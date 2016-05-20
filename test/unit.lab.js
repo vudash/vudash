@@ -26,9 +26,5 @@ global.resource = requirePath => {
     return path.normalize(__dirname + '/resources/' + requirePath);
 };
 
-global.syncSpec = cb => done => {
-    cb(); done();
-};
-
 let tests = glob.sync(__dirname + '/**/*.spec.js');
 tests.forEach(fullPath => require(fullPath));

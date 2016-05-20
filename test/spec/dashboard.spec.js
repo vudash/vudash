@@ -8,7 +8,7 @@ describe('modules.dashboard', () => {
   it('Loads internal widgets', (done) => {
     const descriptor = {
       widgets: [
-        { widget: 'internal:time' }
+        { widget: 'path:./widgets/time' }
       ]
     }
 
@@ -32,6 +32,29 @@ describe('modules.dashboard', () => {
 
     expect(fn).to.throw(Error, 'Widget descriptor something:else was not understood.')
 
+    done()
+
+  })
+
+  it('Builds a render model', (done) => {
+
+    const descriptor = {
+      widgets: [
+        { widget: 'path:widgets/time' }
+      ]
+    }
+
+    const widget = new Widget('widgets/time')
+    const dashboard = new Dashboard(descriptor)
+    expect(dashboard.toRenderModel()).to.deep.equal({
+      widgets: [
+        {
+          js: widget.getJs(),
+          css: widget.getCss(),
+          markup: widget.getMarkup()
+        }
+      ]
+    })
     done()
 
   })

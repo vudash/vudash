@@ -8,6 +8,11 @@
   <title>{{dashboard}} Dashboard</title>
 
   <link rel="stylesheet" type="text/css" href="/static/semantic-ui-css/semantic.min.css">
+  <style type="text/css">
+  {{#each widgets}}
+    {{{css}}}
+  {{/each}}
+  </style>
 </head>
 <body>
   <div class="ui stackable four column padded grid">
@@ -21,8 +26,18 @@
         </div>
       </div>
     </div>
+    {{#each widgets}}
+    <div class="ui four wide center aligned column inverted segment">
+      {{{markup}}}
+    </div>
+    {{/each}}
   </div>
   <script type="text/javascript" href="/static/semantic-ui-css/semantic.min.js" />
+  <script>
+  {{#each widgets}}
+    {{{js}}}
+  {{/each}}
+  </script>
 </body>
 
 </html>

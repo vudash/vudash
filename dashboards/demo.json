@@ -1,0 +1,5 @@
+{
+  "widgets": [
+    { "widget": "path:widgets/time" }
+  ]
+}

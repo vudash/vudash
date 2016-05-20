@@ -1,6 +1,7 @@
 'use strict'
 
-const Widget = require(fromSrc('modules/widget'))
+const Widget = require('./widget')
+const Path = require('path')
 
 class Dashboard {
 
@@ -8,8 +9,8 @@ class Dashboard {
     this.widgets = descriptor.widgets.map((fd) => {
       const parts = fd.widget.split(':')
       switch(parts[0]) {
-        case 'internal':
-          return new Widget(fromRoot(`widgets/${parts[1]}`))
+        case 'path':
+          return new Widget(parts[1])
         default:
           throw new Error(`Widget descriptor ${fd.widget} was not understood.`)
       }
@@ -18,6 +19,14 @@ class Dashboard {
 
   getWidgets() {
     return this.widgets
+  }
+
+  toRenderModel() {
+    return {
+      widgets: this.widgets.map((widget) => {
+        return widget.toRenderModel()
+      })
+    }
   }
 
 }
