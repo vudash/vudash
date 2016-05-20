@@ -44,8 +44,8 @@ describe('modules.dashboard', () => {
       ]
     }
 
-    const widget = new Widget('widgets/time')
     const dashboard = new Dashboard(descriptor)
+    const widget = dashboard.widgets[0]
     expect(dashboard.toRenderModel()).to.deep.equal({
       widgets: [
         {

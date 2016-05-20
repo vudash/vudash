@@ -33,6 +33,10 @@
     {{/each}}
   </div>
   <script type="text/javascript" href="/static/semantic-ui-css/semantic.min.js" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io('http://localhost');
+  </script>
   <script>
   {{#each widgets}}
     {{{js}}}

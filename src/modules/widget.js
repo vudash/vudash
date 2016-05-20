@@ -3,6 +3,7 @@
 const Path = require('path')
 const fs = require('fs')
 const shortid = require('shortid')
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_')
 
 class Widget {
 
@@ -13,22 +14,12 @@ class Widget {
     this.markup = this._fetchInternal(descriptor.markup)
     this.js = this._fetchInternal(descriptor.js)
     this.css = this._fetchInternal(descriptor.css)
-    this.events = this._bindEvents(descriptor.events)
+    this.update = this._fetchInternal(descriptor.update)
   }
 
   _loadDefinition(path) {
     if (!fs.existsSync(path)) { throw new Error(`Could not load widget from ${path}`) }
     return require(Path.join(path, 'descriptor.json'))
-  }
-
-  _bindEvents(events) {
-    let bound = {}
-    if (events) {
-      for (let event of Object.keys(events)) {
-        bound[`${this.id}:${event}`] = events[event]
-      }
-    }
-    return bound
   }
 
   _fetchInternal(definition) {
@@ -38,12 +29,26 @@ class Widget {
     return fs.readFileSync(location, 'utf-8').trim()
   }
 
+  _buildEvent() {
+    const id = this.id
+    return `
+    var widget_${id} = function() {}
+    widget_${id}.prototype.update = function(data) {
+      ${this.update}
+    };
+    socket.on('${id}:update', widget_${id}.update);
+    `.trim()
+  }
+
   getMarkup() {
     return this.markup
   }
 
   getJs() {
-    return this.js
+    return `
+      ${this._buildEvent()}
+      ${this.js}
+    `.trim()
   }
 
   getCss() {
