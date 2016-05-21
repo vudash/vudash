@@ -21,9 +21,20 @@ describe('modules.widget', () => {
   it('Reads widget descriptor properties', (done) => {
     const path = 'test/resources/widgets/example'
     const widget = new Widget(path)
-    expect(widget.getMarkup()).to.equal('<h1>Hello</h1>')
-    expect(widget.getJs()).to.include("function() { console.log('hello'); }")
+    const job = widget.getJob()
+    expect(job).to.deep.include({
+      schedule: 1000
+    })
+    expect(job.script).to.be.a.function()
+    expect(widget.getClientsideJs()).to.include("function() { console.log('hello'); }")
     expect(widget.getCss()).to.equal("body { color: #fff; }")
+    done()
+  })
+
+  it('Parses markup', (done) => {
+    const path = 'test/resources/widgets/example'
+    const widget = new Widget(path)
+    expect(widget.getMarkup()).to.equal(`<h1 id="${widget.id}">Hello</h1>`)
     done()
   })
 
@@ -32,10 +43,11 @@ describe('modules.widget', () => {
     const widget = new Widget(path)
     expect(widget.getMarkup()).to.equal('')
     expect(widget.getCss()).to.equal('')
+    expect(widget.getClientsideJs()).to.equal('')
     done()
   })
 
-  it('Widget with missing properties', (done) => {
+  it('Widget with invalid properties', (done) => {
     const path = 'test/resources/widgets/broken'
     function fn() {
       const widget = new Widget(path)
@@ -51,7 +63,7 @@ describe('modules.widget', () => {
         css: widget.getCss(),
         markup: widget.getMarkup()
     })
-    expect(renderModel.js).to.include(widget.getJs())
+    expect(renderModel.js).to.include(widget.getClientsideJs())
     done()
   })
 
@@ -64,13 +76,17 @@ describe('modules.widget', () => {
     done()
   })
 
+  it('Event is not bound if there is no update code', (done) => {
+    const widget = new Widget('test/resources/widgets/neutral')
+    expect(widget.toRenderModel().js).to.equal('')
+    done()
+  })
+
   it('Attaches update function to event', (done) => {
     const widget = new Widget('test/resources/widgets/example')
     let update = `
-    var widget_${widget.id} = function() {}
-    widget_${widget.id}.prototype.update = function(data) {
-      ${widget.update}
-    };
+    var widget_${widget.id} = function() {};
+    widget_${widget.id}.prototype.update = ${widget.update}
     `.trim()
     expect(widget.toRenderModel().js).to.include(update)
     done()

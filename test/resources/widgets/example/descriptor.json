@@ -1,8 +1,7 @@
 {
   "markup": "markup.html",
-  "js": "widget.js",
-  "css": "style.css",
-  "events": {
-    "my-event": "alert('oh hi')"
-  }
+  "clientsideJs": "widget.js",
+  "update": "update.js",
+  "job": "job.js",
+  "css": "style.css"
 }

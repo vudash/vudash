@@ -2,6 +2,7 @@
 
 const Path = require('path')
 const fs = require('fs')
+const Handlebars = require('handlebars')
 const shortid = require('shortid')
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_')
 
@@ -11,10 +12,19 @@ class Widget {
     this.path = Path.join(process.cwd(), path)
     const descriptor = this._loadDefinition(this.path)
     this.id = shortid.generate()
-    this.markup = this._fetchInternal(descriptor.markup)
-    this.js = this._fetchInternal(descriptor.js)
-    this.css = this._fetchInternal(descriptor.css)
-    this.update = this._fetchInternal(descriptor.update)
+    this.markup = this._readFile(descriptor.markup, '')
+    this.clientsideJs = this._readFile(descriptor.clientsideJs, '')
+    this.css = this._readFile(descriptor.css, '')
+    this.update = this._readFile(descriptor.update, null)
+    this.job = this._requireFile(descriptor.job, '')
+  }
+
+  _buildJob(job) {
+    if (!job) { return {} }
+    return {
+      schedule: job.schedule,
+      script: this._fetchInternal(job.script)
+    }
   }
 
   _loadDefinition(path) {
@@ -22,32 +32,46 @@ class Widget {
     return require(Path.join(path, 'descriptor.json'))
   }
 
-  _fetchInternal(definition) {
-    if (!definition) { return '' }
+  _determineLocation(definition) {
     const location = Path.join(this.path, definition)
     if (!fs.existsSync(location)) { throw new Error(`Could not load widget component from ${location}`) }
-    return fs.readFileSync(location, 'utf-8').trim()
+    return location
+  }
+
+  _requireFile(definition, defaultValue) {
+    if (!definition) { return defaultValue }
+    const file = this._determineLocation(definition)
+    return require(file)
+  }
+
+  _readFile(definition, defaultValue) {
+    if (!definition) { return defaultValue }
+    const file = this._determineLocation(definition)
+    return fs.readFileSync(file, 'utf-8').trim()
   }
 
   _buildEvent() {
+    if (!this.update) { return `` }
     const id = this.id
     return `
-    var widget_${id} = function() {}
-    widget_${id}.prototype.update = function(data) {
-      ${this.update}
-    };
-    socket.on('${id}:update', widget_${id}.update);
+    var widget_${id} = function() {};
+    widget_${id}.prototype.update = ${this.update};
+    widget_${id}.prototype.handleEvent = function(data) {
+      this.update.call(this, '${id}', data);
+    }.bind(this);
+    socket.on('${id}:update', widget_${id}.handleEvent);
     `.trim()
   }
 
   getMarkup() {
-    return this.markup
+    const template = Handlebars.compile(this.markup)
+    return template(this)
   }
 
-  getJs() {
+  getClientsideJs() {
     return `
       ${this._buildEvent()}
-      ${this.js}
+      ${this.clientsideJs}
     `.trim()
   }
 
@@ -55,9 +79,13 @@ class Widget {
     return this.css
   }
 
+  getJob() {
+    return this.job
+  }
+
   toRenderModel() {
     return {
-      js: this.getJs(),
+      js: this.getClientsideJs(),
       css: this.getCss(),
       markup: this.getMarkup()
     }

@@ -4,6 +4,7 @@ const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 
 describe('modules.dashboard', () => {
+  const emit = function(val) { expect(val).to.be.an.object() }
 
   it('Loads internal widgets', (done) => {
     const descriptor = {
@@ -12,7 +13,7 @@ describe('modules.dashboard', () => {
       ]
     }
 
-    const dashboard = new Dashboard(descriptor)
+    const dashboard = new Dashboard(descriptor, emit)
     expect(dashboard.getWidgets().length).to.equal(1)
     expect(dashboard.getWidgets()[0]).to.be.an.instanceOf(Widget)
     done()
@@ -27,7 +28,7 @@ describe('modules.dashboard', () => {
     }
 
     function fn () {
-      const dashboard = new Dashboard(descriptor)
+      const dashboard = new Dashboard(descriptor, emit)
     }
 
     expect(fn).to.throw(Error, 'Widget descriptor something:else was not understood.')
@@ -37,19 +38,18 @@ describe('modules.dashboard', () => {
   })
 
   it('Builds a render model', (done) => {
-
     const descriptor = {
       widgets: [
         { widget: 'path:widgets/time' }
       ]
     }
 
-    const dashboard = new Dashboard(descriptor)
+    const dashboard = new Dashboard(descriptor, emit)
     const widget = dashboard.widgets[0]
     expect(dashboard.toRenderModel()).to.deep.equal({
       widgets: [
         {
-          js: widget.getJs(),
+          js: widget.getClientsideJs(),
           css: widget.getCss(),
           markup: widget.getMarkup()
         }
@@ -57,6 +57,20 @@ describe('modules.dashboard', () => {
     })
     done()
 
+  })
+
+  it('Schedules jobs', (done) => {
+    const descriptor = {
+      widgets: [
+        { widget: 'path:widgets/time' }
+      ]
+    }
+
+    const dashboard = new Dashboard(descriptor, emit)
+    dashboard.buildJobs()
+    const widget = dashboard.widgets[0]
+    expect(dashboard.getJobs().length).to.equal(1)
+    done()
   })
 
 })

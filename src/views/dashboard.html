@@ -32,15 +32,13 @@
     </div>
     {{/each}}
   </div>
-  <script type="text/javascript" href="/static/semantic-ui-css/semantic.min.js" />
+  <script type="text/javascript" href="/static/semantic-ui-css/semantic.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io('http://localhost');
-  </script>
-  <script>
-  {{#each widgets}}
-    {{{js}}}
-  {{/each}}
+    var socket = io('http://localhost:3000');
+    {{#each widgets}}
+      {{{js}}}
+    {{/each}}
   </script>
 </body>
 

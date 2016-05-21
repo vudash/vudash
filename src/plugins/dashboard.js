@@ -6,6 +6,16 @@ const Joi = require('joi')
 
 const DashboardPlugin = {
   register: function (server, options, next) {
+    let dashboards = {}
+
+    function loadDashboard(name) {
+      const path = Path.join(process.cwd(), 'dashboards', name)
+      const descriptor = require(path)
+      const dashboard = new Dashboard(descriptor, server.methods.emit)
+      dashboards[name] = dashboard
+      return dashboard
+    }
+
     server.route({
       method: 'GET',
       path: '/{board}.dashboard',
@@ -17,12 +27,15 @@ const DashboardPlugin = {
         }
       },
       handler: function (request, reply) {
-        const path = Path.join(process.cwd(), 'dashboards', `${request.params.board}`)
-        const descriptor = require(path)
-        const dashboard = new Dashboard(descriptor)
+
+        const name = request.params.board
+        const dashboard = dashboards[name] || loadDashboard(name)
+
         reply.view('dashboard', dashboard.toRenderModel())
       }
     })
+
+    server.expose('dashboards', dashboards)
 
     next()
   }
