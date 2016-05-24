@@ -1,6 +1,8 @@
 {
   "name": "my-dashboard",
   "widgets": [
+    { "widget": "path:widgets/random" },
+    { "widget": "path:widgets/health" },
     { "widget": "path:widgets/time" }
   ]
 }
