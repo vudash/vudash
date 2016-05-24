@@ -18,6 +18,7 @@
     "inert": "^4.0.0",
     "joi": "^8.1.0",
     "moment": "^2.13.0",
+    "request": "^2.72.0",
     "semantic-ui-css": "^2.1.8",
     "shortid": "^2.2.6",
     "socket.io": "^1.4.6",

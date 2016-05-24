@@ -3,6 +3,7 @@
   "widgets": [
     { "widget": "path:widgets/random" },
     { "widget": "path:widgets/health" },
-    { "widget": "path:widgets/time" }
+    { "widget": "path:widgets/time" },
+    { "widget": "path:widgets/github" }
   ]
 }
