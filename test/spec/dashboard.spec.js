@@ -50,7 +50,8 @@ describe('modules.dashboard', () => {
         {
           js: widget.getClientsideJs(),
           css: widget.getCss(),
-          markup: widget.getMarkup()
+          markup: widget.getMarkup(),
+          width: 'four'
         }
       ]
     })

@@ -3,5 +3,6 @@
   "clientsideJs": "widget.js",
   "update": "update.js",
   "job": "job.js",
-  "css": "style.css"
+  "css": "style.css",
+  "width": 8
 }

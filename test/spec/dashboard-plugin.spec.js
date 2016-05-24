@@ -10,7 +10,5 @@ describe('plugins.dashboard', () => {
       expect(server.plugins.dashboard.dashboards[dashboard]).to.exist()
       done()
     })
-
   })
-
 })

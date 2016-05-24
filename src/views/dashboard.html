@@ -15,9 +15,9 @@
   </style>
 </head>
 <body>
-  <div class="ui stackable four column padded grid">
-    <div class="ui four wide center aligned column inverted segment">
-      <div class="ui huge inverted statistic">
+  <div class="ui padded grid inverted segment">
+    <div class="ui four wide center aligned column">
+      <div class="ui huge red inverted statistic">
         <div class="value">
           54
         </div>
@@ -27,7 +27,7 @@
       </div>
     </div>
     {{#each dashboard.widgets}}
-    <div class="ui four wide center aligned column inverted segment">
+    <div class="ui {{width}} wide center aligned column">
       {{{markup}}}
     </div>
     {{/each}}
