@@ -1,15 +1,18 @@
 'use strict'
 
 const Widget = require('./widget')
-const Path = require('path')
 
 class Dashboard {
-
-  constructor(descriptor, emit) {
-    this.emit = emit
+  constructor (descriptor, io) {
+    this.io = io
+    this.id = descriptor.name
+    io.on('connection', (socket) => {
+      socket.join(this.id)
+      console.log(`Client ${socket.id} connected to ${this.id}`)
+    })
     this.widgets = descriptor.widgets.map((fd) => {
       const parts = fd.widget.split(':')
-      switch(parts[0]) {
+      switch (parts[0]) {
         case 'path':
           return new Widget(parts[1])
         default:
@@ -19,27 +22,29 @@ class Dashboard {
     this.buildJobs()
   }
 
-  getWidgets() {
+  getWidgets () {
     return this.widgets
   }
 
-  getJobs() {
+  getJobs () {
     return this.jobs
   }
 
-  buildJobs() {
+  _emit (id, data) {
+    this.io.emit(`${id}:update`, data)
+  }
+
+  buildJobs () {
     this.jobs = this.getWidgets().map((widget) => {
-      return setInterval(function() {
-        var self = this;
-        function emit (data) {
-          self.emit(`${widget.id}:update`, data)
-        }
-        widget.job.script(emit)
-      }.bind(this), widget.schedule)
+      const job = widget.getJob()
+      let self = this
+      return setInterval(function () {
+        job.script(self._emit.bind(self, widget.id))
+      }, job.schedule)
     })
   }
 
-  toRenderModel() {
+  toRenderModel () {
     return {
       widgets: this.widgets.map((widget) => {
         return widget.toRenderModel()

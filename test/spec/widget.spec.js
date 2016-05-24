@@ -5,8 +5,8 @@ const Widget = require(fromSrc('modules/widget'))
 describe('modules.widget', () => {
   it('Barf on unknown widget', (done) => {
     const path = 'test/resources/widgets/unknown'
-    function fn() {
-      const widget = new Widget(path)
+    function fn () {
+      return new Widget(path)
     }
     expect(fn).to.throw(Error, `Could not load widget from ${process.cwd()}/${path}`)
     done()
@@ -27,7 +27,7 @@ describe('modules.widget', () => {
     })
     expect(job.script).to.be.a.function()
     expect(widget.getClientsideJs()).to.include("function() { console.log('hello'); }")
-    expect(widget.getCss()).to.equal("body { color: #fff; }")
+    expect(widget.getCss()).to.equal('body { color: #fff; }')
     done()
   })
 
@@ -49,8 +49,8 @@ describe('modules.widget', () => {
 
   it('Widget with invalid properties', (done) => {
     const path = 'test/resources/widgets/broken'
-    function fn() {
-      const widget = new Widget(path)
+    function fn () {
+      return new Widget(path)
     }
     expect(fn).to.throw(Error, `Could not load widget component from ${process.cwd()}/${path}/markup.html`)
     done()
@@ -60,8 +60,8 @@ describe('modules.widget', () => {
     const widget = new Widget('widgets/time')
     const renderModel = widget.toRenderModel()
     expect(renderModel).to.deep.include({
-        css: widget.getCss(),
-        markup: widget.getMarkup()
+      css: widget.getCss(),
+      markup: widget.getMarkup()
     })
     expect(renderModel.js).to.include(widget.getClientsideJs())
     done()
@@ -70,7 +70,7 @@ describe('modules.widget', () => {
   it('Binds events on the client side', (done) => {
     const widget = new Widget('test/resources/widgets/example')
     let bound = `
-    socket.on('${widget.id}:update', widget_${widget.id}.update);
+    socket.on('${widget.id}:update', widget_${widget.id}.handleEvent.bind(widget_${widget.id}))
     `.trim()
     expect(widget.toRenderModel().js).to.include(bound)
     done()
@@ -85,11 +85,16 @@ describe('modules.widget', () => {
   it('Attaches update function to event', (done) => {
     const widget = new Widget('test/resources/widgets/example')
     let update = `
-    var widget_${widget.id} = function() {};
-    widget_${widget.id}.prototype.update = ${widget.update}
+      update: ${widget.update}
     `.trim()
     expect(widget.toRenderModel().js).to.include(update)
     done()
   })
 
+  it('Loads jobs', (done) => {
+    const widget = new Widget('test/resources/widgets/example')
+    const job = widget.getJob()
+    expect(job.schedule).to.equal(1000)
+    done()
+  })
 })

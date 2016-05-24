@@ -1,7 +1,9 @@
-module.exports = {
+const moment = require('moment')
 
-  script: function(emit) {
-    emit({time: '00:00:00', date: '1 BC'})
+module.exports = {
+  script: function (emit) {
+    const now = moment()
+    emit({time: now.format('h:mm:ss a'), date: now.format('MMMM Do YYYY')})
   },
 
   schedule: 1000

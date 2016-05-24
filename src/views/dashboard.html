@@ -9,7 +9,7 @@
 
   <link rel="stylesheet" type="text/css" href="/static/semantic-ui-css/semantic.min.css">
   <style type="text/css">
-  {{#each widgets}}
+  {{#each dashboard.widgets}}
     {{{css}}}
   {{/each}}
   </style>
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    {{#each widgets}}
+    {{#each dashboard.widgets}}
     <div class="ui four wide center aligned column inverted segment">
       {{{markup}}}
     </div>
@@ -35,8 +35,17 @@
   <script type="text/javascript" href="/static/semantic-ui-css/semantic.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io('http://localhost:3000');
-    {{#each widgets}}
+    var socket = io('{{serverUrl}}');
+
+    socket.on('connect', function() {
+      console.log('Connected.');
+    });
+
+    socket.on('error', function(e) {
+      console.error('Error.', e);
+    });
+
+    {{#each dashboard.widgets}}
       {{{js}}}
     {{/each}}
   </script>

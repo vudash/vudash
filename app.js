@@ -7,7 +7,7 @@ const server = new Hapi.Server()
 const src = (name) => { return `./src/${name}` }
 const plugin = (name) => { return src(`plugins/${name}`) }
 
-server.connection({ port: process.env.PORT || 3000 })
+server.connection({ port: process.env.PORT || 3300 })
 
 server.register([
   require('vision'),

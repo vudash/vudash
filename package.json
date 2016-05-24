@@ -17,6 +17,7 @@
     "hoek": "^4.0.0",
     "inert": "^4.0.0",
     "joi": "^8.1.0",
+    "moment": "^2.13.0",
     "semantic-ui-css": "^2.1.8",
     "shortid": "^2.2.6",
     "socket.io": "^1.4.6",
@@ -27,5 +28,19 @@
     "lab": "^10.6.0",
     "nodemon": "^1.9.2",
     "standard": "^7.1.0"
+  },
+  "standard": {
+    "globals": [
+      "fromSrc",
+      "describe",
+      "it",
+      "fromRoot",
+      "expect",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach",
+      "resource"
+    ]
   }
 }

@@ -6,12 +6,14 @@ const Joi = require('joi')
 
 const DashboardPlugin = {
   register: function (server, options, next) {
+    const io = server.plugins.socket.io
     let dashboards = {}
 
-    function loadDashboard(name) {
+    function loadDashboard (name) {
       const path = Path.join(process.cwd(), 'dashboards', name)
       const descriptor = require(path)
-      const dashboard = new Dashboard(descriptor, server.methods.emit)
+      const dashboard = new Dashboard(descriptor, io)
+
       dashboards[name] = dashboard
       return dashboard
     }
@@ -27,11 +29,10 @@ const DashboardPlugin = {
         }
       },
       handler: function (request, reply) {
-
         const name = request.params.board
         const dashboard = dashboards[name] || loadDashboard(name)
 
-        reply.view('dashboard', dashboard.toRenderModel())
+        reply.view('dashboard', {serverUrl: `${server.info.uri}`, dashboard: dashboard.toRenderModel()})
       }
     })
 
@@ -43,7 +44,8 @@ const DashboardPlugin = {
 
 DashboardPlugin.register.attributes = {
   name: 'dashboard',
-  version: '1.0.0'
+  version: '1.0.0',
+  dependencies: ['socket']
 }
 
 module.exports = DashboardPlugin

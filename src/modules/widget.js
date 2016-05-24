@@ -8,7 +8,7 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 
 class Widget {
 
-  constructor(path) {
+  constructor (path) {
     this.path = Path.join(process.cwd(), path)
     const descriptor = this._loadDefinition(this.path)
     this.id = shortid.generate()
@@ -16,74 +16,68 @@ class Widget {
     this.clientsideJs = this._readFile(descriptor.clientsideJs, '')
     this.css = this._readFile(descriptor.css, '')
     this.update = this._readFile(descriptor.update, null)
-    this.job = this._requireFile(descriptor.job, '')
+    this.job = this._requireFile(descriptor.job, {})
   }
 
-  _buildJob(job) {
-    if (!job) { return {} }
-    return {
-      schedule: job.schedule,
-      script: this._fetchInternal(job.script)
-    }
-  }
-
-  _loadDefinition(path) {
+  _loadDefinition (path) {
     if (!fs.existsSync(path)) { throw new Error(`Could not load widget from ${path}`) }
     return require(Path.join(path, 'descriptor.json'))
   }
 
-  _determineLocation(definition) {
+  _determineLocation (definition) {
     const location = Path.join(this.path, definition)
     if (!fs.existsSync(location)) { throw new Error(`Could not load widget component from ${location}`) }
     return location
   }
 
-  _requireFile(definition, defaultValue) {
+  _requireFile (definition, defaultValue) {
     if (!definition) { return defaultValue }
     const file = this._determineLocation(definition)
     return require(file)
   }
 
-  _readFile(definition, defaultValue) {
+  _readFile (definition, defaultValue) {
     if (!definition) { return defaultValue }
     const file = this._determineLocation(definition)
     return fs.readFileSync(file, 'utf-8').trim()
   }
 
-  _buildEvent() {
-    if (!this.update) { return `` }
+  _buildEvent () {
+    if (!this.update) { return '' }
     const id = this.id
     return `
-    var widget_${id} = function() {};
-    widget_${id}.prototype.update = ${this.update};
-    widget_${id}.prototype.handleEvent = function(data) {
-      this.update.call(this, '${id}', data);
-    }.bind(this);
-    socket.on('${id}:update', widget_${id}.handleEvent);
+    var widget_${id} = {
+      update: ${this.update},
+      handleEvent: function(data) {
+        this.update.call(this, '${id}', data)
+      }
+    }
+
+    socket.on('${id}:update', widget_${id}.handleEvent.bind(widget_${id}))
     `.trim()
   }
 
-  getMarkup() {
+  getMarkup () {
     const template = Handlebars.compile(this.markup)
     return template(this)
   }
 
-  getClientsideJs() {
+  getClientsideJs () {
     return `
       ${this._buildEvent()}
       ${this.clientsideJs}
     `.trim()
   }
 
-  getCss() {
+  getCss () {
     return this.css
   }
 
-  getJob() {
+  getJob () {
     return this.job
   }
 
-  toRenderModel() {
+  toRenderModel () {
     return {
       js: this.getClientsideJs(),
       css: this.getCss(),
