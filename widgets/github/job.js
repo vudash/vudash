@@ -11,14 +11,9 @@ const mappings = {
 
 module.exports = {
   script: function (emit) {
-    request({url: 'https://status.github.com/api/status.json', json: true}, function(err, response, body) {
+    request({url: 'https://status.github.com/api/status.json', json: true}, (err, response, body) => {
       const updated = moment().fromNow()
-      let icon
-      if (err) {
-        icon = 'red mute'
-      } else {
-        icon = mappings[body.status]
-      }
+      let icon = err ? 'red mute' : mappings[body.status]
       emit({icon, updated})
     })
   },

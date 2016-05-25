@@ -14,7 +14,7 @@ class Dashboard {
       const parts = fd.widget.split(':')
       switch (parts[0]) {
         case 'path':
-          return new Widget(parts[1])
+          return new Widget(parts[1], fd.options)
         default:
           throw new Error(`Widget descriptor ${fd.widget} was not understood.`)
       }
@@ -38,9 +38,11 @@ class Dashboard {
     this.jobs = this.getWidgets().map((widget) => {
       const job = widget.getJob()
       let self = this
-      return setInterval(function () {
+      const fn = function () {
         job.script(self._emit.bind(self, widget.id))
-      }, job.schedule)
+      }
+      fn()
+      return setInterval(fn, job.schedule)
     })
   }
 

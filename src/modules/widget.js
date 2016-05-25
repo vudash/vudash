@@ -27,7 +27,7 @@ const widths = {
 
 class Widget {
 
-  constructor (path) {
+  constructor (path, options) {
     this.path = Path.join(process.cwd(), path)
     const descriptor = this._loadDefinition(this.path)
     this.id = shortid.generate()
@@ -35,8 +35,16 @@ class Widget {
     this.clientsideJs = this._readFile(descriptor.clientsideJs, '')
     this.css = this._readFile(descriptor.css, '')
     this.update = this._readFile(descriptor.update, null)
-    this.job = this._requireFile(descriptor.job, {})
     this.width = descriptor.width || 4
+    this.job = this._loadJob(descriptor.job, options)
+  }
+
+  _loadJob (job, options) {
+    let definition = Object.assign({}, this._requireFile(job, {}))
+    if (options) {
+      definition.config = Object.assign({}, definition.config, options)
+    }
+    return definition
   }
 
   _loadDefinition (path) {

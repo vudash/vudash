@@ -104,4 +104,28 @@ describe('modules.widget', () => {
     expect(job.schedule).to.equal(1000)
     done()
   })
+
+  it('Overrides config for jobs', (done) => {
+    const overrides = {
+      foo: 'baz',
+      working: true
+    }
+    const widget = new Widget('test/resources/widgets/configurable', overrides)
+    const job = widget.getJob()
+    expect(job.config).to.deep.equal(overrides)
+    done()
+  })
+
+  it('Does not override all config for jobs', (done) => {
+    const overrides = {
+      working: true
+    }
+    const widget = new Widget('test/resources/widgets/configurable', overrides)
+    const job = widget.getJob()
+    expect(job.config).to.deep.equal({
+      foo: 'bar',
+      working: true
+    })
+    done()
+  })
 })
