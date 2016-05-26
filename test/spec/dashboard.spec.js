@@ -2,10 +2,13 @@
 
 const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
-const events = require('events')
+const sinon = require('sinon')
 
 describe('modules.dashboard', () => {
-  const emitter = new events.EventEmitter()
+  const emitter = {
+    on: sinon.stub(),
+    to: sinon.stub().returns({ emit: sinon.stub() })
+  }
 
   it('Loads internal widgets', (done) => {
     const descriptor = {

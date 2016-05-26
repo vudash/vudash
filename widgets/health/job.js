@@ -3,11 +3,11 @@
 let on = false
 
 module.exports = {
-  script: function (emit) {
-    on = !on
-    emit({on})
+  register: (config) => {
+    return (emit) => {
+      on = !on
+      emit({on})
+    }
   },
-
   schedule: 1000
-
 }

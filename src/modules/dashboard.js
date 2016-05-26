@@ -31,18 +31,20 @@ class Dashboard {
   }
 
   _emit (id, data) {
-    this.io.emit(`${id}:update`, data)
+    this.io.to(this.id).emit(`${id}:update`, data)
   }
 
   buildJobs () {
     this.jobs = this.getWidgets().map((widget) => {
       const job = widget.getJob()
-      let self = this
-      const fn = function () {
-        job.script(self._emit.bind(self, widget.id))
+      if (job) {
+        let self = this
+        const fn = function () {
+          job.script(self._emit.bind(self, widget.id))
+        }
+        fn()
+        return setInterval(fn, job.schedule)
       }
-      fn()
-      return setInterval(fn, job.schedule)
     })
   }
 

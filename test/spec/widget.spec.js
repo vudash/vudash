@@ -8,7 +8,7 @@ describe('modules.widget', () => {
     function fn () {
       return new Widget(path)
     }
-    expect(fn).to.throw(Error, `Could not load widget from ${process.cwd()}/${path}`)
+    expect(fn).to.throw(Error, `Could not load from ${process.cwd()}/${path}/descriptor.json`)
     done()
   })
 
@@ -111,8 +111,8 @@ describe('modules.widget', () => {
       working: true
     }
     const widget = new Widget('test/resources/widgets/configurable', overrides)
-    const job = widget.getJob()
-    expect(job.config).to.deep.equal(overrides)
+    const rawConfig = widget.getJob().script()
+    expect(rawConfig).to.deep.equal(overrides)
     done()
   })
 
@@ -121,8 +121,8 @@ describe('modules.widget', () => {
       working: true
     }
     const widget = new Widget('test/resources/widgets/configurable', overrides)
-    const job = widget.getJob()
-    expect(job.config).to.deep.equal({
+    const rawConfig = widget.getJob().script()
+    expect(rawConfig).to.deep.equal({
       foo: 'bar',
       working: true
     })

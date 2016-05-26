@@ -1,9 +1,10 @@
+'use strict'
+
 module.exports = {
-
-  script: function(emit) {
-    emit({x: 'y'})
+  register: (config) => {
+    return (emit) => {
+      emit({x: 'y'})
+    }
   },
-
   schedule: 1000
-
 }

@@ -29,27 +29,36 @@ class Widget {
 
   constructor (path, options) {
     this.path = Path.join(process.cwd(), path)
-    const descriptor = this._loadDefinition(this.path)
+    const descriptor = this._loadJson(this.path, 'descriptor.json', false)
+    const config = this._loadJson(this.path, 'config.json', true)
     this.id = shortid.generate()
     this.markup = this._readFile(descriptor.markup, '')
     this.clientsideJs = this._readFile(descriptor.clientsideJs, '')
     this.css = this._readFile(descriptor.css, '')
     this.update = this._readFile(descriptor.update, null)
     this.width = descriptor.width || 4
-    this.job = this._loadJob(descriptor.job, options)
+    this.job = this._loadJob(descriptor.job, config, options)
   }
 
-  _loadJob (job, options) {
-    let definition = Object.assign({}, this._requireFile(job, {}))
-    if (options) {
-      definition.config = Object.assign({}, definition.config, options)
+  _loadJob (job, config, options) {
+    const definition = this._requireFile(job, null)
+    if (definition) {
+      const conf = Object.assign({}, config, options)
+      return {
+        script: definition.register(conf),
+        schedule: definition.schedule
+      }
     }
-    return definition
   }
 
-  _loadDefinition (path) {
-    if (!fs.existsSync(path)) { throw new Error(`Could not load widget from ${path}`) }
-    return require(Path.join(path, 'descriptor.json'))
+  _loadJson (path, file, isOptional) {
+    const location = Path.join(path, file)
+    if (!fs.existsSync(location)) {
+      if (isOptional) { return {} }
+      throw new Error(`Could not load from ${location}`)
+    } else {
+      return require(location)
+    }
   }
 
   _determineLocation (definition) {

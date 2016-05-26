@@ -1,14 +1,12 @@
-module.exports = {
+'use strict'
 
-  script: (emit) => {
-    emit({x: 'y'})
-  },
-
-  schedule: 1000,
-
-  config: {
-    foo: 'bar',
-    working: false
+const job = {
+  schedule: 10000,
+  register: function (config) {
+    return (emit) => {
+      return config
+    }
   }
-
 }
+
+module.exports = job

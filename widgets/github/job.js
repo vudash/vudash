@@ -10,14 +10,14 @@ const mappings = {
 }
 
 module.exports = {
-  script: function (emit) {
-    request({url: 'https://status.github.com/api/status.json', json: true}, (err, response, body) => {
-      const updated = moment().fromNow()
-      let icon = err ? 'red mute' : mappings[body.status]
-      emit({icon, updated})
-    })
+  register: (config) => {
+    return function (emit) {
+      request({url: 'https://status.github.com/api/status.json', json: true}, (err, response, body) => {
+        const updated = moment().fromNow()
+        let icon = err ? 'red mute' : mappings[body.status]
+        emit({icon, updated})
+      })
+    }
   },
-
   schedule: 1000
-
 }
