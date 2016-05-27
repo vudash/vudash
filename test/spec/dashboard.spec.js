@@ -23,6 +23,19 @@ describe('modules.dashboard', () => {
     done()
   })
 
+  it('Loads module widgets', (done) => {
+    const descriptor = {
+      widgets: [
+        [{ widget: 'module:./test/resources/widgets/npm-module' }]
+      ]
+    }
+
+    const dashboard = new Dashboard(descriptor, emitter)
+    expect(dashboard.getWidgets().length).to.equal(1)
+    expect(dashboard.getWidgets()[0][0]).to.be.an.instanceOf(Widget)
+    done()
+  })
+
   it('Loads layout', (done) => {
     const descriptor = {
       widgets: [

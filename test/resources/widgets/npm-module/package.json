@@ -1,0 +1,8 @@
+{
+  "name": "npm-module",
+  "version": "1.0.0",
+  "description": "Vudash npm module widget",
+  "main": "widget.js",
+  "author": "",
+  "license": "MIT"
+}

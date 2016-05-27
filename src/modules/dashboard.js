@@ -16,6 +16,7 @@ class Dashboard {
         const parts = fd.widget.split(':')
         switch (parts[0]) {
           case 'path':
+          case 'module':
             return new Widget(parts[1], fd.options)
           default:
             throw new Error(`Widget descriptor ${fd.widget} was not understood.`)

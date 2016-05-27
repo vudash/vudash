@@ -25,7 +25,7 @@ class Widget {
     try {
       const Module = require(location)
       return new Module().register(options)
-    } catch(err) {
+    } catch (err) {
       throw new Error(`Failed to load widget at ${location}`, err)
     }
   }
