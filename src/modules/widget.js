@@ -20,8 +20,6 @@ class Widget {
   }
 
   _attemptLoad (path, options) {
-
-    global.load = this._loadFile
     const location = Path.join(this.path, 'widget.js')
     if (!fs.existsSync(location)) { throw new Error(`Could not load widget from ${location}`) }
     try {
