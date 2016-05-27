@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
+    "start": "node app.js",
     "test": "lab -I describe,it,fromSrc,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "author": "",

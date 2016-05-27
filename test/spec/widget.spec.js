@@ -8,7 +8,7 @@ describe('modules.widget', () => {
     function fn () {
       return new Widget(path)
     }
-    expect(fn).to.throw(Error, `Could not load from ${process.cwd()}/${path}/descriptor.json`)
+    expect(fn).to.throw(Error, `Could not load widget from ${process.cwd()}/${path}/widget.js`)
     done()
   })
 

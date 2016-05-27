@@ -1,6 +1,0 @@
-{
-  "url": "http://api.fixer.io/latest",
-  "path": "rates.CHF",
-  "description": "EUR -> CHF",
-  "schedule": 60000
-}

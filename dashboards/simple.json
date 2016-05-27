@@ -1,0 +1,8 @@
+{
+  "name": "simple-dashboard",
+  "widgets": [
+    [
+      { "widget": "path:widgets/time" }
+    ]
+  ]
+}

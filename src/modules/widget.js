@@ -9,35 +9,24 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 class Widget {
 
   constructor (path, options) {
-    this.path = Path.join(process.cwd(), path)
-    const descriptor = this._loadJson(this.path, 'descriptor.json', false)
-    const config = this._loadJson(this.path, 'config.json', true)
     this.id = shortid.generate()
-    this.markup = this._readFile(descriptor.markup, '')
-    this.clientsideJs = this._readFile(descriptor.clientsideJs, '')
-    this.css = this._readFile(descriptor.css, '')
-    this.update = this._readFile(descriptor.update, null)
-    this.job = this._loadJob(descriptor.job, config, options)
+    this.path = Path.join(process.cwd(), path)
+    const module = this._attemptLoad(this.path, options)
+    this.markup = this._readFile(module.markup, '')
+    this.clientsideJs = this._readFile(module.clientJs, '')
+    this.css = this._readFile(module.css, '')
+    this.update = this._readFile(module.update, null)
+    this.job = { script: module.job, schedule: module.schedule }
   }
 
-  _loadJob (job, config, options) {
-    const definition = this._requireFile(job, null)
-    if (definition) {
-      const conf = Object.assign({}, config, options)
-      return {
-        script: definition.register(conf),
-        schedule: definition.schedule
-      }
-    }
-  }
-
-  _loadJson (path, file, isOptional) {
-    const location = Path.join(path, file)
-    if (!fs.existsSync(location)) {
-      if (isOptional) { return {} }
-      throw new Error(`Could not load from ${location}`)
-    } else {
-      return require(location)
+  _attemptLoad (path, options) {
+    const location = Path.join(this.path, 'widget.js')
+    if (!fs.existsSync(location)) { throw new Error(`Could not load widget from ${location}`) }
+    try {
+      const Module = require(location)
+      return new Module().register(options)
+    } catch(err) {
+      throw new Error(`Failed to load widget at ${location}`, err)
     }
   }
 
@@ -45,12 +34,6 @@ class Widget {
     const location = Path.join(this.path, definition)
     if (!fs.existsSync(location)) { throw new Error(`Could not load widget component from ${location}`) }
     return location
-  }
-
-  _requireFile (definition, defaultValue) {
-    if (!definition) { return defaultValue }
-    const file = this._determineLocation(definition)
-    return require(file)
   }
 
   _readFile (definition, defaultValue) {

@@ -1,6 +1,0 @@
-{
-  "markup": "markup.html",
-  "job": "job.js",
-  "update": "update.js",
-  "clientsideJs": "client.js"
-}
