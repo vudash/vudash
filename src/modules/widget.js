@@ -4,7 +4,7 @@ const Path = require('path')
 const fs = require('fs')
 const Handlebars = require('handlebars')
 const shortid = require('shortid')
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_')
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_')
 
 class Widget {
 
@@ -20,6 +20,8 @@ class Widget {
   }
 
   _attemptLoad (path, options) {
+
+    global.load = this._loadFile
     const location = Path.join(this.path, 'widget.js')
     if (!fs.existsSync(location)) { throw new Error(`Could not load widget from ${location}`) }
     try {
@@ -36,10 +38,14 @@ class Widget {
     return location
   }
 
-  _readFile (definition, defaultValue) {
-    if (!definition) { return defaultValue }
+  _loadFile (definition) {
     const file = this._determineLocation(definition)
     return fs.readFileSync(file, 'utf-8').trim()
+  }
+
+  _readFile (definition, defaultValue) {
+    if (!definition) { return defaultValue }
+    return this._loadFile(definition)
   }
 
   _buildEvent () {

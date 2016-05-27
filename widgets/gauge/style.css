@@ -1,0 +1,9 @@
+.progress {
+  width: 300px;
+}
+.ui.progress > .bar {
+  height: 5.75em;
+}
+.progress .label {
+  text-transform: uppercase;
+}

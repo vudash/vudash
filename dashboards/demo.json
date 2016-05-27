@@ -3,12 +3,14 @@
   "widgets": [
     [
       { "widget": "path:widgets/random" },
+      { "widget": "path:widgets/gauge" },
       { "widget": "path:widgets/health" },
       { "widget": "path:widgets/time" }
     ],
     [
       { "widget": "path:widgets/github" },
-      { "widget": "path:widgets/pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } }
+      { "widget": "path:widgets/pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
+      { "widget": "path:widgets/pluck", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
     ]
   ]
 }
