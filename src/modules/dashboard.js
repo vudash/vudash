@@ -10,14 +10,17 @@ class Dashboard {
       socket.join(this.id)
       console.log(`Client ${socket.id} connected to ${this.id}`)
     })
-    this.widgets = descriptor.widgets.map((fd) => {
-      const parts = fd.widget.split(':')
-      switch (parts[0]) {
-        case 'path':
-          return new Widget(parts[1], fd.options)
-        default:
-          throw new Error(`Widget descriptor ${fd.widget} was not understood.`)
-      }
+
+    this.widgets = descriptor.widgets.map((row) => {
+      return row.map((fd) => {
+        const parts = fd.widget.split(':')
+        switch (parts[0]) {
+          case 'path':
+            return new Widget(parts[1], fd.options)
+          default:
+            throw new Error(`Widget descriptor ${fd.widget} was not understood.`)
+        }
+      })
     })
     this.buildJobs()
   }
@@ -35,7 +38,8 @@ class Dashboard {
   }
 
   buildJobs () {
-    this.jobs = this.getWidgets().map((widget) => {
+    const widgets = this.getWidgets().reduce((all, next) => { return all.concat(next) }, [])
+    this.jobs = widgets.map((widget) => {
       const job = widget.getJob()
       if (job) {
         let self = this
@@ -50,8 +54,10 @@ class Dashboard {
 
   toRenderModel () {
     return {
-      widgets: this.widgets.map((widget) => {
-        return widget.toRenderModel()
+      widgets: this.getWidgets().map((row) => {
+        return row.map((widget) => {
+          return widget.toRenderModel()
+        })
       })
     }
   }

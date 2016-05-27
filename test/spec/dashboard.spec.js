@@ -13,20 +13,35 @@ describe('modules.dashboard', () => {
   it('Loads internal widgets', (done) => {
     const descriptor = {
       widgets: [
-        { widget: 'path:./widgets/time' }
+        [{ widget: 'path:./widgets/time' }]
       ]
     }
 
     const dashboard = new Dashboard(descriptor, emitter)
     expect(dashboard.getWidgets().length).to.equal(1)
-    expect(dashboard.getWidgets()[0]).to.be.an.instanceOf(Widget)
+    expect(dashboard.getWidgets()[0][0]).to.be.an.instanceOf(Widget)
+    done()
+  })
+
+  it('Loads layout', (done) => {
+    const descriptor = {
+      widgets: [
+        [{ widget: 'path:./widgets/time' }, { widget: 'path:./widgets/time' }],
+        [{ widget: 'path:./widgets/time' }]
+      ]
+    }
+
+    const dashboard = new Dashboard(descriptor, emitter)
+    expect(dashboard.getWidgets().length).to.equal(2)
+    expect(dashboard.getWidgets()[0].length).to.equal(2)
+    expect(dashboard.getWidgets()[1].length).to.equal(1)
     done()
   })
 
   it('Tries to load widget with invalid descriptor', (done) => {
     const descriptor = {
       widgets: [
-        { widget: 'something:else' }
+        [{ widget: 'something:else' }]
       ]
     }
 
@@ -42,21 +57,20 @@ describe('modules.dashboard', () => {
   it('Builds a render model', (done) => {
     const descriptor = {
       widgets: [
-        { widget: 'path:widgets/time' }
+        [{ widget: 'path:widgets/time' }]
       ]
     }
 
     const dashboard = new Dashboard(descriptor, emitter)
-    const widget = dashboard.widgets[0]
+    const widget = dashboard.widgets[0][0]
     expect(dashboard.toRenderModel()).to.deep.equal({
-      widgets: [
+      widgets: [[
         {
           js: widget.getClientsideJs(),
           css: widget.getCss(),
-          markup: widget.getMarkup(),
-          width: 'four'
+          markup: widget.getMarkup()
         }
-      ]
+      ]]
     })
     done()
   })
@@ -64,7 +78,7 @@ describe('modules.dashboard', () => {
   it('Schedules jobs', (done) => {
     const descriptor = {
       widgets: [
-        { widget: 'path:widgets/time' }
+        [{ widget: 'path:widgets/time' }]
       ]
     }
 

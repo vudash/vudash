@@ -7,36 +7,40 @@
 
   <title>{{dashboard}} Dashboard</title>
 
+  <link rel="stylesheet" href="/static/flexboxgrid/css/flexboxgrid.min.css" type="text/css">
   <link rel="stylesheet" type="text/css" href="/static/semantic-ui-css/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   <style type="text/css">
   {{#each dashboard.widgets}}
-    {{{css}}}
+    {{#each this}}
+      {{{css}}}
+    {{/each}}
   {{/each}}
   </style>
 </head>
 <body>
-  <div class="ui padded grid inverted segment">
-    {{#each dashboard.widgets}}
-    <div class="ui {{width}} wide center aligned column">
-      {{{markup}}}
-    </div>
-    {{/each}}
+  {{#each dashboard.widgets}}
+  <div class="row">
+    {{#each this}}
+      <div class="col-xs aligner">
+          <div class="box aligner-item">{{{markup}}}</div>
+      </div>
+      {{/each}}
   </div>
+  {{/each}}
   <script type="text/javascript" href="/static/semantic-ui-css/semantic.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io('{{serverUrl}}');
-
-    socket.on('connect', function() {
-      console.log('Connected.');
-    });
 
     socket.on('error', function(e) {
       console.error('Error.', e);
     });
 
     {{#each dashboard.widgets}}
-      {{{js}}}
+      {{#each this}}
+        {{{js}}}
+      {{/each}}
     {{/each}}
   </script>
 </body>

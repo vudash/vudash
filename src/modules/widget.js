@@ -6,25 +6,6 @@ const Handlebars = require('handlebars')
 const shortid = require('shortid')
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_')
 
-const widths = {
-  1: 'one',
-  2: 'two',
-  3: 'three',
-  4: 'four',
-  5: 'five',
-  6: 'six',
-  7: 'seven',
-  8: 'eight',
-  9: 'nine',
-  10: 'ten',
-  11: 'eleven',
-  12: 'twelve',
-  13: 'thirteen',
-  14: 'fourteen',
-  15: 'fifteen',
-  16: 'sixteen'
-}
-
 class Widget {
 
   constructor (path, options) {
@@ -36,7 +17,6 @@ class Widget {
     this.clientsideJs = this._readFile(descriptor.clientsideJs, '')
     this.css = this._readFile(descriptor.css, '')
     this.update = this._readFile(descriptor.update, null)
-    this.width = descriptor.width || 4
     this.job = this._loadJob(descriptor.job, config, options)
   }
 
@@ -114,16 +94,11 @@ class Widget {
     return this.job
   }
 
-  getWidth () {
-    return widths[this.width]
-  }
-
   toRenderModel () {
     return {
       js: this.getClientsideJs(),
       css: this.getCss(),
-      markup: this.getMarkup(),
-      width: this.getWidth()
+      markup: this.getMarkup()
     }
   }
 

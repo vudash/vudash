@@ -12,6 +12,16 @@ const AssetsPlugin = {
       }
     })
 
+    server.route({
+      method: 'GET',
+      path: '/assets/{param*}',
+      handler: {
+        directory: {
+          path: 'src/public'
+        }
+      }
+    })
+
     next()
   }
 }

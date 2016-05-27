@@ -47,13 +47,6 @@ describe('modules.widget', () => {
     done()
   })
 
-  it('Default widget width is four', (done) => {
-    const path = 'test/resources/widgets/example'
-    const widget = new Widget(path)
-    expect(widget.getWidth()).to.equal('eight')
-    done()
-  })
-
   it('Widget with invalid properties', (done) => {
     const path = 'test/resources/widgets/broken'
     function fn () {

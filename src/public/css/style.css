@@ -1,0 +1,19 @@
+body {
+  background-color: #404040;
+}
+
+.row {
+  height: 25%;
+  width: 100%;
+}
+
+.aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    min-height: 100%;
+}
+
+.aligner-item {
+  max-width: 50%;
+}

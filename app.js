@@ -29,6 +29,15 @@ server.register([
   server.start((err) => {
     Hoek.assert(!err, err)
 
+    if (process.env.BROWSER_SYNC) {
+      const bs = require('browser-sync').create()
+
+      bs.init({
+        open: false,
+        proxy: server.info.uri,
+        files: ['src/public/**/*.{js,css}']
+      })
+    }
     console.log('Server running at:', server.info.uri)
   })
 })

@@ -1,10 +1,14 @@
 {
   "name": "my-dashboard",
   "widgets": [
-    { "widget": "path:widgets/random" },
-    { "widget": "path:widgets/health" },
-    { "widget": "path:widgets/time" },
-    { "widget": "path:widgets/github" },
-    { "widget": "path:widgets/pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } }
+    [
+      { "widget": "path:widgets/random" },
+      { "widget": "path:widgets/health" },
+      { "widget": "path:widgets/time" }
+    ],
+    [
+      { "widget": "path:widgets/github" },
+      { "widget": "path:widgets/pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } }
+    ]
   ]
 }
