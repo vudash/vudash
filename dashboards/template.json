@@ -2,7 +2,7 @@
   "name": "simple-dashboard",
   "widgets": [
     [
-      { "widget": "./widgets/time" }
+      { "widget": "vudash-widget-time" }
     ]
   ]
 }

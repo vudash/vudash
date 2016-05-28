@@ -10,23 +10,12 @@ describe('modules.dashboard', () => {
     to: sinon.stub().returns({ emit: sinon.stub() })
   }
 
+  const exampleWidget = { widget: resource('widgets/example') }
+
   it('Loads internal widgets', (done) => {
     const descriptor = {
       widgets: [
-        [{ widget: 'path:./widgets/time' }]
-      ]
-    }
-
-    const dashboard = new Dashboard(descriptor, emitter)
-    expect(dashboard.getWidgets().length).to.equal(1)
-    expect(dashboard.getWidgets()[0][0]).to.be.an.instanceOf(Widget)
-    done()
-  })
-
-  it('Loads module widgets', (done) => {
-    const descriptor = {
-      widgets: [
-        [{ widget: 'module:./test/resources/widgets/npm-module' }]
+        [exampleWidget]
       ]
     }
 
@@ -39,8 +28,8 @@ describe('modules.dashboard', () => {
   it('Loads layout', (done) => {
     const descriptor = {
       widgets: [
-        [{ widget: 'path:./widgets/time' }, { widget: 'path:./widgets/time' }],
-        [{ widget: 'path:./widgets/time' }]
+        [exampleWidget, exampleWidget],
+        [exampleWidget]
       ]
     }
 
@@ -52,9 +41,10 @@ describe('modules.dashboard', () => {
   })
 
   it('Tries to load widget with invalid descriptor', (done) => {
+    const badModuleName = 'something:else'
     const descriptor = {
       widgets: [
-        [{ widget: 'something:else' }]
+        [{ widget: badModuleName }]
       ]
     }
 
@@ -62,7 +52,7 @@ describe('modules.dashboard', () => {
       return new Dashboard(descriptor, emitter)
     }
 
-    expect(fn).to.throw(Error, 'Widget descriptor something:else was not understood.')
+    expect(fn).to.throw(Error, `Cannot find module '${badModuleName}'`)
 
     done()
   })
@@ -70,7 +60,7 @@ describe('modules.dashboard', () => {
   it('Builds a render model', (done) => {
     const descriptor = {
       widgets: [
-        [{ widget: 'path:widgets/time' }]
+        [exampleWidget]
       ]
     }
 
@@ -91,7 +81,7 @@ describe('modules.dashboard', () => {
   it('Schedules jobs', (done) => {
     const descriptor = {
       widgets: [
-        [{ widget: 'path:widgets/time' }]
+        [exampleWidget]
       ]
     }
 

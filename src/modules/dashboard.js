@@ -13,14 +13,7 @@ class Dashboard {
 
     this.widgets = descriptor.widgets.map((row) => {
       return row.map((fd) => {
-        const parts = fd.widget.split(':')
-        switch (parts[0]) {
-          case 'path':
-          case 'module':
-            return new Widget(parts[1], fd.options)
-          default:
-            throw new Error(`Widget descriptor ${fd.widget} was not understood.`)
-        }
+        return new Widget(fd.widget, fd.options)
       })
     })
     this.buildJobs()

@@ -10,8 +10,14 @@ class Widget {
 
   constructor (path, options) {
     this.id = shortid.generate()
-    this.path = Path.join(process.cwd(), path)
-    const module = this._attemptLoad(this.path, options)
+    const location = Path.join(process.cwd(), path)
+    const Module = require(location)
+    this.base = Path.dirname(require.resolve(location))
+    const module = new Module().register(options)
+    this.build(module)
+  }
+
+  build (module) {
     this.markup = this._readFile(module.markup, '')
     this.clientsideJs = this._readFile(module.clientJs, '')
     this.css = this._readFile(module.css, '')
@@ -19,31 +25,11 @@ class Widget {
     this.job = { script: module.job, schedule: module.schedule }
   }
 
-  _attemptLoad (path, options) {
-    const location = Path.join(this.path, 'widget.js')
-    if (!fs.existsSync(location)) { throw new Error(`Could not load widget from ${location}`) }
-    try {
-      const Module = require(location)
-      return new Module().register(options)
-    } catch (err) {
-      throw new Error(`Failed to load widget at ${location}`, err)
-    }
-  }
-
-  _determineLocation (definition) {
-    const location = Path.join(this.path, definition)
-    if (!fs.existsSync(location)) { throw new Error(`Could not load widget component from ${location}`) }
-    return location
-  }
-
-  _loadFile (definition) {
-    const file = this._determineLocation(definition)
-    return fs.readFileSync(file, 'utf-8').trim()
-  }
-
   _readFile (definition, defaultValue) {
     if (!definition) { return defaultValue }
-    return this._loadFile(definition)
+    const file = Path.join(this.base, definition)
+    if (!fs.existsSync(file)) { throw new Error(`Could not load widget component from ${file}`) }
+    return fs.readFileSync(file, 'utf-8').trim()
   }
 
   _buildEvent () {

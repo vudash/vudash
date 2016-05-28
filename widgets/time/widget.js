@@ -1,14 +1,10 @@
 'use strict'
 
 const moment = require('moment')
-const defaults = {}
 
 class TimeWidget {
 
   register (options) {
-
-    const config = Object.assign({}, defaults, options)
-
     return {
 
       markup: 'markup.html',
@@ -21,7 +17,6 @@ class TimeWidget {
       }
 
     }
-
   }
 
 }
