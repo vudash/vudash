@@ -30,6 +30,13 @@ describe('modules.widget', () => {
     done()
   })
 
+  it('Handles multiple files in properties', (done) => {
+    const widget = new Widget(resource('widgets/multiple'))
+    expect(widget.getClientsideJs()).to.equal('var one = 1;\nvar two = 2;')
+    expect(widget.getCss()).to.equal('one { color: #fff; }\ntwo { color: #000; }')
+    done()
+  })
+
   it('Parses markup', (done) => {
     const widget = new Widget(resource('widgets/example'))
     expect(widget.getMarkup()).to.equal(`<h1 id="${widget.id}">Hello</h1>`)
