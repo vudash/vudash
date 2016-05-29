@@ -8,7 +8,7 @@ describe('modules.widget', () => {
     function fn () {
       return new Widget(badModuleName)
     }
-    expect(fn).to.throw(Error, `Cannot find module '${badModuleName}'`)
+    expect(fn).to.throw(Error, /Cannot find module /)
     done()
   })
 
@@ -45,8 +45,8 @@ describe('modules.widget', () => {
   })
 
   it('Widget with invalid properties', (done) => {
-    const module = resource('broken')
-    expect(() => { return new Widget(module) }).to.throw(Error, `Cannot find module '${module}'`)
+    const module = resource('widgets/broken')
+    expect(() => { return new Widget(module) }).to.throw(Error, `Could not load widget component from ${module}/markup.html`)
     done()
   })
 

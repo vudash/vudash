@@ -8,13 +8,25 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 
 class Widget {
 
-  constructor (path, options) {
+  constructor (module, options) {
     this.id = shortid.generate()
-    const location = Path.join(process.cwd(), path)
-    const Module = require(location)
-    this.base = Path.dirname(require.resolve(location))
-    const module = new Module().register(options)
-    this.build(module)
+    const paths = this._resolve(module)
+    const Module = require(paths.entry)
+    this.base = paths.base
+    const widget = new Module().register(options)
+    this.build(widget)
+  }
+
+  _resolve (module) {
+    const paths = {}
+    try {
+      paths.entry = require.resolve(module)
+    } catch (e) {
+      const local = Path.join(process.cwd(), module)
+      paths.entry = require.resolve(local)
+    }
+    paths.base = Path.dirname(paths.entry)
+    return paths
   }
 
   build (module) {

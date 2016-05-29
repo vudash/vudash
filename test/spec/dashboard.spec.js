@@ -3,6 +3,7 @@
 const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const sinon = require('sinon')
+const Path = require('path')
 
 describe('modules.dashboard', () => {
   const emitter = {
@@ -52,7 +53,7 @@ describe('modules.dashboard', () => {
       return new Dashboard(descriptor, emitter)
     }
 
-    expect(fn).to.throw(Error, `Cannot find module '${badModuleName}'`)
+    expect(fn).to.throw(Error, `Cannot find module '${Path.join(process.cwd(), badModuleName)}'`)
 
     done()
   })

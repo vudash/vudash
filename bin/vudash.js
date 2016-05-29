@@ -21,7 +21,7 @@ cli.main((args, options) => {
     fs.ensureDirSync(Path.join(__cwd, 'dashboards'))
     fs.writeJsonSync(configFile, dashboard)
     fs.writeJsonSync(packageJson, { name: 'my-vudash-dashboard', main: 'vudash', scripts: { start: 'vudash' } })
-    exec('npm install --save moment', (error, stdout, stderr) => {
+    exec('npm install --save moment vudash-widget-time', (error, stdout, stderr) => {
       Hoek.assert(!error, error)
       console.log('Created sample dashboard. Run "vudash" or "npm start" to view')
     })
