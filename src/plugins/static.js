@@ -1,5 +1,7 @@
 'use strict'
 
+const Path = require('path')
+
 const AssetsPlugin = {
   register: function (server, options, next) {
     server.route({
@@ -7,7 +9,7 @@ const AssetsPlugin = {
       path: '/static/{param*}',
       handler: {
         directory: {
-          path: 'node_modules'
+          path: Path.join(__dirname, '..', '..', 'node_modules')
         }
       }
     })
@@ -17,7 +19,7 @@ const AssetsPlugin = {
       path: '/assets/{param*}',
       handler: {
         directory: {
-          path: 'src/public'
+          path: Path.join(__dirname, '..', '..', 'src/public')
         }
       }
     })
