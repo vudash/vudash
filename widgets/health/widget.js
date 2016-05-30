@@ -3,7 +3,6 @@
 class HealthWidget {
 
   register (options) {
-
     let on = false
 
     return {
@@ -15,9 +14,8 @@ class HealthWidget {
         on = !on
         emit({on})
       }
-
+      
     }
-
   }
 
 }

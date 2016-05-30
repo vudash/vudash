@@ -1,3 +1,1 @@
-function (id, data) {
-  console.log(data);
-}
+console.log($data);

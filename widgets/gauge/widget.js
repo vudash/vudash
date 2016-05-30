@@ -13,6 +13,7 @@ class GaugeWidget {
     const config = Object.assign({}, defaults, options)
 
     return {
+      config,
       markup: 'markup.html',
       update: 'update.js',
       css: 'style.css',

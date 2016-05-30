@@ -3,7 +3,6 @@
 class ExampleWidget {
 
   register () {
-
     return {
       schedule: 1000,
       markup: 'markup.html',
@@ -16,7 +15,6 @@ class ExampleWidget {
       }
 
     }
-
   }
 
 }

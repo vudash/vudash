@@ -12,7 +12,6 @@ const mappings = {
 class GithubWidget {
 
   register (options) {
-
     return {
       markup: 'markup.html',
       update: 'update.js',
@@ -27,7 +26,6 @@ class GithubWidget {
       }
 
     }
-
   }
 
 }

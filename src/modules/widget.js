@@ -35,6 +35,7 @@ class Widget {
     this.css = this._readFile(module.css, '')
     this.update = this._readFile(module.update, null)
     this.job = { script: module.job, schedule: module.schedule }
+    this.config = module.config || {}
   }
 
   _readFile (definition, defaultValue) {
@@ -78,7 +79,7 @@ class Widget {
 
   getJs () {
     return `
-      var widget_${this.id} = {};
+      var widget_${this.id} = { config: ${JSON.stringify(this.getConfig())} };
 
       ${this._buildEvent()}
 
@@ -92,6 +93,10 @@ class Widget {
 
   getJob () {
     return this.job
+  }
+
+  getConfig () {
+    return this.config
   }
 
   toRenderModel () {

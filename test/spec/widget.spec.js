@@ -47,7 +47,7 @@ describe('modules.widget', () => {
     const widget = new Widget(resource('widgets/missing'))
     expect(widget.getMarkup()).to.equal('')
     expect(widget.getCss()).to.equal('')
-    expect(widget.getJs()).to.contain(`var widget_${widget.id} = {};`)
+    expect(widget.getJs()).to.contain(`var widget_${widget.id} = { config: {} };`)
     done()
   })
 
@@ -112,6 +112,18 @@ describe('modules.widget', () => {
     const widget = new Widget(resource('widgets/configurable'), overrides)
     const rawConfig = widget.getJob().script()
     expect(rawConfig).to.deep.equal(overrides)
+    done()
+  })
+
+  it('Final config exposed to clientside', (done) => {
+    const overrides = {
+      foo: 'qux',
+      working: null
+    }
+    const widget = new Widget(resource('widgets/configurable'), overrides)
+    const rawConfig = widget.getConfig()
+    const clientsideJs = widget.getJs()
+    expect(clientsideJs).to.equal(`var widget_${widget.id} = { config: ${JSON.stringify(rawConfig)} };`)
     done()
   })
 

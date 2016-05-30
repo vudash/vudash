@@ -3,18 +3,18 @@
 const request = require('request')
 const Hoek = require('hoek')
 const defaults = {
-  url: "http://api.fixer.io/latest",
-  path: "rates.CHF",
-  description: "EUR -> CHF"
+  url: 'http://api.fixer.io/latest',
+  path: 'rates.CHF',
+  description: 'EUR -> CHF'
 }
 
 class PluckWidget {
 
   register (options) {
-
     const config = Object.assign({}, defaults, options)
 
     return {
+      config,
       markup: 'markup.html',
       update: 'update.js',
       schedule: 60000,

@@ -1,12 +1,8 @@
 'use strict'
 
-const moment = require('moment')
-const defaults = {}
-
 class RandomWidget {
 
   register (options) {
-
     return {
       markup: 'markup.html',
       update: 'update.js',
