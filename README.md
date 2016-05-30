@@ -152,12 +152,12 @@ To pass configuration, you can use the `options` parameter of `register()`
 
 The client side code to update the widget. It is wrapped in a function which contains
 * `$id`: The widget's ID (For avoiding conflicts in the browser - this is in the format widget_<random> where random is some random chars assigned at load time)
-* `$widget`: The widget itself, initially contains one property, `config`, which is the config you gave in `widget.js` above. You can use it as a store for anything you like, as it is namespaced to the widget you are working on. i.e. $widget.myValue = 'x'
+* `$widget`: The widget itself, initially contains one property, `config`, which is the config you gave in `widget.js` above. You can use it as a store for anything you like, as it is namespaced to the widget you are working on. i.e. `$widget.myValue = 'x'`
 * `$data`: Whatever you emit from emit() in your job method. Ideally this is a javascript object.
 
 #### markup.html
 
-Just html. Use {{id}} to get the ID of the widget mentioned above. Your html should use things like `<h1 id="{{id}}-some-thing"/>` to avoid conflicts. You can then reference them using `$id+'-some-thing'` when you need to access them from the clientside javascript.
+Just html. Use `{{id}}` to get the ID of the widget mentioned above. Your html should use things like `<h1 id="{{id}}-some-thing"/>` to avoid conflicts. You can then reference them using `$id+'-some-thing'` when you need to access them from the clientside javascript.
 
 ## Roadmap
  - Some sort of testing around multi-tenancy
