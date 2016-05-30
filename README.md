@@ -5,6 +5,14 @@ A dashboard, like dashing, but written in NodeJS.
 Vudash open source component
 Writen using hapijs, lab, semantic ui, socket.io
 
+## What does it look like?
+
+![dashboard](https://cloud.githubusercontent.com/assets/218949/15656045/17d19e10-269b-11e6-9743-493049d25e76.png)
+
+## Demo
+
+http://vudash.herokuapp.com/demo.dashboard
+
 ## Why?
 * I'll get to the point. I like dashing, but I don't like ruby.
 * Both Dashing and Dashing-js are stellar efforts, but abandoned.
@@ -39,17 +47,18 @@ You can visit your created dashboard by visiting http://localhost:3000/<dashboar
 
 ## Quick start
 In so few lines:
-`
+```bash
   npm install -g vudash
   vudash create
   vudash
-`
+```
 
 ## Dashboards
 A dashboard is a collection of widgets separated into rows and columns.
 
 Dashboards are in JSON format and take the form:
-`{
+```javascript
+{
   "name": "my-dashboard",
   "widgets": [
     [
@@ -68,19 +77,21 @@ Dashboards are in JSON format and take the form:
     ]
   ]
 }
-`
+```
 Where 'widgets' is an array of arrays. The top level array represents rows of widgets on the screen. There is theoretically no min/max width for a widget.
 
 ## Widgets
 
 Widgets are configured in the dashboard.json file, in the format:
 
-`{
+```javascript
+{
   "widget": "./widgets/pluck",
   "options": {
     "your" : "config"
   }
-}`
+}
+```
 
 ### Creating a widget
 
@@ -89,11 +100,14 @@ A widget is a visible indicator of some sort of statistic or other monitor, whic
 A widget is packaged as a node module, but a node module can simply be a folder with a `package.json` file. It can then contain a number of files:
 
 #### package.json
-`{ "name": "vudash-widget-example", "main": "widget.js" }`
+```javascript
+{ "name": "vudash-widget-example", "main": "widget.js" }
+```
 The `main` js file above should reference your main module class, in this example we call it `widget.js`
 
 #### widget.js
-`'use strict'
+```javascript
+'use strict'
 
 const moment = require('moment')
 
@@ -117,20 +131,20 @@ class TimeWidget {
 }
 
 module.exports = TimeWidget
-`
+```
 The main widget file. The crux of this file is to export a class with a single method, register, which returns a widget configuration, which is:
 
-`
+```javascript
   {
-    config: {abc: 'def'} // configuration to pass to the client and server side widget. Available in the client as `$widget.config` and `options` parameter of `register()`
-    markup: 'markup.html' // The html for the widget. This is automatically wrapped in a grid cell, so it can be any html you like.
-    update: 'update.js' // The method that is triggered when the `job` emits new data. This gets `$widget`, `$id`, and `$data` passed in, as detailed below.
-    schedule: 1000 // Put simply, how often the widget sends updates,
-    css: 'styles.css' // Or, an array of css filenames. these are rendered to the client.
-    clientJs: 'client.js' // or an array of js files. These are rendered to the client.
+    config: {abc: 'def'}, // configuration to pass to the client and server side widget. Available in the client as `$widget.config` and `options` parameter of `register()`
+    markup: 'markup.html', // The html for the widget. This is automatically wrapped in a grid cell, so it can be any html you like.
+    update: 'update.js', // The method that is triggered when the `job` emits new data. This gets `$widget`, `$id`, and `$data` passed in, as detailed below.
+    schedule: 1000, // Put simply, how often the widget sends updates,
+    css: 'styles.css', // Or, an array of css filenames. these are rendered to the client.
+    clientJs: 'client.js', // or an array of js files. These are rendered to the client.
     job: (emit) => { emit({x: 'y'}) } // The crux of the widget. Does some sort of work or check, and then emits the results.
   }
-`
+```
 
 To pass configuration, you can use the `options` parameter of `register()`
 
