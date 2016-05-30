@@ -48,6 +48,7 @@ class Dashboard {
 
   toRenderModel () {
     return {
+      name: this.id,
       widgets: this.getWidgets().map((row) => {
         return row.map((widget) => {
           return widget.toRenderModel()

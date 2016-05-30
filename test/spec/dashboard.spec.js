@@ -60,6 +60,7 @@ describe('modules.dashboard', () => {
 
   it('Builds a render model', (done) => {
     const descriptor = {
+      name: 'Foo bar qux',
       widgets: [
         [exampleWidget]
       ]
@@ -67,7 +68,9 @@ describe('modules.dashboard', () => {
 
     const dashboard = new Dashboard(descriptor, emitter)
     const widget = dashboard.widgets[0][0]
-    expect(dashboard.toRenderModel()).to.deep.equal({
+    const renderModel = dashboard.toRenderModel()
+    expect(renderModel).to.deep.equal({
+      name: descriptor.name,
       widgets: [[
         {
           id: widget.id,

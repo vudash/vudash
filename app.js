@@ -3,6 +3,9 @@
 const Hapi = require('hapi')
 const Hoek = require('hoek')
 const server = new Hapi.Server()
+const fs = require('fs')
+const Path = require('path')
+const chalk = require('chalk')
 
 const src = (name) => { return `./src/${name}` }
 const plugin = (name) => { return src(`plugins/${name}`) }
@@ -38,7 +41,15 @@ server.register([
         files: ['src/public/**/*.{js,css}']
       })
     }
-    console.log('Server running at:', server.info.uri)
+    console.log('Server', 'running'.green)
+    console.log('Dashboards available:')
+    const dashboardDir = Path.join(process.cwd(), 'dashboards')
+    const boards = fs.readdirSync(dashboardDir)
+    for (let board of boards) {
+      const loaded = require(Path.join(dashboardDir, board))
+      const boardUrl = `${Path.basename(board, '.json')}.dashboard`
+      console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.info.uri}/${boardUrl}`))
+    }
   })
 })
 
