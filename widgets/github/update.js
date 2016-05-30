@@ -1,4 +1,2 @@
-function (id, data) {
-  document.getElementById(id+'_icon').classList = data.icon + ' icon';
-  document.getElementById(id+'_updated').innerHTML = data.updated;
-}
+document.getElementById($id+'_icon').classList = $data.icon + ' icon';
+document.getElementById($id+'_updated').innerHTML = $data.updated;

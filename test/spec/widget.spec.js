@@ -25,14 +25,14 @@ describe('modules.widget', () => {
       schedule: 1000
     })
     expect(job.script).to.be.a.function()
-    expect(widget.getClientsideJs()).to.include("function() { console.log('hello'); }")
+    expect(widget.getJs()).to.include("function() { console.log('hello'); }")
     expect(widget.getCss()).to.equal('body { color: #fff; }')
     done()
   })
 
   it('Handles multiple files in properties', (done) => {
     const widget = new Widget(resource('widgets/multiple'))
-    expect(widget.getClientsideJs()).to.equal('var one = 1;\nvar two = 2;')
+    expect(widget.getJs()).to.contain('var one = 1;\nvar two = 2;')
     expect(widget.getCss()).to.equal('one { color: #fff; }\ntwo { color: #000; }')
     done()
   })
@@ -47,7 +47,7 @@ describe('modules.widget', () => {
     const widget = new Widget(resource('widgets/missing'))
     expect(widget.getMarkup()).to.equal('')
     expect(widget.getCss()).to.equal('')
-    expect(widget.getClientsideJs()).to.equal('')
+    expect(widget.getJs()).to.equal('')
     done()
   })
 
@@ -64,7 +64,7 @@ describe('modules.widget', () => {
       css: widget.getCss(),
       markup: widget.getMarkup()
     })
-    expect(renderModel.js).to.include(widget.getClientsideJs())
+    expect(renderModel.js).to.include(widget.getJs())
     done()
   })
 

@@ -1,3 +1,1 @@
-function (id, data) {
-  style2Dial.setValue(data.value);
-}
+$widget.dial.setValue(data.value);

@@ -9,7 +9,7 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 class Widget {
 
   constructor (module, options) {
-    this.id = shortid.generate()
+    this.id = shortid.generate().replace(/-/, '_')
     const paths = this._resolve(module)
     const Module = require(paths.entry)
     this.base = paths.base
@@ -31,7 +31,7 @@ class Widget {
 
   build (module) {
     this.markup = this._readFile(module.markup, '')
-    this.clientsideJs = this._readFile(module.clientJs, '')
+    this.clientJs = this._readFile(module.clientJs, '')
     this.css = this._readFile(module.css, '')
     this.update = this._readFile(module.update, null)
     this.job = { script: module.job, schedule: module.schedule }
@@ -55,14 +55,9 @@ class Widget {
     if (!this.update) { return '' }
     const id = this.id
     return `
-    var widget_${id} = {
-      update: ${this.update},
-      handleEvent: function(data) {
-        this.update.call(this, '${id}', data)
-      }
-    }
-
-    socket.on('${id}:update', widget_${id}.handleEvent.bind(widget_${id}))
+      socket.on('${id}:update', function($id, $widget, $data) {
+        ${this.update}
+      }.bind(this, '${id}', widget_${id}));
     `.trim()
   }
 
@@ -71,10 +66,22 @@ class Widget {
     return template(this)
   }
 
-  getClientsideJs () {
+  _buildClientJs () {
+    const id = this.id
     return `
+      (function($id, $widget) {
+        ${this.clientJs}
+      }('${this.id}', widget_${id}));
+    `.trim()
+  }
+
+  getJs () {
+    return `
+      var widget_${this.id} = {};
+
       ${this._buildEvent()}
-      ${this.clientsideJs}
+
+      ${this._buildClientJs()}
     `.trim()
   }
 
@@ -88,7 +95,8 @@ class Widget {
 
   toRenderModel () {
     return {
-      js: this.getClientsideJs(),
+      id: this.id,
+      js: this.getJs(),
       css: this.getCss(),
       markup: this.getMarkup()
     }

@@ -1,5 +1,5 @@
-var style3 = document.querySelector('#style-3');
-var style3Dial = new TkAudial(style3, {
+var dial = document.querySelector('#' + $id + '-dial');
+var audial = new TkAudial(dial, {
   type:'balance',
   display:'notch',
   min:-50,

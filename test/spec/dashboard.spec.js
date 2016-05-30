@@ -70,7 +70,8 @@ describe('modules.dashboard', () => {
     expect(dashboard.toRenderModel()).to.deep.equal({
       widgets: [[
         {
-          js: widget.getClientsideJs(),
+          id: widget.id,
+          js: widget.getJs(),
           css: widget.getCss(),
           markup: widget.getMarkup()
         }
