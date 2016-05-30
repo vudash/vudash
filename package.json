@@ -1,7 +1,23 @@
 {
   "name": "vudash",
   "version": "2.0.1",
-  "description": "Core Vudash Engine",
+  "keywords": [
+    "vudash",
+    "dashboard",
+    "dashing",
+    "analytics",
+    "monitoring",
+    "websockets",
+    "geckoboard",
+    "widget",
+    "stats",
+    "dash",
+    "dashing-js",
+    "statistics",
+    "big screen",
+    "display"
+  ],
+  "description": "Easy to use, flexible dashboard software for monitoring, analytics, and more.",
   "main": "app.js",
   "scripts": {
     "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
@@ -11,8 +27,12 @@
   "bin": {
     "vudash": "bin/vudash.js"
   },
-  "author": "",
-  "license": "CC-BY-NC",
+  "repository" :{
+    "type" : "git",
+    "url" : "https://github.com/npm/npm.git"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.0",
     "boom": "^3.1.3",
