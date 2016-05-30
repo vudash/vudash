@@ -32,7 +32,7 @@ const DashboardPlugin = {
         const name = request.params.board
         const dashboard = dashboards[name] || loadDashboard(name)
 
-        reply.view('dashboard', {serverUrl: `${server.info.uri}`, dashboard: dashboard.toRenderModel()})
+        reply.view('dashboard', {serverUrl: `${process.env.SERVER_URL || server.info.uri}`, dashboard: dashboard.toRenderModel()})
       }
     })
 
