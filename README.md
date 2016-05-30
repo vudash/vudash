@@ -3,11 +3,29 @@ A dashboard, like dashing, but written in NodeJS.
 
 ## vudash-core
 Vudash open source component
-
 Writen using hapijs, lab, semantic ui, socket.io
 
+## Why?
+* I'll get to the point. I like dashing, but I don't like ruby.
+* Both Dashing and Dashing-js are stellar efforts, but abandoned.
+* Jade is an abomination.
+* Coffeescript is an uneccessary abstraction.
+* dashing-js has more bugs than code
+
+## Features
+* will happily run on a free heroku instance
+* es6
+* all cross-origin requests done server side
+* websockets rather than polling
+* websocket fallback to long-poll when sockets aren't available
+* Custom widgets
+* Custom dashboards
+* Simple row-by-row layout
+* Dashboard arrangement is simply the config order (see below)
+* Super simple widget structure
+
 ## Tests
-`npm test`
+Clone me and run `npm test`
 
 ## Project Status
 Status: Rewrote entire original 'vudash' application as a core-component of a bigger project.
@@ -18,6 +36,14 @@ Install as a global module `npm install -g vudash` and use `vudash create` to cr
 Add new widgets under `/widgets` and add them to your dashboard under `/dashboards`.
 
 You can visit your created dashboard by visiting http://localhost:3000/<dashboard>.dashboard - where `<dashboard>` is the name of a JSON file within the `/dashboards` directory.
+
+## Quick start
+In so few lines:
+`
+  npm install -g vudash
+  vudash create
+  vudash
+`
 
 ## Dashboards
 A dashboard is a collection of widgets separated into rows and columns.
@@ -122,3 +148,4 @@ Just html. Use {{id}} to get the ID of the widget mentioned above. Your html sho
 ## Roadmap
  - Some sort of testing around multi-tenancy
  - Heroku easy deploy
+ - You, sending Pull Requests.

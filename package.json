@@ -1,6 +1,6 @@
 {
   "name": "vudash",
-  "version": "3.0.0",
+  "version": "1.2.3",
   "description": "Core Vudash Engine",
   "main": "app.js",
   "scripts": {
