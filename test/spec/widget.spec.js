@@ -47,7 +47,7 @@ describe('modules.widget', () => {
     const widget = new Widget(resource('widgets/missing'))
     expect(widget.getMarkup()).to.equal('')
     expect(widget.getCss()).to.equal('')
-    expect(widget.getJs()).to.equal('')
+    expect(widget.getJs()).to.contain(`var widget_${widget.id} = {};`)
     done()
   })
 
@@ -70,23 +70,28 @@ describe('modules.widget', () => {
 
   it('Binds events on the client side', (done) => {
     const widget = new Widget(resource('widgets/example'))
-    let bound = `
-    socket.on('${widget.id}:update', widget_${widget.id}.handleEvent.bind(widget_${widget.id}))
+    const eventBinding = `
+      socket.on('${widget.id}:update', function($id, $widget, $data) {
     `.trim()
-    expect(widget.toRenderModel().js).to.include(bound)
+    const componentBinding = `
+      }('${widget.id}', widget_${widget.id}));
+    `.trim()
+    const rendered = widget.toRenderModel().js
+    expect(rendered).to.include(eventBinding)
+    expect(rendered).to.include(componentBinding)
     done()
   })
 
   it('Event is not bound if there is no update code', (done) => {
     const widget = new Widget(resource('widgets/neutral'))
-    expect(widget.toRenderModel().js).to.equal('')
+    expect(widget.toRenderModel().js).not.to.include('socket.on')
     done()
   })
 
   it('Attaches update function to event', (done) => {
     const widget = new Widget(resource('widgets/example'))
     let update = `
-      update: ${widget.update}
+      ${widget.update}
     `.trim()
     expect(widget.toRenderModel().js).to.include(update)
     done()

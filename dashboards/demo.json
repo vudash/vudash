@@ -11,6 +11,9 @@
       { "widget": "./widgets/github" },
       { "widget": "./widgets/pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
       { "widget": "./widgets/pluck", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
+    ],
+    [
+      { "widget": "./widgets/dial" }
     ]
   ]
 }

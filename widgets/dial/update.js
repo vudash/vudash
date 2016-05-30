@@ -1,1 +1,1 @@
-$widget.dial.setValue(data.value);
+$widget.component.setValue($data.value);

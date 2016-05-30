@@ -67,6 +67,7 @@ class Widget {
   }
 
   _buildClientJs () {
+    if (!this.clientJs) { return '' }
     const id = this.id
     return `
       (function($id, $widget) {
