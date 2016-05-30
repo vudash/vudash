@@ -1,5 +1,5 @@
 {
-  "name": "vudash-core",
+  "name": "vudash",
   "version": "1.0.0",
   "description": "Core Vudash Engine",
   "main": "app.js",
