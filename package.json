@@ -1,0 +1,14 @@
+{
+  "name": "vudash-widget-time",
+  "version": "1.0.0",
+  "description": "Vudash time widget",
+  "main": "widget.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.13.0"
+  }
+}
