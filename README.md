@@ -1,6 +1,6 @@
 # vudash-widget-time
 
-Shows the current time and date in your (Vudash)[https://npmjs.org/vudash] Dashboard
+Shows the current time and date in your [Vudash](https://npmjs.org/vudash) Dashboard
 
 Usage
 =====
