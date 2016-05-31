@@ -1,0 +1,29 @@
+{
+  "name": "vudash-widget-travis",
+  "version": "1.0.0",
+  "description": "A Travis CI Widget for Vudash",
+  "main": "widget.js",
+  "scripts": {
+    "test": "mocha test/**.spec.js"
+  },
+  "keywords": [
+    "vudash",
+    "travis",
+    "travis-ci",
+    "travisci",
+    "widget",
+    "dashboard",
+    "dashing",
+    "build"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "travis-ci": "^2.1.0"
+  },
+  "devDependencies": {
+    "code": "^3.0.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4"
+  }
+}
