@@ -1,5 +1,5 @@
 {
-  "name": "my-dashboard",
+  "name": "Happy",
   "widgets": [
     [
       { "widget": "./widgets/random" },
@@ -13,7 +13,9 @@
       { "widget": "./widgets/pluck", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
     ],
     [
-      { "widget": "./widgets/dial" }
+      { "widget": "./widgets/dial" },
+      { "widget": "vudash-widget-travis" },
+      { "widget": "vudash-widget-travis", "options": { "user": "vudash", "repo": "vudash-widget-travis" } }
     ]
   ]
 }
