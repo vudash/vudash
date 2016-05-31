@@ -7,7 +7,7 @@ Writen using hapijs, lab, semantic ui, socket.io
 
 ## What does it look like?
 
-![dashboard](https://cloud.githubusercontent.com/assets/218949/15675519/45dd3a40-273a-11e6-9212-d2a3698e3725.png)
+![dashboard](https://cloud.githubusercontent.com/assets/218949/15675788/7045e51a-273b-11e6-9ee2-c3e4969dfd20.png)
 
 ## Demo
 
