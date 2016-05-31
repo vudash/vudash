@@ -1,5 +1,9 @@
 'use strict'
 
+const requirePaths = require('app-module-path')
+requirePaths.addPath(process.cwd())
+requirePaths.addPath(`${process.cwd()}/node_modules`)
+
 const Hapi = require('hapi')
 const Hoek = require('hoek')
 const server = new Hapi.Server()
