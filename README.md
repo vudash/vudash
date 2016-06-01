@@ -1,4 +1,6 @@
 # Vudash
+
+[![Join the chat at https://gitter.im/vudash/vudash-core](https://badges.gitter.im/vudash/vudash-core.svg)](https://gitter.im/vudash/vudash-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A dashboard, like dashing, but written in NodeJS.
 
 ## vudash-core
