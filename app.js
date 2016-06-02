@@ -45,7 +45,8 @@ server.register([
         files: ['src/public/**/*.{js,css}']
       })
     }
-    console.log('Server', 'running'.green)
+    console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
+    console.log(`Server ${chalk.green.bold('running')}`)
     console.log('Dashboards available:')
     const dashboardDir = Path.join(process.cwd(), 'dashboards')
     const boards = fs.readdirSync(dashboardDir)
