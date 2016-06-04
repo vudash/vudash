@@ -3,13 +3,12 @@
 const Path = require('path')
 const fs = require('fs')
 const Handlebars = require('handlebars')
-const shortid = require('shortid')
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_')
+const id = require('./id-gen')
 
 class Widget {
 
   constructor (module, options) {
-    this.id = shortid.generate().replace(/-/, '_')
+    this.id = id()
     const paths = this._resolve(module)
     const Module = require(paths.entry)
     this.base = paths.base

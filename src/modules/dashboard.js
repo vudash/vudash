@@ -1,16 +1,14 @@
 'use strict'
 
 const Widget = require('./widget')
+const Emitter = require('./emitter')
+const id = require('./id-gen')
 
 class Dashboard {
   constructor (descriptor, io) {
-    this.io = io
-    this.id = descriptor.name
-    io.on('connection', (socket) => {
-      socket.join(this.id)
-      console.log(`Client ${socket.id} connected to ${this.id}`)
-    })
-
+    this.id = id()
+    this.name = descriptor.name
+    this.emitter = new Emitter(io, this.id)
     this.widgets = descriptor.widgets.map((row) => {
       return row.map((fd) => {
         return new Widget(fd.widget, fd.options)
@@ -27,10 +25,6 @@ class Dashboard {
     return this.jobs
   }
 
-  _emit (id, data) {
-    this.io.to(this.id).emit(`${id}:update`, data)
-  }
-
   buildJobs () {
     const widgets = this.getWidgets().reduce((all, next) => { return all.concat(next) }, [])
     this.jobs = widgets.map((widget) => {
@@ -38,7 +32,7 @@ class Dashboard {
       if (job) {
         let self = this
         const fn = function () {
-          job.script(self._emit.bind(self, widget.id))
+          job.script(self.emitter.emit.bind(self.emitter, widget.id))
         }
         setTimeout(fn(), 5000)
         return setInterval(fn, job.schedule)
@@ -48,7 +42,7 @@ class Dashboard {
 
   toRenderModel () {
     return {
-      name: this.id,
+      name: this.name,
       widgets: this.getWidgets().map((row) => {
         return row.map((widget) => {
           return widget.toRenderModel()

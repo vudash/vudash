@@ -2,7 +2,7 @@
 
 describe('plugins.dashboard', () => {
   const server = require(fromRoot('app'))
-  const dashboard = 'demo'
+  const dashboard = 'simple'
 
   it('Loads dashboards into memory', (done) => {
     server.inject({ url: `/${dashboard}.dashboard` }, (response) => {

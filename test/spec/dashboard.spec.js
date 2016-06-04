@@ -6,7 +6,7 @@ const sinon = require('sinon')
 const Path = require('path')
 
 describe('modules.dashboard', () => {
-  const emitter = {
+  const io = {
     on: sinon.stub(),
     to: sinon.stub().returns({ emit: sinon.stub() })
   }
@@ -20,7 +20,7 @@ describe('modules.dashboard', () => {
       ]
     }
 
-    const dashboard = new Dashboard(descriptor, emitter)
+    const dashboard = new Dashboard(descriptor, io)
     expect(dashboard.getWidgets().length).to.equal(1)
     expect(dashboard.getWidgets()[0][0]).to.be.an.instanceOf(Widget)
     done()
@@ -34,7 +34,7 @@ describe('modules.dashboard', () => {
       ]
     }
 
-    const dashboard = new Dashboard(descriptor, emitter)
+    const dashboard = new Dashboard(descriptor, io)
     expect(dashboard.getWidgets().length).to.equal(2)
     expect(dashboard.getWidgets()[0].length).to.equal(2)
     expect(dashboard.getWidgets()[1].length).to.equal(1)
@@ -50,7 +50,7 @@ describe('modules.dashboard', () => {
     }
 
     function fn () {
-      return new Dashboard(descriptor, emitter)
+      return new Dashboard(descriptor, io)
     }
 
     expect(fn).to.throw(Error, `Cannot find module '${Path.join(process.cwd(), badModuleName)}'`)
@@ -66,7 +66,7 @@ describe('modules.dashboard', () => {
       ]
     }
 
-    const dashboard = new Dashboard(descriptor, emitter)
+    const dashboard = new Dashboard(descriptor, io)
     const widget = dashboard.widgets[0][0]
     const renderModel = dashboard.toRenderModel()
     expect(renderModel).to.deep.equal({
@@ -90,7 +90,7 @@ describe('modules.dashboard', () => {
       ]
     }
 
-    const dashboard = new Dashboard(descriptor, emitter)
+    const dashboard = new Dashboard(descriptor, io)
     dashboard.buildJobs()
     expect(dashboard.getJobs().length).to.equal(1)
     done()
