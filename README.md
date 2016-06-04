@@ -67,12 +67,12 @@ Dashboards are in JSON format and take the form:
       { "widget": "./widgets/random" },
       { "widget": "./widgets/gauge" },
       { "widget": "./widgets/health" },
-      { "widget": "./widgets/time" }
+      { "widget": "vudash-time-widget" }
     ],
     [
       { "widget": "./widgets/github" },
-      { "widget": "./widgets/pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
-      { "widget": "./widgets/pluck", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
+      { "widget": "vudash-pluck-widget", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
+      { "widget": "vudash-pluck-widget", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
     ],
     [
       { "widget": "./widgets/dial" }
@@ -81,6 +81,8 @@ Dashboards are in JSON format and take the form:
 }
 ```
 Where 'widgets' is an array of arrays. The top level array represents rows of widgets on the screen. There is theoretically no min/max width for a widget.
+
+Widgets can be either a path to a directory containing a widget (see below), or an npm module of the same. If the widget is a npm module, you would need to `npm install --save <widget-name>` first.
 
 ## Widgets
 
