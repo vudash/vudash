@@ -64,7 +64,7 @@
     "lab": "^10.6.0",
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
-    "standard": "^7.1.0"
+    "standard": "^7.1.2"
   },
   "standard": {
     "globals": [

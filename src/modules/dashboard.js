@@ -34,7 +34,7 @@ class Dashboard {
         const fn = function () {
           job.script(self.emitter.emit.bind(self.emitter, widget.id))
         }
-        setTimeout(fn(), 5000)
+        setTimeout(fn, 5000)
         return setInterval(fn, job.schedule)
       }
     })
