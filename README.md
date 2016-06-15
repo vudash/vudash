@@ -163,6 +163,11 @@ The client side code to update the widget. It is wrapped in a function which con
 
 Just html. Use `{{id}}` to get the ID of the widget mentioned above. Your html should use things like `<h1 id="{{id}}-some-thing"/>` to avoid conflicts. You can then reference them using `$id+'-some-thing'` when you need to access them from the clientside javascript.
 
+## Troubleshooting
+
+* Q. The console shows that the websocket is failing to connect, and my widgets aren't updating.
+* A. Your hosting provider might not be correctly reporting the external vhost of the server. Add an environment variable `SERVER_URL` with the full url to your server, i.e: `http://www.example.com/`
+
 ## Roadmap
  - Some sort of testing around multi-tenancy
  - Heroku easy deploy
