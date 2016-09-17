@@ -10,6 +10,7 @@ Writen using hapijs, lab, semantic ui, socket.io
 ## What does it look like?
 
 ![dashboard](https://cloud.githubusercontent.com/assets/218949/15675788/7045e51a-273b-11e6-9ee2-c3e4969dfd20.png)
+![graph](https://cloud.githubusercontent.com/assets/218949/18608448/68c9bf90-7ce1-11e6-95a9-15c864722271.png)
 
 ## Demo
 
