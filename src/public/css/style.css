@@ -2,14 +2,14 @@ body {
   background-color: #404040;
 }
 
-.row {
-  height: 25%;
-  width: 100%;
+.widget-container {
+  position: absolute;
+  display: block;
 }
-
-.aligner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-    min-height: 100%;
+.widget-container > * {
+  position: relative !important;
+  display: block !important;
+  margin: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
 }

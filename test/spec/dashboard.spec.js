@@ -11,43 +11,49 @@ describe('modules.dashboard', () => {
     to: sinon.stub().returns({ emit: sinon.stub() })
   }
 
-  const exampleWidget = { widget: resource('widgets/example') }
+  const baseDashboard = {
+    layout: {
+      rows: 4,
+      columns: 5
+    }
+  }
+
+  const exampleWidget = { position: { x: 0, y: 0, w: 0, h: 0 }, widget: resource('widgets/example') }
 
   it('Loads internal widgets', (done) => {
-    const descriptor = {
+    const descriptor = Object.assign({}, baseDashboard, {
       widgets: [
-        [exampleWidget]
+        exampleWidget
       ]
-    }
+    })
 
     const dashboard = new Dashboard(descriptor, io)
     expect(dashboard.getWidgets().length).to.equal(1)
-    expect(dashboard.getWidgets()[0][0]).to.be.an.instanceOf(Widget)
+    expect(dashboard.getWidgets()[0]).to.be.an.instanceOf(Widget)
     done()
   })
 
   it('Loads layout', (done) => {
-    const descriptor = {
+    const descriptor = Object.assign({}, baseDashboard, {
       widgets: [
-        [exampleWidget, exampleWidget],
-        [exampleWidget]
+        exampleWidget,
+        exampleWidget,
+        exampleWidget
       ]
-    }
+    })
 
     const dashboard = new Dashboard(descriptor, io)
-    expect(dashboard.getWidgets().length).to.equal(2)
-    expect(dashboard.getWidgets()[0].length).to.equal(2)
-    expect(dashboard.getWidgets()[1].length).to.equal(1)
+    expect(dashboard.getWidgets().length).to.equal(3)
     done()
   })
 
   it('Tries to load widget with invalid descriptor', (done) => {
     const badModuleName = 'something:else'
-    const descriptor = {
+    const descriptor = Object.assign({}, baseDashboard, {
       widgets: [
-        [{ widget: badModuleName }]
+        { widget: badModuleName }
       ]
-    }
+    })
 
     function fn () {
       return new Dashboard(descriptor, io)
@@ -59,36 +65,36 @@ describe('modules.dashboard', () => {
   })
 
   it('Builds a render model', (done) => {
-    const descriptor = {
+    const descriptor = Object.assign({}, baseDashboard, {
       name: 'Foo bar qux',
       widgets: [
-        [exampleWidget]
+        exampleWidget
       ]
-    }
+    })
 
     const dashboard = new Dashboard(descriptor, io)
-    const widget = dashboard.widgets[0][0]
+    const widget = dashboard.widgets[0]
     const renderModel = dashboard.toRenderModel()
     expect(renderModel).to.deep.equal({
       name: descriptor.name,
-      widgets: [[
+      widgets: [
         {
           id: widget.id,
           js: widget.getJs(),
           css: widget.getCss(),
           markup: widget.getMarkup()
         }
-      ]]
+      ]
     })
     done()
   })
 
   it('Schedules jobs', (done) => {
-    const descriptor = {
+    const descriptor = Object.assign({}, baseDashboard, {
       widgets: [
-        [exampleWidget]
+        exampleWidget
       ]
-    }
+    })
 
     const dashboard = new Dashboard(descriptor, io)
     dashboard.buildJobs()
