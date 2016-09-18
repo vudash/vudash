@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-pluck",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "main": "widget.js",
   "scripts": {
     "test": "lab *.test.js"
