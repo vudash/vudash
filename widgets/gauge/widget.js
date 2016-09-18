@@ -1,6 +1,5 @@
 'use strict'
 
-const moment = require('moment')
 const defaults = {
   percentage: 27,
   description: 'Total Things'
@@ -9,7 +8,6 @@ const defaults = {
 class GaugeWidget {
 
   register (options) {
-
     const config = Object.assign({}, defaults, options)
 
     return {
@@ -24,9 +22,7 @@ class GaugeWidget {
         const percentage = Math.floor(random)
         emit({ percentage, description: config.description })
       }
-
     }
-
   }
 
 }

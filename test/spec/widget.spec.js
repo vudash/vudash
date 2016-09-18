@@ -3,10 +3,13 @@
 const Widget = require(fromSrc('modules/widget'))
 
 describe('modules.widget', () => {
+  const dashboard = { layout: { rows: 4, columns: 5 } }
+  const position = {x: 0, y: 0, w: 1, h: 1}
+
   it('Barf on unknown widget', (done) => {
     const badModuleName = resource('widgets/unknown')
     function fn () {
-      return new Widget(badModuleName)
+      return new Widget(dashboard, position, badModuleName)
     }
     expect(fn).to.throw(Error, /Cannot find module /)
     done()
@@ -14,12 +17,12 @@ describe('modules.widget', () => {
 
   it('Gains a dynamic id', (done) => {
     const module = resource('widgets/example')
-    expect(new Widget(module).id).to.exist()
+    expect(new Widget(dashboard, position, module).id).to.exist()
     done()
   })
 
   it('Reads widget descriptor properties', (done) => {
-    const widget = new Widget(resource('widgets/example'))
+    const widget = new Widget(dashboard, position, resource('widgets/example'))
     const job = widget.getJob()
     expect(job).to.deep.include({
       schedule: 1000
@@ -31,21 +34,21 @@ describe('modules.widget', () => {
   })
 
   it('Handles multiple files in properties', (done) => {
-    const widget = new Widget(resource('widgets/multiple'))
+    const widget = new Widget(dashboard, position, resource('widgets/multiple'))
     expect(widget.getJs()).to.contain('var one = 1;\nvar two = 2;')
     expect(widget.getCss()).to.equal('one { color: #fff; }\ntwo { color: #000; }')
     done()
   })
 
   it('Parses markup', (done) => {
-    const widget = new Widget(resource('widgets/example'))
-    expect(widget.getMarkup()).to.equal(`<h1 id="${widget.id}">Hello</h1>`)
+    const widget = new Widget(dashboard, position, resource('widgets/example'))
+    expect(widget.getMarkup()).to.contain(`<h1 id="${widget.id}">Hello</h1>`)
     done()
   })
 
   it('Widget with missing properties', (done) => {
-    const widget = new Widget(resource('widgets/missing'))
-    expect(widget.getMarkup()).to.equal('')
+    const widget = new Widget(dashboard, position, resource('widgets/missing'))
+    expect(widget.getMarkup()).to.exist()
     expect(widget.getCss()).to.equal('')
     expect(widget.getJs()).to.contain(`var widget_${widget.id} = { config: {} };`)
     done()
@@ -53,12 +56,12 @@ describe('modules.widget', () => {
 
   it('Widget with invalid properties', (done) => {
     const module = resource('widgets/broken')
-    expect(() => { return new Widget(module) }).to.throw(Error, `Could not load widget component from ${module}/markup.html`)
+    expect(() => { return new Widget(dashboard, position, module) }).to.throw(Error, `Could not load widget component from ${module}/markup.html`)
     done()
   })
 
   it('Converts widget to render model', (done) => {
-    const widget = new Widget(resource('widgets/example'))
+    const widget = new Widget(dashboard, position, resource('widgets/example'))
     const renderModel = widget.toRenderModel()
     expect(renderModel).to.deep.include({
       css: widget.getCss(),
@@ -69,7 +72,7 @@ describe('modules.widget', () => {
   })
 
   it('Binds events on the client side', (done) => {
-    const widget = new Widget(resource('widgets/example'))
+    const widget = new Widget(dashboard, position, resource('widgets/example'))
     const eventBinding = `
       socket.on('${widget.id}:update', function($id, $widget, $data) {
     `.trim()
@@ -83,13 +86,13 @@ describe('modules.widget', () => {
   })
 
   it('Event is not bound if there is no update code', (done) => {
-    const widget = new Widget(resource('widgets/neutral'))
+    const widget = new Widget(dashboard, position, resource('widgets/neutral'))
     expect(widget.toRenderModel().js).not.to.include('socket.on')
     done()
   })
 
   it('Attaches update function to event', (done) => {
-    const widget = new Widget(resource('widgets/example'))
+    const widget = new Widget(dashboard, position, resource('widgets/example'))
     let update = `
       ${widget.update}
     `.trim()
@@ -98,7 +101,7 @@ describe('modules.widget', () => {
   })
 
   it('Loads jobs', (done) => {
-    const widget = new Widget(resource('widgets/example'))
+    const widget = new Widget(dashboard, position, resource('widgets/example'))
     const job = widget.getJob()
     expect(job.schedule).to.equal(1000)
     done()
@@ -109,7 +112,7 @@ describe('modules.widget', () => {
       foo: 'baz',
       working: true
     }
-    const widget = new Widget(resource('widgets/configurable'), overrides)
+    const widget = new Widget(dashboard, position, resource('widgets/configurable'), overrides)
     const rawConfig = widget.getJob().script()
     expect(rawConfig).to.deep.equal(overrides)
     done()
@@ -120,7 +123,7 @@ describe('modules.widget', () => {
       foo: 'qux',
       working: null
     }
-    const widget = new Widget(resource('widgets/configurable'), overrides)
+    const widget = new Widget(dashboard, position, resource('widgets/configurable'), overrides)
     const rawConfig = widget.getConfig()
     const clientsideJs = widget.getJs()
     expect(clientsideJs).to.equal(`var widget_${widget.id} = { config: ${JSON.stringify(rawConfig)} };`)
@@ -131,12 +134,37 @@ describe('modules.widget', () => {
     const overrides = {
       working: true
     }
-    const widget = new Widget(resource('widgets/configurable'), overrides)
+    const widget = new Widget(dashboard, position, resource('widgets/configurable'), overrides)
     const rawConfig = widget.getJob().script()
     expect(rawConfig).to.deep.equal({
       foo: 'bar',
       working: true
     })
+    done()
+  })
+
+  it('Writes widget position configuration', (done) => {
+    const widget = new Widget(dashboard, position, './widgets/random')
+    const markup = widget.getMarkup()
+    expect(markup).to.contain(' style="top: 0%; left: 0%; width: 20%; height: 25%"')
+    done()
+  })
+
+  it('Calculates first widget dimensions', (done) => {
+    const widget = new Widget(dashboard, position, './widgets/random')
+    expect(widget.top).to.equal(0)
+    expect(widget.left).to.equal(0)
+    expect(widget.width).to.equal(20)
+    expect(widget.height).to.equal(25)
+    done()
+  })
+
+  it('Calculates middle widget dimensions', (done) => {
+    const widget = new Widget(dashboard, { x: 2, y: 4, w: 2, h: 1 }, './widgets/random')
+    expect(widget.top).to.equal(100)
+    expect(widget.left).to.equal(40)
+    expect(widget.width).to.equal(40)
+    expect(widget.height).to.equal(25)
     done()
   })
 })

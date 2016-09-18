@@ -1,21 +1,19 @@
 {
   "name": "Happy",
+  "layout": {
+    "columns": 5,
+    "rows": 4
+  },
   "widgets": [
-    [
-      { "widget": "./widgets/random" },
-      { "widget": "./widgets/gauge" },
-      { "widget": "./widgets/health" },
-      { "widget": "vudash-widget-time" }
-    ],
-    [
-      { "widget": "./widgets/github" },
-      { "widget": "vudash-widget-pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
-      { "widget": "vudash-widget-pluck", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
-    ],
-    [
-      { "widget": "./widgets/dial" },
-      { "widget": "vudash-widget-travis" },
-      { "widget": "vudash-widget-travis", "options": { "user": "vudash", "repo": "vudash-widget-travis" } }
-    ]
+    { "position": {"x": 0, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/random" },
+    { "position": {"x": 1, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/gauge" },
+    { "position": {"x": 2, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/health" },
+    { "position": {"x": 3, "y": 0, "w": 1, "h": 1}, "widget": "vudash-widget-time" },
+    { "position": {"x": 4, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/github" },
+    { "position": {"x": 0, "y": 1, "w": 2, "h": 1}, "widget": "vudash-widget-pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
+    { "position": {"x": 2, "y": 1, "w": 2, "h": 1}, "widget": "vudash-widget-pluck", "options": { "path": "rates.USD", "description": "EUR -> USD" } },
+    { "position": {"x": 0, "y": 2, "w": 1, "h": 1}, "widget": "./widgets/dial" },
+    { "position": {"x": 2, "y": 2, "w": 1, "h": 1}, "widget": "vudash-widget-travis" },
+    { "position": {"x": 4, "y": 2, "w": 1, "h": 1}, "widget": "vudash-widget-travis", "options": { "user": "vudash", "repo": "vudash-widget-travis" } }
   ]
 }

@@ -12,21 +12,13 @@
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   <style type="text/css">
   {{#each dashboard.widgets}}
-    {{#each this}}
-      {{{css}}}
-    {{/each}}
+    {{{css}}}
   {{/each}}
   </style>
 </head>
 <body>
   {{#each dashboard.widgets}}
-  <div class="row">
-    {{#each this}}
-      <div class="col-xs aligner">
-          <div class="box aligner-item">{{{markup}}}</div>
-      </div>
-      {{/each}}
-  </div>
+    {{{markup}}}
   {{/each}}
   <script src="/static/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="/static/semantic-ui-css/semantic.min.js"></script>
@@ -39,9 +31,7 @@
     });
 
     {{#each dashboard.widgets}}
-      {{#each this}}
-        {{{js}}}
-      {{/each}}
+      {{{js}}}
     {{/each}}
   </script>
 </body>

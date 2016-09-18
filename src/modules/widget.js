@@ -7,13 +7,15 @@ const id = require('./id-gen')
 
 class Widget {
 
-  constructor (module, options) {
+  constructor (dashboard, position, descriptor, options) {
+    this.dashboard = dashboard
+    this.position = position
     this.id = id()
-    const paths = this._resolve(module)
+    const paths = this._resolve(descriptor)
     const Module = require(paths.entry)
     this.base = paths.base
-    const widget = new Module().register(options)
-    this.build(widget)
+    const buildable = new Module().register(options)
+    this.build(buildable)
   }
 
   _resolve (module) {
@@ -39,7 +41,6 @@ class Widget {
 
   _readFile (definition, defaultValue) {
     if (!definition) { return defaultValue }
-
     if (Array.isArray(definition)) {
       return definition.map((file) => {
         return this._readFile(file)
@@ -61,9 +62,33 @@ class Widget {
     `.trim()
   }
 
+  get rowHeight () {
+    return 100 / this.dashboard.layout.rows
+  }
+
+  get columnWidth () {
+    return 100 / this.dashboard.layout.columns
+  }
+
+  get height () {
+    return this.position.h * this.rowHeight
+  }
+
+  get width () {
+    return this.position.w * this.columnWidth
+  }
+
+  get left () {
+    return this.position.x * this.columnWidth
+  }
+
+  get top () {
+    return this.position.y * this.rowHeight
+  }
+
   getMarkup () {
     const template = Handlebars.compile(this.markup)
-    return template(this)
+    return `<div class="widget-container" style="top: ${this.top}%; left: ${this.left}%; width: ${this.width}%; height: ${this.height}%">${template(this)}</div>`
   }
 
   _buildClientJs () {

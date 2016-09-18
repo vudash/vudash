@@ -9,10 +9,9 @@ class Dashboard {
     this.id = id()
     this.name = descriptor.name
     this.emitter = new Emitter(io, this.id)
-    this.widgets = descriptor.widgets.map((row) => {
-      return row.map((fd) => {
-        return new Widget(fd.widget, fd.options)
-      })
+    this.layout = descriptor.layout
+    this.widgets = descriptor.widgets.map((fd) => {
+      return new Widget(this, fd.position, fd.widget, fd.options)
     })
     this.buildJobs()
   }
@@ -26,8 +25,7 @@ class Dashboard {
   }
 
   buildJobs () {
-    const widgets = this.getWidgets().reduce((all, next) => { return all.concat(next) }, [])
-    this.jobs = widgets.map((widget) => {
+    this.jobs = this.getWidgets().map((widget) => {
       const job = widget.getJob()
       if (job) {
         let self = this
@@ -43,10 +41,8 @@ class Dashboard {
   toRenderModel () {
     return {
       name: this.name,
-      widgets: this.getWidgets().map((row) => {
-        return row.map((widget) => {
-          return widget.toRenderModel()
-        })
+      widgets: this.getWidgets().map((widget) => {
+        return widget.toRenderModel()
       })
     }
   }
