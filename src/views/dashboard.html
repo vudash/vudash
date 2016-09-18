@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <title>{{dashboard.name}} Dashboard</title>
-
-  <link rel="stylesheet" href="/static/flexboxgrid/css/flexboxgrid.min.css" type="text/css">
-  <link rel="stylesheet" type="text/css" href="/static/semantic-ui-css/semantic.min.css">
+  <style>
+    @import 'https://fonts.googleapis.com/css?family=Ubuntu';
+    @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+  </style>
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   <style type="text/css">
   {{#each dashboard.widgets}}
@@ -20,8 +21,7 @@
   {{#each dashboard.widgets}}
     {{{markup}}}
   {{/each}}
-  <script src="/static/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/semantic-ui-css/semantic.min.js"></script>
+  <script src="/static/jqlite/jqlite.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io('{{serverUrl}}');
