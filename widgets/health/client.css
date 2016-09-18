@@ -1,0 +1,17 @@
+.vudash-health > * {
+  text-align: center;
+}
+
+.vudash-health > .value {
+  height: 80px;
+  display: block;
+}
+
+.vudash-health > .value > i {
+  color: #FF695E;
+  font-size: 76px;
+}
+
+.vudash-health > .value > i.small {
+  font-size: 56px;
+}
