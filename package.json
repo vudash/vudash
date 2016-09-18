@@ -53,9 +53,9 @@
     "shortid": "^2.2.6",
     "socket.io": "^1.4.6",
     "vision": "^4.1.0",
-    "vudash-widget-pluck": "^1.0.1",
-    "vudash-widget-time": "^1.0.0",
-    "vudash-widget-travis": "^1.0.0"
+    "vudash-widget-pluck": "^3.0.0",
+    "vudash-widget-time": "^3.0.0",
+    "vudash-widget-travis": "^3.0.0"
   },
   "devDependencies": {
     "code": "^2.3.0",
