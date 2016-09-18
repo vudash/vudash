@@ -22,6 +22,7 @@ class TravisWidget {
       schedule: 60000,
       markup: 'markup.html',
       update: 'update.js',
+      css: 'client.css',
       clientJs: 'client.js',
 
       job: (emit) => {

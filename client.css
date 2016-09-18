@@ -1,0 +1,14 @@
+.travis-widget > * {
+  text-align: center;
+}
+
+.travis-widget > .label {
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.travis-icon {
+  margin: auto;
+  display: block;
+  font-size: 76px;
+}
