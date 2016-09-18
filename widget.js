@@ -9,6 +9,7 @@ class TimeWidget {
 
       markup: 'markup.html',
       update: 'update.js',
+      css: 'client.css',
       schedule: 1000,
 
       job: (emit) => {
