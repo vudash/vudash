@@ -2,8 +2,15 @@
   "name": "vudash-widget-pluck",
   "version": "1.0.1",
   "main": "widget.js",
+  "scripts": {
+    "test": "lab *.test.js"
+  },
   "dependencies": {
     "hoek": "^4.0.0",
     "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "code": "^3.0.2",
+    "lab": "^11.0.1"
   }
 }

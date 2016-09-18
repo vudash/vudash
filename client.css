@@ -1,0 +1,11 @@
+.vudash-pluck .value {
+  font-size: 76px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vudash-pluck .label {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
