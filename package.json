@@ -1,0 +1,22 @@
+{
+  "name": "vudash-transports",
+  "version": "1.0.0",
+  "description": "Various transports for vudash widgets",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -vD ./unit.lab.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "joi": "^9.0.4",
+    "request": "^2.75.0",
+    "request-promise": "^4.1.1",
+    "spreadsheet-to-json": "^1.0.5"
+  },
+  "devDependencies": {
+    "code": "^3.0.2",
+    "glob": "^7.0.6",
+    "lab": "^11.0.1"
+  }
+}
