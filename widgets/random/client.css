@@ -1,0 +1,12 @@
+.vudash-random > * {
+  font-weight: bold;
+  text-align: center;
+}
+
+.vudash-random .value {
+  font-size: 76px;
+}
+
+.vudash-random .label {
+  font-size: 14px;
+}

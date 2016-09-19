@@ -62,26 +62,24 @@ A dashboard is a collection of widgets separated into rows and columns.
 Dashboards are in JSON format and take the form:
 ```javascript
 {
-  "name": "my-dashboard",
+  "name": "Happy",
+  "layout": {
+    "columns": 5,
+    "rows": 4
+  },
   "widgets": [
-    [
-      { "widget": "./widgets/random" },
-      { "widget": "./widgets/gauge" },
-      { "widget": "./widgets/health" },
-      { "widget": "vudash-time-widget" }
-    ],
-    [
-      { "widget": "./widgets/github" },
-      { "widget": "vudash-pluck-widget", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
-      { "widget": "vudash-pluck-widget", "options": { "path": "rates.USD", "description": "EUR -> USD" } }
-    ],
-    [
-      { "widget": "./widgets/dial" }
-    ]
+    { "position": {"x": 0, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/random" },
+    { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" },
+    { "position": {"x": 4, "y": 1, "w": 1, "h": 1}, "widget": "./widgets/github" },
+    { "position": {"x": 0, "y": 1, "w": 2, "h": 1}, "widget": "vudash-widget-pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
+    { "position": {"x": 4, "y": 2, "w": 1, "h": 1}, "widget": "vudash-widget-travis", "options": { "user": "vudash", "repo": "vudash-widget-travis" } }
   ]
 }
+
 ```
-Where 'widgets' is an array of arrays. The top level array represents rows of widgets on the screen. There is theoretically no min/max width for a widget.
+Where 'widgets' is an array of widgets. The position in the grid (specified by `layout`) is indicated by the widget's `x` and `y` `position` values.
+
+The values for `position.w` and `position.h` are the number of grid units the widget occupies in width and height, respectively.
 
 Widgets can be either a path to a directory containing a widget (see below), or an npm module of the same. If the widget is a npm module, you would need to `npm install --save <widget-name>` first.
 
@@ -103,6 +101,9 @@ Widgets are configured in the dashboard.json file, in the format:
 A widget is a visible indicator of some sort of statistic or other monitor, which emits new data using websockets, and updates its display in the dashboard based on the information given in this data.
 
 A widget is packaged as a node module, but a node module can simply be a folder with a `package.json` file. It can then contain a number of files:
+
+### Predefined widgets
+There are a series of pre-defined widgets available. These widgets are [npm packages beginning with 'vudash-widget'](https://www.npmjs.com/search?q=vudash-widget) Generally the widget's major version number should match the vudash instance's major version number to guarantee compatiblity.
 
 #### package.json
 ```javascript
@@ -170,6 +171,5 @@ Just html. Use `{{id}}` to get the ID of the widget mentioned above. Your html s
 * A. Your hosting provider might not be correctly reporting the external vhost of the server. Add an environment variable `SERVER_URL` with the full url to your server, i.e: `http://www.example.com/`
 
 ## Roadmap
- - Some sort of testing around multi-tenancy
  - Heroku easy deploy
  - You, sending Pull Requests.

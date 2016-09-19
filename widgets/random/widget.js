@@ -6,6 +6,7 @@ class RandomWidget {
     return {
       markup: 'markup.html',
       update: 'update.js',
+      css: 'client.css',
       schedule: 5000,
 
       job: (emit) => {
@@ -15,9 +16,7 @@ class RandomWidget {
       }
 
     }
-
   }
-
 }
 
 module.exports = RandomWidget
