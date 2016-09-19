@@ -16,12 +16,12 @@
     {{{css}}}
   {{/each}}
   </style>
+  <script src="/static/jqlite/jqlite.min.js"></script>
 </head>
 <body>
   {{#each dashboard.widgets}}
     {{{markup}}}
   {{/each}}
-  <script src="/static/jqlite/jqlite.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io('{{serverUrl}}');

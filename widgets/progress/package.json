@@ -1,0 +1,4 @@
+{
+  "name": "vudash-widget-progress",
+  "main": "./widget.js"
+}

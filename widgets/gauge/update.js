@@ -1,5 +1,2 @@
-$('#'+$id+'-progress').progress({
-  percent: $data.percentage
-});
-
-$('#'+$id+'-progress .label').text($data.description);
+$widget.component = $widget.component || new window.widgets.VudashGague('#'+$id+'-gauge');
+$widget.component.update($data.percentage);
