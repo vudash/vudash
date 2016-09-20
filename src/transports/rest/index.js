@@ -18,9 +18,15 @@ class RestTransport extends Transport {
     const options = {
       method: this.config.method,
       url: this.config.url,
-      qs: this.config.query,
-      body: this.config.payload,
       json: true
+    }
+
+    if (this.config.body) {
+      options.body = this.config.body
+    }
+
+    if (this.config.query) {
+      options.query = this.config.query
     }
 
     return request(options)
