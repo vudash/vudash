@@ -3,6 +3,8 @@
 const Dashboard = require('../modules/dashboard')
 const Path = require('path')
 const Joi = require('joi')
+const fs = require('fs')
+const Boom = require('boom')
 
 const DashboardPlugin = {
   register: function (server, options, next) {
@@ -17,6 +19,24 @@ const DashboardPlugin = {
       dashboards[name] = dashboard
       return dashboard
     }
+
+    server.route({
+      method: 'GET',
+      path: '/',
+      handler: function (request, reply) {
+        const path = Path.join(process.cwd(), 'dashboards')
+        fs.readdir(path, (err, files) => {
+          if (err) { return reply(Boom.wrap(err, 400)) }
+          const boards = files.map((file) => {
+            return {
+              link: file.replace('json', 'dashboard'),
+              name: file.replace('.json', '')
+            }
+          })
+          reply.view('listing', { boards })
+        })
+      }
+    })
 
     server.route({
       method: 'GET',

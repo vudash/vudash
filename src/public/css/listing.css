@@ -1,0 +1,23 @@
+body {
+  font-family: 'Ubuntu', sans-serif;
+  color: #fff;
+  background-color: #404040;
+}
+
+.sub-page {
+  font-size: 20px;
+}
+
+ul {
+  margin: 20px 0;
+  list-style-type: none;
+}
+
+ul > li {
+  margin: 5px 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
