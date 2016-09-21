@@ -4,7 +4,11 @@ const RestTransport = require('.')
 describe('transports.rest', () => {
   const host = 'http://example.net'
   const scenarios = [
-    { method: 'get', host, path: '/' }
+    { method: 'get', host, path: '/' },
+    { method: 'post', host, path: '/some/path' },
+    { method: 'post', host, path: '/some/path', payload: {a: 'b', one: 2, true: false} },
+    { method: 'get', host, path: '/lala', query: { foot: 'bart' } },
+    { method: 'post', host, path: '/some/path', payload: {a: 'b', one: 2, true: false}, query: { foot: 'bath' } }
   ]
 
   afterEach((done) => {
@@ -13,14 +17,15 @@ describe('transports.rest', () => {
   })
 
   scenarios.forEach((scenario) => {
-    it('#get', () => {
+    it(`#fetch() with ${scenario.method} ${scenario.host}`, () => {
       const config = Object.assign({}, scenario)
       config.url = `${config.host}${config.path}`
       delete config.host
       delete config.path
       const transport = new RestTransport({ config })
 
-      nock(scenario.host)[scenario.method](scenario.path)
+      nock(scenario.host)[scenario.method](scenario.path, scenario.body)
+      .query(scenario.query)
       .reply(200, { a: 'b' })
 
       return transport

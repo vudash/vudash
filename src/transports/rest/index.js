@@ -26,7 +26,7 @@ class RestTransport extends Transport {
     }
 
     if (this.config.query) {
-      options.query = this.config.query
+      options.qs = this.config.query
     }
 
     return request(options)
