@@ -99,7 +99,7 @@ class GoogleSheetsTransport extends Transport {
     const tab = data[conf.tab]
     const multiCell = (typeof conf.rows === 'object' || Array.isArray(conf.columns))
 
-    return multiCell ? this._toMatrix(tab) : tab[conf.rows - 1][conf.columns]
+    return multiCell ? this._toMatrix(tab) : this._extractCellValue(tab)
   }
 
   _toMatrix (tab) {
@@ -108,6 +108,11 @@ class GoogleSheetsTransport extends Transport {
         return row[column]
       })
     })
+  }
+
+  _extractCellValue (tab) {
+    const conf = this.config
+    return tab[conf.rows - 1][conf.columns]
   }
 }
 
