@@ -4,7 +4,11 @@ class Transport {
 
   constructor (descriptor) {
     this.config = descriptor.config
-    this.configValidation.validate(this.config, (err) => {
+    this.validate(this.configValidation, this.config)
+  }
+
+  validate (schema, content) {
+    schema.validate(content, (err) => {
       if (err) { throw err }
     })
   }
