@@ -91,11 +91,24 @@ class GoogleSheetsTransport extends Transport {
       spreadsheetKey: conf.sheet,
       credentials: conf.credentials,
       sheetsToExtract: [conf.tab]
-    }).then((data) => {
-      return data[conf.tab][conf.rows - 1][conf.columns]
-    })
+    }).then(this._extractCellData.bind(this))
   }
 
+  _extractCellData (data) {
+    const conf = this.config
+    const tab = data[conf.tab]
+    const multiCell = (typeof conf.rows === 'object' || Array.isArray(conf.columns))
+
+    return multiCell ? this._toMatrix(tab) : tab[conf.rows - 1][conf.columns]
+  }
+
+  _toMatrix (tab) {
+    return tab.map((row) => {
+      return Object.keys(row).map((column) => {
+        return row[column]
+      })
+    })
+  }
 }
 
 module.exports = GoogleSheetsTransport

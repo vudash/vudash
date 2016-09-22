@@ -25,7 +25,7 @@ class ConfigUtil {
 
   getRangeConfig (credentialsOverride) {
     const baseConfig = this._getConfig(credentialsOverride)
-    return Object.assign({ columns: ['a', 'b', 'c'], rows: { from: 0, to: 10 } }, baseConfig)
+    return Object.assign({ columns: ['a', 'b'], rows: { from: 1, to: 3 } }, baseConfig)
   }
 
   getSingleCellConfig (credentialsOverride) {
