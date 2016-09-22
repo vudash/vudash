@@ -19,12 +19,12 @@ This saves time for a widget developer, and means that any widget can easily fet
 
 1. In order to use in a widget, install the module:
   ```npm i -s vudash-transports```
-2. Then simply read the `transport` value from the widget's options, and pass it into `Transport.configure` in your widget's constructor.
+2. Then simply read the `data-source` value from the widget's options, and pass it into `Transport.configure` in your widget's constructor.
   ```
   const Transport = require('vudash-transports')
 
   constructor (options) {
-    this.transport = Transport.configure(options.transport)
+    this.transport = Transport.configure(options['data-source'])
   }
   ```
 3. To fetch data, just ask the transport for it.
@@ -46,7 +46,7 @@ When using a widget which uses `vudash-transports`, the consumer simply passes i
     widget: 'some-widget',
     options: {
       ...
-      transport: {
+      "data-source": {
         source: 'rest',
         config: {
           url: 'http://example.com/some/api',
@@ -58,7 +58,7 @@ When using a widget which uses `vudash-transports`, the consumer simply passes i
   }
 ```
 
-where `transport.source` is one of the supported transports listed at the top of this readme, and `transport.config` is
+where `data-source.source` is one of the supported transports listed at the top of this readme, and `data-source.config` is
 the transport specific config, such as credentials for third party services, or URLs for web services, etc.
 
 All configuration is validated by a transport method, using Joi.
