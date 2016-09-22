@@ -1,7 +1,6 @@
 const GoogleSheetsTransport = require('.')
 const configUtil = require('./config.util.test')
 const sinon = require('sinon')
-const sheetToJson = require('spreadsheet-to-json')
 
 describe('transports.google-sheets', () => {
   const sandbox = sinon.sandbox.create()

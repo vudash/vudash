@@ -1,1 +1,1 @@
-module.exports = require('transport')
+module.exports = require('./src/transport')
