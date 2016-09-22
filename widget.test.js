@@ -6,31 +6,17 @@ const describe = lab.describe
 const it = lab.it
 
 const Widget = require('./widget')
-const widget = new Widget()
 
 describe('widget', () => {
-  it('Plucks basic value which exists', (done) => {
-    const json = {
-      a: {
-        b: {
-          c: 'd'
-        }
-      }
-    }
-    const value = widget._extractValue(json, 'a.b.c')
-    expect(value).to.equal('d')
+  it('Uses config', (done) => {
+    const config = { schedule: 25000 }
+    const widget = new Widget()
+    const configuration = widget.register(config)
+    expect(configuration.schedule).to.equal(config.schedule)
     done()
   })
-  it('Plucks nonexistent value', (done) => {
-    const json = {
-      a: {
-        b: {
-          c: 'd'
-        }
-      }
-    }
-    const value = widget._extractValue(json, 'x.y.z')
-    expect(value).to.equal(undefined)
-    done()
+
+  it('Only handles single value transports', (done) => {
+    
   })
 })

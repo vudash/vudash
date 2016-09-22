@@ -1,14 +1,14 @@
 'use strict'
 
-const request = require('request')
-const Hoek = require('hoek')
+const Transport = require('vudash-transports')
 const defaults = {
-  url: 'http://api.fixer.io/latest',
-  path: 'rates.CHF',
-  description: 'EUR -> CHF'
+  'description': 'Visitor Count',
+  'data-source': {
+    source: 'random'
+  }
 }
 
-class PluckWidget {
+class StatisticWidget {
 
   register (options) {
     const config = Object.assign({}, defaults, options)
@@ -19,25 +19,24 @@ class PluckWidget {
       update: 'update.js',
       css: 'client.css',
       clientJs: 'client.js',
-      schedule: 60000,
+      schedule: config.schedule,
 
       job: (emit) => {
-        request({url: config.url, json: true}, (err, response, body) => {
-          if (err || response.statusCode !== 200) {
-            console.error(err)
-            emit({ value: '!' })
-          } else {
-            emit({ value: this._extractValue(body, config.path) })
+        const transport = Transport.configure(config['data-source'])
+        transport.fetch()
+        .then((value) => {
+          if (Array.isArray(value)) {
+            throw new Error('This widget only handles single return values from its data source.')
           }
+          emit({ value })
+        })
+        .catch((e) => {
+          emit({ value: '!', error: e.message })
         })
       }
     }
   }
 
-  _extractValue (json, path) {
-    return Hoek.reach(json, path)
-  }
-
 }
 
-module.exports = PluckWidget
+module.exports = StatisticWidget

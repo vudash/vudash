@@ -1,14 +1,11 @@
 {
-  "name": "vudash-widget-pluck",
+  "name": "vudash-widget-statistic",
   "version": "3.0.0",
   "main": "widget.js",
   "scripts": {
     "test": "lab *.test.js"
   },
-  "dependencies": {
-    "hoek": "^4.0.0",
-    "request": "^2.72.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "code": "^3.0.2",
     "lab": "^11.0.1"

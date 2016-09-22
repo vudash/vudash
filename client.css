@@ -1,10 +1,10 @@
-.vudash-pluck .value {
+.vudash-statistic .value {
   font-size: 76px;
   font-weight: bold;
   text-align: center;
 }
 
-.vudash-pluck .label {
+.vudash-statistic .label {
   font-size: 14px;
   font-weight: bold;
   text-align: center;
