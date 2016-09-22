@@ -2,11 +2,15 @@ const Transport = require('..')
 const Joi = require('joi')
 const path = require('path')
 const fs = require('fs')
+const Promise = require('bluebird').Promise
+const spreadsheetToJson = require('spreadsheet-to-json')
 
 class GoogleSheetsTransport extends Transport {
 
   constructor (descriptor) {
     super(descriptor)
+
+    this.extract = Promise.promisify(spreadsheetToJson.extractSheets)
 
     this.credentials = this.config.credentials
     if (typeof this.credentials === 'string') {
@@ -78,6 +82,18 @@ class GoogleSheetsTransport extends Transport {
         to: Joi.number().required().description('Last row in range')
       }).required().description('Range selector')
     ]).required().description('Row number to retrieve, or object with "from" and "to" row numbers to select a range')
+  }
+
+  fetch () {
+    const conf = this.config
+
+    return this.extract({
+      spreadsheetKey: conf.sheet,
+      credentials: conf.credentials,
+      sheetsToExtract: [conf.tab]
+    }).then((data) => {
+      return data[conf.tab][conf.rows - 1][conf.columns]
+    })
   }
 
 }

@@ -4,7 +4,7 @@
   "description": "Various transports for vudash widgets",
   "main": "index.js",
   "scripts": {
-    "test": "lab -vD ./unit.lab.js"
+    "test": "lab -vpDI 'expect,before,beforeEach,after,afterEach,describe,it,fromRoot,fromSrc,resource' ./unit.lab.js"
   },
   "author": "",
   "license": "MIT",
@@ -26,7 +26,12 @@
       "expect",
       "fail",
       "describe",
-      "it"
+      "it",
+      "sandbox",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
     ]
   }
 }

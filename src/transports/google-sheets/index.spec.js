@@ -1,7 +1,16 @@
 const GoogleSheetsTransport = require('.')
 const configUtil = require('./config.util.test')
+const sinon = require('sinon')
+const sheetToJson = require('spreadsheet-to-json')
 
 describe('transports.google-sheets', () => {
+  const sandbox = sinon.sandbox.create()
+
+  afterEach((done) => {
+    sandbox.restore()
+    done()
+  })
+
   it('With invalid config', (done) => {
     expect(() => {
       return new GoogleSheetsTransport({ config: {} })
@@ -56,5 +65,28 @@ describe('transports.google-sheets', () => {
     const transport = new GoogleSheetsTransport({ config: configUtil.getSingleCellConfig(credentials) })
     expect(transport).to.be.an.instanceOf(GoogleSheetsTransport)
     done()
+  })
+
+  it('Fetches single cell sheet data', () => {
+    const config = configUtil.getSingleCellConfig()
+    const transport = new GoogleSheetsTransport({ config })
+
+    sinon.stub(transport, 'extract')
+    .withArgs({
+      spreadsheetKey: config.sheet,
+      credentials: config.credentials,
+      sheetsToExtract: [config.tab]
+    }).returns(Promise.resolve({
+      [config.tab]: [
+        {
+          [config.columns]: 'myValue'
+        }
+      ]
+    }))
+
+    return transport.fetch().then((result) => {
+      expect(transport.extract.callCount).to.equal(1)
+      expect(result).to.equal('myValue')
+    })
   })
 })
