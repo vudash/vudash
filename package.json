@@ -20,5 +20,13 @@
     "glob": "^7.0.6",
     "lab": "^11.0.1",
     "nock": "^8.0.0"
+  },
+  "standard": {
+    "globals": [
+      "expect",
+      "fail",
+      "describe",
+      "it"
+    ]
   }
 }

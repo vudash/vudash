@@ -11,6 +11,11 @@ const mappings = {
 module.exports = {
   configure: (config) => {
     const TransportClass = mappings[config.transport]
+
+    if (!TransportClass) {
+      throw new Error(`${config.transport} is not a known method of fetching data. Consult Vudash docs.`)
+    }
+
     return new TransportClass(config)
   }
 }

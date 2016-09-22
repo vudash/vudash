@@ -54,13 +54,30 @@ class GoogleSheetsTransport extends Transport {
     return Joi.object().keys({
       sheet: Joi.string().required().description('Sheet id'),
       tab: Joi.string().required().description('Tab Name'),
-      column: Joi.string().required().description('Column Heading Name'),
-      formatter: Joi.string().optional().description('Format specifier for cell value'),
+      columns: this.columnSchema,
+      rows: this.rowSchema,
       credentials: Joi.alternatives([
         this.inlineCredentialsValidation,
         this.fileCredentialsValidation
       ]).required().description('Service account credentials')
     }).required().description('Configuration')
+  }
+
+  get columnSchema () {
+    return Joi.alternatives([
+      Joi.string().required().description('Column heading'),
+      Joi.array().required().description('Array of column headings')
+    ]).required().description('Column or an array of Columns to retrieve')
+  }
+
+  get rowSchema () {
+    return Joi.alternatives([
+      Joi.number().required().description('Row number'),
+      Joi.object().keys({
+        from: Joi.number().required().description('First row in range'),
+        to: Joi.number().required().description('Last row in range')
+      }).required().description('Range selector')
+    ]).required().description('Row number to retrieve, or object with "from" and "to" row numbers to select a range')
   }
 
 }
