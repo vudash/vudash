@@ -5,7 +5,9 @@
   "scripts": {
     "test": "lab *.test.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "hoek": "^4.1.0"
+  },
   "devDependencies": {
     "code": "^3.0.2",
     "lab": "^11.0.1",

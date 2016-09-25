@@ -1,5 +1,6 @@
 'use strict'
 
+const Hoek = require('hoek')
 const Transport = require('vudash-transports')
 const defaults = {
   'description': 'Statistics',
@@ -25,6 +26,9 @@ class StatisticWidget {
       job: (emit) => {
         const transport = Transport.configure(config['data-source'])
         transport.fetch()
+        .then((resp) => {
+          return Hoek.reach(resp, config.graph)
+        })
         .then((value) => {
           if (Array.isArray(value)) {
             throw new Error('This widget only handles single return values from its data source.')
