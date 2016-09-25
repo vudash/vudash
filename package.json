@@ -8,6 +8,7 @@
   "dependencies": {},
   "devDependencies": {
     "code": "^3.0.2",
-    "lab": "^11.0.1"
+    "lab": "^11.0.1",
+    "vudash-transports": "^1.0.0"
   }
 }

@@ -2,7 +2,8 @@
 
 const Transport = require('vudash-transports')
 const defaults = {
-  'description': 'Visitor Count',
+  'description': 'Statistics',
+  'schedule': 60000,
   'data-source': {
     source: 'random'
   }
