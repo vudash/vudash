@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "chance": "^1.0.4",
+    "hoek": "^4.1.0",
     "joi": "^9.0.4",
     "request": "^2.75.0",
     "request-promise": "^4.1.1",

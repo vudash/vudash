@@ -35,5 +35,35 @@ describe('transports.rest', () => {
           expect(body.a).to.equal('b')
         })
     })
+
+    describe('Extract values', () => {
+      const object = { i: { love: { animals: 'dogs' } } }
+      let transport
+
+      beforeEach((done) => {
+        transport = new RestTransport({})
+        done()
+      })
+
+      it('Without graph specified, returns full object', (done) => {
+        const object = { i: { love: { animals: 'dogs' } } }
+        const transport = new RestTransport({})
+        const value = transport.reach(object)
+        expect(value).to.equal(object)
+        done()
+      })
+
+      it('extracts a specified value from JSON', (done) => {
+        const value = transport.reach(object, 'i.love.animals')
+        expect(value).to.equal('dogs')
+        done()
+      })
+
+      it('Simply returns undefined for unreachable value', (done) => {
+        const value = transport.reach(object, 'i.love.people')
+        expect(value).to.equal(undefined)
+        done()
+      })
+    })
   })
 })
