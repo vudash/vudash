@@ -1,11 +1,13 @@
 const RestTransport = require('./transports/rest')
 const GoogleSheetsTransport = require('./transports/google-sheets')
 const RandomTransport = require('./transports/random')
+const ValueTransport = require('./transports/value')
 
 const mappings = {
   'rest': RestTransport,
   'google-sheets': GoogleSheetsTransport,
-  'random': RandomTransport
+  'random': RandomTransport,
+  'value': ValueTransport
 }
 
 module.exports = {

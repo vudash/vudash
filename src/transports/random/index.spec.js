@@ -1,6 +1,6 @@
 const RandomTransport = require('.')
 
-describe('transports.rest', () => {
+describe('transports.random', () => {
   const MT_SEED = 'a'
   it('Returns a random number', () => {
     const transport = new RandomTransport({ config: {} }, MT_SEED)
