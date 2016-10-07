@@ -10,7 +10,7 @@ class ValueTransport extends Transport {
 
   get configValidation () {
     return Joi.object({
-      value: Joi.string().required().description('Value to return')
+      value: Joi.any().required().description('Value to return')
     })
   }
 

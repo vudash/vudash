@@ -7,6 +7,16 @@ describe('transports.value', () => {
     done()
   })
 
+  const valueTypes = [ 'string', 123, Date.now(), { a: 'x' }, () => {} ]
+
+  valueTypes.forEach((value) => {
+    it(`Allows value ${typeof value} to be passed in`, (done) => {
+      const transport = new ValueTransport({ config: { value } })
+      expect(transport).to.exist().and.to.be.an.instanceOf(ValueTransport)
+      done()
+    })
+  })
+
   it('Returns value passed in config', () => {
     const config = { value: 'abc' }
     const transport = new ValueTransport({ config })
