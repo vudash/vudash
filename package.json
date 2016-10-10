@@ -5,12 +5,11 @@
   "scripts": {
     "test": "lab *.test.js"
   },
-  "dependencies": {
-    "hoek": "^4.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "code": "^3.0.2",
     "lab": "^11.0.1",
+    "sinon": "^1.17.6",
     "vudash-transports": "^1.0.0"
   }
 }

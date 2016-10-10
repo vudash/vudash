@@ -1,6 +1,5 @@
 'use strict'
 
-const Hoek = require('hoek')
 const Transport = require('vudash-transports')
 const defaults = {
   'description': 'Statistics',
@@ -14,6 +13,7 @@ class StatisticWidget {
 
   register (options) {
     const config = Object.assign({}, defaults, options)
+    this.transport = Transport.configure(config['data-source'])
 
     return {
       config: { description: config.description },
@@ -23,23 +23,19 @@ class StatisticWidget {
       clientJs: 'client.js',
       schedule: config.schedule,
 
-      job: (emit) => {
-        const transport = Transport.configure(config['data-source'])
-        transport.fetch()
-        .then((resp) => {
-          return Hoek.reach(resp, config.graph)
-        })
-        .then((value) => {
-          if (Array.isArray(value)) {
-            throw new Error('This widget only handles single return values from its data source.')
-          }
-          emit({ value })
-        })
-        .catch((e) => {
-          emit({ value: '!', error: e.message })
-        })
-      }
+      job: this.job.bind(this)
     }
+  }
+
+  job (emit) {
+    return this.transport
+    .fetch()
+    .then((value) => {
+      emit({ value: value.toString() })
+    })
+    .catch((e) => {
+      emit({ value: '!', error: e.message })
+    })
   }
 
 }
