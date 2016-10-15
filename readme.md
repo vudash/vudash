@@ -10,11 +10,12 @@ This saves time for a widget developer, and means that any widget can easily fet
 
 ### Supported sources
 
-|| Transport name || Transport Data Source || Documentation ||
-|  value          | config ```{ value: <value> }``` | [docs/value]
-|  random         | [chance.natural({ min: 0, max: 999})](http://chancejs.org) | [docs/random]
-|  rest           | http(s) using [request](http://requestjs.org) | [docs/rest]
-|  google-sheets  | [Google Sheets](http://drive.google.com) | [docs/google-sheets]
+| Transport name | Transport Data Source | Documentation |
+|----------------|-----------------------|---------------|
+|  value          | config ```{ value: <value> }``` | [docs/value]()
+|  random         | [chance.natural({ min: 0, max: 999})](http://chancejs.org) | [docs/random]()
+|  rest           | http(s) using [request](http://requestjs.org) | [docs/rest]()
+|  google-sheets  | [Google Sheets](http://drive.google.com) | [docs/google-sheets]()
 
 ### Usage (For developers)
 

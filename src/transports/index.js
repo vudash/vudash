@@ -3,7 +3,7 @@ const Joi = require('joi')
 class Transport {
 
   constructor (descriptor) {
-    this.config = descriptor.config
+    this.config = descriptor.config || {}
     this.validate(this.configValidation, this.config)
   }
 
