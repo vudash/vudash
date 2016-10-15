@@ -29,4 +29,32 @@ describe('widget', () => {
       expect(emitMock.firstCall.args[0].value).to.equal('a,b')
     })
   })
+
+  describe('Formatting', () => {
+    it('Will use default format value if none specified', () => {
+      const emitMock = sinon.spy()
+      const config = { 'data-source': { source: 'value', config: { value: 'things' } } }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      return configuration
+      .job(emitMock)
+      .then(() => {
+        expect(emitMock.called).to.equal(true)
+        expect(emitMock.firstCall.args[0].value).to.equal('things')
+      })
+    })
+
+    it('Will format according to format config', () => {
+      const emitMock = sinon.spy()
+      const config = { 'format': '%d%%', 'data-source': { source: 'value', config: { value: 34 } } }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      return configuration
+      .job(emitMock)
+      .then(() => {
+        expect(emitMock.called).to.equal(true)
+        expect(emitMock.firstCall.args[0].value).to.equal('34%')
+      })
+    })
+  })
 })
