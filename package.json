@@ -6,12 +6,12 @@
     "test": "lab *.test.js"
   },
   "dependencies": {
-    "sprintf-js": "^1.0.3"
+    "sprintf-js": "^1.0.3",
+    "vudash-transports": "^1.0.1"
   },
   "devDependencies": {
     "code": "^3.0.2",
     "lab": "^11.0.1",
-    "sinon": "^1.17.6",
-    "vudash-transports": "^1.0.0"
+    "sinon": "^1.17.6"
   }
 }
