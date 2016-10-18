@@ -13,7 +13,7 @@ class TimeWidget {
 
       job: () => {
         const now = moment()
-        Promise.resolve({time: now.format('HH:mm:ss'), date: now.format('MMMM Do YYYY')})
+        return Promise.resolve({time: now.format('HH:mm:ss'), date: now.format('MMMM Do YYYY')})
       }
 
     }
