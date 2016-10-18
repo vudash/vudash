@@ -1,5 +1,4 @@
-'use strict'
-
+const Promise = require('bluebird').Promise
 const moment = require('moment')
 
 class TimeWidget {
@@ -12,9 +11,9 @@ class TimeWidget {
       css: 'client.css',
       schedule: 1000,
 
-      job: (emit) => {
+      job: () => {
         const now = moment()
-        emit({time: now.format('HH:mm:ss'), date: now.format('MMMM Do YYYY')})
+        Promise.resolve({time: now.format('HH:mm:ss'), date: now.format('MMMM Do YYYY')})
       }
 
     }
