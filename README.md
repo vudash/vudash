@@ -67,12 +67,29 @@ Dashboards are in JSON format and take the form:
     "columns": 5,
     "rows": 4
   },
+  "shared-config": {
+    "google-config": {
+      "email": "you@example.net"
+    }
+  }
   "widgets": [
     { "position": {"x": 0, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/random" },
     { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" },
     { "position": {"x": 4, "y": 1, "w": 1, "h": 1}, "widget": "./widgets/github" },
-    { "position": {"x": 0, "y": 1, "w": 2, "h": 1}, "widget": "vudash-widget-pluck", "options": { "path": "rates.GBP", "description": "EUR -> GBP" } },
-    { "position": {"x": 4, "y": 2, "w": 1, "h": 1}, "widget": "vudash-widget-travis", "options": { "user": "vudash", "repo": "vudash-widget-travis" } }
+    { "position": {"x": 0, "y": 1, "w": 2, "h": 1},
+      "widget": "vudash-widget-pluck",
+      "options": {
+        "_extends": "google-config",
+        "path": "rates.GBP", "description": "EUR -> GBP"
+      }
+    },
+    { "position": {"x": 4, "y": 2, "w": 1, "h": 1},
+      "widget": "vudash-widget-travis",
+      "options": {
+        "user": "vudash",
+        "repo": "vudash-widget-travis"
+      }
+    }
   ]
 }
 
@@ -82,6 +99,8 @@ Where 'widgets' is an array of widgets. The position in the grid (specified by `
 The values for `position.w` and `position.h` are the number of grid units the widget occupies in width and height, respectively.
 
 Widgets can be either a path to a directory containing a widget (see below), or an npm module of the same. If the widget is a npm module, you would need to `npm install --save <widget-name>` first.
+
+Widgets can share configuration by using `shared-config` which is a key-values map of config names to config objects. You can then use `_extends` in the `options` block of a widget config, and only override the widget properties that you wish to change.
 
 ## Widgets
 
