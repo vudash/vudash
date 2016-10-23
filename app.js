@@ -1,5 +1,3 @@
-'use strict'
-
 const requirePaths = require('app-module-path')
 requirePaths.addPath(process.cwd())
 requirePaths.addPath(`${process.cwd()}/node_modules`)

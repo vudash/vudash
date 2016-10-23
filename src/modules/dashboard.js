@@ -45,7 +45,7 @@ class Dashboard {
     })
     .catch((err) => {
       console.error(`Error in widget ${widget.descriptor} (${widget.id})`, err)
-      emitter.emit(widget.id, { error: { message: err.message } })
+      emitter.emit(widget.id, { error: { message: (err && err.message) || 'An unknown error occured' } })
     })
   }
 

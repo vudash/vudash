@@ -64,7 +64,7 @@ class Widget {
     return `
       socket.on('${id}:update', function($id, $widget, $data) {
         if ($data.error) {
-          console.error('Widget "$id" encountered error: ' + $data.error);
+          console.error('Widget "${id}" encountered error: ' + $data.error.message);
         }
         ${this.update}
       }.bind(this, '${id}', widget_${id}));
