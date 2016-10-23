@@ -1,4 +1,4 @@
-'use strict'
+const Promise = require('bluebird').Promise
 
 class ExampleWidget {
 
@@ -10,8 +10,8 @@ class ExampleWidget {
       css: 'style.css',
       update: 'update.js',
 
-      job: (emit) => {
-        emit({x: 'y'})
+      job: () => {
+        return Promise.resolve({x: 'y'})
       }
 
     }

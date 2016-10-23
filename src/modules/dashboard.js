@@ -28,13 +28,20 @@ class Dashboard {
     this.jobs = this.getWidgets().map((widget) => {
       const job = widget.getJob()
       if (job) {
-        let self = this
-        const fn = function () {
-          job.script(self.emitter.emit.bind(self.emitter, widget.id))
-        }
-        setTimeout(fn, 5000)
-        return setInterval(fn, job.schedule)
+        let executeJob = this.emitResult.bind(this, widget, this.emitter)
+        executeJob()
+        return setInterval(executeJob, job.schedule)
       }
+    })
+  }
+
+  emitResult (widget, emitter) {
+    return widget.getJob().script().then((result) => {
+      emitter.emit(widget.id, result)
+    })
+    .catch((err) => {
+      console.error(`Error in widget ${widget.descriptor} (${widget.id})`, err)
+      emitter.emit(widget.id, { error: { message: err.message } })
     })
   }
 

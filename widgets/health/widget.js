@@ -1,4 +1,4 @@
-'use strict'
+const Promise = require('bluebird').Promise
 
 class HealthWidget {
 
@@ -11,9 +11,9 @@ class HealthWidget {
       css: 'client.css',
       schedule: 1000,
 
-      job: (emit) => {
+      job: () => {
         on = !on
-        emit({on})
+        return Promise.resolve({on})
       }
 
     }

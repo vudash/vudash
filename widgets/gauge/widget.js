@@ -1,4 +1,4 @@
-'use strict'
+const Promise = require('bluebird').Promise
 
 const defaults = {
   description: 'Total Things',
@@ -31,10 +31,10 @@ class GaugeWidget {
       clientJs: 'client.js',
       schedule: 3000,
 
-      job: (emit) => {
+      job: () => {
         const random = Math.random() * (100 - 1) + 1
         const percentage = Math.floor(random)
-        emit({ percentage })
+        return Promise.resolve({ percentage })
       }
 
     }

@@ -1,9 +1,12 @@
+
 'use strict'
 
+const DashboardBuilder = require(fromTest('util/dashboard.builder'))
+const WidgetBuilder = require(fromTest('util/widget.builder'))
 const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
-const sinon = require('sinon')
 const Path = require('path')
+const Promise = require('bluebird').Promise
 
 describe('modules.dashboard', () => {
   const io = {
@@ -18,87 +21,130 @@ describe('modules.dashboard', () => {
     }
   }
 
-  const exampleWidget = { position: { x: 0, y: 0, w: 0, h: 0 }, widget: resource('widgets/example') }
+  context('Load from local module', () => {
+    let dashboard
+    before((done) => {
+      const descriptor = Object.assign({}, baseDashboard, {
+        widgets: [
+          { position: { x: 0, y: 0, w: 0, h: 0 }, widget: resource('widgets/example') }
+        ]
+      })
 
-  it('Loads internal widgets', (done) => {
-    const descriptor = Object.assign({}, baseDashboard, {
-      widgets: [
-        exampleWidget
-      ]
+      dashboard = new Dashboard(descriptor, io)
+      done()
     })
 
-    const dashboard = new Dashboard(descriptor, io)
-    expect(dashboard.getWidgets().length).to.equal(1)
-    expect(dashboard.getWidgets()[0]).to.be.an.instanceOf(Widget)
-    done()
+    it('loads correctly', (done) => {
+      expect(dashboard.getWidgets().length).to.equal(1)
+      expect(dashboard.getWidgets()[0]).to.be.an.instanceOf(Widget)
+      done()
+    })
   })
 
-  it('Loads layout', (done) => {
-    const descriptor = Object.assign({}, baseDashboard, {
-      widgets: [
-        exampleWidget,
-        exampleWidget,
-        exampleWidget
-      ]
+  context('Layout', () => {
+    let dashboard
+
+    before((done) => {
+      const descriptor = DashboardBuilder.create()
+      .addWidget()
+      .addWidget()
+      .addWidget()
+      .build()
+
+      dashboard = new Dashboard(descriptor, io)
+      done()
     })
 
-    const dashboard = new Dashboard(descriptor, io)
-    expect(dashboard.getWidgets().length).to.equal(3)
-    done()
+    it('Loads layout', (done) => {
+      expect(dashboard.getWidgets().length).to.equal(3)
+      done()
+    })
   })
 
-  it('Tries to load widget with invalid descriptor', (done) => {
+  context('Invalid Descriptor', () => {
     const badModuleName = 'something:else'
-    const descriptor = Object.assign({}, baseDashboard, {
-      widgets: [
-        { widget: badModuleName }
-      ]
+    let fn
+    before((done) => {
+      const descriptor = DashboardBuilder.create()
+      .addWidget({ widget: badModuleName })
+      .build()
+
+      fn = () => {
+        return new Dashboard(descriptor, io)
+      }
+      done()
     })
 
-    function fn () {
-      return new Dashboard(descriptor, io)
-    }
-
-    expect(fn).to.throw(Error, `Cannot find module '${Path.join(process.cwd(), badModuleName)}'`)
-
-    done()
+    it('Throws error', (done) => {
+      expect(fn).to.throw(Error, `Cannot find module '${Path.join(process.cwd(), badModuleName)}'`)
+      done()
+    })
   })
 
-  it('Builds a render model', (done) => {
-    const descriptor = Object.assign({}, baseDashboard, {
-      name: 'Foo bar qux',
-      widgets: [
-        exampleWidget
-      ]
+  context('Render Model', () => {
+    let renderModel
+    const js = 'my-js'
+    const dashName = 'my-dash'
+
+    before((done) => {
+      const myWidget = WidgetBuilder.create()
+      .withJs(js)
+      .build()
+
+      const descriptor = DashboardBuilder.create()
+      .withName(dashName)
+      .addWidget(myWidget)
+      .build()
+
+      const dashboard = new Dashboard(descriptor, io)
+      renderModel = dashboard.toRenderModel()
+      done()
     })
 
-    const dashboard = new Dashboard(descriptor, io)
-    const widget = dashboard.widgets[0]
-    const renderModel = dashboard.toRenderModel()
-    expect(renderModel).to.deep.equal({
-      name: descriptor.name,
-      widgets: [
-        {
-          id: widget.id,
-          js: widget.getJs(),
-          css: widget.getCss(),
-          markup: widget.getMarkup()
-        }
-      ]
+    it('Is built correctly', (done) => {
+      expect(renderModel.name).to.equal(dashName)
+      expect(renderModel.widgets[0].css).to.exist()
+      expect(renderModel.widgets[0].markup).to.exist()
+      done()
     })
-    done()
   })
 
-  it('Schedules jobs', (done) => {
-    const descriptor = Object.assign({}, baseDashboard, {
-      widgets: [
-        exampleWidget
-      ]
+  context('Scheduled Jobs', () => {
+    let dashboard
+    before((done) => {
+      const descriptor = DashboardBuilder.create().addWidget().build()
+      dashboard = new Dashboard(descriptor, io)
+      done()
     })
 
-    const dashboard = new Dashboard(descriptor, io)
-    dashboard.buildJobs()
-    expect(dashboard.getJobs().length).to.equal(1)
-    done()
+    it('Loads jobs', (done) => {
+      expect(dashboard.getJobs().length).to.equal(1)
+      done()
+    })
+  })
+
+  context('Binds emitter', () => {
+    let job
+    let dashboard
+
+    before((done) => {
+      job = sinon.stub().returns(Promise.resolve({a: 'b'}))
+      const widget = WidgetBuilder.create().withJob(job, 1).build()
+      const descriptor = DashboardBuilder.create().addWidget(widget).build()
+      dashboard = new Dashboard(descriptor, io)
+      done()
+    })
+
+    after((done) => {
+      job.reset()
+      done()
+    })
+
+    it('is bound correctly', (done) => {
+      expect(dashboard.getJobs().length).to.equal(1)
+      console.log(dashboard.getJobs())
+      expect(job.callCount).to.be.above(1)
+      done()
+    })
   })
 })

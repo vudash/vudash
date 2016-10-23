@@ -1,5 +1,3 @@
-'use strict'
-
 const Widget = require(fromSrc('modules/widget'))
 
 describe('modules.widget', () => {
@@ -113,9 +111,9 @@ describe('modules.widget', () => {
       working: true
     }
     const widget = new Widget(dashboard, position, resource('widgets/configurable'), overrides)
-    const rawConfig = widget.getJob().script()
-    expect(rawConfig).to.deep.equal(overrides)
-    done()
+    return widget.getJob().script().then((rawConfig) => {
+      expect(rawConfig).to.deep.equal(overrides)
+    })
   })
 
   it('Final config exposed to clientside', (done) => {
@@ -135,12 +133,12 @@ describe('modules.widget', () => {
       working: true
     }
     const widget = new Widget(dashboard, position, resource('widgets/configurable'), overrides)
-    const rawConfig = widget.getJob().script()
-    expect(rawConfig).to.deep.equal({
-      foo: 'bar',
-      working: true
+    return widget.getJob().script().then((rawConfig) => {
+      expect(rawConfig).to.deep.equal({
+        foo: 'bar',
+        working: true
+      })
     })
-    done()
   })
 
   it('Writes widget position configuration', (done) => {

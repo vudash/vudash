@@ -12,22 +12,28 @@ class Widget {
     this.position = position
     this.id = id()
     const paths = this._resolve(descriptor)
-    const Module = require(paths.entry)
     this.base = paths.base
-    const buildable = new Module().register(options)
+    const buildable = new paths.Module().register(options)
     this.build(buildable)
   }
 
   _resolve (module) {
-    const paths = {}
+    if (typeof module === 'function') {
+      return { base: process.cwd(), Module: module }
+    }
+
+    let entry
     try {
-      paths.entry = require.resolve(module)
+      entry = require.resolve(module)
     } catch (e) {
       const local = Path.join(process.cwd(), module)
-      paths.entry = require.resolve(local)
+      entry = require.resolve(local)
     }
-    paths.base = Path.dirname(paths.entry)
-    return paths
+
+    return {
+      Module: require(entry),
+      base: Path.dirname(entry)
+    }
   }
 
   build (module) {

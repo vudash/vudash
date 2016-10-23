@@ -1,4 +1,4 @@
-'use strict'
+const Promise = require('bluebird').Promise
 
 const defaults = {
   foo: 'bar',
@@ -14,8 +14,8 @@ class ConfigurableWidget {
       config,
       schedule: 10000,
 
-      job: (emit) => {
-        return config
+      job: () => {
+        return Promise.resolve(config)
       }
     }
   }

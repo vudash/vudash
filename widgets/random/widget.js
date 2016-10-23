@@ -1,4 +1,4 @@
-'use strict'
+const Promise = require('bluebird').Promise
 
 class RandomWidget {
 
@@ -9,10 +9,10 @@ class RandomWidget {
       css: 'client.css',
       schedule: 5000,
 
-      job: (emit) => {
+      job: () => {
         const random = Math.random() * (999 - 100) + 100
         const number = Math.floor(random)
-        emit({number})
+        return Promise.resolve({number})
       }
 
     }

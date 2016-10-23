@@ -22,7 +22,7 @@
   "scripts": {
     "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
     "start": "node app.js",
-    "test": "lab -I describe,it,fromSrc,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"
@@ -50,6 +50,7 @@
     "moment": "^2.13.0",
     "npm": "^3.9.3",
     "request": "^2.72.0",
+    "request-promise": "^4.1.1",
     "shortid": "^2.2.6",
     "socket.io": "^1.4.6",
     "vision": "^4.1.0",
@@ -62,13 +63,17 @@
     "lab": "^10.6.0",
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
+    "sinon-as-promised": "^4.0.2",
     "standard": "^7.1.2"
   },
   "standard": {
     "globals": [
       "fromSrc",
+      "fromTest",
       "describe",
+      "context",
       "it",
+      "sinon",
       "fromRoot",
       "expect",
       "before",

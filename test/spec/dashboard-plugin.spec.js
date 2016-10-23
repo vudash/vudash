@@ -1,5 +1,3 @@
-'use strict'
-
 describe('plugins.dashboard', () => {
   const server = require(fromRoot('app'))
   const dashboard = 'simple'

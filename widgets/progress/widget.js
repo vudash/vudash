@@ -1,4 +1,4 @@
-'use strict'
+const Promise = require('bluebird').Promise
 
 const defaults = {
   percentage: 27,
@@ -17,10 +17,10 @@ class ProgressWidget {
       css: 'style.css',
       schedule: 3000,
 
-      job: (emit) => {
+      job: () => {
         const random = Math.random() * (100 - 1) + 1
         const percentage = Math.floor(random)
-        emit({ percentage, description: config.description })
+        return Promise.resolve({ percentage, description: config.description })
       }
     }
   }

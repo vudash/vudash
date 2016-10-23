@@ -1,7 +1,6 @@
 'use strict'
 
 const Emitter = require(fromSrc('modules/emitter'))
-const sinon = require('sinon')
 
 describe('module.emitter', () => {
   const room = 'my-room'
