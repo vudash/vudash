@@ -15,6 +15,7 @@ const DashboardPlugin = {
       const path = Path.join(process.cwd(), 'dashboards', name)
       const descriptor = require(path)
       const dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
 
       dashboards[name] = dashboard
       return dashboard

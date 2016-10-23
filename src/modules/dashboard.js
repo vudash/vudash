@@ -13,6 +13,9 @@ class Dashboard {
     this.widgets = descriptor.widgets.map((fd) => {
       return new Widget(this, fd.position, fd.widget, fd.options)
     })
+  }
+
+  initialise () {
     this.buildJobs()
   }
 
@@ -37,6 +40,7 @@ class Dashboard {
 
   emitResult (widget, emitter) {
     return widget.getJob().script().then((result) => {
+      result._updated = new Date()
       emitter.emit(widget.id, result)
     })
     .catch((err) => {

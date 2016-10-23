@@ -1,4 +1,3 @@
-const Promise = require('bluebird').Promise
 const request = require('request-promise')
 const moment = require('moment')
 
@@ -13,10 +12,9 @@ class GithubWidget {
 
       job: () => {
         return request({ url: 'https://status.github.com/api/status.json', json: true })
-        .then((response) => {
-          const body = response.body
+        .then((body) => {
           const updated = moment().fromNow()
-          return Promise.resolve({status: body.status, updated})
+          return { status: body.status, updated }
         })
       }
 

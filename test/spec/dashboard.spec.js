@@ -52,6 +52,7 @@ describe('modules.dashboard', () => {
       .build()
 
       dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
       done()
     })
 
@@ -97,6 +98,7 @@ describe('modules.dashboard', () => {
       .build()
 
       const dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
       renderModel = dashboard.toRenderModel()
       done()
     })
@@ -114,6 +116,7 @@ describe('modules.dashboard', () => {
     before((done) => {
       const descriptor = DashboardBuilder.create().addWidget().build()
       dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
       done()
     })
 
@@ -132,18 +135,26 @@ describe('modules.dashboard', () => {
       const widget = WidgetBuilder.create().withJob(job, 1).build()
       const descriptor = DashboardBuilder.create().addWidget(widget).build()
       dashboard = new Dashboard(descriptor, io)
+      dashboard.emitter = { emit: sinon.stub() }
+      dashboard.initialise()
       done()
     })
 
     after((done) => {
       job.reset()
+      dashboard.emitter.emit.reset()
       done()
     })
 
     it('is bound correctly', (done) => {
       expect(dashboard.getJobs().length).to.equal(1)
-      console.log(dashboard.getJobs())
       expect(job.callCount).to.be.above(1)
+      done()
+    })
+
+    it('Emits metadata', (done) => {
+      expect(dashboard.emitter.emit.callCount).to.be.above(0)
+      expect(dashboard.emitter.emit.firstCall.args[1]._updated).to.be.an.instanceOf(Date)
       done()
     })
   })

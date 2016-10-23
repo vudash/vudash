@@ -9,7 +9,7 @@ class WidgetBuilder {
     this.js = 'js'
   }
 
-  _createWidgetModule (internals = { schedule: 1000, job: () => { return Promise.resolve() } }) {
+  _createWidgetModule (internals = { schedule: 1000, job: () => { return Promise.resolve({}) } }) {
     internals.js = this.js
     internals.css = this.css
     internals.markup = this.markup
@@ -36,7 +36,7 @@ class WidgetBuilder {
     return this
   }
 
-  withJob (job = Promise.resolve(), schedule = 1000) {
+  withJob (job = Promise.resolve({}), schedule = 1000) {
     this.widget = this._createWidgetModule({ job, schedule })
     return this
   }
