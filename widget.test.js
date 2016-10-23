@@ -1,8 +1,8 @@
 const expect = require('code').expect
 const Lab = require('lab')
 const lab = exports.lab = Lab.script()
-const sinon = require('sinon')
 
+const context = lab.describe
 const describe = lab.describe
 const it = lab.it
 
@@ -18,42 +18,36 @@ describe('widget', () => {
   })
 
   it('Will convert given value to string', () => {
-    const emitMock = sinon.spy()
     const config = { 'data-source': { source: 'value', config: { value: ['a', 'b'] } } }
     const widget = new Widget()
     const configuration = widget.register(config)
     return configuration
-    .job(emitMock)
-    .then(() => {
-      expect(emitMock.called).to.equal(true)
-      expect(emitMock.firstCall.args[0].value).to.equal('a,b')
+    .job()
+    .then((output) => {
+      expect(output).to.equal({ value: 'a,b' })
     })
   })
 
-  describe('Formatting', () => {
+  context('Formatting', () => {
     it('Will use default format value if none specified', () => {
-      const emitMock = sinon.spy()
       const config = { 'data-source': { source: 'value', config: { value: 'things' } } }
       const widget = new Widget()
       const configuration = widget.register(config)
       return configuration
-      .job(emitMock)
-      .then(() => {
-        expect(emitMock.called).to.equal(true)
-        expect(emitMock.firstCall.args[0].value).to.equal('things')
+      .job()
+      .then((output) => {
+        expect(output).to.equal({ value: 'things' })
       })
     })
 
     it('Will format according to format config', () => {
-      const emitMock = sinon.spy()
       const config = { 'format': '%d%%', 'data-source': { source: 'value', config: { value: 34 } } }
       const widget = new Widget()
       const configuration = widget.register(config)
       return configuration
-      .job(emitMock)
-      .then(() => {
-        expect(emitMock.called).to.equal(true)
-        expect(emitMock.firstCall.args[0].value).to.equal('34%')
+      .job()
+      .then((output) => {
+        expect(output).to.equal({ value: '34%' })
       })
     })
   })
