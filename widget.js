@@ -1,5 +1,3 @@
-'use strict'
-
 const sprintf = require('sprintf-js').sprintf
 
 const Transport = require('vudash-transports')
@@ -30,15 +28,11 @@ class StatisticWidget {
     }
   }
 
-  job (emit) {
+  job () {
     return this.transport
     .fetch()
     .then((value) => {
-      emit({ value: this._format(value) })
-    })
-    .catch((e) => {
-      console.error(e)
-      emit({ value: '!', error: e.message })
+      return { value: this._format(value) }
     })
   }
 
