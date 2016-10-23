@@ -1,9 +1,4 @@
-A Vudash widget for travis builds.
-
-Screenshot
-==========
-
-
+A Vudash widget for CI builds.
 
 Usage
 =====
@@ -12,10 +7,12 @@ Add to a (Vudash)[https://www.npmjs.com/package/vudash] dashboard with the follo
 
 ```javascript
       {
-        "widget": "vudash-widget-travis",
+        "widget": "vudash-widget-ci",
         "options": {
+          "provider": "travis", // CI Provider (currently supports only travis)
           "user": "your-user",
-          "repo": "your-repo"
+          "repo": "your-repo",
+          "schedule": 60000 // Update frequency in MS (optional)
         }
       }
 ```

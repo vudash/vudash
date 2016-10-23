@@ -1,13 +1,13 @@
-.travis-widget > * {
+.ci-widget > * {
   text-align: center;
 }
 
-.travis-widget > .label {
+.ci-widget > .label {
   font-weight: bold;
   margin-top: 16px;
 }
 
-.travis-icon {
+.ci-icon {
   margin: auto;
   display: block;
   font-size: 76px;

@@ -1,7 +1,7 @@
 {
-  "name": "vudash-widget-travis",
+  "name": "vudash-widget-ci",
   "version": "3.0.0",
-  "description": "A Travis CI Widget for Vudash",
+  "description": "A CI Widget for Vudash",
   "main": "widget.js",
   "scripts": {
     "test": "mocha test/**.spec.js"
@@ -19,6 +19,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.6",
+    "joi": "^9.2.0",
     "travis-ci": "^2.1.0"
   },
   "devDependencies": {

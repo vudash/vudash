@@ -1,10 +1,14 @@
-var widget = $('#' + $id + '-travis');
+var widget = $('#' + $id + '-ci');
 
 var icons = {
-  'unknown': 'error',
   'passed': 'check circle',
-  'failed': 'cancel'
+  'failed': 'cancel',
+  'unknown': 'block'
 };
 
-var ligature = icons[$data.state];
-widget.find('.travis-icon').innerHtml = ligature;
+var ligature = icons[$data.status];
+if ($data.error) {
+  ligature = 'block';
+}
+
+widget.find('.ci-icon').html(ligature);
