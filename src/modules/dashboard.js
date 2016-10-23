@@ -3,16 +3,33 @@
 const Widget = require('./widget')
 const Emitter = require('./emitter')
 const id = require('./id-gen')
+const Hoek = require('hoek')
 
 class Dashboard {
   constructor (descriptor, io) {
     this.id = id()
     this.name = descriptor.name
+    this.sharedConfig = descriptor['shared-config']
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
-    this.widgets = descriptor.widgets.map((fd) => {
-      return new Widget(this, fd.position, fd.widget, fd.options)
-    })
+    this.widgets = descriptor.widgets.map(this.registerWidget.bind(this))
+  }
+
+  registerWidget (fd) {
+    const inheritFrom = Hoek.reach(fd, 'options._extends')
+
+    let options = fd.options
+    if (inheritFrom) {
+      if (!this.sharedConfig || !this.sharedConfig.hasOwnProperty(inheritFrom)) {
+        throw new Error(`Shared configuration ${inheritFrom} does not exist.`)
+      }
+
+      const base = this.sharedConfig[inheritFrom]
+      options = Object.assign({}, base, fd.options)
+      delete options._extends
+    }
+
+    return new Widget(this, fd.position, fd.widget, options)
   }
 
   initialise () {

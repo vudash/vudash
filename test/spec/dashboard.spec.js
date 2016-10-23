@@ -1,6 +1,3 @@
-
-'use strict'
-
 const DashboardBuilder = require(fromTest('util/dashboard.builder'))
 const WidgetBuilder = require(fromTest('util/widget.builder'))
 const Dashboard = require(fromSrc('modules/dashboard'))
@@ -9,10 +6,21 @@ const Path = require('path')
 const Promise = require('bluebird').Promise
 
 describe('modules.dashboard', () => {
-  const io = {
-    on: sinon.stub(),
-    to: sinon.stub().returns({ emit: sinon.stub() })
-  }
+  let io
+
+  before((done) => {
+    io = {
+      on: sinon.stub(),
+      to: sinon.stub().returns({ emit: sinon.stub() })
+    }
+    done()
+  })
+
+  after((done) => {
+    io.on.reset()
+    io.to.reset()
+    done()
+  })
 
   const baseDashboard = {
     layout: {
@@ -148,7 +156,7 @@ describe('modules.dashboard', () => {
 
     it('is bound correctly', (done) => {
       expect(dashboard.getJobs().length).to.equal(1)
-      expect(job.callCount).to.be.above(1)
+      expect(job.callCount).to.be.above(0)
       done()
     })
 

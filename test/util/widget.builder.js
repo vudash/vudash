@@ -15,8 +15,8 @@ class WidgetBuilder {
     internals.markup = this.markup
 
     return class MyWidget {
-      register () {
-        return internals
+      register (options) {
+        return Object.assign({}, internals, { config: options })
       }
     }
   }
@@ -41,10 +41,16 @@ class WidgetBuilder {
     return this
   }
 
+  withOptions (options = {}) {
+    this.options = options
+    return this
+  }
+
   build () {
     return {
       position: this.position,
-      widget: this.widget
+      widget: this.widget,
+      options: this.options
     }
   }
 }
