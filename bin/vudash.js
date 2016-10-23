@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict'
-
 const cli = require('cli')
 const Hoek = require('hoek')
 const Path = require('path')
@@ -21,7 +19,7 @@ cli.main((args, options) => {
     fs.ensureDirSync(Path.join(__cwd, 'dashboards'))
     fs.writeJsonSync(configFile, dashboard)
     fs.writeJsonSync(packageJson, { name: 'my-vudash-dashboard', main: 'vudash', scripts: { start: 'vudash' } })
-    exec('npm install --save moment vudash-widget-time', (error, stdout, stderr) => {
+    exec('npm install --save moment vudash vudash-widget-time', (error, stdout, stderr) => {
       Hoek.assert(!error, error)
       console.log('Created sample dashboard. Run "vudash" or "npm start" to view')
     })

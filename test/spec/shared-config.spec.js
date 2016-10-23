@@ -71,4 +71,37 @@ describe('shared-config', () => {
       done()
     })
   })
+
+  context('Deep copy', () => {
+    let dashboard
+
+    before((done) => {
+      const sharedConfigKey = 'deep-conf'
+      const widget = WidgetBuilder.create()
+      .withOptions({
+        _extends: sharedConfigKey,
+        so: {
+          much: {
+            of: {
+              deep: 'overrideme'
+            }
+          }
+        }
+      }).build()
+
+      const descriptor = DashboardBuilder.create()
+      .withSharedConfig(sharedConfigKey, { so: { much: { of: { deep: 'copy' } } } })
+      .addWidget(widget)
+      .build()
+
+      dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
+      done()
+    })
+
+    it('Peforms a deep merge', (done) => {
+      expect(dashboard.getWidgets()[0].config.so.much.of.deep).to.equal('copy')
+      done()
+    })
+  })
 })

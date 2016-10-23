@@ -1,9 +1,8 @@
-'use strict'
-
 const Widget = require('./widget')
 const Emitter = require('./emitter')
 const id = require('./id-gen')
 const Hoek = require('hoek')
+const defaultsDeep = require('lodash/defaultsDeep')
 
 class Dashboard {
   constructor (descriptor, io) {
@@ -25,7 +24,7 @@ class Dashboard {
       }
 
       const base = this.sharedConfig[inheritFrom]
-      options = Object.assign({}, base, fd.options)
+      options = defaultsDeep({}, base, fd.options)
       delete options._extends
     }
 
