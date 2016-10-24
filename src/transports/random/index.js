@@ -13,14 +13,28 @@ class ChanceTransport extends Transport {
   get configValidation () {
     return Joi.object({
       method: Joi.string().optional().description('Chance method name'),
-      options: Joi.object().optional().description('Chance method options')
+      options: Joi.alternatives([
+        Joi.object().optional().description('Chance method options'),
+        Joi.array().optional().description('Chance method arguments')
+      ])
     })
   }
 
   prepareOptions () {
+    const options = this.config.method ? this.config.options : { min: 0, max: 999 }
+    const args = Array.isArray(options) ? options : [options]
+
+    if (this.config.method === 'n') {
+      const functionReference = options[0]
+      const referenceParts = functionReference.split('.')
+      const functionName = referenceParts.length > 1 ? referenceParts[1] : referenceParts[0]
+      this.validateMethod(functionName)
+      args[0] = this.chance[functionName]
+    }
+
     return {
       method: this.config.method || 'natural',
-      options: this.config.method ? this.config.options : { min: 0, max: 999 }
+      options: args
     }
   }
 
@@ -33,7 +47,7 @@ class ChanceTransport extends Transport {
   fetch () {
     const conf = this.prepareOptions()
     this.validateMethod(conf.method)
-    const result = this.chance[conf.method](conf.options)
+    const result = this.chance[conf.method].apply(this.chance, conf.options)
     return Promise.resolve(result)
   }
 }

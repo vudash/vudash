@@ -39,5 +39,31 @@ describe('transports.random', () => {
         expect(email).to.equal(AN_EMAIL)
       })
     })
+
+    it('Allow multiple arguments to options', () => {
+      const options = ['chance.integer', 12, { min: 15, max: 32 }]
+      const transport = new RandomTransport({ config: { method: 'n', options } }, MT_SEED)
+      return transport.fetch().then((numbers) => {
+        expect(numbers).to.be.an.array()
+        expect(numbers.length).to.equal(12)
+        for (const val of numbers) {
+          expect(val, val).to.be.between(14, 33)
+        }
+      })
+    })
+
+    it('Validate for unknown method references', (done) => {
+      const options = ['chance.abcde']
+      const transport = new RandomTransport({ config: { method: 'n', options } }, MT_SEED)
+      expect(transport.fetch.bind(transport)).to.throw(Error, /is not a known chance method/)
+      done()
+    })
+
+    it('Allow shorthand chance method names', (done) => {
+      const options = ['integer', 12, { min: 0, max: 1 }]
+      const transport = new RandomTransport({ config: { method: 'n', options } }, MT_SEED)
+      expect(transport.fetch.bind(transport)).not.to.throw()
+      done()
+    })
   })
 })
