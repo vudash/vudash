@@ -6,6 +6,7 @@
     "test": "lab *.test.js"
   },
   "dependencies": {
+    "chartist": "^0.9.8",
     "sprintf-js": "^1.0.3",
     "vudash-transports": "^1.0.1"
   },
