@@ -1,0 +1,17 @@
+{
+  "name": "vudash-widget-gauge",
+  "version": "3.0.0",
+  "main": "widget.js",
+  "scripts": {
+    "test": "lab *.test.js"
+  },
+  "dependencies": {
+    "hoek": "^4.1.0",
+    "vudash-transports": "^1.0.1"
+  },
+  "devDependencies": {
+    "chance": "^1.0.4",
+    "code": "^3.0.2",
+    "lab": "^11.0.1"
+  }
+}

@@ -1,0 +1,66 @@
+const Promise = require('bluebird').Promise
+const Transport = require('vudash-transports')
+const Hoek = require('hoek')
+
+const defaults = {
+  schedule: 60000,
+  description: 'Gauge',
+  type: 'balance',
+  display: 'fill',
+  min: 0,
+  max: 100,
+  step: 5,
+  value: 27,
+  borderWidth: 0,
+  indicatorWidth: 35,
+  indicatorBackgroundColour: 'orange',
+  indicatorColour: 'yellow',
+  valueBackgroundColour: 'grey',
+  valueColour: 'rgba(255,255,255,0.85)',
+  valueFontSize: '65px',
+  enableClipboard: false,
+  'data-source': {
+    source: 'random'
+  }
+}
+
+class GaugeWidget {
+
+  register (options) {
+    const overrides = Hoek.transform(options, {
+      'value': 'initial-value',
+      'min': 'min',
+      'max': 'max',
+      'schedule': 'schedule',
+      'indicatorBackgroundColour': 'pointer.background-colour',
+      'indicatorColour': 'pointer.colour',
+      'valueFontSize': 'value.font-size',
+      'valueColour': 'value.colour',
+      'description': 'description'
+    })
+
+    const config = Object.assign({}, defaults, overrides)
+    console.log(config)
+    this.transport = Transport.configure(config['data-source'])
+
+    return {
+      config,
+      markup: 'markup.html',
+      update: 'update.js',
+      css: 'client.css',
+      clientJs: 'client.js',
+      schedule: config.schedule,
+
+      job: () => {
+        return this.transport
+        .fetch()
+        .then((value) => {
+          return Promise.resolve({ value })
+        })
+      }
+    }
+  }
+
+}
+
+module.exports = GaugeWidget
