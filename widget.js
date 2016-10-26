@@ -36,11 +36,11 @@ class GaugeWidget {
       'indicatorColour': 'pointer.colour',
       'valueFontSize': 'value.font-size',
       'valueColour': 'value.colour',
+      'valueBackgroundColour': 'value.background-colour',
       'description': 'description'
     })
 
-    const config = Object.assign({}, defaults, overrides)
-    console.log(config)
+    const config = Hoek.applyToDefaults(defaults, overrides, false)
     this.transport = Transport.configure(config['data-source'])
 
     return {
@@ -55,6 +55,7 @@ class GaugeWidget {
         return this.transport
         .fetch()
         .then((value) => {
+          console.log(value)
           return Promise.resolve({ value })
         })
       }
