@@ -23,7 +23,7 @@ Add to a [Vudash](https://www.npmjs.com/package/vudash) dashboard with the follo
 
 Where `your-user` is your github organisation or user name, and `your-repo` is your build/repository name.
 
-* The travis plugin currently only deals with private repositories
+* The travis plugin currently only deals with public repositories
 
 Developing
 ==========
