@@ -43,18 +43,17 @@
         }
       }
     },
-    { "position": {"x": 2, "y": 2, "w": 1, "h": 1}, "widget": "./widgets/gauge" },
+    { "position": {"x": 2, "y": 2, "w": 1, "h": 1}, "widget": "vudash-widget-gauge" },
     { "position": {"x": 3, "y": 2, "w": 2, "h": 1},
       "widget": "vudash-widget-statistic",
       "options": {
         "schedule": 900000,
         "description": "EUR -> USD",
         "data-source": {
-          "source": "rest",
+          "source": "random",
           "config": {
-            "url": "http://api.fixer.io/latest?base=EUR",
-            "method": "get",
-            "graph": "rates.USD"
+            "method": "n",
+            "options": ["chance.integer", "12", { "min": 0, "max": 15 }]
           }
         }
       }
