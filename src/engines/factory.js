@@ -1,9 +1,11 @@
 const Travis = require('./travis')
+const CircleCI = require('./circleci')
 
 class Factory {
   constructor () {
     this.engines = {
-      travis: Travis
+      travis: Travis,
+      circleci: CircleCI
     }
   }
 

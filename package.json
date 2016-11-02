@@ -4,7 +4,7 @@
   "description": "A CI Widget for Vudash",
   "main": "widget.js",
   "scripts": {
-    "test": "mocha test/**.spec.js"
+    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "keywords": [
     "vudash",
@@ -20,12 +20,31 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.6",
+    "circleci": "^0.3.2",
     "joi": "^9.2.0",
     "travis-ci": "^2.1.0"
   },
   "devDependencies": {
     "code": "^3.0.0",
     "mocha": "^2.5.3",
-    "sinon": "^1.17.4"
+    "sinon": "^1.17.6",
+    "sinon-as-promised": "^4.0.2"
+  },
+  "standard": {
+    "globals": [
+      "fromSrc",
+      "fromTest",
+      "describe",
+      "context",
+      "it",
+      "sinon",
+      "fromRoot",
+      "expect",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach",
+      "resource"
+    ]
   }
 }

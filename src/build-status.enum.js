@@ -10,6 +10,14 @@ class BuildStatus {
   static get unknown () {
     return 'unknown'
   }
+
+  static get queued () {
+    return 'queued'
+  }
+
+  static get running () {
+    return 'running'
+  }
 }
 
 module.exports = BuildStatus

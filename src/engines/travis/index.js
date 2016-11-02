@@ -1,15 +1,17 @@
+'use strict'
+
 const Travis = require('travis-ci')
 const Promise = require('bluebird').Promise
-const BuildStatus = require('../build-status.enum')
+const BuildStatus = require('../../build-status.enum')
 
 class TravisEngine {
-  constructor (user, repo, branch) {
+  constructor (options) {
     this.travis = new Travis({
       version: '2.0.0'
     })
-    this.user = user
-    this.repo = repo
-    this.branch = branch
+    this.user = options.user
+    this.repo = options.repo
+    this.branch = options.branch
     this.mappings = {
       passed: BuildStatus.passed,
       failed: BuildStatus.failed
