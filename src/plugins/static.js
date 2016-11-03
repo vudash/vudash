@@ -9,7 +9,7 @@ const AssetsPlugin = {
       path: '/static/{param*}',
       handler: {
         directory: {
-          path: Path.join(__dirname, '..', '..', 'node_modules')
+          path: Path.join(__dirname, '..', '..', 'src/public/generated')
         }
       }
     })
