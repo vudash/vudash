@@ -1,5 +1,5 @@
-.ci-widget > * {
-  text-align: center;
+.ci-widget > .value > i {
+  font-size: 76px;
 }
 
 .ci-widget > .label {
@@ -12,4 +12,6 @@
   display: block;
   font-size: 76px;
   width: 76px;
+  font-weight: bold;
+  text-align: center;
 }
