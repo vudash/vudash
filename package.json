@@ -23,7 +23,7 @@
     "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
     "start": "node app.js",
     "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js",
-    "postinstall": "rm -f src/public/generated/* && cp node_modules/jqlite/jqlite.min.js src/public/generated/jqlite.min.js"
+    "prepublish": "rm -f src/public/generated/* && cp node_modules/jqlite/jqlite.min.js src/public/generated/jqlite.min.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"
