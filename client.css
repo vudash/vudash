@@ -2,6 +2,10 @@
   font-size: 76px;
 }
 
+.ci-widget > * {
+  text-align: center;
+}
+
 .ci-widget > .label {
   font-weight: bold;
   margin-top: 16px;
@@ -13,5 +17,4 @@
   font-size: 76px;
   width: 76px;
   font-weight: bold;
-  text-align: center;
 }
