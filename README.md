@@ -145,9 +145,12 @@ class TimeWidget {
       update: 'update.js',
       schedule: 1000,
 
-      job: (emit) => {
+      job: () => {
         const now = moment()
-        emit({time: now.format('HH:mm:ss'), date: now.format('MMMM Do YYYY')})
+        Promise.resolve({
+          time: now.format('HH:mm:ss'),
+          date: now.format('MMMM Do YYYY')
+        })
       }
 
     }
