@@ -8,7 +8,7 @@
   "dependencies": {
     "chartist": "^0.9.8",
     "sprintf-js": "^1.0.3",
-    "vudash-transports": "^1.0.1"
+    "vudash-transports": "^1.1.0"
   },
   "devDependencies": {
     "code": "^3.0.2",
