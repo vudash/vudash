@@ -142,14 +142,14 @@ describe('modules.widget', () => {
   })
 
   it('Writes widget position configuration', (done) => {
-    const widget = new Widget(dashboard, position, './widgets/random')
+    const widget = new Widget(dashboard, position, './widgets/health')
     const markup = widget.getMarkup()
     expect(markup).to.contain(' style="top: 0%; left: 0%; width: 20%; height: 25%"')
     done()
   })
 
   it('Calculates first widget dimensions', (done) => {
-    const widget = new Widget(dashboard, position, './widgets/random')
+    const widget = new Widget(dashboard, position, './widgets/health')
     expect(widget.top).to.equal(0)
     expect(widget.left).to.equal(0)
     expect(widget.width).to.equal(20)
@@ -158,7 +158,7 @@ describe('modules.widget', () => {
   })
 
   it('Calculates middle widget dimensions', (done) => {
-    const widget = new Widget(dashboard, { x: 2, y: 4, w: 2, h: 1 }, './widgets/random')
+    const widget = new Widget(dashboard, { x: 2, y: 4, w: 2, h: 1 }, './widgets/health')
     expect(widget.top).to.equal(100)
     expect(widget.left).to.equal(40)
     expect(widget.width).to.equal(40)
