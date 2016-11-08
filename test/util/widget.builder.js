@@ -46,6 +46,11 @@ class WidgetBuilder {
     return this
   }
 
+  withWidget (widget) {
+    this.widget = widget
+    return this
+  }
+
   build () {
     return {
       position: this.position,

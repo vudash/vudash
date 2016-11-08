@@ -13,7 +13,9 @@ class Widget {
     this.id = id()
     const paths = this._resolve(descriptor)
     this.base = paths.base
-    const buildable = new paths.Module().register(options)
+
+    const emitFn = this.dashboard.emitter.emit.bind(this.id)
+    const buildable = new paths.Module().register(options, emitFn)
     this.build(buildable)
   }
 

@@ -1,4 +1,6 @@
 const Widget = require(fromSrc('modules/widget'))
+const WidgetBuilder = require(fromTest('util/widget.builder'))
+const sinon = require('sinon')
 
 describe('modules.widget', () => {
   const dashboard = { layout: { rows: 4, columns: 5 } }
@@ -164,5 +166,29 @@ describe('modules.widget', () => {
     expect(widget.width).to.equal(40)
     expect(widget.height).to.equal(25)
     done()
+  })
+
+  context.only('Event Emitter', () => {
+    let expectedEmitFn
+
+    class MyWidget {
+      register (options, emitter) {
+        expectedEmitFn = emitter
+        return {}
+      }
+    }
+
+    const emittingDashboard = { emitter: { emit: function () {} } }
+
+    before((done) => {
+      new Widget(emittingDashboard, position, MyWidget)
+      done()
+    })
+
+    it('Recieves an event emitter on construction', (done) => {
+      expect(expectedEmitFn).to.be.a.function()
+      console.log(expectedEmitFn)
+      done()
+    })
   })
 })
