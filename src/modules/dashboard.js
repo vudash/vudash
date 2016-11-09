@@ -57,7 +57,7 @@ class Dashboard {
   emitResult (widget, emitter) {
     return widget.getJob().script().then((result) => {
       result._updated = new Date()
-      emitter.emit(widget.id, result)
+      emitter.emit(`${widget.id}:update`, result)
     })
     .catch((err) => {
       console.error(`Error in widget ${widget.descriptor} (${widget.id})`, err)

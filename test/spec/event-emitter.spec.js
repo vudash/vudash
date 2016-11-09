@@ -50,9 +50,9 @@ describe('module.emitter', () => {
     const mockSocket = { id: 'xyz', join: sinon.spy() }
     emitter.clientJoinHandler(mockSocket)
     expect(emit.callCount).to.equal(3)
-    expect(emit.firstCall.args).to.deep.equal(['abc:update', {id: 'abc'}])
-    expect(emit.secondCall.args).to.deep.equal(['def:update', {id: 'pqr'}])
-    expect(emit.thirdCall.args).to.deep.equal(['ghi:update', {id: 'ghi'}])
+    expect(emit.firstCall.args).to.deep.equal(['abc', {id: 'abc'}])
+    expect(emit.secondCall.args).to.deep.equal(['def', {id: 'pqr'}])
+    expect(emit.thirdCall.args).to.deep.equal(['ghi', {id: 'ghi'}])
     done()
   })
 

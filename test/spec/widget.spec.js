@@ -1,7 +1,8 @@
 const Widget = require(fromSrc('modules/widget'))
+const sinon = require('sinon')
 
 describe('modules.widget', () => {
-  const dashboard = { layout: { rows: 4, columns: 5 } }
+  const dashboard = { layout: { rows: 4, columns: 5 }, emitter: { emit: sinon.stub() } }
   const position = {x: 0, y: 0, w: 1, h: 1}
 
   it('Barf on unknown widget', (done) => {
@@ -164,5 +165,22 @@ describe('modules.widget', () => {
     expect(widget.width).to.equal(40)
     expect(widget.height).to.equal(25)
     done()
+  })
+
+  context('Event Emitter', () => {
+    let expectedEmitFn
+
+    class MyWidget {
+      register (options, emitter) {
+        expectedEmitFn = emitter
+        return {}
+      }
+    }
+
+    it('Recieves an event emitter on construction', (done) => {
+      new Widget(dashboard, position, MyWidget)
+      expect(expectedEmitFn).to.be.a.function()
+      done()
+    })
   })
 })
