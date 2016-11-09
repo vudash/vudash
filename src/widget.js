@@ -10,7 +10,7 @@ class TimeWidget {
     const action = Joi.object({
       action: Joi.string().only('sound').description('Action name'),
       options: Joi.object({
-        file: Joi.string().description('Sound file to play')
+        data: Joi.string().description('Data uri for sound file')
       }).description('Action configuration')
     }).description('Action')
 
@@ -26,26 +26,29 @@ class TimeWidget {
     return Joi.validate(options, schema)
   }
 
-  register (options) {
+  register (options, emit) {
     const validated = this.parseOptions(options)
     if (validated.error) { throw new Error(validated.error) }
     const config = validated.value
 
-    const alarms = Hoek.reach(config, alarms, { default: [] })
+    const alarms = Hoek.reach(config, 'alarms', { default: [] })
 
     alarms.forEach((alarm) => {
-      new CronJob({
-        cronTime: alarm.expression,
-        onTick: () => {
+      alarm.actions.forEach((action) => {
+        const context = { options: action.options, emit }
 
-        },
-        context: alarm.options,
-        start: true
+        new CronJob({
+          cronTime: alarm.expression,
+          onTick: function () {
+            this.emit('audio:play', { data: this.options.data })
+          },
+          context,
+          start: true
+        })
       })
     })
 
     return {
-
       markup: 'markup.html',
       update: 'update.js',
       css: 'client.css',

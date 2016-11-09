@@ -20,7 +20,7 @@ describe('widget', () => {
                 {
                   action: 'sound',
                   options: {
-                    file: 'sound.ogg'
+                    data: 'abcde'
                   }
                 }
               ]
