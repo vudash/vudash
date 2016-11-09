@@ -19,11 +19,10 @@ class Emitter {
     })
   }
 
-  emit (id, data, historical) {
-    const event = `${id}:update`
+  emit (event, data, historical) {
     this.io.to(this.room).emit(event, data)
     if (!historical) {
-      this.recentEvents[id] = data
+      this.recentEvents[event] = data
     }
   }
 
