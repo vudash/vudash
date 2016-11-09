@@ -2,7 +2,7 @@ var widget = $('#' + $id + '-ci');
 
 var icons = {
   'passed': 'check circle',
-  'failed': 'error outline',
+  'failed': 'cancel',
   'unknown': 'help',
   'running': 'play circle filled',
   'queued': 'playlist add check'

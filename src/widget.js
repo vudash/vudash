@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const Hoek = require('hoek')
 const engineFactory = require('./engines/factory')
 
 class CiWidget {
@@ -10,6 +11,11 @@ class CiWidget {
       user: Joi.string().required().description('Account/Organisation Name'),
       branch: Joi.string().optional().description('Branch name'),
       provider: Joi.string().required().only(engineFactory.availableEngines).description('CI Provider name'),
+      sounds: Joi.object({
+        passed: Joi.string().optional().description('Sound to play on build pass'),
+        failed: Joi.string().optional().description('Sound to play on build fail'),
+        unknown: Joi.string().optional().description('Sound to play on unknown state')
+      }).optional().description('Sounds to play when build status changes'),
       options: Joi.when('provider', {
         is: 'circleci',
         then: Joi.object({
@@ -20,7 +26,7 @@ class CiWidget {
     })
   }
 
-  register (options) {
+  register (options, emit) {
     Joi.validate(options, this.validation, (err) => {
       if (err) { throw err }
     })
@@ -40,6 +46,12 @@ class CiWidget {
       job: () => {
         return provider.fetchBuildStatus()
         .then((status) => {
+          const sound = Hoek.reach(config, `sounds.${status}`)
+          if (sound && this.previousState !== status) {
+            emit('audio:play', sound)
+          }
+
+          this.previousState = status
           return { status }
         })
       }

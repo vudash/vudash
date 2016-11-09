@@ -14,6 +14,11 @@ Add to a [Vudash](https://www.npmjs.com/package/vudash) dashboard with the follo
           "repo": "your-repo", // repository name, mandatory
           "branch": "your-branch" // branch to monitor, optional.
           "schedule": 60000 // Update frequency in MS (optional),
+          "sounds": { // Sound to play on build state changes (optional)
+            "passed": "/some/local/path/sound.ogg",
+            "failed": "data:audio/ogg;base64, ...",
+            "unknown": "data:audio/ogg;base64, ..."
+          },
           "options": {
             "auth": "xxx" // circleci auth token, only required for circleci
           }
