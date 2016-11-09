@@ -18,6 +18,21 @@ class DashboardBuilder {
     return this
   }
 
+  addAsset (kind, url) {
+    this.overrides.assets = this.overrides.assets || {}
+    this.overrides.assets[kind] = this.overrides.assets[kind] || []
+    this.overrides.assets[kind].push(url)
+    return this
+  }
+
+  addJsAsset (url) {
+    return this.addAsset('js', url)
+  }
+
+  addCssAsset (url) {
+    return this.addAsset('css', url)
+  }
+
   withSharedConfig (key, conf) {
     const propName = 'shared-config'
     this.overrides[propName] = this.overrides[propName] || {}

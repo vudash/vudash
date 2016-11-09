@@ -72,6 +72,35 @@ describe('modules.dashboard', () => {
     })
   })
 
+  context('Assets', () => {
+    let dashboard
+    let assets
+
+    before((done) => {
+      const descriptor = DashboardBuilder.create()
+      .addJsAsset('some-asset.js')
+      .addJsAsset('https://example.net/some.js')
+      .addCssAsset('some-asset.css')
+      .addCssAsset('https://example.net/some.css')
+      .build()
+
+      dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
+      assets = dashboard.getAssets()
+      done()
+    })
+
+    it('Js Asset is present', (done) => {
+      expect(assets.js.length).to.equal(2)
+      done()
+    })
+
+    it('Css Asset is present', (done) => {
+      expect(assets.css.length).to.equal(2)
+      done()
+    })
+  })
+
   context('Invalid Descriptor', () => {
     const badModuleName = 'something:else'
     let fn

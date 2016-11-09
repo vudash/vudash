@@ -4,6 +4,7 @@ const id = require('./id-gen')
 const Hoek = require('hoek')
 const defaultsDeep = require('lodash/defaultsDeep')
 const descriptorParser = require('./descriptor-parser')
+const assetBuilder = require('./asset-builder')
 
 class Dashboard {
   constructor (json, io) {
@@ -11,6 +12,7 @@ class Dashboard {
 
     this.id = id()
     this.name = descriptor.name
+    this.assets = assetBuilder.build(descriptor.assets)
     this.sharedConfig = descriptor['shared-config']
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
@@ -44,6 +46,10 @@ class Dashboard {
 
   getJobs () {
     return this.jobs
+  }
+
+  getAssets () {
+    return this.assets
   }
 
   buildJobs () {

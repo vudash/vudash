@@ -6,10 +6,10 @@ const AssetsPlugin = {
   register: function (server, options, next) {
     server.route({
       method: 'GET',
-      path: '/static/{param*}',
+      path: '/thirdparty/{param*}',
       handler: {
         directory: {
-          path: Path.join(__dirname, '..', '..', 'src/public/generated')
+          path: __dirname
         }
       }
     })
