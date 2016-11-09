@@ -138,7 +138,7 @@ const moment = require('moment')
 
 class TimeWidget {
 
-  register (options) {
+  register (options, emit) {
     return {
 
       markup: 'markup.html',
@@ -176,6 +176,8 @@ The main widget file. The crux of this file is to export a class with a single m
 
 To pass configuration, you can use the `options` parameter of `register()`
 
+The second parameter to register is the optional parameter `emit` which can be used to emit events (at any time) to the dashboard. See `Events` below for more information about this.
+
 #### update.js
 
 The client side code to update the widget. It is wrapped in a function which contains
@@ -186,6 +188,20 @@ The client side code to update the widget. It is wrapped in a function which con
 #### markup.html
 
 Just html. Use `{{id}}` to get the ID of the widget mentioned above. Your html should use things like `<h1 id="{{id}}-some-thing"/>` to avoid conflicts. You can then reference them using `$id+'-some-thing'` when you need to access them from the clientside javascript.
+
+#### Events
+
+Events can be emitted using the event emitter which is passed into the register method. These events will cause dashboard-wide actions to happen.
+
+```
+emit('audio:play', {data: data})
+```
+
+The current list of events that can be triggered are:
+
+| Event         | Data            | Description                                                         |
+| ------------- |-----------------| --------------------------------------------------------------------|
+| audio:play    | `{ data: data}` | Plays an audio clip (once). `data` is a data-uri of the audio file. |
 
 ## Troubleshooting
 
