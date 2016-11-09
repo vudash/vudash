@@ -3,9 +3,12 @@ const Emitter = require('./emitter')
 const id = require('./id-gen')
 const Hoek = require('hoek')
 const defaultsDeep = require('lodash/defaultsDeep')
+const descriptorParser = require('./descriptor-parser')
 
 class Dashboard {
-  constructor (descriptor, io) {
+  constructor (json, io) {
+    const descriptor = descriptorParser.parse(json)
+
     this.id = id()
     this.name = descriptor.name
     this.sharedConfig = descriptor['shared-config']

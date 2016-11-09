@@ -33,5 +33,5 @@ global.resource = requirePath => {
   return fromRoot(`test/resources/${requirePath}`)
 }
 
-let tests = glob.sync(path.join(__dirname, '/spec/**.spec.js'))
+const tests = glob.sync(path.join(__dirname, '..', 'src', '**/**.spec.js'))
 tests.forEach(fullPath => require(fullPath))

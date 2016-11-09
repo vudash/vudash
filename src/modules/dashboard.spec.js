@@ -29,12 +29,14 @@ describe('modules.dashboard', () => {
     }
   }
 
+  const position = { x: 0, y: 0, w: 0, h: 0 }
+
   context('Load from local module', () => {
     let dashboard
     before((done) => {
       const descriptor = Object.assign({}, baseDashboard, {
         widgets: [
-          { position: { x: 0, y: 0, w: 0, h: 0 }, widget: resource('widgets/example') }
+          { position, widget: resource('widgets/example') }
         ]
       })
 
@@ -75,7 +77,7 @@ describe('modules.dashboard', () => {
     let fn
     before((done) => {
       const descriptor = DashboardBuilder.create()
-      .addWidget({ widget: badModuleName })
+      .addWidget({ widget: badModuleName, position })
       .build()
 
       fn = () => {
