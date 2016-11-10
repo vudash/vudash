@@ -17,7 +17,8 @@ const widgetPositionSchema = Joi.object({
 const widgetSchema = Joi.object({
   position: widgetPositionSchema,
   widget: Joi.any().required().description('Path to widget, Node package name, or Class'),
-  options: Joi.object().optional().description('Widget configuration')
+  options: Joi.object().optional().description('Widget configuration'),
+  background: Joi.string().optional().description('Optional background styling, used as css background')
 }).description('Widget Configuration')
 
 const widgetsSchema = Joi.array().required().items(widgetSchema).description('List of widgets')

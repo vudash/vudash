@@ -145,7 +145,15 @@ describe('modules.widget', () => {
   it('Writes widget position configuration', (done) => {
     const widget = new Widget(dashboard, position, './widgets/health')
     const markup = widget.getMarkup()
-    expect(markup).to.contain(' style="top: 0%; left: 0%; width: 20%; height: 25%"')
+    expect(markup).to.contain(' style="top: 0%; left: 0%; width: 20%; height: 25%')
+    done()
+  })
+
+  it.only('Writes widget background styling', (done) => {
+    const renderOptions = { position, background: 'background-colour: #cac0be' }
+    const widget = new Widget(dashboard, renderOptions, './widgets/health')
+    const markup = widget.getMarkup()
+    expect(markup).to.contain(' background-colour: #cac0be"')
     done()
   })
 

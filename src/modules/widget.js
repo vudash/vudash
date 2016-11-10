@@ -2,8 +2,8 @@
 
 const Path = require('path')
 const fs = require('fs')
-const Handlebars = require('handlebars')
 const id = require('./id-gen')
+const markupBuilder = require('./markup-builder')
 
 class Widget {
 
@@ -100,8 +100,7 @@ class Widget {
   }
 
   getMarkup () {
-    const template = Handlebars.compile(this.markup)
-    return `<div class="widget-container" style="top: ${this.top}%; left: ${this.left}%; width: ${this.width}%; height: ${this.height}%">${template(this)}</div>`
+    return markupBuilder.render(this)
   }
 
   _buildClientJs () {

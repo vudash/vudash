@@ -6,6 +6,7 @@
   },
   "widgets": [
     { "position": {"x": 1, "y": 0, "w": 3, "h": 1},
+      "style": "background-colour: #cec9bf",
       "widget": "vudash-widget-time",
       "options": {
           "alarms": [
