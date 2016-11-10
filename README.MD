@@ -34,4 +34,4 @@ Developing
 ==========
 Check the project out, make your changes, and use `npm test` to run tests.
 
-npm link into a dashboard for live-reload fun.
+`npm link` into a dashboard for live-reload fun.
