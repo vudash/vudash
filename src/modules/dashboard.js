@@ -33,7 +33,10 @@ class Dashboard {
       delete options._extends
     }
 
-    return new Widget(this, fd.position, fd.widget, options)
+    return new Widget(this, { 
+      position: fd.position, 
+      background: fd.background 
+    }, fd.widget, options)
   }
 
   initialise () {

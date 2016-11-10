@@ -21,7 +21,7 @@ http://vudash.herokuapp.com/demo.dashboard
 * Both Dashing and Dashing-js are stellar efforts, but abandoned.
 * Jade is an abomination.
 * Coffeescript is an uneccessary abstraction.
-* dashing-js has more bugs than code
+* dashing-js has a lot of bugs
 
 ## Features
 * will happily run on a free heroku instance
@@ -108,12 +108,24 @@ Widgets are configured in the dashboard.json file, in the format:
 
 ```javascript
 {
-  "widget": "./widgets/pluck",
-  "options": {
+  "widget": "./widgets/pluck", // widget file path, node module name, or class definition
+  "position": { 
+    "x": 1, // x position (row number) of widget
+    "y": 1, // y position (column number) of widget
+    "w": 1, // widget width in columns
+    "h": 1  // widget height in columns
+  },
+  "options": { // widget specific config
     "your" : "config"
   }
 }
 ```
+
+Widgets have some optional properties:
+
+| property name | description                          | example |
+| ------------- | ------------------------------------ | ------- |
+| background    | css for "background" style attribute | #ffffff |
 
 ### Creating a widget
 
@@ -147,7 +159,7 @@ class TimeWidget {
 
       job: () => {
         const now = moment()
-        Promise.resolve({
+        return Promise.resolve({
           time: now.format('HH:mm:ss'),
           date: now.format('MMMM Do YYYY')
         })
