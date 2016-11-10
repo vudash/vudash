@@ -18,13 +18,12 @@ class MarkupBuilder {
       })
     }
 
-    const style = Object.keys(inlineStyles).reduce((css, key) => {
-      const style = css += `${key}: ${inlineStyles[key]}`
-      return style
-    }, '')
+    const style = Object.keys(inlineStyles).map((key) => {
+      return `${key}: ${inlineStyles[key]}`
+    })
 
     return `<div class="widget-container"
-      style="${style}">
+      style="${style.join('; ')}">
       ${template(widget)}
     </div>`
   }
