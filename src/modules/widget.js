@@ -7,9 +7,10 @@ const markupBuilder = require('./markup-builder')
 
 class Widget {
 
-  constructor (dashboard, position, descriptor, options) {
+  constructor (dashboard, renderOptions, descriptor, options) {
     this.dashboard = dashboard
-    this.position = position
+    this.position = renderOptions.position
+    this.background = renderOptions.background
     this.id = id()
     const paths = this._resolve(descriptor)
     this.base = paths.base

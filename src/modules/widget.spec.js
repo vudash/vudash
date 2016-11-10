@@ -149,7 +149,7 @@ describe('modules.widget', () => {
     done()
   })
 
-  it.only('Writes widget background styling', (done) => {
+  it('Writes widget background styling', (done) => {
     const renderOptions = { position, background: 'background-colour: #cac0be' }
     const widget = new Widget(dashboard, renderOptions, './widgets/health')
     const markup = widget.getMarkup()

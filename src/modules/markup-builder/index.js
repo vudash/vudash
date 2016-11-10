@@ -4,7 +4,6 @@ const Handlebars = require('handlebars')
 
 class MarkupBuilder {
   render (widget) {
-    console.log(widget)
     const template = Handlebars.compile(widget.markup)
     const inlineStyles = {
       top: `${widget.top}%`,
