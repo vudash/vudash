@@ -1,11 +1,11 @@
 var widget = $('#' + $id + '-ci');
 
 var icons = {
-  'passed': 'check circle',
-  'failed': 'highlight off',
-  'unknown': 'help outline',
+  'passed': 'check_circle',
+  'failed': 'highlight_off',
+  'unknown': 'help_outline',
   'running': 'update',
-  'queued': 'hourglass empty'
+  'queued': 'hourglass_empty'
 };
 
 var ligature = icons[$data.status];
