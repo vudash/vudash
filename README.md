@@ -48,6 +48,8 @@ Add new widgets under `/widgets` and add them to your dashboard under `/dashboar
 
 You can visit your created dashboard by visiting http://localhost:3000/<dashboard>.dashboard - where `<dashboard>` is the name of a JSON file within the `/dashboards` directory.
 
+Visiting the root of the application will yield a list of all available dashboards, unless the environment variable `DEFAULT_DASHBOARD` is set, in which case that dashboard will be loaded instead. Other dashboards will still be available via the normal methods.
+
 ## Quick start
 In so few lines:
 ```bash
@@ -109,7 +111,7 @@ Widgets are configured in the dashboard.json file, in the format:
 ```javascript
 {
   "widget": "./widgets/pluck", // widget file path, node module name, or class definition
-  "position": { 
+  "position": {
     "x": 1, // x position (row number) of widget
     "y": 1, // y position (column number) of widget
     "w": 1, // widget width in columns
