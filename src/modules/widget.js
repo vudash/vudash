@@ -4,16 +4,20 @@ const Path = require('path')
 const fs = require('fs')
 const id = require('./id-gen')
 const markupBuilder = require('./markup-builder')
+const AssetReader = require('./asset-reader')
+const WidgetPosition = require('./css-builder/widget-position')
+const cssBuilder = require('./css-builder')
 
 class Widget {
 
   constructor (dashboard, renderOptions, descriptor, options) {
     this.dashboard = dashboard
-    this.position = renderOptions.position
     this.background = renderOptions.background
+    this.position = new WidgetPosition(dashboard.layout, renderOptions.position)
     this.id = id()
+    
     const paths = this._resolve(descriptor)
-    this.base = paths.base
+    this.assetReader = new AssetReader(paths.base)
 
     const buildable = new paths.Module().register(
       options,
@@ -42,25 +46,15 @@ class Widget {
   }
 
   build (module) {
-    this.markup = this._readFile(module.markup, '')
-    this.clientJs = this._readFile(module.clientJs, '')
-    this.css = this._readFile(module.css, '')
-    this.update = this._readFile(module.update, null)
+    this.markup = this.assetReader.readFromFile(module.markup, '')
+    this.clientJs = this.assetReader.readFromFile(module.clientJs, '')
+
+    const providedCss = this.assetReader.readFromFile(module.css, '')
+    this.css = cssBuilder.build(this.id, providedCss, this.position, this.background)
+
+    this.update = this.assetReader.readFromFile(module.update, null)
     this.job = { script: module.job, schedule: module.schedule }
     this.config = module.config || {}
-  }
-
-  _readFile (definition, defaultValue) {
-    if (!definition) { return defaultValue }
-    if (Array.isArray(definition)) {
-      return definition.map((file) => {
-        return this._readFile(file)
-      }).join('\n')
-    }
-
-    const file = Path.join(this.base, definition)
-    if (!fs.existsSync(file)) { throw new Error(`Could not load widget component from ${file}`) }
-    return fs.readFileSync(file, 'utf-8').trim()
   }
 
   _buildEvent () {
@@ -74,30 +68,6 @@ class Widget {
         ${this.update}
       }.bind(this, '${id}', widget_${id}));
     `.trim()
-  }
-
-  get rowHeight () {
-    return 100 / this.dashboard.layout.rows
-  }
-
-  get columnWidth () {
-    return 100 / this.dashboard.layout.columns
-  }
-
-  get height () {
-    return this.position.h * this.rowHeight
-  }
-
-  get width () {
-    return this.position.w * this.columnWidth
-  }
-
-  get left () {
-    return this.position.x * this.columnWidth
-  }
-
-  get top () {
-    return this.position.y * this.rowHeight
   }
 
   getMarkup () {
