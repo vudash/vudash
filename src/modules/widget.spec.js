@@ -29,7 +29,7 @@ describe('modules.widget', () => {
     })
     expect(job.script).to.be.a.function()
     expect(widget.getJs()).to.include("function() { console.log('hello'); }")
-    expect(widget.getCss()).to.equal('body { color: #fff; }')
+    expect(widget.getCss()).to.contain('body { color: #fff; }')
     done()
   })
 

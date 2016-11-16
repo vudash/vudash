@@ -1,21 +1,25 @@
 'use strict'
 
+const Cheerio = require('cheerio')
 const markupBuilder = require('.')
 
 describe('modules/markup-builder', () => {
   context('Build Markup', () => {
-    const position = { x: 1, y: 1, w: 1, h: 1 }
-    it('Applies widget background', (done) => {
-      const widget = { position, background: 'xxx', markup: '' }
+    let $
+    before((done) => {
+      const widget = { id: 'xyz', markup: '<h1>hi</h1>' }
       const markup = markupBuilder.render(widget)
-      expect(markup).to.contain('background: xxx')
+      $ = Cheerio.load(markup)
       done()
     })
 
-    it('No widget background', (done) => {
-      const widget = { position, markup: '' }
-      const markup = markupBuilder.render(widget)
-      expect(markup).not.to.contain('background:')
+    it('Has correct id', (done) => {
+      expect($('div').attr('id')).to.equal('widget-container-xyz')
+      done()
+    })
+
+    it('Has correct class', (done) => {
+      expect($('div').hasClass('widget-container')).to.be.true()
       done()
     })
   })
