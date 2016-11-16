@@ -29,14 +29,14 @@ describe('modules.widget', () => {
     })
     expect(job.script).to.be.a.function()
     expect(widget.getJs()).to.include("function() { console.log('hello'); }")
-    expect(widget.getCss()).to.equal('body { color: #fff; }')
+    expect(widget.getCss()).to.contain('body { color: #fff; }')
     done()
   })
 
   it('Handles multiple files in properties', (done) => {
     const widget = new Widget(dashboard, renderOptions, resource('widgets/multiple'))
     expect(widget.getJs()).to.contain('var one = 1;\nvar two = 2;')
-    expect(widget.getCss()).to.equal('one { color: #fff; }\ntwo { color: #000; }')
+    expect(widget.getCss()).to.contain('\none { color: #fff; }\ntwo { color: #000; }')
     done()
   })
 
@@ -49,7 +49,6 @@ describe('modules.widget', () => {
   it('Widget with missing properties', (done) => {
     const widget = new Widget(dashboard, renderOptions, resource('widgets/missing'))
     expect(widget.getMarkup()).to.exist()
-    expect(widget.getCss()).to.equal('')
     expect(widget.getJs()).to.contain(`var widget_${widget.id} = { config: {} };`)
     done()
   })
@@ -141,39 +140,6 @@ describe('modules.widget', () => {
         working: true
       })
     })
-  })
-
-  it('Writes widget position configuration', (done) => {
-    const widget = new Widget(dashboard, renderOptions, './widgets/health')
-    const markup = widget.getMarkup()
-    expect(markup).to.contain(' style="top: 0%; left: 0%; width: 20%; height: 25%')
-    done()
-  })
-
-  it('Writes widget background styling', (done) => {
-    const renderOptions = { position, background: 'background-colour: #cac0be' }
-    const widget = new Widget(dashboard, renderOptions, './widgets/health')
-    const markup = widget.getMarkup()
-    expect(markup).to.contain(' background-colour: #cac0be"')
-    done()
-  })
-
-  it('Calculates first widget dimensions', (done) => {
-    const widget = new Widget(dashboard, renderOptions, './widgets/health')
-    expect(widget.top).to.equal(0)
-    expect(widget.left).to.equal(0)
-    expect(widget.width).to.equal(20)
-    expect(widget.height).to.equal(25)
-    done()
-  })
-
-  it('Calculates middle widget dimensions', (done) => {
-    const widget = new Widget(dashboard, { position: { x: 2, y: 4, w: 2, h: 1 } }, './widgets/health')
-    expect(widget.top).to.equal(100)
-    expect(widget.left).to.equal(40)
-    expect(widget.width).to.equal(40)
-    expect(widget.height).to.equal(25)
-    done()
   })
 
   context('Event Emitter', () => {

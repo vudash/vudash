@@ -65,6 +65,7 @@
     "vudash-widget-time": "^3.2.0"
   },
   "devDependencies": {
+    "cheerio": "^0.22.0",
     "code": "^2.3.0",
     "lab": "^10.6.0",
     "nodemon": "^1.9.2",
