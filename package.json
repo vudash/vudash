@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-statistic",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "main": "widget.js",
   "scripts": {
     "test": "lab *.test.js"
@@ -15,7 +15,7 @@
     "lab": "^11.0.1"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/vudash/vudash-widget-statistic.git"
-  } 
+    "type": "git",
+    "url": "https://github.com/vudash/vudash-widget-statistic.git"
+  }
 }
