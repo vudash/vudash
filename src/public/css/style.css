@@ -1,13 +1,16 @@
 body {
   font-family: 'Ubuntu', sans-serif;
   color: #fff;
-  background-color: #404040;
+  background-color: #292929;
 }
 
 .widget-container {
   position: absolute;
   display: block;
+  box-sizing: border-box;
+  border: 2px solid #393939;
 }
+
 .widget-container > * {
   position: relative !important;
   display: block !important;

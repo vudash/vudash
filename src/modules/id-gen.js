@@ -4,5 +4,5 @@ const shortid = require('shortid')
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_')
 
 module.exports = () => {
-  return shortid.generate()
+  return shortid.generate().replace('$', '')
 }
