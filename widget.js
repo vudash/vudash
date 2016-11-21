@@ -20,8 +20,8 @@ class StatisticWidget {
       config: { description: config.description },
       markup: 'markup.html',
       update: 'update.js',
-      css: 'client.css',
-      clientJs: 'client.js',
+      css: ['client.css', 'chartist.min.css'],
+      clientJs: ['client.js', 'chartist.min.js'],
       schedule: config.schedule,
 
       job: this.job.bind(this)
@@ -31,8 +31,14 @@ class StatisticWidget {
   job () {
     return this.transport
     .fetch()
-    .then((value) => {
-      return { value: this._format(value) }
+    .then((result) => {
+
+      if (Array.isArray(result)) {
+        const currentValue = result.pop()
+        return { value: this._format(currentValue), history: result }
+      }
+
+      return { value: this._format(result) }
     })
   }
 

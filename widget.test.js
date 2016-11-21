@@ -18,13 +18,13 @@ describe('widget', () => {
   })
 
   it('Will convert given value to string', () => {
-    const config = { 'data-source': { source: 'value', config: { value: ['a', 'b'] } } }
+    const config = { 'data-source': { source: 'value', config: { value: [1, 2] } } }
     const widget = new Widget()
     const configuration = widget.register(config)
     return configuration
     .job()
     .then((output) => {
-      expect(output).to.equal({ value: 'a,b' })
+      expect(output.value).to.equal('2')
     })
   })
 
@@ -41,13 +41,27 @@ describe('widget', () => {
     })
 
     it('Will format according to format config', () => {
-      const config = { 'format': '%d%%', 'data-source': { source: 'value', config: { value: 34 } } }
+      const config = { format: '%d%%', 'data-source': { source: 'value', config: { value: 34 } } }
       const widget = new Widget()
       const configuration = widget.register(config)
       return configuration
       .job()
       .then((output) => {
         expect(output).to.equal({ value: '34%' })
+      })
+    })
+  })
+
+  context('Arrays', () => {
+    it("if it's an array, provide params for a graph", () => {
+      const config = { format: '%s', 'data-source': { source: 'value', config: { value: [1,2,3,4,5,6,7] } } }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      return configuration
+      .job()
+      .then((output) => {
+        expect(output.value).to.equal('7')
+        expect(output.history).to.equal([1,2,3,4,5,6])
       })
     })
   })
