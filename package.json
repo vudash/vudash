@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-gauge",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "main": "widget.js",
   "scripts": {
     "test": "lab *.test.js"
