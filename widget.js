@@ -3,12 +3,12 @@ const Transport = require('vudash-transports')
 const Hoek = require('hoek')
 
 const defaults = {
-  schedule: 60000,
+  schedule: 3000,
   description: 'Gauge',
   type: 'balance',
   display: 'fill',
   min: 0,
-  max: 100,
+  max: 1000,
   step: 5,
   value: 27,
   borderWidth: 0,
@@ -20,7 +20,11 @@ const defaults = {
   valueFontSize: '65px',
   enableClipboard: false,
   'data-source': {
-    source: 'random'
+    source: 'random',
+    options: {
+      "method": 'integer',
+      "options": [{ "min": 0, "max": 1000 }]
+    }
   }
 }
 
@@ -55,8 +59,8 @@ class GaugeWidget {
         return this.transport
         .fetch()
         .then((value) => {
-          console.log(value)
-          return Promise.resolve({ value })
+          console.log('gg', value)
+          return { value, min: config.min, max: config.max }
         })
       }
     }
