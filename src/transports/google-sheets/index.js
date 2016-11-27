@@ -103,8 +103,14 @@ class GoogleSheetsTransport extends Transport {
   }
 
   _toMatrix (tab) {
+    const conf = this.config
+
     return tab.map((row) => {
-      return Object.keys(row).map((column) => {
+      const columns = Object.keys(row).filter((col) => { 
+        return conf.columns.includes(col) 
+      })
+
+      return columns.map((column) => {
         return row[column]
       })
     })

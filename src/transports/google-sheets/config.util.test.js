@@ -28,6 +28,11 @@ class ConfigUtil {
     return Object.assign({ columns: ['a', 'b'], rows: { from: 1, to: 3 } }, baseConfig)
   }
 
+  getSingleColumnConfig (credentialsOverride) {
+    const baseConfig = this._getConfig(credentialsOverride)
+    return Object.assign({ columns: ['a'], rows: { from: 1, to: 3 } }, baseConfig)
+  }
+
   getSingleCellConfig (credentialsOverride) {
     const baseConfig = this._getConfig(credentialsOverride)
     return Object.assign({ columns: 'z', rows: 1 }, baseConfig)
