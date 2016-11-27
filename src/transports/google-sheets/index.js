@@ -110,9 +110,11 @@ class GoogleSheetsTransport extends Transport {
         return conf.columns.includes(col) 
       })
 
-      return columns.map((column) => {
+      const values = columns.map((column) => {
         return row[column]
       })
+      
+      return values.length > 1 ? values : values[0]
     })
   }
 

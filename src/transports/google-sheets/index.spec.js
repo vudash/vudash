@@ -154,9 +154,9 @@ describe('transports.google-sheets', () => {
     return transport.fetch().then((result) => {
       expect(transport.extract.callCount).to.equal(1)
       expect(result).to.equal([
-        ['cell0,0'],
-        ['cell1,0'],
-        ['cell2,0']
+        'cell0,0',
+        'cell1,0',
+        'cell2,0'
       ])
     })
   })
