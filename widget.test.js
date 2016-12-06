@@ -91,7 +91,9 @@ describe('widget', () => {
   context('Configuration Defaults', () => {
     let widget
 
-    const config = {}
+    const config = {
+      schedule: 32768
+    }
 
     before((done) => {
       widget = new Widget().register(config)
@@ -99,7 +101,7 @@ describe('widget', () => {
     })
 
     it('Overrides schedule', (done) => {
-      expect(widget.schedule).to.equal(60000)
+      expect(widget.schedule).to.equal(32768)
       done()
     })
   })
