@@ -58,6 +58,8 @@
     "request-promise": "^4.1.1",
     "shortid": "^2.2.6",
     "socket.io": "^1.4.6",
+    "svelte": "^1.0.7",
+    "uppercamelcase": "^1.1.0",
     "vision": "^4.1.0",
     "vudash-widget-ci": "^3.3.0",
     "vudash-widget-gauge": "^3.0.0",
@@ -71,7 +73,8 @@
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
     "sinon-as-promised": "^4.0.2",
-    "standard": "^7.1.2"
+    "standard": "^7.1.2",
+    "svelte": "^1.0.7"
   },
   "standard": {
     "globals": [
