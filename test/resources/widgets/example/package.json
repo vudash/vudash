@@ -1,4 +1,9 @@
 {
   "name": "vudash-widget-example",
-  "main": "widget.js"
+  "main": "widget.js",
+  "vudash": {
+    "script": "./update.js",
+    "styles": "./style.css",
+    "markup": "./markup.html"
+  }
 }

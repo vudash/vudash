@@ -1,4 +1,4 @@
-class MissingWidget {
+class OptionalWidget {
 
   register () {
     return {}
@@ -6,4 +6,4 @@ class MissingWidget {
 
 }
 
-module.exports = MissingWidget
+module.exports = OptionalWidget

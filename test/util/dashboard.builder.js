@@ -1,3 +1,5 @@
+'use strict'
+
 const WidgetBuilder = require('./widget.builder')
 
 class DashboardBuilder {

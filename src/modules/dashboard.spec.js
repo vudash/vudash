@@ -123,12 +123,10 @@ describe('modules.dashboard', () => {
 
   context('Render Model', () => {
     let renderModel
-    const js = 'my-js'
     const dashName = 'my-dash'
 
     before((done) => {
       const myWidget = WidgetBuilder.create()
-      .withJs(js)
       .build()
 
       const descriptor = DashboardBuilder.create()
