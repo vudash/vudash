@@ -6,14 +6,12 @@ class HealthWidget {
     let on = false
 
     return {
-      markup: 'markup.html',
-      update: 'update.js',
-      css: 'client.css',
       schedule: 1000,
 
       job: () => {
         on = !on
-        return Promise.resolve({on})
+        const classes = on ? '' : 'small'
+        return Promise.resolve({ classes })
       }
 
     }

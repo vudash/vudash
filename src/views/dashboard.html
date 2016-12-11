@@ -12,14 +12,14 @@
   </style>
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   <style type="text/css">
+  {{#each dashboard.widgets}}
+    {{{css}}}
+    {{{providedCss}}}
+  {{/each}}
   {{#each dashboard.assets.css}}
     @import url("{{{this}}}") list-of-media-queries;
   {{/each}}
-  {{#each dashboard.widgets}}
-    {{{css}}}
-  {{/each}}
   </style>
-  <script src="/assets/generated/jqlite.min.js"></script>
 </head>
 <body>
   {{#each dashboard.widgets}}
@@ -40,6 +40,7 @@
 
     {{#each dashboard.widgets}}
       {{{js}}}
+      {{{providedJs}}}
     {{/each}}
   </script>
   {{#each dashboard.assets.js}}

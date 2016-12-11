@@ -4,6 +4,10 @@
   "vudash": {
     "script": "./client.js",
     "styles": "./style.css",
-    "markup": "./markup.html"
+    "markup": "./markup.html",
+    "libs": {
+      "js": ["./js1.js", "./js2.js"],
+      "css": ["./css1.css", "./css2.css"]
+    }
   }
 }

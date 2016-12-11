@@ -4,36 +4,22 @@ class WidgetBuilder {
   constructor () {
     this.widget = this._createWidgetModule()
     this.position = { x: 0, y: 0, w: 0, h: 0 }
-    this.css = 'test/resources/widgets/example/style.css'
-    this.markup = 'test/resources/widgets/example/markup.html'
-    this.js = 'js'
   }
 
   _createWidgetModule (internals = { schedule: 1000, job: () => { return Promise.resolve({}) } }) {
-    internals.js = this.js
-    internals.css = this.css
-    internals.markup = this.markup
-
-    return class MyWidget {
+    const Module = class MyWidget {
       register (options) {
         return Object.assign({}, internals, { config: options })
       }
     }
-  }
+    const html = '<h1>hi</h1>'
+    const name = 'VudashMyWidget'
 
-  withCss (css) {
-    this.css = css
-    return this
-  }
-
-  withMarkup (markup) {
-    this.markup = markup
-    return this
-  }
-
-  withJs (js) {
-    this.js = js
-    return this
+    return {
+      Module,
+      html,
+      name
+    }
   }
 
   withJob (job = Promise.resolve({}), schedule = 1000) {

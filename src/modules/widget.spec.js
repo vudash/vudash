@@ -28,45 +28,13 @@ describe('modules.widget', () => {
       schedule: 1000
     })
     expect(job.script).to.be.a.function()
-    expect(widget.getJs()).to.include("function() { console.log('hello'); }")
-    expect(widget.getCss()).to.contain('body { color: #fff; }')
-    done()
-  })
-
-  it('Handles multiple files in properties', (done) => {
-    const widget = new Widget(dashboard, renderOptions, resource('widgets/multiple'))
-    expect(widget.getJs()).to.contain('var one = 1;\nvar two = 2;')
-    expect(widget.getCss()).to.contain('\none { color: #fff; }\ntwo { color: #000; }')
-    done()
-  })
-
-  it('Parses markup', (done) => {
-    const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
-    expect(widget.getMarkup()).to.contain(`<h1 id="${widget.id}">Hello</h1>`)
-    done()
-  })
-
-  it('Widget with missing properties', (done) => {
-    const widget = new Widget(dashboard, renderOptions, resource('widgets/missing'))
-    expect(widget.getMarkup()).to.exist()
-    expect(widget.getJs()).to.contain(`var widget_${widget.id} = { config: {} };`)
-    done()
-  })
-
-  it('Widget with invalid properties', (done) => {
-    const module = resource('widgets/broken')
-    expect(() => { return new Widget(dashboard, renderOptions, module) }).to.throw(Error, `Could not load widget component from ${module}/markup.html`)
     done()
   })
 
   it('Converts widget to render model', (done) => {
     const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
     const renderModel = widget.toRenderModel()
-    expect(renderModel).to.deep.include({
-      css: widget.getCss(),
-      markup: widget.getMarkup()
-    })
-    expect(renderModel.js).to.include(widget.getJs())
+    expect(renderModel.js).to.contain('var VudashWidgetExample = (function')
     done()
   })
 
@@ -75,27 +43,18 @@ describe('modules.widget', () => {
     const eventBinding = `
       socket.on('${widget.id}:update', function($id, $widget, $data) {
     `.trim()
-    const componentBinding = `
-      }('${widget.id}', widget_${widget.id}));
-    `.trim()
     const rendered = widget.toRenderModel().js
     expect(rendered).to.include(eventBinding)
-    expect(rendered).to.include(componentBinding)
     done()
   })
 
-  it('Event is not bound if there is no update code', (done) => {
-    const widget = new Widget(dashboard, renderOptions, resource('widgets/neutral'))
-    expect(widget.toRenderModel().js).not.to.include('socket.on')
-    done()
-  })
-
-  it('Attaches update function to event', (done) => {
+  it('Binds component update', (done) => {
     const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
-    let update = `
-      ${widget.update}
+    const componentBinding = `
+      widget_${widget.id}.update($data);
     `.trim()
-    expect(widget.toRenderModel().js).to.include(update)
+    const rendered = widget.toRenderModel().js
+    expect(rendered).to.include(componentBinding)
     done()
   })
 
@@ -115,18 +74,6 @@ describe('modules.widget', () => {
     return widget.getJob().script().then((rawConfig) => {
       expect(rawConfig).to.deep.equal(overrides)
     })
-  })
-
-  it('Final config exposed to clientside', (done) => {
-    const overrides = {
-      foo: 'qux',
-      working: null
-    }
-    const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
-    const rawConfig = widget.getConfig()
-    const clientsideJs = widget.getJs()
-    expect(clientsideJs).to.equal(`var widget_${widget.id} = { config: ${JSON.stringify(rawConfig)} };`)
-    done()
   })
 
   it('Does not override all config for jobs', (done) => {
@@ -153,8 +100,24 @@ describe('modules.widget', () => {
     }
 
     it('Recieves an event emitter on construction', (done) => {
-      new Widget(dashboard, renderOptions, MyWidget)
+      new Widget(dashboard, renderOptions, { html: 'hi', name: 'VudashMyWidget', Module: MyWidget })
       expect(expectedEmitFn).to.be.a.function()
+      done()
+    })
+  })
+
+  context('Third Party libraries', () => {
+    it('Renders JS', (done) => {
+      const widget = new Widget(dashboard, renderOptions, resource('widgets/third-party'))
+      const js = widget.toRenderModel().providedJs
+      expect(js).not.to.be.undefined()
+      done()
+    })
+
+    it('Renders CSS', (done) => {
+      const widget = new Widget(dashboard, renderOptions, resource('widgets/third-party'))
+      const css = widget.toRenderModel().providedCss
+      expect(css).not.to.be.undefined()
       done()
     })
   })

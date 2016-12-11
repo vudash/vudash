@@ -1,4 +1,7 @@
 {
   "name": "vudash-widget-health",
-  "main": "widget.js"
+  "main": "widget.js",
+  "vudash": {
+    "component": "./component.html"
+  }
 }

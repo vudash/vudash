@@ -1,12 +1,12 @@
 'use strict'
 
-const Path = require('path')
-const fs = require('fs')
 const id = require('./id-gen')
 const markupBuilder = require('./markup-builder')
-const AssetReader = require('./asset-reader')
+const svelteCompiler = require('./svelte-compiler')
 const WidgetPosition = require('./css-builder/widget-position')
+const moduleResolver = require('./module-resolver')
 const cssBuilder = require('./css-builder')
+const componentRenderer = require('./component-renderer')
 
 class Widget {
 
@@ -15,87 +15,25 @@ class Widget {
     this.background = renderOptions.background
     this.position = new WidgetPosition(dashboard.layout, renderOptions.position)
     this.id = id()
-    
-    const paths = this._resolve(descriptor)
-    this.assetReader = new AssetReader(paths.base)
+    this.config = options
 
-    const buildable = new paths.Module().register(
+    const { name, html, Module, js, css } = moduleResolver.resolve(descriptor)
+    this.providedCss = css
+    this.providedJs = js
+
+    this.component = svelteCompiler.compile(name, html)
+
+    const buildable = new Module().register(
       options,
       this.dashboard.emitter.emit.bind(this.dashboard.emitter)
     )
     this.build(buildable)
   }
 
-  _resolve (module) {
-    if (typeof module === 'function') {
-      return { base: process.cwd(), Module: module }
-    }
-
-    let entry
-    try {
-      entry = require.resolve(module)
-    } catch (e) {
-      const local = Path.join(process.cwd(), module)
-      entry = require.resolve(local)
-    }
-
-    return {
-      Module: require(entry),
-      base: Path.dirname(entry)
-    }
-  }
-
   build (module) {
-    this.markup = this.assetReader.readFromFile(module.markup, '')
-    this.clientJs = this.assetReader.readFromFile(module.clientJs, '')
-
-    const providedCss = this.assetReader.readFromFile(module.css, '')
-    this.css = cssBuilder.build(this.id, providedCss, this.position, this.background)
-
-    this.update = this.assetReader.readFromFile(module.update, null)
+    this.css = cssBuilder.build(this.id, this.position, this.background)
     this.job = { script: module.job, schedule: module.schedule }
     this.config = module.config || {}
-  }
-
-  _buildEvent () {
-    if (!this.update) { return '' }
-    const id = this.id
-    return `
-      socket.on('${id}:update', function($id, $widget, $data) {
-        if ($data.error) {
-          console.error('Widget "${id}" encountered error: ' + $data.error.message);
-        }
-        ${this.update}
-      }.bind(this, '${id}', widget_${id}));
-    `.trim()
-  }
-
-  getMarkup () {
-    return markupBuilder.render(this)
-  }
-
-  _buildClientJs () {
-    if (!this.clientJs) { return '' }
-    const id = this.id
-    return `
-      (function($id, $widget) {
-        ${this.clientJs}
-      }('${this.id}', widget_${id}));
-    `.trim()
-  }
-
-  getJs () {
-    return `
-      var widget_${this.id} = { config: ${JSON.stringify(this.getConfig())} };
-
-      ${this._buildEvent()}
-
-      ${this._buildClientJs()}
-    `.trim()
-  }
-
-  getCss () {
-    return this.css
   }
 
   getJob () {
@@ -109,9 +47,11 @@ class Widget {
   toRenderModel () {
     return {
       id: this.id,
-      js: this.getJs(),
-      css: this.getCss(),
-      markup: this.getMarkup()
+      markup: markupBuilder.render(this),
+      css: this.css,
+      js: componentRenderer.render(this.id, this.component, this.config),
+      providedJs: this.providedJs,
+      providedCss: this.providedCss
     }
   }
 
