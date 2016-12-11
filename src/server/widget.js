@@ -23,16 +23,14 @@ class ProgressWidget {
 
     return {
       config,
-      markup: 'markup.html',
-      update: 'update.js',
-      css: 'style.css',
       schedule: config.schedule,
 
       job: () => {
         return this.transport
         .fetch()
         .then((percentage) => {
-          return { percentage, description: config.description }
+          if (percentage > 100) { percentage = 100 }
+          return { percentage }
         })
       }
     }
