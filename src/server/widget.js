@@ -1,3 +1,5 @@
+'use strict'
+
 const Promise = require('bluebird').Promise
 const Transport = require('vudash-transports')
 const Hoek = require('hoek')
@@ -49,17 +51,12 @@ class GaugeWidget {
 
     return {
       config,
-      markup: 'markup.html',
-      update: 'update.js',
-      css: 'client.css',
-      clientJs: 'client.js',
       schedule: config.schedule,
 
       job: () => {
         return this.transport
         .fetch()
         .then((value) => {
-          console.log('gg', value)
           return { value, min: config.min, max: config.max }
         })
       }
