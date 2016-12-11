@@ -22,8 +22,7 @@
   "scripts": {
     "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
     "start": "node app.js",
-    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js",
-    "prepublish": "rm -f src/public/generated/* && cp node_modules/jqlite/jqlite.min.js src/public/generated/jqlite.min.js"
+    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"
@@ -50,7 +49,6 @@
     "hoek": "^4.0.0",
     "inert": "^4.0.0",
     "joi": "^8.1.0",
-    "jqlite": "^0.2.39",
     "lodash": "^4.16.4",
     "moment": "^2.13.0",
     "npm": "^3.9.3",
@@ -61,10 +59,10 @@
     "svelte": "^1.0.7",
     "uppercamelcase": "^1.1.0",
     "vision": "^4.1.0",
-    "vudash-widget-ci": "^3.3.0",
-    "vudash-widget-gauge": "^3.0.0",
-    "vudash-widget-statistic": "^3.2.1",
-    "vudash-widget-time": "^3.2.0"
+    "vudash-widget-ci": "^4.0.0",
+    "vudash-widget-gauge": "^4.0.0",
+    "vudash-widget-statistic": "^4.0.0",
+    "vudash-widget-time": "^4.0.0"
   },
   "devDependencies": {
     "cheerio": "^0.22.0",
@@ -73,8 +71,7 @@
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
     "sinon-as-promised": "^4.0.2",
-    "standard": "^7.1.2",
-    "svelte": "^1.0.7"
+    "standard": "^7.1.2"
   },
   "standard": {
     "globals": [
