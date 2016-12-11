@@ -1,8 +1,49 @@
 <div class="vudash-health">
   <div class="value">
-    <i id="{{id}}_heart" class="material-icon">favorite</i>
+    <i class="material-icons {{ classes }}">favorite</i>
   </div>
   <div class="label">
     Health
   </div>
 </div>
+
+<style>
+  .vudash-health > * {
+    text-align: center;
+  }
+
+  .vudash-health > .label {
+    font-weight: bold;
+  }
+
+  .vudash-health > .value {
+    height: 80px;
+    display: block;
+  }
+
+  .vudash-health > .value > i {
+    transition: font-size 0.5s;
+    color: #FF695E;
+    font-size: 76px;
+  }
+
+  .vudash-health > .value > i.small {
+    font-size: 56px;
+  }
+</style>
+
+<script>
+  export default {
+    data () {
+      return {
+        classes: ''
+      }
+    },
+
+    methods: {
+      update (data) {
+        this.set(data)
+      }
+    }
+  }
+</script>

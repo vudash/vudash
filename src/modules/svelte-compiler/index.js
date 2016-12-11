@@ -14,7 +14,6 @@ class SvelteCompiler {
         console.warn(warning.message)
       }
     })
-
     return { code, map, name }
   }
 }
