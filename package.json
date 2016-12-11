@@ -4,7 +4,8 @@
   "description": "Vudash time widget",
   "main": "widget.js",
   "scripts": {
-    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js",
+    "compile": "node ./src/compiler && svelte compile -n TimeWidget ./.compiled.html > TimeWidget.js"
   },
   "author": "",
   "license": "MIT",
@@ -13,6 +14,7 @@
     "cron": "^1.1.1",
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
+    "memory-fs": "^0.3.0",
     "moment": "^2.13.0"
   },
   "standard": {
@@ -31,6 +33,11 @@
       "afterEach",
       "resource"
     ]
+  },
+  "vudash": {
+    "markup": "./src/client/markup.html",
+    "script": "./src/client/client.js",
+    "styles": "./src/client/client.css"
   },
   "devDependencies": {
     "code": "^4.0.0",
