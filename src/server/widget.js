@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const Hoek = require('hoek')
-const engineFactory = require('./engines/factory')
+const engineFactory = require('../engines/factory')
 
 class CiWidget {
 
@@ -38,10 +38,6 @@ class CiWidget {
     return {
       config,
       schedule: config.schedule || 60000,
-      markup: 'markup.html',
-      update: 'update.js',
-      css: 'client.css',
-      clientJs: 'client.js',
 
       job: () => {
         return provider.fetchBuildStatus()

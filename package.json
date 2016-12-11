@@ -16,7 +16,12 @@
     "dashing",
     "build"
   ],
-  "author": "",
+  "vudash": {
+    "markup": "./src/client/markup.html",
+    "script": "./src/client/client.js",
+    "styles": "./src/client/client.css"
+  },
+  "author": "Antony Jones",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.6",

@@ -1,9 +1,9 @@
 'use strict'
 
-const Widget = require('../widget')
-const Travis = require('./engines/travis')
-const BuildStatus = require('./build-status.enum')
-const engineFactory = require('./engines/factory')
+const Widget = require('./widget')
+const Travis = require('../engines/travis')
+const BuildStatus = require('../build-status.enum')
+const engineFactory = require('../engines/factory')
 
 describe('widget', () => {
   it('No config for travis', (done) => {
