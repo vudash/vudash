@@ -5,7 +5,7 @@ A dashboard, like dashing, but written in NodeJS.
 
 ## vudash-core
 Vudash open source component
-Writen using hapijs, lab, semantic ui, socket.io
+Writen using hapijs, lab, material ui, socket.io, and svelte
 
 ## What does it look like?
 
@@ -154,9 +154,6 @@ class TimeWidget {
 
   register (options, emit) {
     return {
-
-      markup: 'markup.html',
-      update: 'update.js',
       schedule: 1000,
 
       job: () => {
@@ -179,12 +176,8 @@ The main widget file. The crux of this file is to export a class with a single m
 ```javascript
   {
     config: {abc: 'def'}, // configuration to pass to the client and server side widget. Available in the client as `$widget.config` and `options` parameter of `register()`
-    markup: 'markup.html', // The html for the widget. This is automatically wrapped in a grid cell, so it can be any html you like.
-    update: 'update.js', // The method that is triggered when the `job` emits new data. This gets `$widget`, `$id`, and `$data` passed in, as detailed below.
     schedule: 1000, // Put simply, how often the widget sends updates,
-    css: 'styles.css', // Or, an array of css filenames. these are rendered to the client.
-    clientJs: 'client.js', // or an array of js files. These are rendered to the client.
-    job: (emit) => { emit({x: 'y'}) } // The crux of the widget. Does some sort of work or check, and then emits the results.
+    job: () => { return Promise.resolve({some: 'result'}) } // The crux of the widget. Does some sort of work or check, and then resolves with the results.
   }
 ```
 
@@ -192,16 +185,56 @@ To pass configuration, you can use the `options` parameter of `register()`
 
 The second parameter to register is the optional parameter `emit` which can be used to emit events (at any time) to the dashboard. See `Events` below for more information about this.
 
-#### update.js
+#### Writing a client side component
 
-The client side code to update the widget. It is wrapped in a function which contains
-* `$id`: The widget's ID (For avoiding conflicts in the browser - this is in the format widget_<random> where random is some random chars assigned at load time)
-* `$widget`: The widget itself, initially contains one property, `config`, which is the config you gave in `widget.js` above. You can use it as a store for anything you like, as it is namespaced to the widget you are working on. i.e. `$widget.myValue = 'x'`
-* `$data`: Whatever you emit from emit() in your job method. Ideally this is a javascript object.
+Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
 
-#### markup.html
+There are two ways to define components, either:
+1. Multi-part: Define `vudash.markup`, `vudash.script` and `vudash.styles` in your widget's `package.json` and put your html, svelte component, and css into them respectively.
+2. Single-part: Just define `vudash.component` in your widget's package.json, and place all your svelte component's code there.
 
-Just html. Use `{{id}}` to get the ID of the widget mentioned above. Your html should use things like `<h1 id="{{id}}-some-thing"/>` to avoid conflicts. You can then reference them using `$id+'-some-thing'` when you need to access them from the clientside javascript.
+##### Example of a single part component:
+
+package.json
+```json
+{
+  "name": "vudash-widget-health",
+  "main": "widget.js",
+  "vudash": {
+    "component": "./component.html"
+  }
+}
+```
+
+component.html
+```html
+<h1 class="vudash-hello">{{ greeting }}</h1>
+<style>
+  .vudash-hello {
+    text-align: right;
+  }
+</style>
+<script>
+  export default {
+    data () {
+      return {
+        greeting: 'hello'
+      }
+    },
+
+    methods: {
+      /**
+      * This is the really important bit. This update method is called whenever the widget emits data.
+      **/
+      update (data) {
+        this.set(data)
+      }
+    }
+  }
+</script>
+```
+
+See the [Svelte Documentation](https://svelte.technology/guide) for information on how to build svelte components.
 
 #### Events
 
