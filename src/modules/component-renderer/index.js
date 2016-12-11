@@ -1,13 +1,16 @@
 'use strict'
 
 class ComponentRenderer {
-  render (id, component) {
+  render (id, component, config) {
     const { name, code } = component
 
     return `
       ${code}
 
-      var widget_${id} = new ${name}({ target: document.getElementById("widget-container-${id}") });
+      var widget_${id} = new ${name}({ 
+        target: document.getElementById("widget-container-${id}"), 
+        data: { config: ${JSON.stringify(config)} }
+      });
 
       socket.on('${id}:update', function($id, $widget, $data) {
         if ($data.error) {

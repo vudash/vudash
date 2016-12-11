@@ -1,12 +1,31 @@
 'use strict'
 
+const { reach } = require('hoek')
 const Path = require('path')
 const fs = require('fs')
 const upperCamelCase = require('uppercamelcase')
 const { ComponentCompilationError } = require('../../errors')
 const directoryResolver = require('./directory-resolver')
 
+class Internals {
+  optionallyRead (directory, filename) {
+    if (!filename) { return '' }
+    return fs.readFileSync(Path.join(directory, filename))
+  }
+
+  compileLibraries (assetType, pkg, directory) {
+    const libs = reach(pkg, `libs.${assetType}`, { default: [] })
+    return libs.map((lib) => {
+      return this.optionallyRead(directory, lib)
+    }).join('\n')
+  }
+}
+
 class ModuleResolver {
+
+  constructor () {
+    this.internals = new Internals()
+  }
 
   readPackage (directory) {
     const packageJson = fs.readFileSync(Path.join(directory, 'package.json'))
@@ -19,7 +38,10 @@ class ModuleResolver {
     const name = upperCamelCase(pkg.name)
     const Module = require(directory)
 
-    return { name, html, Module }
+    const js = this.internals.compileLibraries('js', pkg.vudash, directory)
+    const css = this.internals.compileLibraries('css', pkg.vudash, directory)
+
+    return { name, html, Module, js, css }
   }
 
   resolve (descriptor) {
@@ -37,16 +59,11 @@ class ModuleResolver {
   }
 
   buildMultiFileComponent (directory, paths) {
-    const script = this.optionallyRead(directory, paths.script)
-    const markup = this.optionallyRead(directory, paths.markup)
-    const styles = this.optionallyRead(directory, paths.styles)
+    const script = this.internals.optionallyRead(directory, paths.script)
+    const markup = this.internals.optionallyRead(directory, paths.markup)
+    const styles = this.internals.optionallyRead(directory, paths.styles)
 
     return `${markup} <style>${styles}</style> <script>${script}</script>`
-  }
-
-  optionallyRead (directory, filename) {
-    if (!filename) { return '' }
-    return fs.readFileSync(Path.join(directory, filename))
   }
 
   buildSingleFileComponent (directory, paths) {

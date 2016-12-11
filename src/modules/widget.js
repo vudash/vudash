@@ -15,8 +15,11 @@ class Widget {
     this.background = renderOptions.background
     this.position = new WidgetPosition(dashboard.layout, renderOptions.position)
     this.id = id()
+    this.config = options
 
-    const { name, html, Module } = moduleResolver.resolve(descriptor)
+    const { name, html, Module, js, css } = moduleResolver.resolve(descriptor)
+    this.providedCss = css
+    this.providedJs = js
 
     this.component = svelteCompiler.compile(name, html)
 
@@ -47,7 +50,9 @@ class Widget {
       id: this.id,
       markup: markupBuilder.render(this),
       css: this.css,
-      js: componentRenderer.render(this.id, this.component)
+      js: componentRenderer.render(this.id, this.component, this.config),
+      providedJs: this.providedJs,
+      providedCss: this.providedCss
     }
   }
 

@@ -54,4 +54,20 @@ describe('module-resolver', () => {
       done()
     })
   })
+
+  context('Third party libraries', () => {
+    it('reads css files', (done) => {
+      const { css } = moduleResolver.resolve(resource('widgets/third-party'))
+      expect(css).to.include('h1 { color: red; }')
+      expect(css).to.include('h2 { color: blue; }')
+      done()
+    })
+
+    it('reads js files', (done) => {
+      const { js } = moduleResolver.resolve(resource('widgets/third-party'))
+      expect(js).to.include('console.log("a");')
+      expect(js).to.include('console.log("b");')
+      done()
+    })
+  })
 })

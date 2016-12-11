@@ -105,4 +105,20 @@ describe('modules.widget', () => {
       done()
     })
   })
+
+  context('Third Party libraries', () => {
+    it('Renders JS', (done) => {
+      const widget = new Widget(dashboard, renderOptions, resource('widgets/third-party'))
+      const js = widget.toRenderModel().providedJs
+      expect(js).not.to.be.undefined()
+      done()
+    })
+
+    it('Renders CSS', (done) => {
+      const widget = new Widget(dashboard, renderOptions, resource('widgets/third-party'))
+      const css = widget.toRenderModel().providedCss
+      expect(css).not.to.be.undefined()
+      done()
+    })
+  })
 })
