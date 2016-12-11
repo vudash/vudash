@@ -1,12 +1,15 @@
 {
   "name": "vudash-widget-progress",
-  "main": "./widget.js",
+  "main": "index.js",
   "version": "1.0.0",
   "description": "Vudash Progress Widget",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "vudash": {
+    "component": "./src/client/component.html"
+  },
+  "author": "Antony Jones",
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {}
