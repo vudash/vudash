@@ -1,7 +1,7 @@
 'use strict'
 
 class CssBuilder {
-  build (id, providedCss, widgetPosition, background) {
+  build (id, widgetPosition, background) {
 
     const rules = [
       `top:${widgetPosition.top}%`,
@@ -14,12 +14,7 @@ class CssBuilder {
       rules.push(`background:${background}`)
     }
 
-    const css = [
-      `#widget-container-${id}{${rules.join(';')}}`,
-      providedCss
-    ]
-
-    return css.join('\n')
+    return `#widget-container-${id}{${rules.join(';')}}`
   } 
 }
 

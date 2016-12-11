@@ -4,8 +4,6 @@ const cssBuilder = require('.')
 const WidgetPosition = require('./widget-position')
 
 describe('modules/css-builder', () => {
-  const baseCss = `.stuff{foo: 'bar'}`
-
   const widgetPosition = new WidgetPosition({
     rows: 4,
     columns: 5
@@ -18,7 +16,7 @@ describe('modules/css-builder', () => {
   context('Css', () => {
     let css
     before((done) => {
-      css = cssBuilder.build('xyz', baseCss, widgetPosition, background)
+      css = cssBuilder.build('xyz', widgetPosition, background)
       done()
     })
 
@@ -39,17 +37,12 @@ describe('modules/css-builder', () => {
       expect(css).to.contain('height:100%;')
       done()
     })
-
-    it('Renders provided css', (done) => {
-      expect(css).to.contain(baseCss)
-      done()
-    })
   })
 
   context('No Background', () => {
     let css
     before((done) => {
-      css = cssBuilder.build('abc', baseCss, widgetPosition, undefined)
+      css = cssBuilder.build('abc', widgetPosition, undefined)
       done()
     })
 

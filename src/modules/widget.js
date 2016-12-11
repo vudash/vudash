@@ -31,8 +31,7 @@ class Widget {
   }
 
   build (module) {
-    this.css = cssBuilder.build(this.id, '', this.position, this.background)
-
+    this.css = cssBuilder.build(this.id, this.position, this.background)
     this.job = { script: module.job, schedule: module.schedule }
     this.config = module.config || {}
   }
