@@ -5,9 +5,6 @@ class GithubWidget {
 
   register (options) {
     return {
-      markup: 'markup.html',
-      update: 'update.js',
-      css: 'client.css',
       schedule: 60000,
 
       job: () => {

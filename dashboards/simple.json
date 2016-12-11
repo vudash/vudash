@@ -5,43 +5,6 @@
     "rows": 4
   },
   "widgets": [
-    { "position": {"x": 4, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/health" },
-    { "position": { "x": 1, "y": 0, "w": 3, "h":1 }, "widget": "vudash-widget-time" },
-    { "position": {"x": 0, "y": 1, "w": 2, "h": 1},
-      "widget": "vudash-widget-statistic",
-      "options": {
-        "schedule": 900000,
-        "description": "EUR -> USD",
-        "data-source": {
-          "source": "rest",
-          "config": {
-            "url": "http://api.fixer.io/latest?base=EUR",
-            "method": "get",
-            "graph": "rates.USD"
-          }
-        }
-      }
-    },
-    { "position": {"x": 2, "y": 1, "w": 2, "h": 1},
-      "widget": "vudash-widget-statistic",
-      "options": {
-        "schedule": 5000,
-        "description": "Charty",
-        "data-source": {
-          "source": "random",
-          "config": {
-            "method": "n",
-            "options": [
-              "integer",
-              8,
-              [{
-                "min": 0,
-                "max": 20
-              }]
-            ]
-          }
-        }
-      }
-    }
+    { "position": {"x": 4, "y": 0, "w": 1, "h": 1}, "widget": "./widgets/health" }
   ]
 }

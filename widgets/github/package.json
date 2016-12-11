@@ -1,4 +1,7 @@
 {
   "name": "vudash-widget-github",
-  "main": "widget.js"
+  "main": "index.js",
+  "vudash": {
+    "component": "./component.html"
+  }
 }
