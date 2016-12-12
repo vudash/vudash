@@ -18,10 +18,6 @@ class StatisticWidget {
 
     return {
       config: { description: config.description },
-      markup: 'markup.html',
-      update: 'update.js',
-      css: ['client.css', 'chartist.min.css'],
-      clientJs: ['client.js', 'chartist.min.js'],
       schedule: config.schedule,
 
       job: this.job.bind(this)
@@ -32,7 +28,6 @@ class StatisticWidget {
     return this.transport
     .fetch()
     .then((result) => {
-
       if (Array.isArray(result)) {
         const currentValue = result.pop()
         return { value: this._format(currentValue), history: result }
