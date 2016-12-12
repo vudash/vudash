@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-statistic",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "main": "widget.js",
   "scripts": {
     "test": "lab src/**/*.test.js"
@@ -23,8 +23,12 @@
     "script": "./src/client/client.js",
     "styles": "./src/client/client.css",
     "libs": {
-      "js": ["./src/client/libraries/chartist/chartist.min.js"],
-      "css": ["./src/client/libraries/chartist/chartist.min.css"]
+      "js": [
+        "./src/client/libraries/chartist/chartist.min.js"
+      ],
+      "css": [
+        "./src/client/libraries/chartist/chartist.min.css"
+      ]
     }
   }
 }
