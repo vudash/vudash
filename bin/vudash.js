@@ -10,7 +10,7 @@ const __cwd = process.cwd()
 
 cli.main((args, options) => {
   if (args.length === 0) {
-    require('../app.js')
+    require('../app')
   }
 
   if (args[0] === 'create') {
