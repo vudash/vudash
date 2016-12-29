@@ -1,11 +1,13 @@
 'use strict'
 
 const svelte = require('svelte')
+const buble = require('buble')
 
 class SvelteCompiler {
+
   compile (name, html) {
     try {
-      const { code, map } = svelte.compile(html, {
+      const { code } = svelte.compile(html, {
         format: 'iife',
         name,
         onerror: (err) => {
@@ -16,7 +18,9 @@ class SvelteCompiler {
         }
       })
 
-      return { code, map, name }
+      const transformed = buble.transform(code)
+
+      return { code: transformed.code, map: transformed.map, name }
     } catch (err) {
       console.log('Svelte compilation error', err, err.frame)
     }
