@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "cd $TEST_DIR && npm test"
+    "test:all": "cd $TEST_DIR && npm install && npm test"
   },
   "devDependencies": {
     "lerna": "^2.0.0-beta.32",

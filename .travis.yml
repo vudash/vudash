@@ -14,3 +14,5 @@ env:
   - TEST_DIR=packages/widget-progress
   - TEST_DIR=packages/widget-statistic
   - TEST_DIR=packages/widget-time
+script:
+  - npm run test:all
