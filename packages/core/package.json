@@ -20,9 +20,9 @@
   "description": "Easy to use, flexible dashboard software for monitoring, analytics, and more.",
   "main": "app.js",
   "scripts": {
-    "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
+    "watch": "BROWSER_SYNC=true ../../node_modules/.bin/nodemon -e html,js .",
     "start": "node app.js",
-    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"
