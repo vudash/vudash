@@ -10,6 +10,9 @@ env:
   - TEST_DIR=packages/widget-progress
   - TEST_DIR=packages/widget-statistic
   - TEST_DIR=packages/widget-time
-install:
-  - npm install
+before_script:
   - lerna bootstrap
+script:
+  - pushd $TEST_DIR
+  - npm test
+  - popd
