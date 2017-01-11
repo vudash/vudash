@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "test": "find ./packages -mindepth 1 -maxdepth 1 -type d \\( ! -name . \\) -exec bash -c \"cd '{}' && npm test\" \\;"
-  },
   "devDependencies": {
     "lerna": "^2.0.0-beta.32",
     "cheerio": "^0.22.0",
