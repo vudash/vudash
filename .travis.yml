@@ -15,4 +15,4 @@ env:
   - TEST_DIR=packages/widget-statistic
   - TEST_DIR=packages/widget-time
 script:
-  - pushd $TEST_DIR && npm test && popd
+  - pushd $TEST_DIR && npm install && npm test && popd
