@@ -1,3 +1,12 @@
 language: node_js
 node_js:
   - "6"
+  - "7"
+env:
+  - TEST_DIR=packages/core
+  - TEST_DIR=packages/transports
+  - TEST_DIR=packages/widget-ci
+  - TEST_DIR=packages/widget-gauge
+  - TEST_DIR=packages/widget-progress
+  - TEST_DIR=packages/widget-statistic
+  - TEST_DIR=packages/widget-time
