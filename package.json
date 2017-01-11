@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test:all": "cd $TEST_DIR && npm install && npm test"
+    "test:all": "echo 'RUNNING CORE' && cd $TEST_DIR && npm install && npm test"
   },
   "devDependencies": {
     "lerna": "^2.0.0-beta.32",
