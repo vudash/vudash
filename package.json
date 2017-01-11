@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "pushd $TEST_DIR && npm test && popd"
+    "test": "cd $TEST_DIR && npm test"
   },
   "devDependencies": {
     "lerna": "^2.0.0-beta.32",
