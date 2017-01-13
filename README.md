@@ -190,8 +190,8 @@ The second parameter to register is the optional parameter `emit` which can be u
 Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
 
 There are two ways to define components, either:
-1. Multi-part: Define `vudash.markup`, `vudash.script` and `vudash.styles` in your widget's `package.json` and put your html, svelte component, and css into them respectively.
-2. Single-part: Just define `vudash.component` in your widget's package.json, and place all your svelte component's code there.
+ 1. Multi-part: Define `vudash.markup`, `vudash.script` and `vudash.styles` in your widget's `package.json` and put your html, svelte component, and css into them respectively.
+ 1. Single-part: Just define `vudash.component` in your widget's package.json, and place all your svelte component's code there.
 
 ##### Example of a single part component:
 
