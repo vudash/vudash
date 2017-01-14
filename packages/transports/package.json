@@ -16,13 +16,6 @@
     "request-promise": "^4.1.1",
     "spreadsheet-to-json": "^1.0.5"
   },
-  "devDependencies": {
-    "code": "^3.0.2",
-    "glob": "^7.0.6",
-    "lab": "^11.0.1",
-    "nock": "^8.0.0",
-    "sinon": "^1.17.6"
-  },
   "standard": {
     "globals": [
       "expect",
