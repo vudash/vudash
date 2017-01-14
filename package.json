@@ -1,0 +1,57 @@
+{
+  "name": "vudash-widget-ci",
+  "version": "3.3.2",
+  "description": "A CI Widget for Vudash",
+  "main": "widget.js",
+  "scripts": {
+    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+  },
+  "keywords": [
+    "vudash",
+    "travis",
+    "travis-ci",
+    "travisci",
+    "widget",
+    "dashboard",
+    "dashing",
+    "build"
+  ],
+  "vudash": {
+    "markup": "./src/client/markup.html",
+    "script": "./src/client/client.js",
+    "styles": "./src/client/client.css"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "circleci": "^0.3.2",
+    "hoek": "^4.1.0",
+    "joi": "^9.2.0",
+    "travis-ci": "^2.1.0"
+  },
+  "devDependencies": {
+    "code": "^3.0.0",
+    "lab": "^11.2.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.6",
+    "sinon-as-promised": "^4.0.2"
+  },
+  "standard": {
+    "globals": [
+      "fromSrc",
+      "fromTest",
+      "describe",
+      "context",
+      "it",
+      "sinon",
+      "fromRoot",
+      "expect",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach",
+      "resource"
+    ]
+  }
+}

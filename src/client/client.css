@@ -1,0 +1,20 @@
+.ci-widget > .value > i {
+  font-size: 76px;
+}
+
+.ci-widget > * {
+  text-align: center;
+}
+
+.ci-widget > .label {
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.ci-icon {
+  margin: auto;
+  display: block;
+  font-size: 76px;
+  width: 76px;
+  font-weight: bold;
+}
