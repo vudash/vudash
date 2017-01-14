@@ -1,0 +1,18 @@
+.vudash-statistic .value {
+  font-size: 76px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vudash-statistic .label {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vudash-statistic .chart {
+  top: 0;
+  position: absolute;
+  float: left;
+  z-index: -999;
+}
