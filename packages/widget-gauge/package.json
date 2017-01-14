@@ -11,6 +11,7 @@
     "styles": "./src/client/client.css"
   },
   "dependencies": {
+    "bluebird": "^3.4.7",
     "hoek": "^4.1.0",
     "vudash-transports": "^1.0.1"
   },
