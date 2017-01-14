@@ -15,7 +15,7 @@ describe('module.emitter', () => {
 
   it('Instantiation of emitter binds handler', (done) => {
     expect(socketSpy.on.callCount).to.equal(1)
-    expect(socketSpy.on.firstCall.args[0]).to.deep.equal('connection')
+    expect(socketSpy.on.firstCall.args[0]).to.equal('connection')
     done()
   })
 
@@ -32,7 +32,7 @@ describe('module.emitter', () => {
     emitter.emit('def', {id: 'pqr'})
     const recentEvents = emitter.getRecentEvents()
     expect(Object.keys(recentEvents)).to.have.length(3)
-    expect(recentEvents.def).to.deep.equal({id: 'pqr'})
+    expect(recentEvents.def).to.equal({id: 'pqr'})
     done()
   })
 
@@ -50,9 +50,9 @@ describe('module.emitter', () => {
     const mockSocket = { id: 'xyz', join: sinon.spy() }
     emitter.clientJoinHandler(mockSocket)
     expect(emit.callCount).to.equal(3)
-    expect(emit.firstCall.args).to.deep.equal(['abc', {id: 'abc'}])
-    expect(emit.secondCall.args).to.deep.equal(['def', {id: 'pqr'}])
-    expect(emit.thirdCall.args).to.deep.equal(['ghi', {id: 'ghi'}])
+    expect(emit.firstCall.args).to.equal(['abc', {id: 'abc'}])
+    expect(emit.secondCall.args).to.equal(['def', {id: 'pqr'}])
+    expect(emit.thirdCall.args).to.equal(['ghi', {id: 'ghi'}])
     done()
   })
 
