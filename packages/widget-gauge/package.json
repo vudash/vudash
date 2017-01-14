@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-gauge",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "main": "index.js",
   "scripts": {
     "test": "../../node_modules/.bin/lab src/**/*.test.js"
@@ -13,7 +13,7 @@
   "dependencies": {
     "bluebird": "^3.4.7",
     "hoek": "^4.1.0",
-    "vudash-transports": "^1.0.1"
+    "vudash-transports": "^5.0.0"
   },
   "devDependencies": {
     "chance": "^1.0.4",
