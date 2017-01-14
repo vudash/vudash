@@ -4,7 +4,7 @@
   "description": "A CI Widget for Vudash",
   "main": "widget.js",
   "scripts": {
-    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+    "test": "../../node_modules/.bin/lab describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "keywords": [
     "vudash",

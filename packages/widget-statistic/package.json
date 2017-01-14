@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "main": "widget.js",
   "scripts": {
-    "test": "lab src/**/*.test.js"
+    "test": "../../node_modules/.bin/lab src/**/*.test.js"
   },
   "dependencies": {
     "chartist": "^0.9.8",

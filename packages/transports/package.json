@@ -4,7 +4,7 @@
   "description": "Various transports for vudash widgets",
   "main": "index.js",
   "scripts": {
-    "test": "lab -vpDI 'expect,before,beforeEach,after,afterEach,describe,it,fromRoot,fromSrc,resource' ./unit.lab.js"
+    "test": "../../node_modules/.bin/lab -vpDI 'expect,before,beforeEach,after,afterEach,describe,it,fromRoot,fromSrc,resource' ./unit.lab.js"
   },
   "author": "",
   "license": "MIT",
