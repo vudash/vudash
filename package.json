@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "test:all": "echo 'RUNNING CORE' && cd $TEST_DIR && npm install && npm test"
-  },
   "devDependencies": {
     "lerna": "^2.0.0-beta.32",
     "cheerio": "^0.22.0",

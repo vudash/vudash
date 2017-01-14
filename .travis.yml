@@ -9,12 +9,12 @@ cache:
   - node_modules
   - packages/**/node_modules
 env:
-  - TEST_DIR=packages/core
-  - TEST_DIR=packages/transports
-  - TEST_DIR=packages/widget-ci
-  - TEST_DIR=packages/widget-gauge
-  - TEST_DIR=packages/widget-progress
-  - TEST_DIR=packages/widget-statistic
-  - TEST_DIR=packages/widget-time
+  - TEST_DIR=core
+  - TEST_DIR=transports
+  - TEST_DIR=widget-ci
+  - TEST_DIR=widget-gauge
+  - TEST_DIR=widget-progress
+  - TEST_DIR=widget-statistic
+  - TEST_DIR=widget-time
 script:
-  - npm run test:all
+  - lerna run test --scope $TEST_DIR
