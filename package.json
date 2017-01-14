@@ -1,95 +1,14 @@
 {
-  "name": "vudash",
-  "version": "4.1.1",
-  "keywords": [
-    "vudash",
-    "dashboard",
-    "dashing",
-    "analytics",
-    "monitoring",
-    "websockets",
-    "geckoboard",
-    "widget",
-    "stats",
-    "dash",
-    "dashing-js",
-    "statistics",
-    "big screen",
-    "display"
-  ],
-  "description": "Easy to use, flexible dashboard software for monitoring, analytics, and more.",
-  "main": "app.js",
-  "scripts": {
-    "watch": "BROWSER_SYNC=true ./node_modules/.bin/nodemon -e html,js .",
-    "start": "node app.js",
-    "test": "lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
-  },
-  "bin": {
-    "vudash": "bin/vudash.js"
-  },
-  "engines": {
-    "node": "6.9.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vudash/vudash-core"
-  },
-  "author": "Antony Jones",
-  "license": "MIT",
-  "dependencies": {
-    "app-module-path": "^1.1.0",
-    "bluebird": "^3.4.0",
-    "boom": "^3.1.3",
-    "browser-sync": "^2.12.9",
-    "buble": "^0.15.1",
-    "chalk": "^1.1.3",
-    "cli": "^0.11.2",
-    "fs-extra": "^0.30.0",
-    "handlebars": "^4.0.5",
-    "hapi": "^13.4.0",
-    "hoek": "^4.0.0",
-    "inert": "^4.0.0",
-    "joi": "^8.1.0",
-    "lodash": "^4.16.4",
-    "moment": "^2.13.0",
-    "npm": "^3.9.3",
-    "request": "^2.72.0",
-    "request-promise": "^4.1.1",
-    "shortid": "^2.2.6",
-    "socket.io": "^1.4.6",
-    "svelte": "^1.0.7",
-    "uppercamelcase": "^1.1.0",
-    "vision": "^4.1.0",
-    "vudash-widget-ci": "^4.0.0",
-    "vudash-widget-gauge": "^4.0.0",
-    "vudash-widget-progress": "^2.0.0",
-    "vudash-widget-statistic": "^4.0.0",
-    "vudash-widget-time": "^4.0.0"
-  },
   "devDependencies": {
     "cheerio": "^0.22.0",
-    "code": "^2.3.0",
+    "code": "^4.0.0",
+    "glob": "^7.0.6",
     "lab": "^10.6.0",
+    "lerna": "^2.0.0-beta.32",
+    "nock": "^9.0.2",
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
     "sinon-as-promised": "^4.0.2",
     "standard": "^7.1.2"
-  },
-  "standard": {
-    "globals": [
-      "fromSrc",
-      "fromTest",
-      "describe",
-      "context",
-      "it",
-      "sinon",
-      "fromRoot",
-      "expect",
-      "before",
-      "after",
-      "beforeEach",
-      "afterEach",
-      "resource"
-    ]
   }
 }

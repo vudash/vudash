@@ -24,7 +24,7 @@ describe('modules.widget', () => {
   it('Reads widget descriptor properties', (done) => {
     const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
     const job = widget.getJob()
-    expect(job).to.deep.include({
+    expect(job).to.include({
       schedule: 1000
     })
     expect(job.script).to.be.a.function()
@@ -72,7 +72,7 @@ describe('modules.widget', () => {
     }
     const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
     return widget.getJob().script().then((rawConfig) => {
-      expect(rawConfig).to.deep.equal(overrides)
+      expect(rawConfig).to.equal(overrides)
     })
   })
 
@@ -82,7 +82,7 @@ describe('modules.widget', () => {
     }
     const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
     return widget.getJob().script().then((rawConfig) => {
-      expect(rawConfig).to.deep.equal({
+      expect(rawConfig).to.equal({
         foo: 'bar',
         working: true
       })

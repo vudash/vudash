@@ -1,0 +1,32 @@
+{
+  "name": "vudash-transports",
+  "version": "1.3.0",
+  "description": "Various transports for vudash widgets",
+  "main": "index.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab -vpDI 'expect,before,beforeEach,after,afterEach,describe,it,fromRoot,fromSrc,resource' ./unit.lab.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chance": "^1.0.4",
+    "hoek": "^4.1.0",
+    "joi": "^9.0.4",
+    "request": "^2.75.0",
+    "request-promise": "^4.1.1",
+    "spreadsheet-to-json": "^1.0.5"
+  },
+  "standard": {
+    "globals": [
+      "expect",
+      "fail",
+      "describe",
+      "it",
+      "sandbox",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
+  }
+}

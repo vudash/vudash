@@ -1,0 +1,30 @@
+{
+  "name": "vudash-widget-statistic",
+  "version": "4.0.1",
+  "main": "widget.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab src/**/*.test.js"
+  },
+  "dependencies": {
+    "chartist": "^0.9.8",
+    "sprintf-js": "^1.0.3",
+    "vudash-transports": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash-widget-statistic.git"
+  },
+  "vudash": {
+    "markup": "./src/client/markup.html",
+    "script": "./src/client/client.js",
+    "styles": "./src/client/client.css",
+    "libs": {
+      "js": [
+        "./src/client/libraries/chartist/chartist.min.js"
+      ],
+      "css": [
+        "./src/client/libraries/chartist/chartist.min.css"
+      ]
+    }
+  }
+}
