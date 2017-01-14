@@ -1,10 +1,11 @@
 {
   "devDependencies": {
-    "lerna": "^2.0.0-beta.32",
     "cheerio": "^0.22.0",
-    "code": "^2.3.0",
+    "code": "^4.0.0",
     "glob": "^7.0.6",
     "lab": "^10.6.0",
+    "lerna": "^2.0.0-beta.32",
+    "nock": "^9.0.2",
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
     "sinon-as-promised": "^4.0.2",

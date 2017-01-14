@@ -9,12 +9,12 @@ cache:
   - node_modules
   - packages/**/node_modules
 env:
-  - TEST_DIR=core
-  - TEST_DIR=transports
-  - TEST_DIR=widget-ci
-  - TEST_DIR=widget-gauge
-  - TEST_DIR=widget-progress
-  - TEST_DIR=widget-statistic
-  - TEST_DIR=widget-time
+  - TEST_DIR=vudash
+  - TEST_DIR=vudash-transports
+  - TEST_DIR=vudash-widget-ci
+  - TEST_DIR=vudash-widget-gauge
+  - TEST_DIR=vudash-widget-progress
+  - TEST_DIR=vudash-widget-statistic
+  - TEST_DIR=vudash-widget-time
 script:
   - lerna run test --scope $TEST_DIR
