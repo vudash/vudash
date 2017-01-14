@@ -17,4 +17,5 @@ env:
   - TEST_DIR=vudash-widget-statistic
   - TEST_DIR=vudash-widget-time
 script:
+  - lerna bootstrap
   - lerna run test --scope $TEST_DIR
