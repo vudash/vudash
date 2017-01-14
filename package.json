@@ -1,7 +1,11 @@
 {
+  "scripts": {
+    "docs:preview": "docsify serve docs"
+  },
   "devDependencies": {
     "cheerio": "^0.22.0",
     "code": "^4.0.0",
+    "docsify": "^1.7.4",
     "glob": "^7.0.6",
     "lab": "^10.6.0",
     "lerna": "^2.0.0-beta.32",
