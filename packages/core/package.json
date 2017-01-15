@@ -1,6 +1,6 @@
 {
   "name": "vudash",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "keywords": [
     "vudash",
     "dashboard",
@@ -59,9 +59,9 @@
     "svelte": "^1.0.7",
     "uppercamelcase": "^1.1.0",
     "vision": "^4.1.0",
-    "vudash-widget-ci": "^5.0.0",
-    "vudash-widget-gauge": "^5.0.0",
-    "vudash-widget-progress": "^5.0.0",
+    "vudash-widget-ci": "^5.1.0",
+    "vudash-widget-gauge": "^5.1.0",
+    "vudash-widget-progress": "^5.1.0",
     "vudash-widget-statistic": "^5.0.0",
     "vudash-widget-time": "^5.0.0"
   },
