@@ -5,7 +5,7 @@ A dashboard, like dashing, but written in NodeJS.
 
 ## Documentation
 
-Documentation has moved [here](http://vudash.github.io/vudash-core/)
+Documentation has moved [here](http://vudash.github.io/vudash/)
 
 ## What does it look like?
 
