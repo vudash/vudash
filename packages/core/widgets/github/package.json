@@ -1,7 +1,0 @@
-{
-  "name": "vudash-widget-github",
-  "main": "index.js",
-  "vudash": {
-    "component": "./component.html"
-  }
-}

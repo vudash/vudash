@@ -1,7 +1,7 @@
 const request = require('request-promise')
 const moment = require('moment')
 
-class GithubWidget {
+class StatusWidget {
 
   register (options) {
     return {
@@ -20,4 +20,4 @@ class GithubWidget {
 
 }
 
-module.exports = GithubWidget
+module.exports = StatusWidget

@@ -1,9 +1,8 @@
 {
-  "name": "vudash-widget-gauge",
-  "version": "5.1.0",
-  "main": "index.js",
+  "name": "vudash-widget-status",
+  "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab src/**/*.test.js"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
   },
   "vudash": {
     "markup": "./src/client/markup.html",
@@ -12,6 +11,8 @@
   },
   "dependencies": {
     "bluebird": "^3.4.7",
+    "export-dir": "^0.1.2",
+    "got": "^6.7.1",
     "hoek": "^4.1.0",
     "vudash-transports": "^5.0.0"
   }

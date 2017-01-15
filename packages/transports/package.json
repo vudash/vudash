@@ -15,18 +15,5 @@
     "request": "^2.75.0",
     "request-promise": "^4.1.1",
     "spreadsheet-to-json": "^1.0.5"
-  },
-  "standard": {
-    "globals": [
-      "expect",
-      "fail",
-      "describe",
-      "it",
-      "sandbox",
-      "before",
-      "after",
-      "beforeEach",
-      "afterEach"
-    ]
   }
 }

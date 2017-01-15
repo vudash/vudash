@@ -1,0 +1,16 @@
+.vudash-status > * {
+  text-align: center;
+}
+
+.vudash-status > .label {
+  font-weight: bold;
+}
+
+.vudash-status > .label > .updated {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.vudash-status > .value > i {
+  font-size: 76px;
+}

@@ -2,6 +2,7 @@ const Transport = require('..')
 const request = require('request-promise')
 const Joi = require('joi')
 const Hoek = require('hoek')
+const pkg = require('../../../package.json')
 
 class RestTransport extends Transport {
 
@@ -27,7 +28,10 @@ class RestTransport extends Transport {
     const options = {
       method: this.config.method,
       url: this.config.url,
-      json: true
+      json: true,
+      headers: {
+        'user-agent': `vudash/${pkg.version} (https://github.com/vudash/vudash)`
+      }
     }
 
     if (this.config.body) {

@@ -29,22 +29,5 @@
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
     "travis-ci": "^2.1.0"
-  },
-  "standard": {
-    "globals": [
-      "fromSrc",
-      "fromTest",
-      "describe",
-      "context",
-      "it",
-      "sinon",
-      "fromRoot",
-      "expect",
-      "before",
-      "after",
-      "beforeEach",
-      "afterEach",
-      "resource"
-    ]
   }
 }

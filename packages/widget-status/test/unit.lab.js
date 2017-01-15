@@ -14,6 +14,7 @@ global.context = lab.describe
 global.describe = lab.describe
 global.it = lab.it
 global.before = lab.before
+global.beforeEach = lab.beforeEach
 global.after = lab.after
 global.afterEach = lab.afterEach
 
