@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "start": "lerna run start --scope vudash",
+    "heroku-postbuild": "lerna bootstrap",
     "docs:preview": "docsify serve docs"
   },
   "devDependencies": {
@@ -14,5 +16,8 @@
     "sinon": "^1.17.4",
     "sinon-as-promised": "^4.0.2",
     "standard": "^7.1.2"
+  },
+  "engines": {
+    "node": "7.4.x"
   }
 }
