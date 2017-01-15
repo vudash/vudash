@@ -1,8 +1,7 @@
 'use strict'
 
-const shortid = require('shortid')
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_')
-
 module.exports = () => {
-  return shortid.generate().replace('$', '')
+  const random = Math.random() * 0xFFFFFFFFFFFF << 0
+  const positive = Math.abs(random)
+  return positive.toString(16)
 }

@@ -18,3 +18,16 @@
   width: 76px;
   font-weight: bold;
 }
+
+@keyframes failed-pulse {
+  0% { background-color: #9F14FF; }
+  25% { background-color: #E812CD; }
+  50% { background-color: #FF2021; }
+  75% { background-color: #E85320; }
+  100% { background-color: #FF8B12; }
+}
+
+.ci-widget.error, .ci-widget.failed {
+  background-color: #FF2021;
+  animation: failed-pulse 4s infinite alternate;
+}

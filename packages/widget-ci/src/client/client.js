@@ -11,12 +11,15 @@ const icons = {
 export default {
   methods: {
     update (data) {
-      let ligature = icons[data.status];
+      let ligature = icons[data.status]
+      let backgroundClass = data.status
+
       if (data.error) {
         ligature = 'block'
+        backgroundClass = 'error'
       }
 
-      this.set({ ligature })
+      this.set({ ligature, backgroundClass })
     }
   }
 }

@@ -11,10 +11,14 @@ body {
   border: 2px solid #393939;
 }
 
-.widget-container > * {
-  position: relative !important;
-  display: block !important;
-  margin: auto !important;
-  top: 50%;
-  transform: translateY(-50%);
+.widget-container > *:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+
+.widget-container > *:first-child {
+    height: 100%;
+    width: 100%;
 }
