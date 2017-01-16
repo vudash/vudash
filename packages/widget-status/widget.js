@@ -1,3 +1,3 @@
 'use strict'
 
-exports = require('./src/server/widget')
+module.exports = require('./src/server/widget')

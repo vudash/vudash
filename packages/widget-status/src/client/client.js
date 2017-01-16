@@ -1,26 +1,21 @@
 'use strict'
 
-const mappings = {
-  error: 'sentiment_very_dissatisfied',
-  good: 'sentiment_satisfied',
-  minor: 'sentiment_neutral',
-  major: 'sentiment_dissatisfied'
-}
-
 export default {
   data () {
     return {
-      ligature: 'schedule'
+      description: 'Cloudflare',
+      components: [
+        { name: 'Africa', status: 'Minor Outage' },
+        { name: 'Europe', status: 'Major Outage' },
+        { name: 'Oceania', status: 'Healthy' }
+      ],
+      overallStatus: 'Minor Outage'
     }
   },
 
   methods: {
     update (data) {
-      const ligature = mappings[data.status]
-      this.set(data)
-      this.set({
-        ligature
-      })
+      // this.set(data)
     }
   }
 }

@@ -5,8 +5,14 @@ const HealthStatus = require('../../health-status')
 const { reach } = require('hoek')
 
 function transformOverallHealth (source) {
+  const mappings = {
+    none: HealthStatus.HEALTHY,
+    minor: HealthStatus.PARTIAL_OUTAGE,
+    major: HealthStatus.MAJOR_OUTAGE
+  }
   const overallHealth = reach(source, 'status.indicator')
-  return overallHealth === 'none' ? HealthStatus.HEALTHY : HealthStatus.PARTIAL_OUTAGE
+
+  return overallHealth === mappings[overallHealth] || HealthStatus.UNKNOWN
 }
 
 function mapHealthStatus (status) {

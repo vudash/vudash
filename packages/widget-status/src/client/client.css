@@ -11,6 +11,6 @@
   font-style: italic;
 }
 
-.vudash-status > .value > i {
-  font-size: 76px;
+.vudash-status > ul {
+  font-size: 14px;
 }

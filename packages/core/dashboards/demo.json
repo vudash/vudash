@@ -28,7 +28,7 @@
       "widget": "vudash-widget-ci",
       "options": {
         "provider": "travis",
-        "repo": "vudash-core",
+        "repo": "vudash",
         "user": "vudash"
       }
     },
@@ -51,7 +51,9 @@
       }
     },
     { "position": {"x": 3, "y": 1, "w": 1, "h": 1}, "widget": "vudash-widget-progress" },
-    { "position": {"x": 4, "y": 1, "w": 1, "h": 1}, "widget": "vudash-widget-status" },
+    { "position": {"x": 4, "y": 1, "w": 1, "h": 1}, 
+      "widget": "vudash-widget-status"
+    },
 
     { "position": {"x": 0, "y": 2, "w": 2, "h": 1},
       "widget": "vudash-widget-statistic",

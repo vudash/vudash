@@ -1,8 +1,11 @@
 <div class="vudash-status">
-  <div class="value">
+  <ul>
+    {{#each components as cmp}}
+      <li>{{cmp.name}}: {{cmp.status}}</li>
+    {{/each}}
     <i class="material-icons">{{ ligature }}</i>
-  </div>
+  </ul>
   <div class="label">
-    {{ page.name }} <span class="updated">{{ _updated }}</span>
+    {{ description }} <span class="updated">{{ _updated }}</span>
   </div>
 </div>
