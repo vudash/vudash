@@ -14,3 +14,15 @@
 .vudash-status > ul {
   font-size: 14px;
 }
+
+.vudash-status > ul > li.major-outage i, .vudash-status > ul > li.unknown i {
+  color: red;
+}
+
+.vudash-status > ul > li.minor-outage i, .vudash-status > ul > li.degraded i {
+  color: yellow;
+}
+
+.vudash-status > ul > li.healthy i {
+  color: red;
+}

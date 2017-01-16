@@ -12,7 +12,7 @@ function transformOverallHealth (source) {
   }
   const overallHealth = reach(source, 'status.indicator')
 
-  return overallHealth === mappings[overallHealth] || HealthStatus.UNKNOWN
+  return mappings[overallHealth] || HealthStatus.UNKNOWN
 }
 
 function mapHealthStatus (status) {
@@ -33,7 +33,7 @@ class StatuspageIo {
 
   filterComponentList (all, component) {
     if (this.selectedComponents.includes(component.name)) {
-      all[component.name] = mapHealthStatus(component.status)
+      all[component.name] = { name: component.name, status: mapHealthStatus(component.status) }
     }
     return all
   }

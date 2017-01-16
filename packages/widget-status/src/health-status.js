@@ -1,9 +1,9 @@
 'use strict'
 
 module.exports = {
-  HEALTHY: 'Healthy',
-  PARTIAL_OUTAGE: 'Partial Outage',
-  MAJOR_OUTAGE: 'Major Outage',
-  DEGRADED: 'Degraded Performance',
-  UNKNOWN: 'Unknown'
+  HEALTHY: 'healthy',
+  PARTIAL_OUTAGE: 'partial-outage',
+  MAJOR_OUTAGE: 'major-outage',
+  DEGRADED: 'degraded',
+  UNKNOWN: 'unknown'
 }

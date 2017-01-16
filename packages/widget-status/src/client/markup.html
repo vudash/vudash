@@ -1,7 +1,7 @@
 <div class="vudash-status">
   <ul>
     {{#each components as cmp}}
-      <li>{{cmp.name}}: {{cmp.status}}</li>
+      <li><i class="{{cmp.status}}"></i></li>
     {{/each}}
     <i class="material-icons">{{ ligature }}</i>
   </ul>
