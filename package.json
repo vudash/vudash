@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "lerna run start --scope vudash",
-    "heroku-postbuild": "lerna bootstrap",
+    "heroku-postbuild": "./node_modules/.bin/lerna bootstrap",
     "docs:preview": "docsify serve docs"
   },
   "devDependencies": {
