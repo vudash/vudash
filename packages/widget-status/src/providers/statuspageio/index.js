@@ -3,6 +3,7 @@
 const got = require('got')
 const HealthStatus = require('../../health-status')
 const { reach } = require('hoek')
+const { assign } = Object
 
 function transformOverallHealth (source) {
   const mappings = {
@@ -33,7 +34,8 @@ class StatuspageIo {
 
   filterComponentList (all, component) {
     if (this.selectedComponents.includes(component.name)) {
-      all[component.name] = { name: component.name, status: mapHealthStatus(component.status) }
+      const styles = mapHealthStatus(component.status)
+      all[component.name] = assign({ name: component.name }, styles)
     }
     return all
   }

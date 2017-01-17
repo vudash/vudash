@@ -1,9 +1,9 @@
 'use strict'
 
 module.exports = {
-  HEALTHY: 'healthy',
-  PARTIAL_OUTAGE: 'partial-outage',
-  MAJOR_OUTAGE: 'major-outage',
-  DEGRADED: 'degraded',
-  UNKNOWN: 'unknown'
+  HEALTHY: { class: 'healthy', ligature: 'lens' },
+  PARTIAL_OUTAGE: { class: 'partial-outage', ligature: 'adjust' },
+  MAJOR_OUTAGE: { class: 'major-outage', ligature: 'panorama_fish_eye' },
+  DEGRADED: { class: 'degraded', ligature: 'tonality' },
+  UNKNOWN: { class: 'unknown', ligature: 'remove_circle_outline' }
 }

@@ -12,17 +12,33 @@
 }
 
 .vudash-status > ul {
-  font-size: 14px;
+  font-size: 20px;
+  list-style: none;
+  padding: 0;
 }
 
-.vudash-status > ul > li.major-outage i, .vudash-status > ul > li.unknown i {
+.pips {
+    text-align: justify;
+    min-width: 100%;
+}
+.pips:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+}
+.pips li {
+    display: inline-block;
+    border: 10 dotted #fff;
+}
+
+.pips > li > i.major-outage, .pips > li > i.unknown {
   color: red;
 }
 
-.vudash-status > ul > li.minor-outage i, .vudash-status > ul > li.degraded i {
+.pips > li > i.minor-outage, .pips > li > i.degraded {
   color: yellow;
 }
 
-.vudash-status > ul > li.healthy i {
+.pips > li > i.healthy {
   color: red;
 }

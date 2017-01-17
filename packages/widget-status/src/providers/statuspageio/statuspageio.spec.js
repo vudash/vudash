@@ -3,6 +3,7 @@
 const Provider = require('.')
 const HealthStatus = require('../../health-status')
 const nock = require('nock')
+const { assign } = Object
 
 describe('providers.statuspageio', () => {
   const url = 'http://example.org/'
@@ -62,11 +63,11 @@ describe('providers.statuspageio', () => {
   })
 
   it('Fetches components', (done) => {
-    expect(results.health['Component A']).to.equal({ name: 'Component A', status: HealthStatus.HEALTHY })
-    expect(results.health['Component B']).to.equal({ name: 'Component B', status: HealthStatus.MAJOR_OUTAGE })
-    expect(results.health['Component C']).to.equal({ name: 'Component C', status: HealthStatus.PARTIAL_OUTAGE })
-    expect(results.health['Component D']).to.equal({ name: 'Component D', status: HealthStatus.DEGRADED })
-    expect(results.health['Component E']).to.equal({ name: 'Component E', status: HealthStatus.UNKNOWN })
+    expect(results.health['Component A']).to.equal(assign({ name: 'Component A' }, HealthStatus.HEALTHY))
+    expect(results.health['Component B']).to.equal(assign({ name: 'Component B' }, HealthStatus.MAJOR_OUTAGE))
+    expect(results.health['Component C']).to.equal(assign({ name: 'Component C' }, HealthStatus.PARTIAL_OUTAGE))
+    expect(results.health['Component D']).to.equal(assign({ name: 'Component D' }, HealthStatus.DEGRADED))
+    expect(results.health['Component E']).to.equal(assign({ name: 'Component E' }, HealthStatus.UNKNOWN))
     done()
   })
 })

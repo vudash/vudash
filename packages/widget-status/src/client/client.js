@@ -5,11 +5,11 @@ export default {
     return {
       description: 'Cloudflare',
       components: [
-        { name: 'Africa', status: 'Minor Outage' },
-        { name: 'Europe', status: 'Major Outage' },
-        { name: 'Oceania', status: 'Healthy' }
+        { name: 'Africa', class: 'minor-outage', ligature: 'lens' },
+        { name: 'Europe', class: 'Major Outage', ligature: 'panorama_fish_eye' },
+        { name: 'Oceania', class: 'Healthy', ligature: 'tonality' }
       ],
-      overallStatus: 'Minor Outage'
+      overallStatus: { class: 'healthy', ligature: 'lens' }
     }
   },
 
