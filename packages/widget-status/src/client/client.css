@@ -12,23 +12,20 @@
 }
 
 .vudash-status > ul {
-  font-size: 20px;
   list-style: none;
-  padding: 0;
+  padding: 10% 0;
+  margin: 0 auto;
+  width: 80%;
 }
 
-.pips {
-    text-align: justify;
-    min-width: 100%;
+.vudash-status > ul > li {
+  display: inline-block;
+  margin: auto 0;
 }
-.pips:after {
-    content: '';
-    display: inline-block;
-    width: 100%;
-}
-.pips li {
-    display: inline-block;
-    border: 10 dotted #fff;
+
+.vudash-status > ul > li > i {
+  font-size: 34px;
+  padding: 0 10px;
 }
 
 .pips > li > i.major-outage, .pips > li > i.unknown {
