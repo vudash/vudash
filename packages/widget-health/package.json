@@ -3,5 +3,6 @@
   "main": "widget.js",
   "vudash": {
     "component": "./component.html"
-  }
+  },
+  "version": "5.2.0"
 }
