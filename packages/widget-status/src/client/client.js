@@ -4,14 +4,14 @@ export default {
   data () {
     return {
       description: '...',
-      components: [
-      ],
-      overallStatus: { class: 'healthy', ligature: 'lens' }
+      components: {},
+      overallHealth: { class: 'healthy', ligature: 'lens' }
     }
   },
 
   methods: {
     update (data) {
+      console.log(data)
       this.set(data)
     }
   }

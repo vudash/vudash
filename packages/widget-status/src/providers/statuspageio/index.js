@@ -4,6 +4,7 @@ const got = require('got')
 const HealthStatus = require('../../health-status')
 const { reach } = require('hoek')
 const { assign } = Object
+const Joi = require('joi')
 
 function transformOverallHealth (source) {
   const mappings = {
@@ -32,10 +33,18 @@ class StatuspageIo {
     this.selectedComponents = config.components
   }
 
+  static get configValidation () {
+    return {
+      url: Joi.string().uri().required().description('Status page url'),
+      components: Joi.array(Joi.string()).required().description('Component names to monitor')
+    }
+  }
+
   filterComponentList (all, component) {
     if (this.selectedComponents.includes(component.name)) {
       const styles = mapHealthStatus(component.status)
-      all[component.name] = assign({ name: component.name }, styles)
+      const state = assign({ name: component.name }, styles)
+      all.push(state)
     }
     return all
   }
@@ -46,11 +55,11 @@ class StatuspageIo {
     })
     .then((response) => {
       const body = response.body
-      const filteredComponents = body.components.reduce(this.filterComponentList.bind(this), {})
+      const filteredComponents = body.components.reduce(this.filterComponentList.bind(this), [])
 
       return {
         description: reach(body, 'page.name'),
-        health: filteredComponents,
+        components: filteredComponents,
         overallHealth: transformOverallHealth(body)
       }
     })

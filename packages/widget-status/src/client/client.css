@@ -25,17 +25,17 @@
 
 .vudash-status > ul > li > i {
   font-size: 34px;
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .pips > li > i.major-outage, .pips > li > i.unknown {
-  color: red;
+  color: #ff695e;
 }
 
 .pips > li > i.minor-outage, .pips > li > i.degraded {
-  color: yellow;
+  color: #f5e07c;
 }
 
 .pips > li > i.healthy {
-  color: red;
+  color: #70b37d;
 }

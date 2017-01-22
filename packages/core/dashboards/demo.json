@@ -54,7 +54,16 @@
     { "position": {"x": 4, "y": 1, "w": 1, "h": 1}, 
       "widget": "vudash-widget-status",
       "options": {
-        
+        "type": "statuspageio",
+        "url": "http://status.contentful.com/",
+        "components": [
+          "Content Delivery API",
+          "Assets CDN",
+          "Content Management API",
+          "Web App",
+          "Website",
+          "Authentication Service"
+        ]
       } 
     },
 

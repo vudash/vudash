@@ -5,6 +5,11 @@ const HealthStatus = require('../../health-status')
 const { reach } = require('hoek')
 
 class Github {
+
+  static get configValidation () {
+    return {}
+  }
+
   mapHealth (body) {
     const mappings = {
       good: HealthStatus.HEALTHY,
