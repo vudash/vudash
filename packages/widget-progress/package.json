@@ -1,7 +1,7 @@
 {
   "name": "vudash-widget-progress",
   "main": "index.js",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Vudash Progress Widget",
   "scripts": {
     "test": "echo \"No test specified\" && exit 0"
@@ -12,6 +12,6 @@
   "author": "Antony Jones",
   "license": "MIT",
   "dependencies": {
-    "vudash-transports": "^5.0.0"
+    "vudash-transports": "^5.1.1"
   }
 }
