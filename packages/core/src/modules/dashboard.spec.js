@@ -191,7 +191,7 @@ describe('modules.dashboard', () => {
 
     it('Emits metadata', (done) => {
       expect(dashboard.emitter.emit.callCount).to.be.above(0)
-      expect(dashboard.emitter.emit.firstCall.args[1]._updated).to.be.an.instanceOf(Date)
+      expect(dashboard.emitter.emit.firstCall.args[1]._updated).to.be.a.string()
       done()
     })
   })
