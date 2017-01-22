@@ -7,7 +7,8 @@ const nock = require('nock')
 describe('providers.github', () => {
   context('#configValidation', () => {
     it('Returns an empty block', (done) => {
-      expect(Provider.configValidation).to.equal()
+      expect(Provider.configValidation).to.equal({})
+      done()
     })
   })
 
