@@ -243,6 +243,16 @@ TBD
 ##### configuration
 TBD
 
+#### Health Widget
+
+A simple widget with a beating heart, to let you know that the dashboard is alive.
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
 ### Writing a client side component
 
 Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
