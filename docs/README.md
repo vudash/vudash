@@ -177,6 +177,72 @@ To pass configuration, you can use the `options` parameter of `register()`
 
 The second parameter to register is the optional parameter `emit` which can be used to emit events (at any time) to the dashboard. See `Events` below for more information about this.
 
+### Built-in Widgets
+
+Vudash has a number of widgets which are available on npm, these are in the `packages/` directory of the monorepo, and also available on npm.
+
+#### CI Widget
+
+Connects to CI Providers and displays build results
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
+#### Gauge Widget
+
+Shows a VU-Meter like Gauge which represents numerical figures like percentages
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
+#### Progress Widget
+
+Similar to VU Meter, but with a linear progress bar
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
+#### Statistics Widget
+
+Shows a statistic, which can be a number, a word, or anything else representable on screen.
+
+Optionally can draw a graph of the previous results behind the main one.
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
+#### Status Widget
+
+Shows the status of an external service like github, or any API which uses Atlassian StatusPage
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
+#### Time Widget
+
+Simply shows the time, and has optional audiable alarams
+
+##### Screenshot
+TBD
+
+##### configuration
+TBD
+
 ### Writing a client side component
 
 Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
