@@ -3,6 +3,7 @@
 }
 
 .vudash-status > .label {
+  padding-top: 10px;
   font-weight: bold;
 }
 
@@ -13,7 +14,6 @@
 
 .vudash-status > ul {
   list-style: none;
-  padding: 10% 0;
   margin: 0 auto;
   width: 80%;
 }

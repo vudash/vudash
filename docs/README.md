@@ -32,6 +32,8 @@ Visiting the root of the application will yield a list of all available dashboar
 
 [Demo Dashboard](http://vudash.herokuapp.com/demo.dashboard)
 
+If, like me, you learn by example rather than reams of documentation, check out the [Demo Dashboard's Configuration](https://github.com/vudash/vudash-demo/blob/master/dashboards/demo.json) on github. You can then clarify any questions using the documentation below.
+
 # Dashboards
 A dashboard is a collection of widgets separated into rows and columns.
 
@@ -120,21 +122,262 @@ Widgets have some optional properties:
 | ------------- | ------------------------------------ | ------- |
 | background    | css for "background" style attribute | #ffffff |
 
-## Creating a widget
+## Predefined widgets
+
+Vudash has a number of widgets which are available on npm, these are in the `packages/` directory of the monorepo, and also available on npm.
+
+### CI Widget
+
+Connects to CI Providers and displays build results.
+
+Currently supports [CircleCI](http://www.circleci.com) and [TravisCI](http://www.travis-ci.org)
+
+#### Screenshot
+TBD
+
+#### Configuration
+Add to a [Vudash](https://www.npmjs.com/package/vudash) dashboard with the following configuration:
+
+##### Simple Configuration
+
+The simplest configuration is very straightforward
+
+```json
+  { "position": ...,
+    "widget": "vudash-widget-ci",
+    "options": {
+      "provider": "circleci",
+      "repo": "some-repo",
+      "user": "some-user"
+    }
+  }
+```
+
+##### Build Noises
+
+```javascript
+      {
+        "widget": "vudash-widget-ci",
+        "options": {
+          "provider": "travis", // CI Provider (travis or circleci)
+          "user": "your-user", // username, mandatory
+          "repo": "your-repo", // repository name, mandatory
+          "branch": "your-branch" // branch to monitor, optional.
+          "schedule": 60000 // Update frequency in MS (optional),
+          "sounds": { // Sound to play on build state changes (optional)
+            "passed": "/some/local/path/sound.ogg",
+            "failed": "data:audio/ogg;base64, ...",
+            "unknown": "data:audio/ogg;base64, ..."
+          },
+          "options": {
+            "auth": "xxx" // circleci auth token, only required for circleci
+          }
+        }
+      }
+```
+
+Where `your-user` is your github organisation or user name, and `your-repo` is your build/repository name.
+
+* The travis plugin currently only deals with public repositories (i.e. travis-ci.org, not .com)
+
+### Gauge Widget
+
+Shows a VU-Meter like Gauge which represents numerical figures like percentages
+
+#### Screenshot
+TBD
+
+#### Configuration
+Simply include in your dashboard, and configure as required (defaults are shown):
+
+```javascript
+  {
+    "widget": "vudash-widget-statistic",
+    "options": {
+      "schedule": 60000, // Optional. How often to refresh
+      "description": "Gauge", // Optional. Description shown below statistic,
+      'initial-value': 27,
+      'min': 0,
+      'max': 100,
+      'pointer.background-colour': 'orange' // Optional, Background colour of pointer,
+      'pointer.colour': 'indicatorColour', // Optional, Foreground colour of pointer.
+      'value.font-size': 'valueFontSize', // Optional. Font size of gauge value.
+      'value.colour': 'valueColour', // Optional. Colour of gauge value.
+      "data-source": { ... } // Required. See transports documentation
+    }
+  }
+```
+
+Note that `data-source` tells the widget where to get data, and is using the [vudash-transports plugin](https://github.com/vudash/vudash-transports/providers) to get data for your widget.
+
+### Progress Widget
+
+Similar to VU Meter, but with a linear progress bar
+
+#### Screenshot
+TBD
+
+#### Configuration
+TBD
+
+### Statistics Widget
+
+Shows a statistic, which can be a number, a word, or anything else representable on screen.
+
+Optionally can draw a graph of the previous results behind the main one.
+
+#### Screenshot
+![stats widget](https://cloud.githubusercontent.com/assets/218949/20489789/adb964ca-b003-11e6-917b-c07218625bd3.png)
+
+#### Configuration
+Simply include in your dashboard, and configure as required:
+
+```javascript
+  {
+    "widget": "vudash-widget-statistic",
+    "options": {
+      "schedule": 60000, // Optional. Default 60000ms, how often to refresh
+      "description": "Visitor Count", // Optional. Default "Statistics" Description shown below statistic,
+      "format": "%s", // Optional. Default %s. Format the incoming data (using sprintf-js)
+      "data-source": { ... } // Required. See transports documentation
+    }
+  }
+```
+
+Note that `data-source` tells the widget where to get data, and is using the [vudash-transports plugin](https://github.com/vudash/vudash-transports/providers) to get data for your widget.
+
+##### Graphs
+This widget will graph data which is passed in as an array.
+
+This means that if your data-source resolves an array of numbers as data, the first number in the array 
+will be shown as the statistic value, and a line graph will be drawn behind the widget using the remaining numbers.
+
+For example
+
+`[1,2,3,4,5,6,7]` will result in a widget value of 7, and a graph of 1-6 behind it.
+
+### Status Widget
+
+Shows the status of an external service like github, or any API which uses Atlassian StatusPage
+
+#### Screenshot
+TBD
+
+#### Configuration
+
+Currently this widget has two integrations.
+
+##### Atlassian Statuspage
+
+You can configure any status page which uses [Atlassian StatusPage](https://www.atlassian.com/software/statuspage) easily:
+
+```json
+{ 
+  "position": ..., 
+  "widget": "vudash-widget-status",
+  "options": {
+    "type": "statuspageio",
+    "url": "https://status.newrelic.com/", // URL to the status page
+    "components": [ // List the names of components you want to monitor the status of
+      "APM",
+      "Data Collection",
+      "Alerts"
+    ]
+  }
+}
+```
+
+##### Github
+
+Github status page monitoring is pretty much no-configuration. It will tell you when it is up, down, or otherwise.
+
+```json
+{ 
+  "position": ..., 
+  "widget": "vudash-widget-status",
+  "options": {
+    "type": "github"
+  }
+}
+```
+
+### Time Widget
+
+Simply shows the time, and has optional audiable alarams
+
+#### Screenshot
+TBD
+
+#### Configuration
+Simply include in your dashboard:
+
+```
+  {"widget": "vudash-widget-time", "options": ...}
+```
+
+##### Alarms
+This widget can play sounds! Simply pass 'alarms' into your configuration:
+
+```
+        "options": {
+          "alarms": [
+            {
+              "expression": "5 * * * * *",
+              "actions": [
+                {
+                  "action": "sound",
+                  "options": {
+                    "data": "data:audio/ogg;base64, ..."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+```
+
+`expression` is a cron expression which determines when the sound will be played.
+`actions` is the action to perform when the alarm is triggered. Supported actions are listed below:
+
+##### Actions
+Action: `sound`
+Options: `data` is a data-uri which contains the clip of audio to be played. You can use a tool like: `http://dopiaza.org/tools/datauri/index.php` to convert your audio clips to data-uris.
+
+### Health Widget
+
+A simple widget with a beating heart, to let you know that the dashboard is alive.
+
+#### Screenshot
+TBD
+
+#### Configuration
+
+There is no configuration for this widget. It runs every second, and the heart will change shape.
+
+If the heart stops... your vudash client's websocket has become disconnected from the backend, and your data is out of date.
+
+## Creating your own widgets
 
 A widget is a visible indicator of some sort of statistic or other monitor, which emits new data using websockets, and updates its display in the dashboard based on the information given in this data.
 
 A widget is packaged as a node module, but a node module can simply be a folder with a `package.json` file. It can then contain a number of files:
 
-## Predefined widgets
-
-There are a series of pre-defined widgets available. These widgets are [npm packages beginning with 'vudash-widget'](https://www.npmjs.com/search?q=vudash-widget) Generally the widget's major version number should match the vudash instance's major version number to guarantee compatiblity.
+Building a widget is simply a node module, and really only needs a couple of files.
 
 ### package.json
-```javascript
-{ "name": "vudash-widget-example", "main": "widget.js" }
+```json
+  { 
+    "name": "vudash-widget-example", 
+    "main": "widget.js",
+    "vudash": {
+      "component": "somefile.html"
+    }
+  }
 ```
 The `main` js file above should reference your main module class, in this example we call it `widget.js`
+
+The `vudash.component` is a single file [SvelteJS](http://svelte.technology) component that is an all-in-one (html, css, js),
+view-component with an immutable-data-tree based state model.
 
 ### widget.js
 ```javascript
@@ -146,8 +389,10 @@ class TimeWidget {
 
   register (options, emit) {
     return {
-      schedule: 1000,
+      /* How often the job should run */
+      schedule: options.schedule || 1000,
 
+      /* This is run every ^schedule, and the resolved promise's value is sent to the client */
       job: () => {
         const now = moment()
         return Promise.resolve({
@@ -155,7 +400,6 @@ class TimeWidget {
           date: now.format('MMMM Do YYYY')
         })
       }
-
     }
   }
 
@@ -163,97 +407,10 @@ class TimeWidget {
 
 module.exports = TimeWidget
 ```
-The main widget file. The crux of this file is to export a class with a single method, register, which returns a widget configuration, which is:
+* The first parameter to register is the widget configuration given in the `dashboard.json` file
+* The second parameter to register is the optional parameter `emit` which can be used to emit events (at any time) to the dashboard. See `Events` below for more information about this.
 
-```javascript
-  {
-    config: {abc: 'def'}, // configuration to pass to the client and server side widget. Available in the client as `$widget.config` and `options` parameter of `register()`
-    schedule: 1000, // Put simply, how often the widget sends updates,
-    job: () => { return Promise.resolve({some: 'result'}) } // The crux of the widget. Does some sort of work or check, and then resolves with the results.
-  }
-```
-
-To pass configuration, you can use the `options` parameter of `register()`
-
-The second parameter to register is the optional parameter `emit` which can be used to emit events (at any time) to the dashboard. See `Events` below for more information about this.
-
-### Built-in Widgets
-
-Vudash has a number of widgets which are available on npm, these are in the `packages/` directory of the monorepo, and also available on npm.
-
-#### CI Widget
-
-Connects to CI Providers and displays build results
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-#### Gauge Widget
-
-Shows a VU-Meter like Gauge which represents numerical figures like percentages
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-#### Progress Widget
-
-Similar to VU Meter, but with a linear progress bar
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-#### Statistics Widget
-
-Shows a statistic, which can be a number, a word, or anything else representable on screen.
-
-Optionally can draw a graph of the previous results behind the main one.
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-#### Status Widget
-
-Shows the status of an external service like github, or any API which uses Atlassian StatusPage
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-#### Time Widget
-
-Simply shows the time, and has optional audiable alarams
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-#### Health Widget
-
-A simple widget with a beating heart, to let you know that the dashboard is alive.
-
-##### Screenshot
-TBD
-
-##### configuration
-TBD
-
-### Writing a client side component
+### Writing the client side component
 
 Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
 
@@ -318,10 +475,10 @@ This saves time for a widget developer, and means that any widget can easily fet
 
 | Transport name  | Transport Data Source | Documentation |
 |-----------------|-----------------------|---------------|
-|  value          | config ```{ value: <value> }``` | [Value Transport](#Value Transport)
-|  random         | [chance.natural({ min: 0, max: 999})](http://chancejs.org) | [Random Transport](#Random Transport)
-|  rest           | http(s) using [request](http://requestjs.org) | [REST Transport](#REST Transport)
-|  google-sheets  | [Google Sheets](http://drive.google.com) | [Google Sheets Transport](#Google Sheets Transport)
+|  value          | config ```{ value: <value> }``` | [Value Transport](#value-transport)
+|  random         | [chance.natural({ min: 0, max: 999})](http://chancejs.org) | [Random Transport](#random-transport)
+|  rest           | http(s) using [request](http://requestjs.org) | [REST Transport](#REST-transport)
+|  google-sheets  | [Google Sheets](http://drive.google.com) | [Google Sheets Transport](#google-sheets-transport)
 
 ### Usage (For developers)
 
