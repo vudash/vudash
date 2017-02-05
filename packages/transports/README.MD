@@ -8,4 +8,4 @@ Vudash Transports knows about a number of data transport mechanisms, such as RES
 
 What Vudash Transports can do is to make your life as a widget developer much easier, and leave you to work on the appearance and functionality of your widget without worrying about data-sources and configuration validation.
 
-Documentation has moved [to github](http://vudash.github.io/vudash/#/#widget-transports)
+Documentation has moved [to github](https://vudash.com#widget-transports)

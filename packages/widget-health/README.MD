@@ -2,4 +2,4 @@
 
 Displays [Vudash](https://npmjs.org/vudash) Dashboard health
 
-Documentation has moved [to github](http://vudash.github.io/vudash/#/#health-widget)
+Documentation has moved [to github](https://vudash.com#health-widget)

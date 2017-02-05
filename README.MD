@@ -4,7 +4,7 @@ An open-source, configurable, extensible dashboard for monitoring, marketing, an
 
 Note that this project is a lerna `monorepo`, individual packages in the vudash family are under `/packages`
 
-[Full documentation](https://vudash.github.io/vudash/#/) is available.
+[Full documentation](https://vudash.com) is available.
 
 See this project on NPM: [Vudash](https://npmjs.org/vudash)
 

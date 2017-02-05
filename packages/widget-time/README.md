@@ -3,4 +3,4 @@ Shows the current time and date in your [Vudash](https://npmjs.org/vudash) Dashb
 
 Also plays custom sounds as alarms.
 
-Documentation has moved [to github](http://vudash.github.io/vudash/#/#time-widget)
+Documentation has moved [to github](https://vudash.com#time-widget)

@@ -1,3 +1,5 @@
+![Vu Meter](/img/vumeter.png "Vudash")
+
 <span style="font-family: 'Gruppo', sans-serif; font-size: 72px; text-decoration: uppercase;">
   vudash
 </span>
