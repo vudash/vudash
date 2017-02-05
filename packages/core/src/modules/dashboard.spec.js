@@ -4,6 +4,7 @@ const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
 const Promise = require('bluebird').Promise
+const { PluginRegistrationError } = require('../errors')
 
 describe('modules.dashboard', () => {
   let io
@@ -68,6 +69,31 @@ describe('modules.dashboard', () => {
 
     it('Loads layout', (done) => {
       expect(dashboard.getWidgets().length).to.equal(3)
+      done()
+    })
+  })
+
+  context('Datasource registration', () => {
+    let dashboard
+
+    before((done) => {
+      const descriptor = DashboardBuilder.create()
+      .build()
+
+      dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
+      done()
+    })
+
+    it('Can register datasource', (done) => {
+      dashboard.contributeDatasource('my-data-source', { fetch: sinon.stub() })
+      expect(dashboard.datasources).to.include('my-data-source')
+      done()
+    })
+
+    it('Is not a datasource', (done) => {
+      const fn = () => { dashboard.contributeDatasource('my-data-source', {}) }
+      expect(fn).to.throw(PluginRegistrationError, 'Plugin my-data-source does not appear to be a data-source provider')
       done()
     })
   })

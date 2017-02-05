@@ -5,10 +5,13 @@ const Hoek = require('hoek')
 const defaultsDeep = require('lodash/defaultsDeep')
 const descriptorParser = require('./descriptor-parser')
 const assetBuilder = require('./asset-builder')
+const { PluginRegistrationError } = require('../errors')
 
 class Dashboard {
   constructor (json, io) {
     const descriptor = descriptorParser.parse(json)
+
+    this.datasources = {}
 
     this.id = id()
     this.name = descriptor.name
@@ -53,6 +56,13 @@ class Dashboard {
 
   getAssets () {
     return this.assets
+  }
+
+  contributeDatasource (name, datasource) {
+    if (!Object.keys(datasource).includes('fetch')) {
+      throw new PluginRegistrationError(`Plugin ${name} does not appear to be a data-source provider`)
+    }
+    this.datasources[name] = datasource
   }
 
   buildJobs () {
