@@ -1,3 +1,5 @@
+'use strict'
+
 class ConfigUtil {
 
   _getConfig (credentialsOverride) {

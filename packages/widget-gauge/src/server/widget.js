@@ -1,6 +1,5 @@
 'use strict'
 
-const Promise = require('bluebird').Promise
 const Transport = require('vudash-transports')
 const Hoek = require('hoek')
 

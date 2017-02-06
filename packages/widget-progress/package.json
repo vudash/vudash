@@ -4,7 +4,7 @@
   "version": "5.2.2",
   "description": "Vudash Progress Widget",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
   },
   "vudash": {
     "component": "./src/client/component.html"

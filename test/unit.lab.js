@@ -18,7 +18,7 @@ global.sinon = require('sinon')
 require('sinon-as-promised')
 
 global.fromRoot = requirePath => {
-  return path.normalize(path.join(__dirname, '..', requirePath))
+  return path.normalize(path.join(process.cwd(), requirePath))
 }
 
 global.fromSrc = requirePath => {
@@ -33,5 +33,5 @@ global.resource = requirePath => {
   return fromRoot(`test/resources/${requirePath}`)
 }
 
-const tests = glob.sync(path.join(__dirname, '..', 'src', '**/**.spec.js'))
+const tests = glob.sync(path.join(process.cwd(), '/!(node_modules)/**/**.spec.js'))
 tests.forEach(fullPath => require(fullPath))

@@ -4,16 +4,15 @@
   "description": "Vudash time widget",
   "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
   },
-  "author": "",
+  "author": "Antony Jones",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.6",
     "cron": "^1.1.1",
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
-    "memory-fs": "^0.3.0",
     "moment": "^2.13.0"
   },
   "vudash": {

@@ -1,0 +1,17 @@
+{
+  "name": "@vudash/datasource-google-sheets",
+  "version": "1.0.0",
+  "description": "Google Sheets datasource for Vudash",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab  -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "hoek": "^4.1.0",
+    "joi": "^10.2.1",
+    "spreadsheet-to-json": "^1.0.5"
+  }
+}

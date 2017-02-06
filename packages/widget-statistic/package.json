@@ -3,7 +3,7 @@
   "version": "5.2.2",
   "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab src/**/*.test.js"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
   },
   "dependencies": {
     "chartist": "^0.9.8",

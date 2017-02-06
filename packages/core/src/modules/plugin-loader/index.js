@@ -1,18 +1,16 @@
 'use strict'
 
 const resolver = require('./resolver')
-const { PluginRegistrationError } = require('../../errors')
+const configValidator = require('./config-validator')
 
 class PluginLoader {
   load (dashboard, plugins) {
     plugins.forEach(({ plugin: moduleName, options }) => {
       const Plugin = resolver.resolve(moduleName)
-      const validationErrors = Plugin.validateOptions(options)
-      if (validationErrors) {
-        throw new PluginRegistrationError(
-          `Could not register plugin ${moduleName} due to invalid configuration: ${validationErrors.join(', ')}`
-        )
-      }
+
+      const validation = Plugin.configValidation
+      configValidator.validate(validation, options)
+
       const plugin = new Plugin(options)
       plugin.register(dashboard)
     })

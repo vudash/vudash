@@ -2,6 +2,7 @@
 
 const sinon = require('sinon')
 const pluginResolver = require('./resolver')
+const configValidator = require('./config-validator')
 const loader = require('.')
 
 const Dashboard = require('../dashboard')
@@ -15,13 +16,15 @@ describe('modules.plugin-loader', () => {
   beforeEach((done) => {
     fakePlugin = { register: sinon.stub() }
     FakePlugin = sinon.stub().returns(fakePlugin)
-    FakePlugin.validateOptions = sinon.stub().returns()
+    FakePlugin.configValidation = {}
+    sinon.stub(configValidator, 'validate').returns({})
     sinon.stub(pluginResolver, 'resolve').returns(FakePlugin)
     done()
   })
 
   afterEach((done) => {
     pluginResolver.resolve.restore()
+    configValidator.validate.restore()
     done()
   })
 
@@ -49,8 +52,7 @@ describe('modules.plugin-loader', () => {
     })
 
     it('Requests validation on options', (done) => {
-      expect(FakePlugin.validateOptions.callCount).to.equal(1)
-      expect(FakePlugin.validateOptions.firstCall.args[0]).to.equal(options)
+      expect(configValidator.validate.firstCall.args).to.equal([{}, options])
       done()
     })
   })
@@ -69,12 +71,10 @@ describe('modules.plugin-loader', () => {
   })
 
   context('No validation on plugin', () => {
-    const options = { foo: 'bar' }
-
     it('Requests validation on options', (done) => {
-      FakePlugin.validateOptions.returns(['Some Error', 'Other Error'])
-      const fn = () => { loader.load(dashboard, [ { plugin: 'some-plugin', options } ]) }
-      expect(fn).to.throw(PluginRegistrationError, 'Could not register plugin some-plugin due to invalid configuration: Some Error, Other Error')
+      configValidator.validate.throws(new PluginRegistrationError())
+      const fn = () => { loader.load(dashboard, [ { plugin: 'some-plugin', options: {} } ]) }
+      expect(fn).to.throw(PluginRegistrationError)
       expect(fakePlugin.register.callCount).to.equal(0)
       done()
     })
