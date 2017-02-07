@@ -44,7 +44,7 @@ class CiWidget {
         .then((status) => {
           const sound = Hoek.reach(config, `sounds.${status}`)
           if (sound && this.previousState !== status) {
-            emit('audio:play', sound)
+            emit('audio:play', { data: sound })
           }
 
           this.previousState = status

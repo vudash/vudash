@@ -92,9 +92,9 @@ emit('audio:play', {data: data})
 
 The current list of events that can be triggered are:
 
-| Event         | Data            | Description                                                         |
-| ------------- |-----------------| --------------------------------------------------------------------|
-| audio:play    | `{ data: data}` | Plays an audio clip (once). `data` is a data-uri of the audio file. |
+| Event         | Data             | Description                                                         |
+| ------------- |------------------| --------------------------------------------------------------------|
+| audio:play    | `{ data: data }` | Plays an audio clip (once). `data` is a data-uri of the audio file. |
 
 
 # Widgets
