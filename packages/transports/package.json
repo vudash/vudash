@@ -1,6 +1,6 @@
 {
   "name": "vudash-transports",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Various transports for vudash widgets",
   "main": "index.js",
   "scripts": {

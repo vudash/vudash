@@ -14,7 +14,7 @@
     "export-dir": "^0.1.2",
     "got": "^6.7.1",
     "hoek": "^4.1.0",
-    "vudash-transports": "^5.2.1"
+    "vudash-transports": "^5.2.2"
   },
-  "version": "5.2.1"
+  "version": "5.2.2"
 }
