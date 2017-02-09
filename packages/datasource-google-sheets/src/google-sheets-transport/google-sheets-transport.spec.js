@@ -1,5 +1,5 @@
 const GoogleSheetsTransport = require('.')
-const configUtil = require('./config.util')
+const configUtil = require('../../test/config.util')
 const sinon = require('sinon')
 
 describe('google-sheets-transport', () => {
