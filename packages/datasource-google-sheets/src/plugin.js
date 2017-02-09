@@ -27,7 +27,7 @@ class RestDatasource {
     return Joi.string().required().description('Filesystem path to credentials json, prefixed with "file:"')
   }
 
-  static get configValidation () {
+  static get widgetValidation () {
     return Joi.object().keys({
       sheet: Joi.string().required().description('Sheet id'),
       tab: Joi.string().required().description('Tab Name'),

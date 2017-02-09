@@ -1,3 +1,6 @@
+'use strict'
+
+const Joi = require('joi')
 const Plugin = require('./plugin')
 const configUtil = require('./config.util')
 const sinon = require('sinon')
@@ -11,9 +14,11 @@ describe('plugin', () => {
   })
 
   it('With invalid config', (done) => {
+    Joi.validate()
     expect(() => {
       return new Plugin({ config: {} })
     }).to.throw(Error, /fails because/)
+    expect()
     done()
   })
 
