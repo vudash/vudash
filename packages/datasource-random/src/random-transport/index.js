@@ -1,23 +1,12 @@
+'use strict'
+
 const Chance = require('chance')
 const Promise = require('bluebird').Promise
 
-const Transport = require('..')
-const Joi = require('joi')
-
-class ChanceTransport extends Transport {
-  constructor (descriptor, seed) {
-    super(descriptor)
+class RandomTransport {
+  constructor (options, seed = new Date().getTime()) {
+    this.config = options
     this.chance = new Chance(seed)
-  }
-
-  get configValidation () {
-    return Joi.object({
-      method: Joi.string().optional().description('Chance method name'),
-      options: Joi.alternatives([
-        Joi.object().optional().description('Chance method options'),
-        Joi.array().optional().description('Chance method arguments')
-      ])
-    })
   }
 
   prepareOptions () {
@@ -52,4 +41,4 @@ class ChanceTransport extends Transport {
   }
 }
 
-module.exports = ChanceTransport
+module.exports = RandomTransport

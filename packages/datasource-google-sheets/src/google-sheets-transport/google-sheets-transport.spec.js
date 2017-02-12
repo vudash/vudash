@@ -12,7 +12,7 @@ describe('google-sheets-transport', () => {
 
   it('Fetches single cell sheet data', () => {
     const config = configUtil.getSingleCellConfig()
-    const transport = new GoogleSheetsTransport({ config })
+    const transport = new GoogleSheetsTransport(config)
 
     sinon.stub(transport, 'extract')
     .withArgs({
@@ -35,7 +35,7 @@ describe('google-sheets-transport', () => {
 
   it('Fetches range of sheet data', () => {
     const config = configUtil.getRangeConfig()
-    const transport = new GoogleSheetsTransport({ config })
+    const transport = new GoogleSheetsTransport(config)
 
     sinon.stub(transport, 'extract')
     .withArgs({
@@ -71,7 +71,7 @@ describe('google-sheets-transport', () => {
 
   it('Fetches single column of sheet data', () => {
     const config = configUtil.getSingleColumnConfig()
-    const transport = new GoogleSheetsTransport({ config })
+    const transport = new GoogleSheetsTransport(config)
 
     sinon.stub(transport, 'extract')
     .withArgs({

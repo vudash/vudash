@@ -5,10 +5,11 @@ const spreadsheetToJson = require('spreadsheet-to-json')
 
 class GoogleSheetsTransport {
 
-  constructor (descriptor) {
+  constructor (options) {
+    this.config = options
     this.extract = Promise.promisify(spreadsheetToJson.extractSheets)
 
-    this.credentials = this.config.credentials
+    this.credentials = options.credentials
     if (typeof this.credentials === 'string') {
       this.credentials = this.loadCredentialsFromDisk(this.credentials)
     }

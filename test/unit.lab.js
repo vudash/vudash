@@ -33,5 +33,5 @@ global.resource = requirePath => {
   return fromRoot(`test/resources/${requirePath}`)
 }
 
-const tests = glob.sync(path.join(process.cwd(), '/!(node_modules)/**/**.spec.js'))
+const tests = glob.sync(path.join(process.cwd(), '/{!(node_modules),**}/**.spec.js'))
 tests.forEach(fullPath => require(fullPath))
