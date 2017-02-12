@@ -2,6 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const Promise = require('bluebird').Promise
 const spreadsheetToJson = require('spreadsheet-to-json')
+const configValidator = require('../config-validator')
 
 class GoogleSheetsTransport {
 
@@ -27,7 +28,7 @@ class GoogleSheetsTransport {
     }
 
     const credentials = require(resolvedFile)
-    this.validate(this.inlineCredentialsValidation, credentials)
+    this.validate(configValidator.inlineCredentialsValidation, credentials)
 
     return credentials
   }

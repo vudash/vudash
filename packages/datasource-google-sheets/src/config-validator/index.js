@@ -19,7 +19,7 @@ class ConfigValidator {
   }
 
   get fileCredentialsValidation () {
-    return Joi.string().required().description('Filesystem path to credentials json, prefixed with "file:"')
+    return Joi.string().regex(/^file:.*/).required().description('Filesystem path to credentials json, prefixed with "file:"')
   }
 
   get widgetValidation () {

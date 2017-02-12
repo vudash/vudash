@@ -10,6 +10,38 @@ describe('google-sheets-transport', () => {
     done()
   })
 
+  context('External credentials', () => {
+    it('Loads credentials from disk', (done) => {
+      const contents = require('../../test/example.credentials.test.json')
+      const credentials = 'file:../../test/example.credentials.test.json'
+      const config = configUtil.getSingleCellConfig(credentials)
+      const transport = new GoogleSheetsTransport(config)
+      expect(transport.credentials).to.equal(contents)
+      done()
+    })
+
+    it('File not found', (done) => {
+      expect(() => {
+        return new GoogleSheetsTransport(configUtil.getSingleCellConfig('file:some-nonexistent-file'))
+      }).to.throw(Error, /some-nonexistent-file" as it could not be found/)
+      done()
+    })
+
+    it('Validates credentials loaded from disk', (done) => {
+      expect(() => {
+        return new GoogleSheetsTransport(configUtil.getSingleCellConfig('file:../../test/example.invalid-credentials.test.json'))
+      }).to.throw(Error, /fails because/)
+      done()
+    })
+
+    it('Read credentials from file', (done) => {
+      const credentials = 'file:../../test/example.credentials.test.json'
+      const transport = new GoogleSheetsTransport(configUtil.getSingleCellConfig(credentials))
+      expect(transport).to.be.an.instanceOf(GoogleSheetsTransport)
+      done()
+    })
+  })
+
   it('Fetches single cell sheet data', () => {
     const config = configUtil.getSingleCellConfig()
     const transport = new GoogleSheetsTransport(config)

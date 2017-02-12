@@ -5,7 +5,7 @@ const RandomTransport = require('./src/random-transport')
 
 class RandomDatasource {
   register (dashboard, options) {
-    dashboard.contributeDatasource('rest', RandomTransport)
+    dashboard.contributeDatasource('random', RandomTransport)
   }
 
   get widgetValidation () {
