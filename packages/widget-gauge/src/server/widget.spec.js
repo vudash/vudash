@@ -1,11 +1,4 @@
-const expect = require('code').expect
-const Lab = require('lab')
-const lab = exports.lab = Lab.script()
-
-const context = lab.describe
-const describe = lab.describe
-const before = lab.before
-const it = lab.it
+'use strict'
 
 const chance = require('chance')()
 

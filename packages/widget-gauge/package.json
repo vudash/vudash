@@ -12,10 +12,9 @@
   },
   "dependencies": {
     "bluebird": "^3.4.7",
-    "hoek": "^4.1.0",
-    "vudash-transports": "^5.2.2"
+    "hoek": "^4.1.0"
   },
-  "devDependencies": {
+  " devDependencies": {
     "chance": "^1.0.4"
   }
 }

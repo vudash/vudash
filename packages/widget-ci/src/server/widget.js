@@ -26,7 +26,7 @@ class CiWidget {
     })
   }
 
-  register (options, emit) {
+  register (options, transport, emit) {
     Joi.validate(options, this.validation, (err) => {
       if (err) { throw err }
     })
