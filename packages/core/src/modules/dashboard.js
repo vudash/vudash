@@ -1,11 +1,11 @@
-const Widget = require('./widget')
+'use strict'
+
 const Emitter = require('./emitter')
 const id = require('./id-gen')
-const Hoek = require('hoek')
-const defaultsDeep = require('lodash/defaultsDeep')
 const descriptorParser = require('./descriptor-parser')
 const assetBuilder = require('./asset-builder')
 const { PluginRegistrationError } = require('../errors')
+const WidgetConstructor = require('./widget-constructor')
 
 class Dashboard {
   constructor (json, io) {
@@ -19,27 +19,11 @@ class Dashboard {
     this.sharedConfig = descriptor['shared-config']
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
-    this.widgets = descriptor.widgets.map(this.registerWidget.bind(this))
-  }
 
-  registerWidget (fd) {
-    const inheritFrom = Hoek.reach(fd, 'options._extends')
-
-    let options = fd.options
-    if (inheritFrom) {
-      if (!this.sharedConfig || !this.sharedConfig.hasOwnProperty(inheritFrom)) {
-        throw new Error(`Shared configuration ${inheritFrom} does not exist.`)
-      }
-
-      const base = this.sharedConfig[inheritFrom]
-      options = defaultsDeep({}, base, fd.options)
-      delete options._extends
-    }
-
-    return new Widget(this, {
-      position: fd.position,
-      background: fd.background
-    }, fd.widget, options)
+    this.widgetConstructor = new WidgetConstructor(this, this.sharedConfig)
+    this.widgets = descriptor.widgets.map((fd) => {
+      return this.widgetConstructor.register(fd)
+    })
   }
 
   initialise () {

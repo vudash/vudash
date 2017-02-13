@@ -1,9 +1,12 @@
+'use strict'
+
 const DashboardBuilder = require(fromTest('util/dashboard.builder'))
 const WidgetBuilder = require(fromTest('util/widget.builder'))
 const Dashboard = require(fromSrc('modules/dashboard'))
 
 describe('shared-config', () => {
   let io
+
   before((done) => {
     io = {
       on: sinon.stub(),
