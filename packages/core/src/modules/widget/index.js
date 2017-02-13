@@ -1,27 +1,29 @@
 'use strict'
 
-const id = require('./id-gen')
-const markupBuilder = require('./markup-builder')
-const svelteCompiler = require('./svelte-compiler')
-const WidgetPosition = require('./css-builder/widget-position')
-const moduleResolver = require('./module-resolver')
-const cssBuilder = require('./css-builder')
-const componentRenderer = require('./component-renderer')
+const id = require('../id-gen')
+const markupBuilder = require('../markup-builder')
+const svelteCompiler = require('../svelte-compiler')
+const WidgetPosition = require('../css-builder/widget-position')
+const moduleResolver = require('../module-resolver')
+const cssBuilder = require('../css-builder')
+const componentRenderer = require('../component-renderer')
+const datasourceResolver = require('./datasource-resolver')
 
 class Widget {
 
-  constructor (dashboard, renderOptions, descriptor, options) {
+  constructor (dashboard, renderOptions, moduleName, options = {}) {
     this.dashboard = dashboard
     this.background = renderOptions.background
     this.position = new WidgetPosition(dashboard.layout, renderOptions.position)
     this.id = id()
     this.config = options
 
-    const { name, html, Module, js, css } = moduleResolver.resolve(descriptor)
+    const { name, html, Module, js, css } = moduleResolver.resolve(moduleName)
     this.providedCss = css
     this.providedJs = js
 
     this.component = svelteCompiler.compile(name, html)
+    this.datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
 
     const buildable = new Module().register(
       options,
@@ -38,6 +40,10 @@ class Widget {
 
   getJob () {
     return this.job
+  }
+
+  getDatasource () {
+    return this.datasource
   }
 
   getConfig () {

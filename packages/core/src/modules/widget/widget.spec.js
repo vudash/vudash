@@ -1,10 +1,40 @@
+'use strict'
+
 const Widget = require(fromSrc('modules/widget'))
 const sinon = require('sinon')
 
+const moduleResolver = require('../module-resolver')
+
 describe('modules.widget', () => {
-  const dashboard = { layout: { rows: 4, columns: 5 }, emitter: { emit: sinon.stub() } }
+  const dashboard = {
+    layout: { rows: 4, columns: 5 },
+    emitter: { emit: sinon.stub() },
+    datasources: { stuff: sinon.stub() }
+  }
   const position = { x: 0, y: 0, w: 1, h: 1 }
   const renderOptions = { position }
+
+  context('datasources', () => {
+    beforeEach((done) => {
+      sinon.stub(moduleResolver, 'resolve')
+      .withArgs('abcdef')
+      .returns({ Module: function () { return { register: sinon.stub().returns({ job: sinon.stub() }) } } })
+      done()
+    })
+
+    afterEach((done) => {
+      moduleResolver.resolve.restore()
+      done()
+    })
+
+    it('Registers widget data source', (done) => {
+      const widget = new Widget(dashboard, renderOptions, 'abcdef', {
+        datasource: 'stuff'
+      })
+      expect(widget.getDatasource()).to.equal(dashboard.datasources.stuff)
+      done()
+    })
+  })
 
   it('Barf on unknown widget', (done) => {
     const badModuleName = resource('widgets/unknown')

@@ -8,7 +8,12 @@ class PluginRegistrationError extends Error {
 
 }
 
+class WidgetRegistrationError extends Error {
+
+}
+
 module.exports = {
   ComponentCompilationError,
-  PluginRegistrationError
+  PluginRegistrationError,
+  WidgetRegistrationError
 }

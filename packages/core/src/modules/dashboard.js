@@ -21,8 +21,8 @@ class Dashboard {
     this.layout = descriptor.layout
 
     this.widgetConstructor = new WidgetConstructor(this, this.sharedConfig)
-    this.widgets = descriptor.widgets.map((fd) => {
-      return this.widgetConstructor.register(fd)
+    this.widgets = descriptor.widgets.map((widgetDescriptor) => {
+      return this.widgetConstructor.register(widgetDescriptor)
     })
   }
 
