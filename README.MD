@@ -15,7 +15,7 @@ See this project on NPM: [Vudash](https://npmjs.org/vudash)
 
 # Product Demo
 
-[Demo Dashboard](http://vudash.herokuapp.com/demo.dashboard)
+[Demo Dashboard](http://demo.vudash.com/)
 
 # Quick Start
 
