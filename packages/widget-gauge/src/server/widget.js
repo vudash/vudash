@@ -22,8 +22,8 @@ const defaults = {
   'data-source': {
     source: 'random',
     options: {
-      "method": 'integer',
-      "options": [{ "min": 0, "max": 1000 }]
+      method: 'integer',
+      options: [{ min: 0, max: 1000 }]
     }
   }
 }

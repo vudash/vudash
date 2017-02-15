@@ -25,7 +25,15 @@ describe('modules.widget', () => {
     beforeEach((done) => {
       sinon.stub(moduleResolver, 'resolve')
       .withArgs('abcdef')
-      .returns({ Module: function () { return { register: sinon.stub().returns({ job: sinon.stub() }) } } })
+      .returns({
+        Module: function () {
+          return {
+            register: sinon.stub().returns({
+              job: sinon.stub()
+            })
+          }
+        }
+      })
       sinon.stub(configValidator, 'validate').returns({})
       done()
     })
