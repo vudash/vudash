@@ -12,7 +12,7 @@ class ValueTransport {
     return Promise.resolve(this.config.value)
   }
 
-  get widgetValidation () {
+  static get widgetValidation () {
     return Joi.object({
       value: Joi.any().required().description('Value to return')
     })

@@ -28,7 +28,7 @@ class RandomTransport {
     }
   }
 
-  get widgetValidation () {
+  static get widgetValidation () {
     return Joi.object({
       method: Joi.string().optional().description('Chance method name'),
       options: Joi.alternatives([

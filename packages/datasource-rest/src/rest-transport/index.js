@@ -40,7 +40,7 @@ class RestTransport {
     })
   }
 
-  get widgetValidation () {
+  static get widgetValidation () {
     return Joi.object({
       url: Joi.string().description('Url to call'),
       method: Joi.string().only('get', 'post', 'put', 'options', 'delete', 'head').description('Http Method'),

@@ -16,7 +16,7 @@ class GoogleSheetsTransport {
     }
   }
 
-  get widgetValidation () {
+  static get widgetValidation () {
     return configValidator.widgetValidation
   }
 

@@ -42,11 +42,12 @@ class Dashboard {
     return this.assets
   }
 
-  contributeDatasource (name, datasource) {
-    if (!Object.keys(datasource).includes('fetch')) {
+  contributeDatasource (name, datasource, options) {
+    const propertyNames = Object.getOwnPropertyNames(datasource.prototype)
+    if (!propertyNames.fetch || typeof propertyNames.fetch !== 'function') {
       throw new PluginRegistrationError(`Plugin ${name} does not appear to be a data-source provider`)
     }
-    this.datasources[name] = datasource
+    this.datasources[name] = { constructor: datasource, options }
   }
 
   buildJobs () {

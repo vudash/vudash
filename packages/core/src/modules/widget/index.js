@@ -12,14 +12,14 @@ const configValidator = require('../config-validator')
 
 const internals = {
   loadDatasource (moduleName, dashboard, options) {
-    const datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
+    const Datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
 
-    const validation = datasource.widgetValidation
+    const validation = Datasource.widgetValidation
     if (validation) {
       configValidator.validate(`widget:${moduleName}`, validation, options)
     }
 
-    return datasource
+    return new Datasource(options)
   }
 }
 

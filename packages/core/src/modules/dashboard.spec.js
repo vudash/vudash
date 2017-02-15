@@ -73,8 +73,12 @@ describe('modules.dashboard', () => {
     })
   })
 
-  context('Datasource registration', () => {
+  context.only('Datasource registration', () => {
     let dashboard
+
+    const SomeDatasource = function (options) { this.options = options }
+    SomeDatasource.widgetValidation = {}
+    SomeDatasource.prototype.fetch = function () { return this.options }
 
     before((done) => {
       const descriptor = DashboardBuilder.create()
@@ -86,7 +90,7 @@ describe('modules.dashboard', () => {
     })
 
     it('Can register datasource', (done) => {
-      dashboard.contributeDatasource('my-data-source', { fetch: sinon.stub() })
+      dashboard.contributeDatasource('my-data-source', SomeDatasource)
       expect(dashboard.datasources).to.include('my-data-source')
       done()
     })
@@ -94,6 +98,20 @@ describe('modules.dashboard', () => {
     it('Is not a datasource', (done) => {
       const fn = () => { dashboard.contributeDatasource('my-data-source', {}) }
       expect(fn).to.throw(PluginRegistrationError, 'Plugin my-data-source does not appear to be a data-source provider')
+      done()
+    })
+
+    it('Registers a datasource instance', (done) => {
+      dashboard.contributeDatasource('my-data-source', SomeDatasource)
+      expect(dashboard.datasources['my-data-source'].fetch).to.be.a.function()
+      done()
+    })
+
+    it('Registered datasource instance has passed config', (done) => {
+      const options = { some: 'stuff' }
+      dashboard.contributeDatasource('my-data-source', SomeDatasource, options)
+      const output = dashboard.datasources['my-data-source'].fetch()
+      expect(output).to.equal(options)
       done()
     })
   })
