@@ -8,10 +8,26 @@ const moduleResolver = require('../module-resolver')
 const cssBuilder = require('../css-builder')
 const componentRenderer = require('../component-renderer')
 const datasourceResolver = require('./datasource-resolver')
+const configValidator = require('../config-validator')
+
+const internals = {
+  loadDatasource (moduleName, dashboard, options) {
+    const datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
+
+    const validation = datasource.widgetValidation
+    if (validation) {
+      configValidator.validate(`widget:${moduleName}`, validation, options)
+    }
+
+    return datasource
+  }
+}
 
 class Widget {
 
   constructor (dashboard, renderOptions, moduleName, options = {}) {
+    this.datasource = internals.loadDatasource(moduleName, dashboard, options)
+
     this.dashboard = dashboard
     this.background = renderOptions.background
     this.position = new WidgetPosition(dashboard.layout, renderOptions.position)
@@ -23,7 +39,6 @@ class Widget {
     this.providedJs = js
 
     this.component = svelteCompiler.compile(name, html)
-    this.datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
 
     const buildable = new Module().register(
       options,

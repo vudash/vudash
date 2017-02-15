@@ -2,11 +2,11 @@
 
 const sinon = require('sinon')
 const pluginResolver = require('./resolver')
-const configValidator = require('./config-validator')
+const configValidator = require('../config-validator')
 const loader = require('.')
 
 const Dashboard = require('../dashboard')
-const { PluginRegistrationError } = require('../../errors')
+const { ConfigurationError } = require('../../errors')
 
 describe('modules.plugin-loader', () => {
   const dashboard = sinon.createStubInstance(Dashboard)
@@ -52,7 +52,7 @@ describe('modules.plugin-loader', () => {
     })
 
     it('Requests validation on options', (done) => {
-      expect(configValidator.validate.firstCall.args).to.equal([{}, options])
+      expect(configValidator.validate.firstCall.args).to.equal(['plugin:some-plugin', {}, options])
       done()
     })
   })
@@ -72,9 +72,9 @@ describe('modules.plugin-loader', () => {
 
   context('No validation on plugin', () => {
     it('Requests validation on options', (done) => {
-      configValidator.validate.throws(new PluginRegistrationError())
+      configValidator.validate.throws(new ConfigurationError())
       const fn = () => { loader.load(dashboard, [ { plugin: 'some-plugin', options: {} } ]) }
-      expect(fn).to.throw(PluginRegistrationError)
+      expect(fn).to.throw(ConfigurationError)
       expect(fakePlugin.register.callCount).to.equal(0)
       done()
     })

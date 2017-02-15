@@ -2,6 +2,7 @@
 
 const Chance = require('chance')
 const Promise = require('bluebird').Promise
+const Joi = require('joi')
 
 class RandomTransport {
   constructor (options, seed = new Date().getTime()) {
@@ -25,6 +26,16 @@ class RandomTransport {
       method: this.config.method || 'natural',
       options: args
     }
+  }
+
+  get widgetValidation () {
+    return Joi.object({
+      method: Joi.string().optional().description('Chance method name'),
+      options: Joi.alternatives([
+        Joi.object().optional().description('Chance method options'),
+        Joi.array().optional().description('Chance method arguments')
+      ])
+    })
   }
 
   validateMethod (method) {

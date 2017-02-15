@@ -16,6 +16,10 @@ class GoogleSheetsTransport {
     }
   }
 
+  get widgetValidation () {
+    return configValidator.widgetValidation
+  }
+
   loadCredentialsFromDisk () {
     if (this.credentials.indexOf('file:') !== 0) {
       throw new Error('File credentials must be prefixed with "file:" and reference a local json service account credentials file')

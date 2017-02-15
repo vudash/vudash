@@ -1,7 +1,7 @@
 'use strict'
 
 const resolver = require('./resolver')
-const configValidator = require('./config-validator')
+const configValidator = require('../config-validator')
 
 class PluginLoader {
   load (dashboard, plugins) {
@@ -9,7 +9,7 @@ class PluginLoader {
       const Plugin = resolver.resolve(moduleName)
 
       const validation = Plugin.configValidation
-      configValidator.validate(validation, options)
+      configValidator.validate(`plugin:${moduleName}`, validation, options)
 
       const plugin = new Plugin(options)
       plugin.register(dashboard)
