@@ -48,7 +48,8 @@ describe('modules.widget', () => {
       const widget = new Widget(dashboard, renderOptions, 'abcdef', {
         datasource: 'has-validation'
       })
-      expect(widget.getDatasource()).to.equal(dashboard.datasources['has-validation'])
+      const datasource = widget.getDatasource()
+      expect(datasource.constructor).to.equal(dashboard.datasources['has-validation'])
       done()
     })
 
@@ -65,6 +66,13 @@ describe('modules.widget', () => {
       const widget = new Widget(dashboard, renderOptions, 'abcdef', {
         datasource: 'no-validation'
       })
+      expect(widget).to.exist()
+      expect(configValidator.validate.callCount).to.equal(0)
+      done()
+    })
+
+    it('no datasource specified', (done) => {
+      const widget = new Widget(dashboard, renderOptions, 'abcdef', {})
       expect(widget).to.exist()
       expect(configValidator.validate.callCount).to.equal(0)
       done()

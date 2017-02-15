@@ -12,6 +12,8 @@ const configValidator = require('../config-validator')
 
 const internals = {
   loadDatasource (moduleName, dashboard, options) {
+    if (!options.datasource) { return null }
+
     const Datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
 
     const validation = Datasource.widgetValidation

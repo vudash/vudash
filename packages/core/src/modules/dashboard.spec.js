@@ -73,7 +73,7 @@ describe('modules.dashboard', () => {
     })
   })
 
-  context.only('Datasource registration', () => {
+  context('Datasource registration', () => {
     let dashboard
 
     const SomeDatasource = function (options) { this.options = options }

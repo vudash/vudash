@@ -6,6 +6,7 @@ const descriptorParser = require('./descriptor-parser')
 const assetBuilder = require('./asset-builder')
 const { PluginRegistrationError } = require('../errors')
 const WidgetConstructor = require('./widget-constructor')
+const { reach } = require('hoek')
 
 class Dashboard {
   constructor (json, io) {
@@ -43,8 +44,8 @@ class Dashboard {
   }
 
   contributeDatasource (name, datasource, options) {
-    const propertyNames = Object.getOwnPropertyNames(datasource.prototype)
-    if (!propertyNames.fetch || typeof propertyNames.fetch !== 'function') {
+    const fetchMethod = reach(datasource, 'prototype.fetch')
+    if (!fetchMethod || typeof fetchMethod !== 'function') {
       throw new PluginRegistrationError(`Plugin ${name} does not appear to be a data-source provider`)
     }
     this.datasources[name] = { constructor: datasource, options }
