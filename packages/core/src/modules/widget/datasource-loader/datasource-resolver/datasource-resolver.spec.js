@@ -22,8 +22,8 @@ describe('widget.datasource-resolver', () => {
   it('Widget does not define a datasource', (done) => {
     const noop = resolver.resolve({})
     expect(
-      noop
+      noop.fetch
     ).to.be.a.function()
-    return noop()
+    return noop.fetch()
   })
 })

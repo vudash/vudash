@@ -1,9 +1,15 @@
 'use strict'
 
-const { WidgetRegistrationError } = require('../../../errors')
+const { WidgetRegistrationError } = require('../../../../errors')
+
+class NoopDatasource {
+  fetch () {
+    return Promise.resolve()
+  }
+}
 
 module.exports.resolve = function (datasources, datasource) {
-  if (!datasource) { return () => { return Promise.resolve() } }
+  if (!datasource) { return new NoopDatasource() }
 
   const resolved = datasources[datasource]
   if (!resolved) {

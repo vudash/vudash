@@ -101,17 +101,16 @@ describe('modules.dashboard', () => {
       done()
     })
 
-    it('Registers a datasource instance', (done) => {
+    it('Registers a datasource constructor', (done) => {
       dashboard.contributeDatasource('my-data-source', SomeDatasource)
-      expect(dashboard.datasources['my-data-source'].fetch).to.be.a.function()
+      expect(dashboard.datasources['my-data-source'].constructor).to.be.a.function()
       done()
     })
 
-    it('Registered datasource instance has passed config', (done) => {
+    it("Registers a datasource's global config", (done) => {
       const options = { some: 'stuff' }
       dashboard.contributeDatasource('my-data-source', SomeDatasource, options)
-      const output = dashboard.datasources['my-data-source'].fetch()
-      expect(output).to.equal(options)
+      expect(dashboard.datasources['my-data-source'].options).to.equal(options)
       done()
     })
   })

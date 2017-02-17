@@ -7,28 +7,12 @@ const WidgetPosition = require('../css-builder/widget-position')
 const moduleResolver = require('../module-resolver')
 const cssBuilder = require('../css-builder')
 const componentRenderer = require('../component-renderer')
-const datasourceResolver = require('./datasource-resolver')
-const configValidator = require('../config-validator')
-
-const internals = {
-  loadDatasource (moduleName, dashboard, options) {
-    if (!options.datasource) { return null }
-
-    const Datasource = datasourceResolver.resolve(dashboard.datasources, options.datasource)
-
-    const validation = Datasource.widgetValidation
-    if (validation) {
-      configValidator.validate(`widget:${moduleName}`, validation, options)
-    }
-
-    return new Datasource(options)
-  }
-}
+const datasourceLoader = require('./datasource-loader')
 
 class Widget {
 
-  constructor (dashboard, renderOptions, moduleName, options = {}) {
-    this.datasource = internals.loadDatasource(moduleName, dashboard, options)
+  constructor (dashboard, renderOptions, widgetName, options = {}) {
+    this.datasource = datasourceLoader.load(widgetName, dashboard, options)
 
     this.dashboard = dashboard
     this.background = renderOptions.background
@@ -36,7 +20,7 @@ class Widget {
     this.id = id()
     this.config = options
 
-    const { name, html, Module, js, css } = moduleResolver.resolve(moduleName)
+    const { name, html, Module, js, css } = moduleResolver.resolve(widgetName)
     this.providedCss = css
     this.providedJs = js
 

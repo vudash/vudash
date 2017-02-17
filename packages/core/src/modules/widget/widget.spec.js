@@ -6,19 +6,27 @@ const sinon = require('sinon')
 const moduleResolver = require('../module-resolver')
 const configValidator = require('../config-validator')
 
+const DatasourceBuilder = require(fromTest('util/datasource.builder'))
+
 describe('modules.widget', () => {
   const position = { x: 0, y: 0, w: 1, h: 1 }
   const renderOptions = { position }
 
   context('Datasources', () => {
+    const validatingWidget = DatasourceBuilder.create().addWidgetValidation().build()
+    const nonValidatingWidget = DatasourceBuilder.create().build()
+
     const dashboard = {
       layout: { rows: 4, columns: 5 },
       emitter: { emit: sinon.stub() },
       datasources: {
         'has-validation': {
-          widgetValidation: 'some-validation'
+          constructor: validatingWidget,
+          options: { foo: 'bar' }
         },
-        'no-validation': {}
+        'no-validation': {
+          constructor: nonValidatingWidget
+        }
       }
     }
 
@@ -49,7 +57,7 @@ describe('modules.widget', () => {
         datasource: 'has-validation'
       })
       const datasource = widget.getDatasource()
-      expect(datasource.constructor).to.equal(dashboard.datasources['has-validation'])
+      expect(datasource.fetch).to.equal(validatingWidget.prototype.fetch)
       done()
     })
 
@@ -62,7 +70,7 @@ describe('modules.widget', () => {
       done()
     })
 
-    it('calls for widget validation on load', (done) => {
+    it('no widget validation specified', (done) => {
       const widget = new Widget(dashboard, renderOptions, 'abcdef', {
         datasource: 'no-validation'
       })
