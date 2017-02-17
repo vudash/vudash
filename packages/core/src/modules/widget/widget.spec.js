@@ -40,7 +40,9 @@ describe('modules.widget', () => {
               job: sinon.stub()
             })
           }
-        }
+        },
+        html: '<h1></h1>',
+        name: 'xxx'
       })
       sinon.stub(configValidator, 'validate').returns({})
       done()
@@ -58,31 +60,6 @@ describe('modules.widget', () => {
       })
       const datasource = widget.getDatasource()
       expect(datasource.fetch).to.equal(validatingWidget.prototype.fetch)
-      done()
-    })
-
-    it('calls for widget validation on load', (done) => {
-      const widget = new Widget(dashboard, renderOptions, 'abcdef', {
-        datasource: 'has-validation'
-      })
-      expect(widget).to.exist()
-      expect(configValidator.validate.callCount).to.equal(1)
-      done()
-    })
-
-    it('no widget validation specified', (done) => {
-      const widget = new Widget(dashboard, renderOptions, 'abcdef', {
-        datasource: 'no-validation'
-      })
-      expect(widget).to.exist()
-      expect(configValidator.validate.callCount).to.equal(0)
-      done()
-    })
-
-    it('no datasource specified', (done) => {
-      const widget = new Widget(dashboard, renderOptions, 'abcdef', {})
-      expect(widget).to.exist()
-      expect(configValidator.validate.callCount).to.equal(0)
       done()
     })
   })

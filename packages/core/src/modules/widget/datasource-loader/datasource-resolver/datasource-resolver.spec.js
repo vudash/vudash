@@ -1,6 +1,6 @@
 'use strict'
 
-const { WidgetRegistrationError } = require('../../../errors')
+const { WidgetRegistrationError } = require('../../../../errors')
 const resolver = require('.')
 
 describe('widget.datasource-resolver', () => {

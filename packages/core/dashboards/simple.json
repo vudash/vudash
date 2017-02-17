@@ -7,27 +7,19 @@
   "widgets": [
     { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" },
     { 
-      "position": {"x": 3, "y": 1, "w": 2, "h": 1}, 
-      "widget": "vudash-widget-status",
-      "options": {
-        "type": "statuspageio",
-        "url": "https://status.newrelic.com/",
-        "components": [
-          "APM",
-          "Data Collection",
-          "Alerts",
-          "Browser",
-          "Mobile",
-          "Insights",
-          "Synthetics",
-          "Mobile Crash Reports",
-          "Support Site",
-          "Online Technical Community",
-          "Documentation",
-          "Downloads",
-          "Infrastructure",
-          "newrelic.com"
-        ]
+      "position": { "x": 0, "y": 2, "w": 2, "h": 1 },
+      "widget": "vudash-widget-statistic",
+      "datasource": {
+        "source": "rest",
+        "config": {
+          "url": "http://api.fixer.io/latest?base=EUR",
+          "method": "get",
+          "graph": "rates.GBP"
+        },
+        "options": {
+          "schedule": 30000,
+          "description": "EUR -> GBP"
+        }
       }
     }
   ]

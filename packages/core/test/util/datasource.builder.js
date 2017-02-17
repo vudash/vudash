@@ -2,16 +2,29 @@
 
 const Joi = require('joi')
 
+class NonValidatingDataSource {
+  constructor (options) {
+    this.options = options
+  }
+
+  fetch () {
+    return this.options
+  }
+}
+
+class ValidatingDataSource {
+  static widgetValidation () {
+    return Joi.object({}).required()
+  }
+}
+
 class DatasourceBuilder {
   constructor () {
-    this.ds = function (options) { this.options = options }
-    this.ds.prototype.fetch = function () { return this.options }
+    this.ds = NonValidatingDataSource
   }
 
   addWidgetValidation () {
-    this.ds.widgetValidation = function () {
-      return Joi.object({}).required()
-    }
+    this.ds = ValidatingDataSource
     return this
   }
 

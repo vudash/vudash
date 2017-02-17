@@ -14,7 +14,7 @@ class DatasourceLoader {
       configValidator.validate(`widget:${widgetName}`, validation, widgetOptions)
     }
 
-    return constructor.create(options)
+    return new constructor(options)
   }
 }
 
