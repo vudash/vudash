@@ -15,6 +15,15 @@ class DashboardBuilder {
     return this
   }
 
+  addDatasource (moduleName, options) {
+    this.datasources = this.datasources || {}
+    this.datasources[moduleName] = {
+      module: moduleName,
+      options
+    }
+    return this
+  }
+
   addWidget (widget = WidgetBuilder.create().build()) {
     this.overrides.widgets.push(widget)
     return this

@@ -11,12 +11,12 @@ const datasourceLoader = require('./datasource-loader')
 
 class Widget {
 
-  constructor (dashboard, renderOptions, widgetName, options = {}) {
-    this.datasource = datasourceLoader.load(widgetName, dashboard, options)
+  constructor (dashboard, widgetConfig, widgetName, options = {}) {
+    this.datasource = datasourceLoader.load(widgetName, dashboard, widgetConfig.datasource)
 
     this.dashboard = dashboard
-    this.background = renderOptions.background
-    this.position = new WidgetPosition(dashboard.layout, renderOptions.position)
+    this.background = widgetConfig.background
+    this.position = new WidgetPosition(dashboard.layout, widgetConfig.position)
     this.id = id()
     this.config = options
 

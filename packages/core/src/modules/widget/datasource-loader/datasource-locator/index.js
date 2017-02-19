@@ -8,10 +8,11 @@ class NoopDatasource {
   }
 }
 
-module.exports.resolve = function (datasources, datasource) {
-  if (!datasource) { return new NoopDatasource() }
+module.exports.locate = function (datasources, datasource) {
+  if (!datasource) { return { constructor: NoopDatasource } }
 
   const resolved = datasources[datasource]
+
   if (!resolved) {
     throw new WidgetRegistrationError(`Unable to use datasource ${datasource} as it does not exist`)
   }

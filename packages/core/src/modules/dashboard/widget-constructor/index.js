@@ -1,6 +1,6 @@
 'use strict'
 
-const Widget = require('../widget')
+const Widget = require('../../widget')
 const { reach } = require('hoek')
 const defaultsDeep = require('lodash/defaultsDeep')
 
@@ -37,7 +37,8 @@ class WidgetConstructor {
 
     return new Widget(this.dashboard, {
       position: fd.position,
-      background: fd.background
+      background: fd.background,
+      datasource: fd.datasource
     }, fd.widget, options)
   }
 

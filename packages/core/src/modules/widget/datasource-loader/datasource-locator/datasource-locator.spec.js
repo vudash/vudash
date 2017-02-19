@@ -1,26 +1,26 @@
 'use strict'
 
 const { WidgetRegistrationError } = require('../../../../errors')
-const resolver = require('.')
+const locator = require('.')
 
-describe('widget.datasource-resolver', () => {
+describe('widget.datasource-locator', () => {
   it('loads datasource', (done) => {
     const datasources = { abcde: { foo: 'bar' } }
     expect(
-      resolver.resolve(datasources, 'abcde')
+      locator.locate(datasources, 'abcde')
     ).to.equal(datasources.abcde)
     done()
   })
 
   it('Cannot load datasource', (done) => {
     expect(() => {
-      return resolver.resolve({}, 'non-existent')
+      return locator.locate({}, 'non-existent')
     }).to.throw(WidgetRegistrationError, 'Unable to use datasource non-existent as it does not exist')
     done()
   })
 
   it('Widget does not define a datasource', (done) => {
-    const noop = resolver.resolve({})
+    const noop = locator.locate({})
     expect(
       noop.fetch
     ).to.be.a.function()

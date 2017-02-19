@@ -1,10 +1,14 @@
+'use strict'
+
+const DatasourceBuilder = require(fromTest('util/datasource.builder'))
 const DashboardBuilder = require(fromTest('util/dashboard.builder'))
 const WidgetBuilder = require(fromTest('util/widget.builder'))
 const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
 const Promise = require('bluebird').Promise
-const { PluginRegistrationError } = require('../errors')
+const { PluginRegistrationError } = require('../../errors')
+const datasourceResolver = require('./datasource-resolver')
 
 describe('modules.dashboard', () => {
   let io
@@ -76,17 +80,39 @@ describe('modules.dashboard', () => {
   context('Datasource registration', () => {
     let dashboard
 
-    const SomeDatasource = function (options) { this.options = options }
-    SomeDatasource.widgetValidation = {}
-    SomeDatasource.prototype.fetch = function () { return this.options }
-
-    before((done) => {
-      const descriptor = DashboardBuilder.create()
+    const SomeDatasource = DatasourceBuilder.create().build()
+    const datasourceOptions = { foo: 'bar' }
+    const descriptor = DashboardBuilder
+      .create()
+      .addDatasource('some-modulename', datasourceOptions)
       .build()
+    const datasourceStub = { register: sinon.stub() }
 
+    beforeEach((done) => {
+      sinon.stub(datasourceResolver, 'resolve').returns(datasourceStub)
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
+    })
+
+    afterEach((done) => {
+      datasourceResolver.restore()
+    })
+
+    it('with no datasources stanza', (done) => {
+      const dashboardWithoutDatasources = DashboardBuilder
+        .create()
+        .build()
+      const instance = new Dashboard(dashboardWithoutDatasources, io)
+      expect(instance.initialise).not.to.throw()
       done()
+    })
+
+    it('Asks each datasource to register', (done) => {
+      expect(datasourceStub.register.callCount).to.equal(1)
+    })
+
+    it('Passes options to register', (done) => {
+      expect(datasourceStub.register.firstCall.args[0]).to.equal(datasourceOptions)
     })
 
     it('Can register datasource', (done) => {
