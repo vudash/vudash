@@ -56,7 +56,7 @@ describe('modules.widget', () => {
 
     it('Registers widget data source', (done) => {
       const widget = new Widget(dashboard, renderOptions, 'abcdef', {
-        datasource: 'has-validation'
+        datasource: { name: 'has-validation' }
       })
       const datasource = widget.getDatasource()
       expect(datasource.fetch).to.equal(validatingWidget.prototype.fetch)

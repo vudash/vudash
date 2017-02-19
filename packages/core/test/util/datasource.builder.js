@@ -12,8 +12,8 @@ class NonValidatingDataSource {
   }
 }
 
-class ValidatingDataSource {
-  static widgetValidation () {
+class ValidatingDataSource extends NonValidatingDataSource {
+  static get widgetValidation () {
     return Joi.object({}).required()
   }
 }

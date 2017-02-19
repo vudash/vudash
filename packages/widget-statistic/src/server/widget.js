@@ -1,20 +1,16 @@
 const sprintf = require('sprintf-js').sprintf
 
-const Transport = require('vudash-transports')
 const defaults = {
   'description': 'Statistics',
   'schedule': 60000,
-  'format': '%s',
-  'data-source': {
-    source: 'random'
-  }
+  'format': '%s'
 }
 
 class StatisticWidget {
 
-  register (options) {
+  register (options, transport) {
     const config = this.config = Object.assign({}, defaults, options)
-    this.transport = Transport.configure(config['data-source'])
+    this.transport = transport
 
     return {
       config: { description: config.description },

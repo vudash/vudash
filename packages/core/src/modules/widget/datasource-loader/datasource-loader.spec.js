@@ -5,26 +5,12 @@ const datasourceResolver = require('./datasource-resolver')
 const configValidator = require('../../config-validator')
 const DatasourceBuilder = require(fromTest('util/datasource.builder'))
 
-context.only('widget.datasource-loader', () => {
+context('widget.datasource-loader', () => {
   const validatingWidget = DatasourceBuilder.create().addWidgetValidation().build()
   const nonValidatingWidget = DatasourceBuilder.create().build()
 
-  const dashboard = {
-    datasources: {
-      'has-validation': {
-        constructor: validatingWidget,
-        options: { foo: 'bar' }
-      },
-      'no-validation': {
-        constructor: nonValidatingWidget
-      }
-    }
-  }
-
   beforeEach((done) => {
-    const options = {}
     sinon.stub(datasourceResolver, 'resolve')
-    .returns({ constructor: validatingWidget, options })
     sinon.stub(configValidator, 'validate').returns({})
     done()
   })
@@ -36,25 +22,31 @@ context.only('widget.datasource-loader', () => {
   })
 
   it('Registers widget data source', (done) => {
-    const datasource = loader.load('some-widget', dashboard, { datasource: 'no-validation' })
-    expect(datasource.fetch).to.be.a.function()
+    datasourceResolver.resolve.returns({ constructor: nonValidatingWidget, options: {} })
+    loader.load('some-widget', {}, { datasource: { name: 'no-validation' } })
+    expect(datasourceResolver.resolve.callCount).to.equal(1)
+    expect(datasourceResolver.resolve.firstCall.args[1]).to.equal('no-validation')
     done()
   })
 
   it('calls for widget validation on load', (done) => {
-    loader.load('some-widget', dashboard, { datasource: 'has-validation' })
+    const options = { foo: 'bar' }
+    datasourceResolver.resolve.returns({ constructor: validatingWidget, options: {} })
+    loader.load('some-widget', {}, { datasource: { name: 'has-validation', options } })
     expect(configValidator.validate.callCount).to.equal(1)
+    expect(configValidator.validate.firstCall.args[2]).to.equal(options)
     done()
   })
 
   it('no widget validation specified', (done) => {
-    loader.load('some-widget', dashboard, { datasource: 'no-validation' })
+    datasourceResolver.resolve.returns({ constructor: nonValidatingWidget, options: {} })
+    loader.load('some-widget', {}, { datasource: { name: 'no-validation' } })
     expect(configValidator.validate.callCount).to.equal(0)
     done()
   })
 
   it('no datasource specified', (done) => {
-    loader.load('some-widget', dashboard, {})
+    loader.load('some-widget', {}, {})
     expect(configValidator.validate.callCount).to.equal(0)
     done()
   })

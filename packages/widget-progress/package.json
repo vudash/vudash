@@ -10,8 +10,5 @@
     "component": "./src/client/component.html"
   },
   "author": "Antony Jones",
-  "license": "MIT",
-  "dependencies": {
-    "vudash-transports": "^5.2.2"
-  }
+  "license": "MIT"
 }
