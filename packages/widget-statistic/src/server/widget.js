@@ -8,7 +8,7 @@ const defaults = {
 
 class StatisticWidget {
 
-  register (options, transport) {
+  register (options, emit, transport) {
     const config = this.config = Object.assign({}, defaults, options)
     this.transport = transport
 

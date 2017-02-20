@@ -5,7 +5,10 @@ const configValidator = require('../../config-validator')
 
 class DatasourceLoader {
   load (widgetName, dashboard, datasource) {
-    if (!datasource) { return null }
+    if (!datasource) {
+      console.info(`${widgetName} does not have any datasource configuration.`)
+      return null
+    }
 
     const { constructor, options } = datasourceLocator.locate(dashboard.datasources, datasource.name)
 

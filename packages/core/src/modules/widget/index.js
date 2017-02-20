@@ -28,7 +28,8 @@ class Widget {
 
     const buildable = new Module().register(
       options,
-      this.dashboard.emitter.emit.bind(this.dashboard.emitter)
+      this.dashboard.emitter.emit.bind(this.dashboard.emitter),
+      this.datasource
     )
     this.build(buildable)
   }

@@ -8,4 +8,4 @@ class RestDatasource {
   }
 }
 
-module.exports = RestDatasource
+module.exports = new RestDatasource()

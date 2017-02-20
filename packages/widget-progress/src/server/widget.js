@@ -15,7 +15,7 @@ const defaults = {
 
 class ProgressWidget {
 
-  register (options, transport) {
+  register (options, emit, transport) {
     const config = Object.assign({}, defaults, options)
 
     return {

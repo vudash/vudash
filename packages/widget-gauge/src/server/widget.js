@@ -30,7 +30,7 @@ const defaults = {
 
 class GaugeWidget {
 
-  register (options, transport) {
+  register (options, emit, transport) {
     const overrides = Hoek.transform(options, {
       value: 'initial-value',
       min: 'min',

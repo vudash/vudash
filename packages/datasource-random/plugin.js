@@ -8,4 +8,4 @@ class RandomDatasource {
   }
 }
 
-module.exports = RandomDatasource
+module.exports = new RandomDatasource()

@@ -9,4 +9,4 @@ class ValueDatasource {
   }
 }
 
-module.exports = ValueDatasource
+module.exports = new ValueDatasource()
