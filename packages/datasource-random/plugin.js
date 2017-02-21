@@ -1,10 +1,11 @@
 'use strict'
 
 const RandomTransport = require('./src/random-transport')
+const { validation } = require('./datasource-validation')
 
 class RandomDatasource {
   register (dashboard) {
-    dashboard.contributeDatasource('random', RandomTransport)
+    dashboard.contributeDatasource(RandomTransport, validation)
   }
 }
 

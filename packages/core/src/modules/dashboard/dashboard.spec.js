@@ -1,14 +1,12 @@
 'use strict'
 
-const DatasourceBuilder = require(fromTest('util/datasource.builder'))
 const DashboardBuilder = require(fromTest('util/dashboard.builder'))
 const WidgetBuilder = require(fromTest('util/widget.builder'))
 const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
 const Promise = require('bluebird').Promise
-const { PluginRegistrationError } = require('../../errors')
-const datasourceResolver = require('./datasource-resolver')
+const pluginResolver = require('./plugin-loader/plugin-resolver')
 
 describe('modules.dashboard', () => {
   let io
@@ -77,71 +75,6 @@ describe('modules.dashboard', () => {
     })
   })
 
-  context('Datasource registration', () => {
-    let dashboard
-
-    const SomeDatasource = DatasourceBuilder.create().build()
-    const datasourceOptions = { foo: 'bar' }
-    const descriptor = DashboardBuilder
-      .create()
-      .addDatasource('some-modulename', datasourceOptions)
-      .build()
-    const datasourceStub = {}
-
-    beforeEach((done) => {
-      datasourceStub.register = sinon.stub()
-      sinon.stub(datasourceResolver, 'resolve').returns(datasourceStub)
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
-      done()
-    })
-
-    afterEach((done) => {
-      datasourceResolver.resolve.restore()
-      done()
-    })
-
-    it('with no datasources stanza', (done) => {
-      const dashboardWithoutDatasources = DashboardBuilder
-        .create()
-        .build()
-      const instance = new Dashboard(dashboardWithoutDatasources, io)
-      const fn = () => { instance.initialise() }
-      expect(fn).not.to.throw()
-      done()
-    })
-
-    it('Asks each datasource to register', (done) => {
-      expect(datasourceStub.register.callCount).to.equal(1)
-      done()
-    })
-
-    it('Can register datasource', (done) => {
-      dashboard.contributeDatasource('my-data-source', SomeDatasource)
-      expect(dashboard.datasources).to.include('my-data-source')
-      done()
-    })
-
-    it('Is not a datasource', (done) => {
-      const fn = () => { dashboard.contributeDatasource('my-data-source', {}) }
-      expect(fn).to.throw(PluginRegistrationError, 'Plugin my-data-source does not appear to be a data-source provider')
-      done()
-    })
-
-    it('Registers a datasource constructor', (done) => {
-      dashboard.contributeDatasource('my-data-source', SomeDatasource)
-      expect(dashboard.datasources['my-data-source'].constructor).to.be.a.function()
-      done()
-    })
-
-    it("Registers a datasource's global config", (done) => {
-      const options = { some: 'stuff' }
-      dashboard.contributeDatasource('my-data-source', SomeDatasource, options)
-      expect(dashboard.datasources['my-data-source'].options).to.equal(options)
-      done()
-    })
-  })
-
   context('Assets', () => {
     let dashboard
     let assets
@@ -167,6 +100,50 @@ describe('modules.dashboard', () => {
 
     it('Css Asset is present', (done) => {
       expect(assets.css.length).to.equal(2)
+      done()
+    })
+  })
+
+  context('Plugin registration', () => {
+    let dashboard
+
+    const datasourceOptions = { foo: 'bar' }
+    const descriptor = DashboardBuilder
+      .create()
+      .addPlugin('some-modulename', datasourceOptions)
+      .build()
+    const pluginStub = {}
+
+    before((done) => {
+      sinon.stub(pluginResolver, 'resolve')
+      done()
+    })
+
+    beforeEach((done) => {
+      pluginResolver.resolve.returns(pluginStub)
+      pluginStub.register = sinon.stub()
+      dashboard = new Dashboard(descriptor, io)
+      dashboard.initialise()
+      done()
+    })
+
+    after((done) => {
+      pluginResolver.resolve.restore()
+      done()
+    })
+
+    it('with no plugins stanza', (done) => {
+      const dashboardWithoutPlugins = DashboardBuilder
+        .create()
+        .build()
+      const instance = new Dashboard(dashboardWithoutPlugins, io)
+      const fn = () => { instance.initialise() }
+      expect(fn).not.to.throw()
+      done()
+    })
+
+    it('Asks each plugin to register', (done) => {
+      expect(pluginStub.register.callCount).to.equal(1)
       done()
     })
   })

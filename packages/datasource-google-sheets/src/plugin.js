@@ -1,10 +1,11 @@
 'use strict'
 
 const GoogleSheetsTransport = require('./google-sheets-transport')
+const { validation } = require('./config-validator')
 
 class RestDatasource {
   register (dashboard) {
-    dashboard.contributeDatasource('google-sheets', GoogleSheetsTransport)
+    dashboard.contributeDatasource(GoogleSheetsTransport, validation)
   }
 }
 

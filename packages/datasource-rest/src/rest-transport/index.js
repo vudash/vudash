@@ -1,7 +1,8 @@
+'use strict'
+
 const request = require('request-promise')
 const { reach } = require('hoek')
 const pkg = require('../../package.json')
-const Joi = require('joi')
 
 const internals = {
   prepareRequest (config) {
@@ -37,16 +38,6 @@ class RestTransport {
     return request(options)
     .then((response) => {
       return reach(response, this.config.graph)
-    })
-  }
-
-  static get widgetValidation () {
-    return Joi.object({
-      url: Joi.string().description('Url to call'),
-      method: Joi.string().only('get', 'post', 'put', 'options', 'delete', 'head').description('Http Method'),
-      payload: Joi.object().optional().description('request payload'),
-      query: Joi.object().optional().description('query params'),
-      graph: Joi.string().optional().description('Graph expression (json path) to reach json values')
     })
   }
 }

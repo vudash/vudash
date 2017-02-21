@@ -1,10 +1,11 @@
 'use strict'
 
 const RestTransport = require('./src/rest-transport')
+const { validation } = require('./src/datasource-validation')
 
 class RestDatasource {
   register (dashboard) {
-    dashboard.contributeDatasource('rest', RestTransport)
+    dashboard.contributeDatasource(RestTransport, validation)
   }
 }
 

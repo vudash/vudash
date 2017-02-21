@@ -4,8 +4,8 @@
     "columns": 5,
     "rows": 4
   },
-  "datasources": {
-    "rest": {
+  "plugins": {
+    "rest-datasource": {
       "module": "@vudash/datasource-rest",
       "options": {}
     }
@@ -16,7 +16,7 @@
       "position": { "x": 0, "y": 2, "w": 2, "h": 1 },
       "widget": "vudash-widget-statistic",
       "datasource": {
-        "name": "rest",
+        "name": "rest-datasource",
         "options": {
           "url": "http://api.fixer.io/latest?base=EUR",
           "method": "get",

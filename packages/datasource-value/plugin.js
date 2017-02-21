@@ -1,11 +1,12 @@
 'use strict'
 
 const ValueTransport = require('./src/value-transport')
+const { validation } = require('./src/datasource-validation')
 
 class ValueDatasource {
 
   register (dashboard) {
-    dashboard.contributeDatasource('value', ValueTransport)
+    dashboard.contributeDatasource(ValueTransport, validation)
   }
 }
 

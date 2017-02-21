@@ -1,14 +1,11 @@
 'use strict'
 
-const chalk = require('chalk')
 const Emitter = require('../emitter')
 const id = require('../id-gen')
 const descriptorParser = require('../descriptor-parser')
 const assetBuilder = require('../asset-builder')
-const { PluginRegistrationError } = require('../../errors')
 const WidgetConstructor = require('./widget-constructor')
-const datasourceResolver = require('./datasource-resolver')
-const { reach } = require('hoek')
+const PluginLoader = require('./plugin-loader')
 
 class Dashboard {
   constructor (json, io) {
@@ -23,12 +20,12 @@ class Dashboard {
 
     this.datasources = {}
 
-    const datasourceIds = descriptor.datasources && Object.keys(descriptor.datasources)
-    if (datasourceIds) {
-      datasourceIds.forEach((id) => {
-        const datasourceConfig = descriptor.datasources[id]
-        const datasource = datasourceResolver.resolve(datasourceConfig.module)
-        datasource.register(this)
+    const pluginIds = descriptor.plugins && Object.keys(descriptor.plugins)
+    if (pluginIds) {
+      pluginIds.forEach((id) => {
+        const pluginConfig = descriptor.plugins[id]
+        const pluginLoader = new PluginLoader(id, this)
+        pluginLoader.load(pluginConfig)
       })
     }
 
@@ -52,15 +49,6 @@ class Dashboard {
 
   getAssets () {
     return this.assets
-  }
-
-  contributeDatasource (name, datasource, options = {}) {
-    const fetchMethod = reach(datasource, 'prototype.fetch')
-    if (!fetchMethod || typeof fetchMethod !== 'function') {
-      throw new PluginRegistrationError(`Plugin ${name} does not appear to be a data-source provider`)
-    }
-    console.info(`Adding datasource ${chalk.bold.magenta(name)}`)
-    this.datasources[name] = { Constructor: datasource, options }
   }
 
   buildJobs () {

@@ -15,9 +15,9 @@ class DashboardBuilder {
     return this
   }
 
-  addDatasource (moduleName, options) {
-    this.overrides.datasources = this.datasources || {}
-    this.overrides.datasources[moduleName] = {
+  addPlugin (moduleName, options) {
+    this.overrides.plugins = this.plugins || {}
+    this.overrides.plugins[moduleName] = {
       module: moduleName,
       options
     }

@@ -65,8 +65,8 @@ class GoogleSheetsTransport {
     const conf = this.config
 
     return tab.map((row) => {
-      const columns = Object.keys(row).filter((col) => { 
-        return conf.columns.includes(col) 
+      const columns = Object.keys(row).filter((col) => {
+        return conf.columns.includes(col)
       })
 
       const values = columns.map((column) => {

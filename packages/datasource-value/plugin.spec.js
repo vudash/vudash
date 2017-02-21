@@ -1,12 +1,10 @@
 'use strict'
 
 const Joi = require('joi')
-const Plugin = require('.')
+const plugin = require('.')
 
 describe('value', () => {
   context('Widget Validation', () => {
-    const plugin = new Plugin()
-
     it('Requires a value to be passed in config', (done) => {
       const { error } = Joi.validate({}, plugin.widgetValidation)
       expect(error).to.be.an.error(/"value" is required/)

@@ -4,7 +4,6 @@ const Widget = require(fromSrc('modules/widget'))
 const sinon = require('sinon')
 
 const moduleResolver = require('../module-resolver')
-const configValidator = require('../config-validator')
 const datasourceLoader = require('./datasource-loader')
 
 const DatasourceBuilder = require(fromTest('util/datasource.builder'))
