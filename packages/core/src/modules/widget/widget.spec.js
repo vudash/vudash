@@ -6,26 +6,18 @@ const sinon = require('sinon')
 const moduleResolver = require('../module-resolver')
 const datasourceLoader = require('./datasource-loader')
 
-const DatasourceBuilder = require(fromTest('util/datasource.builder'))
-
 describe('modules.widget', () => {
   const position = { x: 0, y: 0, w: 1, h: 1 }
   const renderOptions = { position }
 
   context('Datasources', () => {
-    const validatingWidget = DatasourceBuilder.create().addWidgetValidation().build()
-    const nonValidatingWidget = DatasourceBuilder.create().build()
-
     const dashboard = {
       layout: { rows: 4, columns: 5 },
       emitter: { emit: sinon.stub() },
       datasources: {
-        'has-validation': {
-          constructor: validatingWidget,
+        'xxx': {
+          constructor: () => {},
           options: { foo: 'bar' }
-        },
-        'no-validation': {
-          constructor: nonValidatingWidget
         }
       }
     }

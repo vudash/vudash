@@ -1,8 +1,6 @@
 'use strict'
 
-const Joi = require('joi')
-
-class NonValidatingDataSource {
+class Datasource {
   constructor (options) {
     this.options = options
   }
@@ -12,20 +10,9 @@ class NonValidatingDataSource {
   }
 }
 
-class ValidatingDataSource extends NonValidatingDataSource {
-  static get widgetValidation () {
-    return Joi.object({}).required()
-  }
-}
-
 class DatasourceBuilder {
   constructor () {
-    this.ds = NonValidatingDataSource
-  }
-
-  addWidgetValidation () {
-    this.ds = ValidatingDataSource
-    return this
+    this.ds = Datasource
   }
 
   build () {

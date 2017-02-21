@@ -5,10 +5,11 @@ const configValidator = require('../../config-validator')
 const { applyToDefaults } = require('hoek')
 
 const internals = {
-  validateDatasourceConfig (widgetName, { Constructor, options }, localOptions = {}) {
+  validateDatasourceConfig (widgetName, sharedDatasource, localOptions = {}) {
+    const validation = sharedDatasource.validation
+    const options = sharedDatasource.options
     const allOptions = applyToDefaults(options, localOptions, true)
 
-    const validation = Constructor.widgetValidation
     if (validation) {
       configValidator.validate(`widget:${widgetName}`, validation, allOptions)
     }
