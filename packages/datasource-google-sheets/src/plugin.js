@@ -3,7 +3,7 @@
 const GoogleSheetsTransport = require('./google-sheets-transport')
 
 class RestDatasource {
-  register (dashboard, options) {
+  register (dashboard) {
     dashboard.contributeDatasource('google-sheets', GoogleSheetsTransport)
   }
 }

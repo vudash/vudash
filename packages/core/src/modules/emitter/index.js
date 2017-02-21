@@ -1,5 +1,7 @@
 'use strict'
 
+const chalk = require('chalk')
+
 class Emitter {
 
   constructor (socketio, room) {
@@ -13,7 +15,9 @@ class Emitter {
     socket.join(this.room)
     const eventHistory = this.getRecentEvents()
     const eventIds = Object.keys(eventHistory)
-    console.log(`Client ${socket.id} connected to ${this.room}. Receives ${eventIds.length} historical events.`)
+    console.log(`Client ${chalk.bold.green(socket.id)} 
+      connected to ${chalk.bold.red(this.room)}. 
+      Receives ${chalk.bold.yellow(eventIds.length)} historical events.`)
     eventIds.map((eventId) => {
       this.emit(eventId, eventHistory[eventId], true)
     })

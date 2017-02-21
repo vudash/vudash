@@ -4,7 +4,7 @@ const ValueTransport = require('./src/value-transport')
 
 class ValueDatasource {
 
-  register (dashboard, options) {
+  register (dashboard) {
     dashboard.contributeDatasource('value', ValueTransport)
   }
 }

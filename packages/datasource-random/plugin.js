@@ -3,7 +3,7 @@
 const RandomTransport = require('./src/random-transport')
 
 class RandomDatasource {
-  register (dashboard, options) {
+  register (dashboard) {
     dashboard.contributeDatasource('random', RandomTransport)
   }
 }

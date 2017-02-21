@@ -86,16 +86,19 @@ describe('modules.dashboard', () => {
       .create()
       .addDatasource('some-modulename', datasourceOptions)
       .build()
-    const datasourceStub = { register: sinon.stub() }
+    const datasourceStub = {}
 
     beforeEach((done) => {
+      datasourceStub.register = sinon.stub()
       sinon.stub(datasourceResolver, 'resolve').returns(datasourceStub)
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
+      done()
     })
 
     afterEach((done) => {
-      datasourceResolver.restore()
+      datasourceResolver.resolve.restore()
+      done()
     })
 
     it('with no datasources stanza', (done) => {
@@ -103,16 +106,14 @@ describe('modules.dashboard', () => {
         .create()
         .build()
       const instance = new Dashboard(dashboardWithoutDatasources, io)
-      expect(instance.initialise).not.to.throw()
+      const fn = () => { instance.initialise() }
+      expect(fn).not.to.throw()
       done()
     })
 
     it('Asks each datasource to register', (done) => {
       expect(datasourceStub.register.callCount).to.equal(1)
-    })
-
-    it('Passes options to register', (done) => {
-      expect(datasourceStub.register.firstCall.args[0]).to.equal(datasourceOptions)
+      done()
     })
 
     it('Can register datasource', (done) => {

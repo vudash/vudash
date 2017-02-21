@@ -20,10 +20,11 @@ describe('widget.datasource-locator', () => {
   })
 
   it('Widget does not define a datasource', (done) => {
-    const noop = locator.locate({})
+    const located = locator.locate({})
+    expect(located).to.include('Constructor')
     expect(
-      noop.fetch
+      located.Constructor
     ).to.be.a.function()
-    return noop.fetch()
+    done()
   })
 })

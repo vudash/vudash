@@ -29,7 +29,7 @@ const internals = {
 class RestTransport {
 
   constructor (options) {
-    this.config = options.config
+    this.config = options
   }
 
   fetch () {

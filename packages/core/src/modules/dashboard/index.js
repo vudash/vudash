@@ -1,5 +1,6 @@
 'use strict'
 
+const chalk = require('chalk')
 const Emitter = require('../emitter')
 const id = require('../id-gen')
 const descriptorParser = require('../descriptor-parser')
@@ -27,7 +28,7 @@ class Dashboard {
       datasourceIds.forEach((id) => {
         const datasourceConfig = descriptor.datasources[id]
         const datasource = datasourceResolver.resolve(datasourceConfig.module)
-        datasource.register(this, datasourceConfig.options)
+        datasource.register(this)
       })
     }
 
@@ -58,8 +59,8 @@ class Dashboard {
     if (!fetchMethod || typeof fetchMethod !== 'function') {
       throw new PluginRegistrationError(`Plugin ${name} does not appear to be a data-source provider`)
     }
-    console.info(`Adding datasource ${name}`)
-    this.datasources[name] = { constructor: datasource, options }
+    console.info(`Adding datasource ${chalk.bold.magenta(name)}`)
+    this.datasources[name] = { Constructor: datasource, options }
   }
 
   buildJobs () {

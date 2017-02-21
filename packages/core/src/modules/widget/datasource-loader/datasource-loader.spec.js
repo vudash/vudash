@@ -22,8 +22,8 @@ context('widget.datasource-loader', () => {
   })
 
   it('Registers widget data source', (done) => {
-    datasourceLocator.locate.returns({ constructor: nonValidatingWidget, options: {} })
-    loader.load('some-widget', {}, { datasource: { name: 'no-validation' } })
+    datasourceLocator.locate.returns({ Constructor: nonValidatingWidget, options: {} })
+    loader.load('some-widget', {}, { name: 'no-validation' })
     expect(datasourceLocator.locate.callCount).to.equal(1)
     expect(datasourceLocator.locate.firstCall.args[1]).to.equal('no-validation')
     done()
@@ -31,16 +31,16 @@ context('widget.datasource-loader', () => {
 
   it('calls for widget validation on load', (done) => {
     const options = { foo: 'bar' }
-    datasourceLocator.locate.returns({ constructor: validatingWidget, options: {} })
-    loader.load('some-widget', {}, { datasource: { name: 'has-validation', options } })
+    datasourceLocator.locate.returns({ Constructor: validatingWidget, options: {} })
+    loader.load('some-widget', {}, { name: 'has-validation', options })
     expect(configValidator.validate.callCount).to.equal(1)
     expect(configValidator.validate.firstCall.args[2]).to.equal(options)
     done()
   })
 
   it('no widget validation specified', (done) => {
-    datasourceLocator.locate.returns({ constructor: nonValidatingWidget, options: {} })
-    loader.load('some-widget', {}, { datasource: { name: 'no-validation' } })
+    datasourceLocator.locate.returns({ Constructor: nonValidatingWidget, options: {} })
+    loader.load('some-widget', {}, { name: 'no-validation' })
     expect(configValidator.validate.callCount).to.equal(0)
     done()
   })
@@ -49,5 +49,31 @@ context('widget.datasource-loader', () => {
     loader.load('some-widget', {}, {})
     expect(configValidator.validate.callCount).to.equal(0)
     done()
+  })
+
+  context('Global Options', () => {
+    beforeEach((done) => {
+      const datasourceOptions = { a: 'b' }
+      datasourceLocator.locate.returns({ Constructor: validatingWidget, options: datasourceOptions })
+      done()
+    })
+
+    it('combines all datasource options', (done) => {
+      const widgetDatasourceOptions = { c: 'd' }
+      loader.load('some-widget', {}, { name: 'has-validation', options: widgetDatasourceOptions })
+
+      expect(configValidator.validate.callCount).to.equal(1)
+      expect(configValidator.validate.firstCall.args[2]).to.equal({ a: 'b', c: 'd' })
+      done()
+    })
+
+    it('local options override global options', (done) => {
+      const widgetDatasourceOptions = { a: 'q', c: 'd' }
+      loader.load('some-widget', {}, { name: 'has-validation', options: widgetDatasourceOptions })
+
+      expect(configValidator.validate.callCount).to.equal(1)
+      expect(configValidator.validate.firstCall.args[2]).to.equal({ a: 'q', c: 'd' })
+      done()
+    })
   })
 })

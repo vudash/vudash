@@ -9,7 +9,7 @@ class NoopDatasource {
 }
 
 module.exports.locate = function (datasources, datasource) {
-  if (!datasource) { return { constructor: NoopDatasource } }
+  if (!datasource) { return { Constructor: NoopDatasource } }
 
   const resolved = datasources[datasource]
 

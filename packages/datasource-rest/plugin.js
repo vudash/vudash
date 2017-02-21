@@ -3,7 +3,7 @@
 const RestTransport = require('./src/rest-transport')
 
 class RestDatasource {
-  register (dashboard, options) {
+  register (dashboard) {
     dashboard.contributeDatasource('rest', RestTransport)
   }
 }

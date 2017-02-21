@@ -5,6 +5,7 @@ const sinon = require('sinon')
 
 const moduleResolver = require('../module-resolver')
 const configValidator = require('../config-validator')
+const datasourceLoader = require('./datasource-loader')
 
 const DatasourceBuilder = require(fromTest('util/datasource.builder'))
 
@@ -44,22 +45,23 @@ describe('modules.widget', () => {
         html: '<h1></h1>',
         name: 'xxx'
       })
-      sinon.stub(configValidator, 'validate').returns({})
+      sinon.stub(datasourceLoader, 'load')
       done()
     })
 
     afterEach((done) => {
       moduleResolver.resolve.restore()
-      configValidator.validate.restore()
+      datasourceLoader.load.restore()
       done()
     })
 
     it('Registers widget data source', (done) => {
-      const widget = new Widget(dashboard, renderOptions, 'abcdef', {
-        datasource: { name: 'has-validation' }
-      })
+      const loadedDatasource = { foo: 'bar' }
+      datasourceLoader.load.returns(loadedDatasource)
+
+      const widget = new Widget(dashboard, renderOptions, 'abcdef', {})
       const datasource = widget.getDatasource()
-      expect(datasource.fetch).to.equal(validatingWidget.prototype.fetch)
+      expect(datasource).to.equal(loadedDatasource)
       done()
     })
   })
