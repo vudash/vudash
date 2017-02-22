@@ -2,7 +2,6 @@
 
 const nock = require('nock')
 const RestTransport = require('.')
-const request = require('request-promise')
 
 describe('transports.rest', () => {
   const host = 'http://example.net'
@@ -40,22 +39,25 @@ describe('transports.rest', () => {
     })
   })
 
-  describe('Extract values', () => {
+  context('Extract values', () => {
     const body = { i: { love: { animals: 'dogs' } } }
+    const options = { method: 'get', url: 'http://example.com/some/stuff' }
 
-    before((done) => {
-      sinon.stub(request, 'get')
+    beforeEach((done) => {
+      nock('http://example.com')
+      .get('/some/stuff')
+      .reply(200, body)
+
       done()
     })
 
-    after((done) => {
-      request.get.restore()
+    afterEach((done) => {
+      nock.cleanAll()
       done()
     })
 
     it('Without graph specified, returns full object', () => {
-      const transport = new RestTransport({ method: 'get', url: 'http://example.com' })
-      request.get.resolves({ body })
+      const transport = new RestTransport(options)
       return transport.fetch()
       .then((value) => {
         expect(value).to.equal(body)
@@ -63,8 +65,7 @@ describe('transports.rest', () => {
     })
 
     it('extracts a specified value from JSON', () => {
-      const transport = new RestTransport({ method: 'get', url: 'http://example.com', graph: 'i.love.animals' })
-      request.get.resolves({ body })
+      const transport = new RestTransport(Object.assign({ graph: 'i.love.animals' }, options))
       return transport.fetch()
       .then((value) => {
         expect(value).to.equal('dogs')
@@ -72,8 +73,7 @@ describe('transports.rest', () => {
     })
 
     it('Simply returns undefined for unreachable value', () => {
-      const transport = new RestTransport({ method: 'get', url: 'http://example.com', graph: 'i.love.people' })
-      request.get.resolves({ body })
+      const transport = new RestTransport(Object.assign({ graph: 'i.love.people' }, options))
       return transport.fetch()
       .then((value) => {
         expect(value).to.equal(undefined)
