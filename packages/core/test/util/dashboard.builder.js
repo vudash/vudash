@@ -44,13 +44,6 @@ class DashboardBuilder {
     return this.addAsset('css', url)
   }
 
-  withSharedConfig (key, conf) {
-    const propName = 'shared-config'
-    this.overrides[propName] = this.overrides[propName] || {}
-    this.overrides[propName][key] = conf
-    return this
-  }
-
   build () {
     return Object.assign({}, {
       layout: {

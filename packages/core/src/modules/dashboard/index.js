@@ -14,7 +14,6 @@ class Dashboard {
     this.id = id()
     this.name = descriptor.name
     this.assets = assetBuilder.build(descriptor.assets)
-    this.sharedConfig = descriptor['shared-config']
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
 
@@ -29,7 +28,7 @@ class Dashboard {
       })
     }
 
-    this.widgetConstructor = new WidgetConstructor(this, this.sharedConfig)
+    this.widgetConstructor = new WidgetConstructor(this)
     this.widgets = descriptor.widgets.map((widgetDescriptor) => {
       return this.widgetConstructor.register(widgetDescriptor)
     })
