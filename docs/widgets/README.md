@@ -121,7 +121,7 @@ Simply include in your dashboard, and configure as required:
   }
 ```
 
-Note that `data-source` tells the widget where to get data, and is using the [vudash-transports plugin](https://github.com/vudash/vudash-transports/providers) to get data for your widget.
+Note that `datasource` tells the widget how to get data, and is using a datasource plugin, which is documented in the [Plugins documentation](/#/plugins)
 
 #### Graphs
 This widget will graph data which is passed in as an array.
