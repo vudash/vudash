@@ -8,8 +8,8 @@
 
 - Uses websockets for realtime updates
 - Integrates with a huge number of services
-- Simple JSON configuration
-- All ES6
+- Familiar JSON configuration
+- Extensible plugin system
 
 [GitHub](https://github.com/vudash/vudash)
 [Get Started](#quick-start)
