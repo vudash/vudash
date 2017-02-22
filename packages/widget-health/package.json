@@ -7,5 +7,8 @@
   "vudash": {
     "component": "./component.html"
   },
-  "version": "5.2.2"
+  "version": "5.2.2",
+  "dependencies": {
+    "bluebird": "^3.4.7"
+  }
 }
