@@ -1,7 +1,5 @@
 'use strict'
 
-const Promise = require('bluebird').Promise
-const Transport = require('vudash-transports')
 const Hoek = require('hoek')
 
 const defaults = {
@@ -24,37 +22,36 @@ const defaults = {
   'data-source': {
     source: 'random',
     options: {
-      "method": 'integer',
-      "options": [{ "min": 0, "max": 1000 }]
+      method: 'integer',
+      options: [{ min: 0, max: 1000 }]
     }
   }
 }
 
 class GaugeWidget {
 
-  register (options) {
+  register (options, emit, transport) {
     const overrides = Hoek.transform(options, {
-      'value': 'initial-value',
-      'min': 'min',
-      'max': 'max',
-      'schedule': 'schedule',
-      'indicatorBackgroundColour': 'pointer.background-colour',
-      'indicatorColour': 'pointer.colour',
-      'valueFontSize': 'value.font-size',
-      'valueColour': 'value.colour',
-      'valueBackgroundColour': 'value.background-colour',
-      'description': 'description'
+      value: 'initial-value',
+      min: 'min',
+      max: 'max',
+      schedule: 'schedule',
+      indicatorBackgroundColour: 'pointer.background-colour',
+      indicatorColour: 'pointer.colour',
+      valueFontSize: 'value.font-size',
+      valueColour: 'value.colour',
+      valueBackgroundColour: 'value.background-colour',
+      description: 'description'
     })
 
     const config = Hoek.applyToDefaults(defaults, overrides, false)
-    this.transport = Transport.configure(config['data-source'])
 
     return {
       config,
       schedule: config.schedule,
 
       job: () => {
-        return this.transport
+        return transport
         .fetch()
         .then((value) => {
           return { value, min: config.min, max: config.max }

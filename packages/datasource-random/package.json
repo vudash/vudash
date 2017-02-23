@@ -1,0 +1,30 @@
+{
+  "name": "@vudash/datasource-random",
+  "version": "1.0.0",
+  "description": "Random Datasource for Vudash",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab  -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
+  "keywords": [
+    "vudash",
+    "transport",
+    "datasource",
+    "chance",
+    "random",
+    "values"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "chance": "^1.0.4"
+  }
+}

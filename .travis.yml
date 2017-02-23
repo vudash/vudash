@@ -10,7 +10,10 @@ cache:
   - packages/**/node_modules
 env:
   - TEST_DIR=vudash
-  - TEST_DIR=vudash-transports
+  - TEST_DIR=@vudash/datasource-rest
+  - TEST_DIR=@vudash/datasource-random
+  - TEST_DIR=@vudash/datasource-value
+  - TEST_DIR=@vudash/datasource-google-sheets
   - TEST_DIR=vudash-widget-ci
   - TEST_DIR=vudash-widget-gauge
   - TEST_DIR=vudash-widget-progress

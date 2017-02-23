@@ -1,5 +1,8 @@
+'use strict'
+
+const server = require(fromRoot('app'))
+
 describe('plugins.dashboard', () => {
-  const server = require(fromRoot('app'))
   const dashboard = 'simple'
 
   it('Loads dashboards into memory', (done) => {

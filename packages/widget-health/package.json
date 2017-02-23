@@ -1,8 +1,25 @@
 {
   "name": "vudash-widget-health",
   "main": "widget.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
   "vudash": {
     "component": "./component.html"
   },
-  "version": "5.2.2"
+"keywords": [
+    "vudash",
+    "dashboard",
+    "dashing",
+    "health",
+    "monitoring"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
+  "version": "5.2.2",
+  "dependencies": {
+    "bluebird": "^3.4.7"
+  }
 }

@@ -15,6 +15,15 @@ class DashboardBuilder {
     return this
   }
 
+  addPlugin (moduleName, options) {
+    this.overrides.plugins = this.plugins || {}
+    this.overrides.plugins[moduleName] = {
+      module: moduleName,
+      options
+    }
+    return this
+  }
+
   addWidget (widget = WidgetBuilder.create().build()) {
     this.overrides.widgets.push(widget)
     return this
@@ -33,13 +42,6 @@ class DashboardBuilder {
 
   addCssAsset (url) {
     return this.addAsset('css', url)
-  }
-
-  withSharedConfig (key, conf) {
-    const propName = 'shared-config'
-    this.overrides[propName] = this.overrides[propName] || {}
-    this.overrides[propName][key] = conf
-    return this
   }
 
   build () {

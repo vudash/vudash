@@ -4,7 +4,11 @@
   "description": "A CI Widget for Vudash",
   "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource test/unit.lab.js"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
   },
   "keywords": [
     "vudash",
@@ -28,6 +32,6 @@
     "circleci": "^0.3.2",
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
-    "travis-ci": "^2.1.0"
+    "travis-ci": "^2.1.1"
   }
 }

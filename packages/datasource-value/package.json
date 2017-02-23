@@ -1,0 +1,22 @@
+{
+  "name": "@vudash/datasource-value",
+  "version": "1.0.0",
+  "description": "Value datasource for Vudash dashboards",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab  -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
+  "main": "plugin.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "joi": "^10.2.2"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@vudash/datasource-rest",
+  "version": "1.0.0",
+  "description": "REST Datasource for Vudash",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/lab  -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "hoek": "^4.1.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}

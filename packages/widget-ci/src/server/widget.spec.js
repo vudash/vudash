@@ -64,7 +64,7 @@ describe('widget', () => {
     })
 
     it('Delivers sound payload', (done) => {
-      expect(emitStub.firstCall.args[1]).to.equal('recovery-sound')
+      expect(emitStub.firstCall.args[1]).to.equal({ data: 'recovery-sound' })
       done()
     })
 

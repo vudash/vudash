@@ -6,8 +6,10 @@
   },
   "devDependencies": {
     "cheerio": "^0.22.0",
+    "chance": "^1.0.4",
     "code": "^4.0.0",
     "docsify": "^1.7.4",
+    "docsify-cli": "^3.0.1",
     "glob": "^7.0.6",
     "lab": "^10.6.0",
     "lerna": "2.0.0-beta.36",
@@ -18,7 +20,7 @@
     "standard": "^7.1.2"
   },
   "engines": {
-    "node": "7.4.x"
+    "node": ">=5.x"
   },
   "standard": {
     "globals": [

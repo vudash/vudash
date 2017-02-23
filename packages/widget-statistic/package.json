@@ -3,16 +3,15 @@
   "version": "5.2.2",
   "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab src/**/*.test.js"
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
   },
   "dependencies": {
     "chartist": "^0.9.8",
-    "sprintf-js": "^1.0.3",
-    "vudash-transports": "^5.2.2"
+    "sprintf-js": "^1.0.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vudash/vudash-widget-statistic.git"
+    "url": "https://github.com/vudash/vudash"
   },
   "vudash": {
     "markup": "./src/client/markup.html",

@@ -1,7 +1,5 @@
 'use strict'
 
-const Transport = require('vudash-transports')
-
 const defaults = {
   'description': 'Completion',
   'schedule': 30000,
@@ -17,16 +15,15 @@ const defaults = {
 
 class ProgressWidget {
 
-  register (options) {
+  register (options, emit, transport) {
     const config = Object.assign({}, defaults, options)
-    this.transport = Transport.configure(config['data-source'])
 
     return {
       config,
       schedule: config.schedule,
 
       job: () => {
-        return this.transport
+        return transport
         .fetch()
         .then((percentage) => {
           if (percentage > 100) { percentage = 100 }
