@@ -7,7 +7,7 @@
   "vudash": {
     "component": "./component.html"
   },
-"keywords": [
+  "keywords": [
     "vudash",
     "dashboard",
     "dashing",
@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/vudash/vudash"
   },
-  "version": "5.2.2",
+  "version": "6.0.0",
   "dependencies": {
     "bluebird": "^3.4.7"
   }
