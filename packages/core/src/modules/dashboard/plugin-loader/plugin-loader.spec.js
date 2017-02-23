@@ -39,7 +39,6 @@ describe('dashboard.plugin-loader', () => {
 
     it("Registers a datasource's options", (done) => {
       pluginLoader.contributeDatasource(SomeDatasource)
-      console.log(dashboard.datasources['some-id'].options)
       expect(dashboard.datasources['some-id'].options).to.equal(options)
       done()
     })

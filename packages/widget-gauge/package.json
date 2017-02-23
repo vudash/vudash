@@ -13,8 +13,5 @@
   "dependencies": {
     "bluebird": "^3.4.7",
     "hoek": "^4.1.0"
-  },
-  " devDependencies": {
-    "chance": "^1.0.4"
   }
 }

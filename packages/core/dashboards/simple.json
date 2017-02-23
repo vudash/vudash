@@ -4,29 +4,7 @@
     "columns": 5,
     "rows": 4
   },
-  "plugins": {
-    "rest-datasource": {
-      "module": "@vudash/datasource-rest",
-      "options": {}
-    }
-  },
   "widgets": [
-    { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" },
-    { 
-      "position": { "x": 0, "y": 2, "w": 2, "h": 1 },
-      "widget": "vudash-widget-statistic",
-      "datasource": {
-        "name": "rest-datasource",
-        "options": {
-          "url": "http://api.fixer.io/latest?base=EUR",
-          "method": "get",
-          "graph": "rates.GBP"
-        }
-      },
-      "options": {
-        "schedule": 30000,
-        "description": "EUR -> GBP"
-      }
-    }
+    { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" }
   ]
 }

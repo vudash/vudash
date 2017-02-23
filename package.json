@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "cheerio": "^0.22.0",
+    "chance": "^1.0.4",
     "code": "^4.0.0",
     "docsify": "^1.7.4",
     "docsify-cli": "^3.0.1",
