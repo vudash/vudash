@@ -7,6 +7,17 @@
   "vudash": {
     "component": "./component.html"
   },
+"keywords": [
+    "vudash",
+    "dashboard",
+    "dashing",
+    "health",
+    "monitoring"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
   "version": "5.2.2",
   "dependencies": {
     "bluebird": "^3.4.7"

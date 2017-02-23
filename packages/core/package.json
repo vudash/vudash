@@ -15,8 +15,15 @@
     "dashing-js",
     "statistics",
     "big screen",
-    "display"
+    "display",
+    "home automation",
+    "automation",
+    "ha"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
   "description": "Easy to use, flexible dashboard software for monitoring, analytics, and more.",
   "main": "app.js",
   "scripts": {
@@ -29,10 +36,6 @@
   },
   "engines": {
     "node": "7.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vudash/vudash-core"
   },
   "author": "Antony Jones",
   "license": "MIT",

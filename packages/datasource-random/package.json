@@ -14,8 +14,15 @@
     "random",
     "values"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
   "author": "Antony Jones",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "bluebird": "^3.4.7",
     "chance": "^1.0.4"

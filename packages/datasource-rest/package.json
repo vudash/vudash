@@ -8,6 +8,9 @@
   },
   "author": "Antony Jones",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "hoek": "^4.1.0",
     "request": "^2.79.0",

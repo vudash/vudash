@@ -6,6 +6,18 @@
   "scripts": {
     "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
+  "keywords": [
+    "vudash",
+    "widget",
+    "progress",
+    "progress bar",
+    "completion",
+    "percentage"
+  ],
   "vudash": {
     "component": "./src/client/component.html"
   },
