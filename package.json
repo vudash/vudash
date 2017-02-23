@@ -19,7 +19,7 @@
     "standard": "^7.1.2"
   },
   "engines": {
-    "node": "7.4.x"
+    "node": ">=5.x"
   },
   "standard": {
     "globals": [

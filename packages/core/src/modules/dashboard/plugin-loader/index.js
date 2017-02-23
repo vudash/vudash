@@ -13,7 +13,7 @@ class PluginLoader {
   }
 
   load (config) {
-    this.options = config.options
+    this.options = config.options || {}
     const plugin = pluginResolver.resolve(config.module)
     plugin.register(this)
   }
