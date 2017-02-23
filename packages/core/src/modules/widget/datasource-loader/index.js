@@ -3,6 +3,7 @@
 const datasourceLocator = require('./datasource-locator')
 const configValidator = require('../../config-validator')
 const { applyToDefaults } = require('hoek')
+const DummyDatasource = require('./dummy-datasource')
 
 const internals = {
   validateDatasourceConfig (widgetName, sharedDatasource, localOptions = {}) {
@@ -21,8 +22,7 @@ const internals = {
 class DatasourceLoader {
   load (widgetName, dashboard, datasourceDefinition) {
     if (!datasourceDefinition || !datasourceDefinition.name) {
-      console.info(`${widgetName} does not have any datasource configuration.`)
-      return null
+      return new DummyDatasource({ widgetName })
     }
 
     const sharedDatasource = datasourceLocator.locate(dashboard.datasources, datasourceDefinition.name)

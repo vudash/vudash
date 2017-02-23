@@ -52,7 +52,7 @@ describe('dashboard.plugin-loader', () => {
     })
   })
 
-  context.only('Datasource without any global config provided', () => {
+  context('Datasource without any global config provided', () => {
     let pluginLoader
 
     const SomeDatasource = DatasourceBuilder.create().build()

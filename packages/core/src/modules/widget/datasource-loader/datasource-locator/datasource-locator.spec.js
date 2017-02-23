@@ -18,13 +18,4 @@ describe('widget.datasource-locator', () => {
     }).to.throw(WidgetRegistrationError, 'Unable to use datasource non-existent as it does not exist')
     done()
   })
-
-  it('Widget does not define a datasource', (done) => {
-    const located = locator.locate({})
-    expect(located).to.include('Constructor')
-    expect(
-      located.Constructor
-    ).to.be.a.function()
-    done()
-  })
 })

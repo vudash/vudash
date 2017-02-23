@@ -45,10 +45,24 @@ context('widget.datasource-loader', () => {
     done()
   })
 
-  it('no datasource specified', (done) => {
-    loader.load('some-widget', {}, {})
-    expect(configValidator.validate.callCount).to.equal(0)
-    done()
+  context('no datasource specified', () => {
+    let loaded
+
+    beforeEach((done) => {
+      loaded = loader.load('some-widget', {}, {})
+      done()
+    })
+
+    it('will not be validated', (done) => {
+      expect(configValidator.validate.callCount).to.equal(0)
+      done()
+    })
+
+    it('will polyfill a fetch method which throws', (done) => {
+      function fn () { return loaded.fetch() }
+      expect(fn).to.throw('Widget some-widget requested data, but no datasource was configured. Check the widget configuration in your dashboard config.')
+      done()
+    })
   })
 
   context('Global Options', () => {

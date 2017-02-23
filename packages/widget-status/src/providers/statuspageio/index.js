@@ -36,7 +36,7 @@ class StatuspageIo {
   static get configValidation () {
     return {
       url: Joi.string().uri().required().description('Status page url'),
-      components: Joi.array(Joi.string()).required().description('Component names to monitor')
+      components: Joi.array().items(Joi.string()).required().description('Component names to monitor')
     }
   }
 
