@@ -8,7 +8,9 @@ class Emitter {
     this.io = socketio
     this.room = room
     this.recentEvents = {}
-    this.io.on('connection', this.clientJoinHandler.bind(this))
+    this.io.on('connection', (socket) => {
+      this.clientJoinHandler(socket)
+    })
   }
 
   clientJoinHandler (socket) {

@@ -15,7 +15,7 @@ class CssBuilder {
     }
 
     return `#widget-container-${id}{${rules.join(';')}}`
-  } 
+  }
 }
 
 module.exports = new CssBuilder()

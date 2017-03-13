@@ -50,7 +50,9 @@ class GoogleSheetsTransport {
       spreadsheetKey: conf.sheet,
       credentials: conf.credentials,
       sheetsToExtract: [conf.tab]
-    }).then(this._extractCellData.bind(this))
+    }).then((data) => {
+      return this._extractCellData(data)
+    })
   }
 
   _extractCellData (data) {

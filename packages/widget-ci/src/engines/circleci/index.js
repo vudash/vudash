@@ -1,3 +1,5 @@
+'use strict'
+
 const CircleCI = require('circleci')
 const BuildStatus = require('../../build-status.enum')
 
