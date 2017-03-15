@@ -65,10 +65,12 @@ class Dashboard {
     return widget.getJob().script().then((result) => {
       result._updated = new Date().toLocaleTimeString()
       emitter.emit(`${widget.id}:update`, result)
+      emitter = null
     })
     .catch((err) => {
       console.error(`Error in widget ${widget.descriptor} (${widget.id})`, err)
       emitter.emit(widget.id, { error: { message: (err && err.message) || 'An unknown error occured' } })
+      emitter = null
     })
   }
 
