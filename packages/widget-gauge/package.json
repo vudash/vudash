@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-gauge",
-  "version": "6.0.0",
+  "version": "6.0.2",
   "main": "index.js",
   "scripts": {
     "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"

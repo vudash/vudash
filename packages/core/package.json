@@ -1,6 +1,6 @@
 {
   "name": "vudash",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "keywords": [
     "vudash",
     "dashboard",
@@ -62,11 +62,11 @@
     "svelte": "^1.6.3",
     "uppercamelcase": "^1.1.0",
     "vision": "^4.1.0",
-    "vudash-widget-ci": "^6.0.0",
-    "vudash-widget-gauge": "^6.0.0",
-    "vudash-widget-progress": "^6.0.0",
-    "vudash-widget-statistic": "^6.0.0",
-    "vudash-widget-status": "^6.0.0",
-    "vudash-widget-time": "^6.0.0"
+    "vudash-widget-ci": "^6.0.2",
+    "vudash-widget-gauge": "^6.0.2",
+    "vudash-widget-progress": "^6.0.2",
+    "vudash-widget-statistic": "^6.0.2",
+    "vudash-widget-status": "^6.0.2",
+    "vudash-widget-time": "^6.0.2"
   }
 }

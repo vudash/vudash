@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-ci",
-  "version": "6.0.0",
+  "version": "6.0.2",
   "description": "A CI Widget for Vudash",
   "main": "widget.js",
   "scripts": {
