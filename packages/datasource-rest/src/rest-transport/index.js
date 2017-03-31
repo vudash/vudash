@@ -1,26 +1,25 @@
 'use strict'
 
-const request = require('request-promise')
+const got = require('got')
 const { reach } = require('hoek')
 const pkg = require('../../package.json')
 
 const internals = {
   prepareRequest (config) {
     const options = {
-      method: config.method,
-      url: config.url,
       json: true,
       headers: {
-        'user-agent': `vudash/${pkg.version} (https://github.com/vudash/vudash)`
+        'user-agent': `vudash/${pkg.version} (https://github.com/vudash/vudash)`,
+        'content-type': 'application/json'
       }
     }
 
     if (config.body) {
-      options.body = config.body
+      options.body = JSON.stringify(config.body)
     }
 
     if (config.query) {
-      options.qs = config.query
+      options.query = config.query
     }
 
     return options
@@ -35,9 +34,9 @@ class RestTransport {
 
   fetch () {
     const options = internals.prepareRequest(this.config)
-    return request(options)
-    .then((response) => {
-      return reach(response, this.config.graph)
+    return got[this.config.method](this.config.url, options)
+    .then(({ body }) => {
+      return reach(body, this.config.graph)
     })
   }
 }
