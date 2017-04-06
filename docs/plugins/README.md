@@ -297,6 +297,41 @@ And if you actually want the contents of two? (As an object of course):
 }
 ```
 
+## Troubleshooting SSL
+
+You might encounter an error when trying to fetch data from SSL protected servers, such as:
+
+```bash
+Error in widget datasource-rest (461305c2) { RequestError
+    at ClientRequest.req.once.err (/home/aj/Projects/vudash-core/packages/core/node_modules/got/index.js:73:21)
+    at Object.onceWrapper (events.js:291:19)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:189:7)
+    at TLSSocket.socketErrorListener (_http_client.js:358:9)
+    at emitOne (events.js:96:13)
+    at TLSSocket.emit (events.js:189:7)
+    at emitErrorNT (net.js:1280:8)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  code: 'UNABLE_TO_VERIFY_LEAF_SIGNATURE',
+  message: 'unable to verify the first certificate',
+  host: 'ssl.example.com',
+  hostname: 'ssl.example.com',
+  method: 'GET',
+  path: '/health' }
+
+```
+
+This means that you don't have the correct root CA certificates for node to connect to the endpoint.
+
+This is easily fixed, if you are using node > 7.3 however:
+
+1. Find out who the Root CA for the domain you are trying to connect to, using [an ssl analysis tool](https://sslanalyzer.comodoca.com/)
+1. Download the root CA's pem file and drop it in your project folder.
+1. When you run vudash, pass an environment variable with the path to your root ca's certificate, i.e: `NODE_EXTRA_CA_CERTS='./path/to/root-cas.pem' vudash`
+
+More details on this [can be found here](https://git.daplie.com/Daplie/node-ssl-root-cas)
+
 ### Random datasource
 
 The Vudash Random Datasource returns hardcoded values.
