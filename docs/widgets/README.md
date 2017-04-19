@@ -194,6 +194,15 @@ Simply include in your dashboard:
   {"widget": "vudash-widget-time", "options": ...}
 ```
 
+#### Timezone support
+The timezone can be set via configuration. The list of allowed timezones is that of the `moment-timezone` library.
+
+```
+        "options": {
+          "timezone": "Europe/London"
+        }
+```
+
 #### Alarms
 This widget can play sounds! Simply pass 'alarms' into your configuration:
 
