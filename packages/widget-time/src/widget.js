@@ -1,6 +1,6 @@
 'use strict'
 
-const moment = require('moment')
+const moment = require('moment-timezone')
 const Joi = require('joi')
 const Hoek = require('hoek')
 const { CronJob } = require('cron')
