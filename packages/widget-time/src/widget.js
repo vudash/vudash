@@ -30,9 +30,8 @@ class TimeWidget {
   }
 
   register (options, emit) {
-    const validated = this.parseOptions(options)
-    if (validated.error) { throw new Error(validated.error) }
-    const config = validated.value
+    const { error, value: config } = this.parseOptions(options)
+    if (error) { throw new Error(error) }
 
     const alarms = Hoek.reach(config, 'alarms', { default: [] })
 
@@ -54,7 +53,7 @@ class TimeWidget {
     return {
       schedule: 1000,
       job: () => {
-        return time(validated.timezome)
+        return time(config.timezone)
       }
     }
   }
