@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-time",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "Vudash time widget",
   "main": "widget.js",
   "scripts": {
