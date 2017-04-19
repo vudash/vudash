@@ -1,8 +1,10 @@
-const Promise = require('bluebird').Promise
+'use strict'
+
 const moment = require('moment')
 const Joi = require('joi')
 const Hoek = require('hoek')
-const CronJob = require('cron').CronJob
+const { CronJob } = require('cron')
+const { time } = require('./time')
 
 class TimeWidget {
 
@@ -20,8 +22,9 @@ class TimeWidget {
     }).required().description('Alarm entry')
 
     const schema = Joi.object({
-      alarms: Joi.array().items(alarm)
-    }).optional().description('List of alarms')
+      timezone: Joi.string().only(moment.tz.names()).optional().description('A momentjs timezone'),
+      alarms: Joi.array().items(alarm).optional().description('List of alarms')
+    }).optional()
 
     return Joi.validate(options, schema)
   }
@@ -37,7 +40,7 @@ class TimeWidget {
       alarm.actions.forEach((action) => {
         const context = { options: action.options, emit }
 
-        new CronJob({
+        return new CronJob({
           cronTime: alarm.expression,
           onTick: function () {
             this.emit('audio:play', { data: this.options.data })
@@ -50,12 +53,9 @@ class TimeWidget {
 
     return {
       schedule: 1000,
-
       job: () => {
-        const now = moment()
-        return Promise.resolve({time: now.format('HH:mm:ss'), date: now.format('MMMM Do YYYY')})
+        return time(validated.timezome)
       }
-
     }
   }
 
