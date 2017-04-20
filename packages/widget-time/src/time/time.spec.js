@@ -4,15 +4,16 @@ const moment = require('moment-timezone')
 const service = require('.')
 
 describe('time', () => {
-  it('without locale', async () => {
-    const current = moment().tz('UTC').format('HH:mm:ss')
-    const { time } = await service.time()
+  it('with UTC locale', async () => {
+    const timezone = 'UTC'
+    const current = moment().tz(timezone).format('HH:mm:ss')
+    const { time } = await service.time(timezone)
     expect(time).to.equal(current)
   })
 
   it('with locale', async () => {
     const timezone = 'America/Los_Angeles'
-    const current = moment().tz('America/Los_Angeles').format('HH:mm:ss')
+    const current = moment().tz(timezone).format('HH:mm:ss')
     const { time } = await service.time(timezone)
     expect(time).to.equal(current)
   })

@@ -3,7 +3,7 @@
 const Promise = require('bluebird')
 const moment = require('moment-timezone')
 
-exports.time = (locale = 'UTC') => {
+exports.time = (locale) => {
   const now = moment().tz(locale)
   return Promise.resolve({
     time: now.format('HH:mm:ss'),

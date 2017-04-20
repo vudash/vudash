@@ -34,6 +34,7 @@ class TimeWidget {
     if (error) { throw new Error(error) }
 
     const alarms = Hoek.reach(config, 'alarms', { default: [] })
+    const timezone = config.timezone || 'UTC'
 
     alarms.forEach((alarm) => {
       alarm.actions.forEach((action) => {
@@ -45,7 +46,8 @@ class TimeWidget {
             this.emit('audio:play', { data: this.options.data })
           },
           context,
-          start: true
+          start: true,
+          timeZone: timezone
         })
       })
     })
@@ -53,7 +55,7 @@ class TimeWidget {
     return {
       schedule: 1000,
       job: () => {
-        return time(config.timezone)
+        return time(timezone)
       }
     }
   }
