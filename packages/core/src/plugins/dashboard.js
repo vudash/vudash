@@ -37,10 +37,24 @@ const DashboardPlugin = {
         }
       },
       handler: function (request, reply) {
-        const name = request.params.board
-        const dashboard = dashboards[name] || loadDashboard(name)
+        const dashboardName = request.params.board
+        // TODO: Cache indefinitely using server methods.
+        const dashboard = dashboards[dashboardName] || loadDashboard(dashboardName)
+        const serverUrl = process.env.SERVER_URL || server.info.uri
 
-        reply.view('dashboard', {serverUrl: `${process.env.SERVER_URL || server.info.uri}`, dashboard: dashboard.toRenderModel()})
+        dashboard.toRenderModel()
+        .then(({ name, html, js, css }) => {
+          const { code, map } = js
+          const model = {
+            serverUrl,
+            html,
+            name,
+            bundle: code,
+            map,
+            css
+          }
+          reply.view('dashboard', model)
+        })
       }
     })
 

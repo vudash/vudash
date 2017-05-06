@@ -6,3 +6,36 @@
     {{ date }}
   </div>
 </div>
+
+<style>
+  .vudash-time > * {
+  text-align: center;
+}
+
+.vudash-time > .value {
+  color: #54C8FF;
+  font-size: 76px;
+}
+
+.vudash-time > .label {
+  color: #D9E778;
+  font-size: 36px;
+}
+</style>
+
+<script>
+  export default {
+  data () {
+    return {
+      time: '--:--:--',
+      date: '--- -- --- ----'
+    }
+  },
+
+  methods: {
+    update (data) {
+      this.set(data)
+    }
+  }
+}
+</script>

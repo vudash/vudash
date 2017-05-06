@@ -7,47 +7,26 @@
 
   <script src="/assets/js/object-assign.polyfill.js"></script>
 
-  <title>{{dashboard.name}} Dashboard</title>
+  <title>{{name}} Dashboard</title>
   <style>
     @import 'https://fonts.googleapis.com/css?family=Ubuntu';
     @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
   </style>
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   <style type="text/css">
-  {{#each dashboard.widgets}}
     {{{css}}}
-    {{{providedCss}}}
-  {{/each}}
-  {{#each dashboard.assets.css}}
-    @import url("{{{this}}}") list-of-media-queries;
-  {{/each}}
   </style>
 </head>
 <body>
-  {{#each dashboard.widgets}}
-    {{{markup}}}
-  {{/each}}
+  {{{html}}}
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/assets/js/audio.js"></script>
   <script>
-    var socket = io('{{serverUrl}}');
-
-    socket.on('error', function(e) {
-      console.error('Error.', e);
-    });
-
-    socket.on('audio:play', function(data) {
-      VUDASH.player.play(data.data);
-    });
-
-    {{#each dashboard.widgets}}
-      {{{js}}}
-      {{{providedJs}}}
-    {{/each}}
+    window.VUDASH = {};
+    window.VUDASH.config = {};
+    window.VUDASH.config.serverUrl = '{{{serverUrl}}}';
+    {{{bundle}}}
   </script>
-  {{#each dashboard.assets.js}}
-    <script src="{{{this}}}"></script>
-  {{/each}}
+  <script src="/assets/js/audio.js"></script>
 </body>
 
 </html>

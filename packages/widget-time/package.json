@@ -30,8 +30,6 @@
     "moment-timezone": "^0.5.13"
   },
   "vudash": {
-    "markup": "./src/client/markup.html",
-    "script": "./src/client/client.js",
-    "styles": "./src/client/client.css"
+    "component": "./src/client/markup.html"
   }
 }
