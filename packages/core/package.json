@@ -58,6 +58,7 @@
     "npm": "^3.9.3",
     "request": "^2.72.0",
     "request-promise": "^4.1.1",
+    "rollup-plugin-commonjs": "^8.0.2",
     "socket.io": "^1.7.3",
     "svelte": "^1.6.3",
     "uppercamelcase": "^1.1.0",
