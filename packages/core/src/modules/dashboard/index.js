@@ -3,7 +3,6 @@
 const Emitter = require('../emitter')
 const id = require('../id-gen')
 const descriptorParser = require('../descriptor-parser')
-const assetBuilder = require('../asset-builder')
 const Widget = require('../widget')
 const PluginLoader = require('./plugin-loader')
 const bundleBuilder = require('./bundle-builder')
@@ -15,7 +14,6 @@ class Dashboard {
 
     this.id = id()
     this.name = descriptor.name
-    this.assets = assetBuilder.build(descriptor.assets)
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
 
@@ -49,10 +47,6 @@ class Dashboard {
 
   getJobs () {
     return this.jobs
-  }
-
-  getAssets () {
-    return this.assets
   }
 
   buildJobs () {

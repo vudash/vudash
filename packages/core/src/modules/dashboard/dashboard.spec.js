@@ -7,6 +7,7 @@ const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
 const Promise = require('bluebird').Promise
 const pluginResolver = require('./plugin-loader/plugin-resolver')
+const cheerio = require('cheerio')
 
 describe('modules.dashboard', () => {
   let io
@@ -34,7 +35,7 @@ describe('modules.dashboard', () => {
 
   const position = { x: 0, y: 0, w: 0, h: 0 }
 
-  context('Load from local module', () => {
+  context('Local module', () => {
     let dashboard
     before((done) => {
       const descriptor = Object.assign({}, baseDashboard, {
@@ -71,35 +72,6 @@ describe('modules.dashboard', () => {
 
     it('Loads layout', (done) => {
       expect(dashboard.getWidgets().length).to.equal(3)
-      done()
-    })
-  })
-
-  context('Assets', () => {
-    let dashboard
-    let assets
-
-    before((done) => {
-      const descriptor = DashboardBuilder.create()
-      .addJsAsset('some-asset.js')
-      .addJsAsset('https://example.net/some.js')
-      .addCssAsset('some-asset.css')
-      .addCssAsset('https://example.net/some.css')
-      .build()
-
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
-      assets = dashboard.getAssets()
-      done()
-    })
-
-    it('Js Asset is present', (done) => {
-      expect(assets.js.length).to.equal(2)
-      done()
-    })
-
-    it('Css Asset is present', (done) => {
-      expect(assets.css.length).to.equal(2)
       done()
     })
   })
@@ -169,28 +141,45 @@ describe('modules.dashboard', () => {
   })
 
   context('Render Model', () => {
-    let renderModel
     const dashName = 'my-dash'
+    let dashboard
+    let renderModel
 
-    before((done) => {
-      const myWidget = WidgetBuilder.create()
-      .build()
+    const myWidget = WidgetBuilder.create()
+    .build()
 
-      const descriptor = DashboardBuilder.create()
-      .withName(dashName)
-      .addWidget(myWidget)
-      .build()
+    const descriptor = DashboardBuilder.create()
+    .withName(dashName)
+    .addWidget(myWidget)
+    .build()
 
-      const dashboard = new Dashboard(descriptor, io)
+    before(async (done) => {
+      dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
-      renderModel = dashboard.toRenderModel()
+      renderModel = await dashboard.toRenderModel()
       done()
     })
 
-    it('Is built correctly', (done) => {
+    it('Has dashboard name', (done) => {
       expect(renderModel.name).to.equal(dashName)
-      expect(renderModel.widgets[0].css).to.exist()
-      expect(renderModel.widgets[0].markup).to.exist()
+      done()
+    })
+
+    it('Has html', (done) => {
+      const $ = cheerio.load(renderModel.html)
+      const styleTag = $('style')
+      expect(styleTag).to.exist()
+      expect(styleTag.text().trim()).to.equal(`#widget-container-${dashboard.widgets[0].id}{top:0%;left:0%;width:0%;height:0%}`)
+      done()
+    })
+
+    it('Has js', (done) => {
+      expect(renderModel.js).to.only.include(['code', 'map'])
+      done()
+    })
+
+    it('Has css', (done) => {
+      expect(renderModel.css).to.equal('\nundefined')
       done()
     })
   })

@@ -29,21 +29,6 @@ class DashboardBuilder {
     return this
   }
 
-  addAsset (kind, url) {
-    this.overrides.assets = this.overrides.assets || {}
-    this.overrides.assets[kind] = this.overrides.assets[kind] || []
-    this.overrides.assets[kind].push(url)
-    return this
-  }
-
-  addJsAsset (url) {
-    return this.addAsset('js', url)
-  }
-
-  addCssAsset (url) {
-    return this.addAsset('css', url)
-  }
-
   build () {
     return Object.assign({}, {
       layout: {

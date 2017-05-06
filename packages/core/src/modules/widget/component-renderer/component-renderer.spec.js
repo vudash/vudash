@@ -5,9 +5,8 @@ const renderer = require('.')
 describe('component-renderer', () => {
   context('Config', () => {
     const id = 'abc'
-    const component = { name: 'c', code: 'xxx' }
     const config = { a: 'b' }
-    const rendered = renderer.render(id, component, config)
+    const rendered = renderer.render(id, 'AbcWidget', config)
 
     it('update method is rendered', (done) => {
       expect(rendered).to.include("socket.on('abc:update', function($id, $widget, $data) {")
@@ -20,7 +19,7 @@ describe('component-renderer', () => {
     })
 
     it('update method is bound', (done) => {
-      expect(rendered).to.include(".bind(this, 'abc', widget_abc));")
+      expect(rendered).to.include(".bind(this, 'abc', widget_abc))")
       done()
     })
 
@@ -30,12 +29,12 @@ describe('component-renderer', () => {
     })
 
     it('widget update method is called', (done) => {
-      expect(rendered).to.include('widget_abc.update($data);')
+      expect(rendered).to.include('widget_abc.update($data)')
       done()
     })
 
     it('component is rendered', (done) => {
-      expect(rendered).to.startWith('xxx')
+      expect(rendered).to.startWith('const widget_abc = new AbcWidget')
       done()
     })
   })

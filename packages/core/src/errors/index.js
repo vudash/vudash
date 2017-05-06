@@ -1,19 +1,10 @@
 'use strict'
 
-class PluginRegistrationError extends Error {
+const { upperCamel } = require('../modules/upper-camel')
 
-}
+const requireDirectory = require('require-directory')
+const errors = requireDirectory(module, {
+  rename: upperCamel
+})
 
-class ConfigurationError extends Error {
-
-}
-
-class WidgetRegistrationError extends Error {
-
-}
-
-module.exports = {
-  ConfigurationError,
-  PluginRegistrationError,
-  WidgetRegistrationError
-}
+module.exports = errors

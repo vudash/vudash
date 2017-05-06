@@ -58,6 +58,7 @@
     "npm": "^3.9.3",
     "request": "^2.72.0",
     "request-promise": "^4.1.1",
+    "require-directory": "^2.1.1",
     "rollup": "^0.41.6",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-memory": "^2.0.0",

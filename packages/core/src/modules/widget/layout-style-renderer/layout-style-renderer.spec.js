@@ -1,9 +1,9 @@
 'use strict'
 
-const cssBuilder = require('.')
-const WidgetPosition = require('./widget-position')
+const layoutStyleRenderer = require('.')
+const WidgetPosition = require('../widget-position')
 
-describe('modules/css-builder', () => {
+describe('layout-style-renderer', () => {
   const widgetPosition = new WidgetPosition({
     rows: 4,
     columns: 5
@@ -16,7 +16,7 @@ describe('modules/css-builder', () => {
   context('Css', () => {
     let css
     before((done) => {
-      css = cssBuilder.build('xyz', widgetPosition, background)
+      css = layoutStyleRenderer.render('xyz', widgetPosition, background)
       done()
     })
 
@@ -42,7 +42,7 @@ describe('modules/css-builder', () => {
   context('No Background', () => {
     let css
     before((done) => {
-      css = cssBuilder.build('abc', widgetPosition, undefined)
+      css = layoutStyleRenderer.render('abc', widgetPosition, undefined)
       done()
     })
 

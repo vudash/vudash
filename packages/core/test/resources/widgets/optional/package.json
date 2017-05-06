@@ -1,7 +1,0 @@
-{
-  "name": "vudash-widget-missing",
-  "main": "widget.js",
-  "vudash": {
-    "markup": "./markup.html"
-  }
-}

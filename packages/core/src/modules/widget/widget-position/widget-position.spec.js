@@ -1,10 +1,10 @@
 'use strict'
 
-const WidgetPosition = require('./widget-position')
+const WidgetPosition = require('.')
 
 describe('css-builder/widget-position', () => {
   const dashboard = { columns: 5, rows: 4 }
-  
+
   it('Calculates first widget dimensions', (done) => {
     const position = { x: 0, y: 0, w: 1, h: 1 }
     const widgetPosition = new WidgetPosition(dashboard, position)

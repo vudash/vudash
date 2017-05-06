@@ -7,7 +7,7 @@ describe('module-resolver', () => {
   context('Programmatic Config', () => {
     const pkg = {
       Module: { register: () => {} },
-      html: 'some-component',
+      component: 'some-component',
       name: 'vudash-some-component'
     }
 
@@ -18,29 +18,9 @@ describe('module-resolver', () => {
     })
   })
 
-  context('Multi-file component', () => {
+  context('Vudash metadata', () => {
     it('reads component metadata', (done) => {
-      const { html } = moduleResolver.resolve(resource('widgets/example'))
-      expect(html).not.to.equal(undefined)
-      done()
-    })
-
-    it('Loads component module', (done) => {
-      const { Module } = moduleResolver.resolve(resource('widgets/example'))
-      expect(Module).not.to.equal(undefined)
-      done()
-    })
-
-    it('reads component metadata', (done) => {
-      const { name } = moduleResolver.resolve(resource('widgets/example'))
-      expect(name).to.equal('VudashWidgetExample')
-      done()
-    })
-  })
-
-  context('Component has no required properties', () => {
-    it('reads component metadata', (done) => {
-      const message = `Unable to compile component vudash-widget-missing as it is missing 'vudash' configuration in package.json`
+      const message = "Component vudash-widget-missing is missing 'vudash.component' in package.json"
       const fn = () => { moduleResolver.resolve(resource('widgets/missing')) }
       expect(fn).to.throw(ComponentCompilationError, message)
       done()
@@ -49,24 +29,8 @@ describe('module-resolver', () => {
 
   context('Single file component', () => {
     it('reads component metadata', (done) => {
-      const { html } = moduleResolver.resolve(resource('widgets/single'))
-      expect(html).not.to.equal(undefined)
-      done()
-    })
-  })
-
-  context('Third party libraries', () => {
-    it('reads css files', (done) => {
-      const { css } = moduleResolver.resolve(resource('widgets/third-party'))
-      expect(css).to.include('h1 { color: red; }')
-      expect(css).to.include('h2 { color: blue; }')
-      done()
-    })
-
-    it('reads js files', (done) => {
-      const { js } = moduleResolver.resolve(resource('widgets/third-party'))
-      expect(js).to.include('console.log("a");')
-      expect(js).to.include('console.log("b");')
+      const { component } = moduleResolver.resolve(resource('widgets/example'))
+      expect(component).not.to.equal(undefined)
       done()
     })
   })

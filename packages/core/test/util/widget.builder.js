@@ -1,4 +1,6 @@
-const Promise = require('bluebird').Promise
+'use strict'
+
+const { Promise } = require('bluebird')
 
 class WidgetBuilder {
   constructor () {
