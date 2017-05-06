@@ -7,11 +7,11 @@ exports.render = function (id, name, config) {
       data: { config: ${JSON.stringify(config)} }
     });
 
-    socket.on('${id}:update', function($id, $widget, $data) {
+    socket.on('${id}:update', ($data) => {
       if ($data.error) {
         console.error('Widget "${id}" encountered error: ' + $data.error.message)
       }
       widget_${id}.update($data)
-    }.bind(this, '${id}', widget_${id}))
+    })
   `.trim()
 }

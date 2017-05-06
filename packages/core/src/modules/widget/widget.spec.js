@@ -104,7 +104,7 @@ describe('modules.widget', () => {
     it('Binds events on the client side', (done) => {
       const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
       const eventBinding = `
-        socket.on('${widget.id}:update', function($id, $widget, $data) {
+        socket.on('${widget.id}:update', ($data) => {
       `.trim()
       const rendered = widget.toRenderModel().js
       expect(rendered).to.include(eventBinding)
