@@ -7,3 +7,68 @@
   </div>
   <div ref:chart class="chart"></div>
 </div>
+
+<style>
+  .vudash-statistic .value {
+  font-size: 76px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vudash-statistic .label {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vudash-statistic .chart {
+  top: 0;
+  position: absolute;
+  float: left;
+  z-index: -999;
+}
+</style>
+
+<script>
+'use strict'
+
+import Chartist from 'chartist'
+
+const options = {
+  axisX: {
+    showLabel: false,
+    showGrid: false
+  },
+  axisY: {
+    showLabel: false,
+    showGrid: false
+  },
+  showPoint: false,
+  showArea: true,
+  fullWidth: true,
+  width: '100%'
+}
+
+export default {
+  data () {
+    return {
+      history: []
+    }
+  },
+
+  methods: {
+    update (data) {
+      if (data.history) {
+        const chartData = {
+          series: [
+            { data: data.history }
+          ]
+        }
+        this.chart = new Chartist.Line(this.refs.chart, chartData, options)
+      }
+
+      this.set(data)
+    }
+  }
+}
+</script>
