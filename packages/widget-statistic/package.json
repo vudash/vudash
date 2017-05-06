@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-statistic",
-  "version": "6.0.2",
+  "version": "7.0.0",
   "main": "widget.js",
   "scripts": {
     "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
