@@ -1,8 +1,57 @@
 <div class="vudash-chart">
   <div ref:chart class="value">
-    xxx
   </div>
   <div class="label">
-    xxx
+    {{ config.description }}
   </div>
 </div>
+
+<style>
+  .value {
+    width: 100%;
+    height: 80%;
+  }
+
+  .ct-label.ct-horizontal,
+  .ct-label.ct-vertical,
+  .ct-grids > .ct-grid.ct-horizontal,
+  .ct-grids > .ct-grid.ct-vertical {
+    color: dimgrey;
+    stroke: dimgrey;
+  }
+</style>
+
+<script>
+  import Chartist from 'chartist'
+  import 'chartist/dist/chartist.css'
+
+  export default {
+    data () {
+      return {
+        series: [
+          [12, 9, 7, 8, 5],
+          [2, 1, 3.5, 7, 3],
+          [1, 3, 4, 5, 6]
+        ]
+      }
+    },
+
+    oncreate () {
+      this.chart = new Chartist.Line(this.refs.chart, {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        series: this.get('series')
+      }, {
+        fullWidth: true,
+        chartPadding: {
+          right: 60
+        }
+      })
+    },
+
+    methods: {
+      update (data) {
+        this.set({ series: data })
+      }
+    }
+  }
+</script>
