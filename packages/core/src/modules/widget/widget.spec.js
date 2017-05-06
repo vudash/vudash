@@ -88,17 +88,23 @@ describe('modules.widget', () => {
       done()
     })
 
-    it('Converts widget to render model', (done) => {
+    context('Render model', () => {
       const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
-      const renderModel = widget.toRenderModel()
-      expect(renderModel.js).to.contain('var VudashWidgetExample = (function')
-      done()
+      const { js } = widget.toRenderModel()
+
+      it('Converts widget to render model', (done) => {
+        const widgetId = widget.id
+        expect(js).to.contain(`const widget_${widgetId} = new VudashWidgetExample({`)
+        expect(js).to.contain(`target: document.getElementById("widget-container-${widgetId}")`)
+        expect(js).to.contain('data: { config: {} }')
+        done()
+      })
     })
 
     it('Binds events on the client side', (done) => {
       const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
       const eventBinding = `
-        socket.on('${widget.id}:update', function($id, $widget, $data) {
+        socket.on('${widget.id}:update', ($data) => {
       `.trim()
       const rendered = widget.toRenderModel().js
       expect(rendered).to.include(eventBinding)
@@ -107,9 +113,7 @@ describe('modules.widget', () => {
 
     it('Binds component update', (done) => {
       const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
-      const componentBinding = `
-        widget_${widget.id}.update($data);
-      `.trim()
+      const componentBinding = `widget_${widget.id}.update($data)`
       const rendered = widget.toRenderModel().js
       expect(rendered).to.include(componentBinding)
       done()
@@ -166,27 +170,6 @@ describe('modules.widget', () => {
       const widget = new Widget(dashboard, renderOptions, { html: 'hi', name: 'VudashMyWidget', Module: MyWidget })
       expect(widget).to.exist()
       expect(expectedEmitFn).to.be.a.function()
-      done()
-    })
-  })
-
-  context('Third Party libraries', () => {
-    const dashboard = {
-      layout: { rows: 4, columns: 5 },
-      emitter: { emit: sinon.stub() }
-    }
-
-    it('Renders JS', (done) => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/third-party'))
-      const js = widget.toRenderModel().providedJs
-      expect(js).not.to.be.undefined()
-      done()
-    })
-
-    it('Renders CSS', (done) => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/third-party'))
-      const css = widget.toRenderModel().providedCss
-      expect(css).not.to.be.undefined()
       done()
     })
   })

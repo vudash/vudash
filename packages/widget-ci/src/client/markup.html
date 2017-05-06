@@ -6,3 +6,67 @@
     <span class="ci-user">{{ config.user }}</span> / <span class="ci-repo">{{ config.repo }}</span>
   </div>
 </div>
+
+<style>
+.ci-widget > .value > i {
+  font-size: 76px;
+}
+
+.ci-widget > * {
+  text-align: center;
+}
+
+.ci-widget > .label {
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.ci-icon {
+  margin: auto;
+  display: block;
+  font-size: 76px;
+  width: 76px;
+  font-weight: bold;
+}
+
+@keyframes failed-pulse {
+  0% { background-color: #9F14FF; }
+  25% { background-color: #E812CD; }
+  50% { background-color: #FF2021; }
+  75% { background-color: #E85320; }
+  100% { background-color: #FF8B12; }
+}
+
+.ci-widget.error, .ci-widget.failed {
+  background-color: #FF2021;
+  animation: failed-pulse 4s infinite alternate;
+}
+</style>
+
+<script>
+'use strict'
+
+const icons = {
+  passed: 'check_circle',
+  failed: 'highlight_off',
+  unknown: 'help_outline',
+  running: 'update',
+  queued: 'hourglass_empty'
+}
+
+export default {
+  methods: {
+    update (data) {
+      let ligature = icons[data.status]
+      let backgroundClass = data.status
+
+      if (data.error) {
+        ligature = 'block'
+        backgroundClass = 'error'
+      }
+
+      this.set({ ligature, backgroundClass })
+    }
+  }
+}
+</script>

@@ -1,30 +1,26 @@
 'use strict'
 
 const id = require('../id-gen')
-const markupBuilder = require('../markup-builder')
-const svelteCompiler = require('../svelte-compiler')
-const WidgetPosition = require('../css-builder/widget-position')
+const markupRenderer = require('./markup-renderer')
+const WidgetPosition = require('./widget-position')
 const moduleResolver = require('../module-resolver')
-const cssBuilder = require('../css-builder')
-const componentRenderer = require('../component-renderer')
+const layoutStyleRenderer = require('./layout-style-renderer')
+const componentRenderer = require('./component-renderer')
 const datasourceLoader = require('./datasource-loader')
 
 class Widget {
 
   constructor (dashboard, widgetConfig, widgetName, options = {}) {
+    this.id = id()
     this.datasource = datasourceLoader.load(widgetName, dashboard, widgetConfig.datasource)
-
     this.dashboard = dashboard
     this.background = widgetConfig.background
     this.position = new WidgetPosition(dashboard.layout, widgetConfig.position)
-    this.id = id()
     this.config = options
 
-    const { name, html, Module, js, css } = moduleResolver.resolve(widgetName)
-    this.providedCss = css
-    this.providedJs = js
-
-    this.component = svelteCompiler.compile(name, html)
+    const { Module, name, component } = moduleResolver.resolve(widgetName)
+    this.componentPath = component
+    this.name = name
 
     const buildable = new Module().register(
       options,
@@ -35,7 +31,7 @@ class Widget {
   }
 
   build (module) {
-    this.css = cssBuilder.build(this.id, this.position, this.background)
+    this.css = layoutStyleRenderer.render(this.id, this.position, this.background)
     this.job = { script: module.job, schedule: module.schedule }
     this.config = module.config || {}
   }
@@ -55,11 +51,11 @@ class Widget {
   toRenderModel () {
     return {
       id: this.id,
-      markup: markupBuilder.render(this),
+      name: this.name,
+      markup: markupRenderer.render(this),
       css: this.css,
-      js: componentRenderer.render(this.id, this.component, this.config),
-      providedJs: this.providedJs,
-      providedCss: this.providedCss
+      js: componentRenderer.render(this.id, this.name, this.config),
+      componentPath: this.componentPath
     }
   }
 

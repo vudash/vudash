@@ -1,7 +1,0 @@
-{
-  "name": "vudash-widget-single",
-  "main": "widget.js",
-  "vudash": {
-    "component": "component.html"
-  }
-}

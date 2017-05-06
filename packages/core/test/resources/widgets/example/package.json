@@ -2,8 +2,6 @@
   "name": "vudash-widget-example",
   "main": "widget.js",
   "vudash": {
-    "script": "./client.js",
-    "styles": "./style.css",
-    "markup": "./markup.html"
+    "component": "./markup.html"
   }
 }

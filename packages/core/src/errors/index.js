@@ -1,24 +1,10 @@
 'use strict'
 
-class ComponentCompilationError extends Error {
+const { upperCamel } = require('../modules/upper-camel')
 
-}
+const requireDirectory = require('require-directory')
+const errors = requireDirectory(module, {
+  rename: upperCamel
+})
 
-class PluginRegistrationError extends Error {
-
-}
-
-class ConfigurationError extends Error {
-
-}
-
-class WidgetRegistrationError extends Error {
-
-}
-
-module.exports = {
-  ComponentCompilationError,
-  ConfigurationError,
-  PluginRegistrationError,
-  WidgetRegistrationError
-}
+module.exports = errors

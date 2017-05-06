@@ -3,9 +3,10 @@
 const Emitter = require('../emitter')
 const id = require('../id-gen')
 const descriptorParser = require('../descriptor-parser')
-const assetBuilder = require('../asset-builder')
-const WidgetConstructor = require('./widget-constructor')
+const Widget = require('../widget')
 const PluginLoader = require('./plugin-loader')
+const bundleBuilder = require('./bundle-builder')
+const bundleCompiler = require('./bundle-compiler')
 
 class Dashboard {
   constructor (json, io) {
@@ -13,7 +14,6 @@ class Dashboard {
 
     this.id = id()
     this.name = descriptor.name
-    this.assets = assetBuilder.build(descriptor.assets)
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
 
@@ -28,9 +28,12 @@ class Dashboard {
       })
     }
 
-    this.widgetConstructor = new WidgetConstructor(this)
-    this.widgets = descriptor.widgets.map((widgetDescriptor) => {
-      return this.widgetConstructor.register(widgetDescriptor)
+    this.widgets = descriptor.widgets.map(({ position, background, datasource, widget, options }) => {
+      return new Widget(this, {
+        position: position,
+        background: background,
+        datasource: datasource
+      }, widget, options)
     })
   }
 
@@ -44,10 +47,6 @@ class Dashboard {
 
   getJobs () {
     return this.jobs
-  }
-
-  getAssets () {
-    return this.assets
   }
 
   buildJobs () {
@@ -75,14 +74,21 @@ class Dashboard {
   }
 
   toRenderModel () {
-    return {
+    const model = {
       name: this.name,
       widgets: this.getWidgets().map((widget) => {
         return widget.toRenderModel()
       })
     }
-  }
 
+    const bundle = bundleBuilder.build(model.widgets)
+
+    return bundleCompiler.compile(bundle.js)
+    .then(({ js, css }) => {
+      const allCss = `${css}\n${bundle.css}`
+      return { html: bundle.html, js, css: allCss, name: model.name }
+    })
+  }
 }
 
 module.exports = Dashboard
