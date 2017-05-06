@@ -60,11 +60,9 @@ module.exports = TimeWidget
 
 Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
 
-There are two ways to define components, either:
- 1. Multi-part: Define `vudash.markup`, `vudash.script` and `vudash.styles` in your widget's `package.json` and put your html, svelte component, and css into them respectively.
- 1. Single-part: Just define `vudash.component` in your widget's package.json, and place all your svelte component's code there.
+Create your svelte component as a single html file, and reference it as a module-absolute path named `vudash.component` in your widget's package.json.
 
-#### Example of a single part component
+#### Example of a component
 
 package.json
 ```json
@@ -106,6 +104,41 @@ component.html
 ```
 
 See the [Svelte Documentation](https://svelte.technology/guide) for information on how to build svelte components.
+
+#### Third party dependencies
+
+All components and their dependencies are processed by `rollup` and bundled into a browser-friendly script.
+
+You can use third party dependencies in your component by importing them using es6 import syntax. First, install the module as a dependency of your widget module:
+
+```bash
+yarn add thing-maker
+```
+
+Then, import it to your component:
+
+```html
+<span>Hello {{ thing }}</span>
+<script>
+  import { world } from 'thing-maker'
+
+  export default {
+    data () {
+      return {
+        thing: world()
+      }
+    },
+
+    methods: {
+      ...
+    }
+  }
+</script>
+```
+
+It doesn't matter if the module you want to use isn't an es6 module (i.e. doesn't export a default object), because the `rollup` plugin [rollup-plugin-commonjs](https://www.npmjs.com/package/rollup-plugin-commonjs) is used which can convert traditional node modules into es6 modules for you.
+
+You can [read more about Rollup.js](https://rollupjs.org/) in order to better understand how to optimise your component's client side code.
 
 ### Writing the server part of the component
 
