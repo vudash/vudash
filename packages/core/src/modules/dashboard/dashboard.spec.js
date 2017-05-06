@@ -5,17 +5,20 @@ const WidgetBuilder = require(fromTest('util/widget.builder'))
 const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
-const Promise = require('bluebird').Promise
+const { Promise } = require('bluebird')
 const pluginResolver = require('./plugin-loader/plugin-resolver')
 const cheerio = require('cheerio')
+const bundleBuilder = require('./bundle-builder')
+const bundleCompiler = require('./bundle-compiler')
+const { stub } = require('sinon')
 
 describe('modules.dashboard', () => {
   let io
 
   before((done) => {
     io = {
-      on: sinon.stub(),
-      to: sinon.stub().returns({ emit: sinon.stub() })
+      on: stub(),
+      to: stub().returns({ emit: stub() })
     }
     done()
   })
@@ -142,21 +145,36 @@ describe('modules.dashboard', () => {
 
   context('Render Model', () => {
     const dashName = 'my-dash'
+    const bundle = { html: 'html' }
+    const compiledBundle = { js: { code: 'abc' }, css: 'xyz'}
     let dashboard
     let renderModel
 
-    const myWidget = WidgetBuilder.create()
+    const myWidget = WidgetBuilder
+    .create()
     .build()
 
-    const descriptor = DashboardBuilder.create()
+    const descriptor = DashboardBuilder
+    .create()
     .withName(dashName)
     .addWidget(myWidget)
     .build()
 
-    before(async (done) => {
+    before(async () => {
+      stub(bundleBuilder, 'build').returns(bundle)
+      stub(bundleCompiler, 'compile').resolves(compiledBundle)
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
-      renderModel = await dashboard.toRenderModel()
+      return dashboard
+      .toRenderModel()
+      .then((result) => {
+        renderModel = result
+      })
+    })
+
+    after((done) => {
+      bundleBuilder.build.restore()
+      bundleCompiler.compile.restore()
       done()
     })
 
@@ -166,20 +184,17 @@ describe('modules.dashboard', () => {
     })
 
     it('Has html', (done) => {
-      const $ = cheerio.load(renderModel.html)
-      const styleTag = $('style')
-      expect(styleTag).to.exist()
-      expect(styleTag.text().trim()).to.equal(`#widget-container-${dashboard.widgets[0].id}{top:0%;left:0%;width:0%;height:0%}`)
+      expect(renderModel.html).to.exist().and.to.equal(bundle.html)
       done()
     })
 
     it('Has js', (done) => {
-      expect(renderModel.js).to.only.include(['code', 'map'])
+      expect(renderModel.js).to.only.include(compiledBundle.js)
       done()
     })
 
     it('Has css', (done) => {
-      expect(renderModel.css).to.equal('\nundefined')
+      expect(renderModel.css).to.equal('xyz\nundefined')
       done()
     })
   })

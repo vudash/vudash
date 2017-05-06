@@ -14,12 +14,12 @@ class WidgetBuilder {
         return Object.assign({}, internals, { config: options })
       }
     }
-    const html = '<h1>hi</h1>'
+    const component = './src/component.html'
     const name = 'VudashMyWidget'
 
     return {
       Module,
-      html,
+      component,
       name
     }
   }

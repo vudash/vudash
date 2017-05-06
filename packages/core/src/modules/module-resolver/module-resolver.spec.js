@@ -11,15 +11,15 @@ describe('module-resolver', () => {
       name: 'vudash-some-component'
     }
 
-    it('Parses component', (done) => {
+    it('Parses Component', (done) => {
       const resolved = moduleResolver.resolve(pkg)
       expect(resolved).to.equal(pkg)
       done()
     })
   })
 
-  context('Vudash metadata', () => {
-    it('reads component metadata', (done) => {
+  context('Vudash Metadata', () => {
+    it('fails to read component metadata', (done) => {
       const message = "Component vudash-widget-missing is missing 'vudash.component' in package.json"
       const fn = () => { moduleResolver.resolve(resource('widgets/missing')) }
       expect(fn).to.throw(ComponentCompilationError, message)
@@ -27,7 +27,7 @@ describe('module-resolver', () => {
     })
   })
 
-  context('Single file component', () => {
+  context('Valid Component', () => {
     it('reads component metadata', (done) => {
       const { component } = moduleResolver.resolve(resource('widgets/example'))
       expect(component).not.to.equal(undefined)
