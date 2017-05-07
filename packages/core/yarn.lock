@@ -90,6 +90,10 @@ ansistyles@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/ansistyles/-/ansistyles-0.1.3.tgz#5de60415bda071bb37127854c864f41b23254539"
 
+any-promise@^1.0.0, any-promise@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
+
 anymatch@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.0.tgz#a3e52fa39168c825ff57b0248126ce5a8ff95507"
@@ -450,9 +454,9 @@ chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chartist@^0.9.8:
-  version "0.9.8"
-  resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.9.8.tgz#08040365c27843811343f008b0bbe9933c780677"
+chartist@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.11.0.tgz#84ba5e05490d096d93dcfa9343ebc31ef6a3bd28"
 
 chokidar@1.6.1:
   version "1.6.1"
@@ -568,6 +572,12 @@ concat-stream@^1.5.2:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
+
+concat-with-sourcemaps@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/concat-with-sourcemaps/-/concat-with-sourcemaps-1.0.4.tgz#f55b3be2aeb47601b10a2d5259ccfb70fd2f1dd6"
+  dependencies:
+    source-map "^0.5.1"
 
 config-chain@~1.1.11:
   version "1.1.11"
@@ -1014,6 +1024,22 @@ fs-extra@^0.30.0:
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
+fs-extra@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-2.1.2.tgz#046c70163cef9aad46b0e4a7fa467fb22d71de35"
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^2.1.0"
+
+fs-promise@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/fs-promise/-/fs-promise-2.0.3.tgz#f64e4f854bcf689aa8bddcba268916db3db46854"
+  dependencies:
+    any-promise "^1.3.0"
+    fs-extra "^2.0.0"
+    mz "^2.6.0"
+    thenify-all "^1.6.0"
+
 fs-vacuum@~1.2.9:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/fs-vacuum/-/fs-vacuum-1.2.10.tgz#b7629bec07a4031a2548fdf99f5ecf1cc8b31e36"
@@ -1248,6 +1274,10 @@ has-color@^0.1.7:
 has-cors@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/has-cors/-/has-cors-1.1.0.tgz#5e474793f7ea9843d1bb99c23eef49ff126fff39"
+
+has-flag@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-1.0.0.tgz#9d9e793165ce017a00f00418c43f942a7b1d11fa"
 
 has-unicode@^2.0.0, has-unicode@~2.0.1:
   version "2.0.1"
@@ -1544,6 +1574,10 @@ joi@9.x.x, joi@^9.2.0:
     moment "2.x.x"
     topo "2.x.x"
 
+js-base64@^2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -1816,6 +1850,14 @@ ms@0.7.2:
 mute-stream@~0.0.4:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
+
+mz@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/mz/-/mz-2.6.0.tgz#c8b8521d958df0a4f2768025db69c719ee4ef1ce"
+  dependencies:
+    any-promise "^1.0.0"
+    object-assign "^4.0.1"
+    thenify-all "^1.0.0"
 
 nan@^2.3.0:
   version "2.6.2"
@@ -2226,6 +2268,15 @@ portscanner@2.1.1:
     async "1.5.2"
     is-number-like "^1.0.3"
 
+postcss@^5.0.12:
+  version "5.2.17"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.17.tgz#cf4f597b864d65c8a492b2eabe9d706c879c388b"
+  dependencies:
+    chalk "^1.1.3"
+    js-base64 "^2.1.9"
+    source-map "^0.5.6"
+    supports-color "^3.2.3"
+
 prepend-http@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
@@ -2614,6 +2665,16 @@ rollup-plugin-memory@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-memory/-/rollup-plugin-memory-2.0.0.tgz#0a8ac6b57fa0e714f89a15c3ac82bc93f89c47c5"
 
+rollup-plugin-postcss@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-postcss/-/rollup-plugin-postcss-0.4.1.tgz#13afed898508bbc7db9de1a9c0faacaa0d09e4cf"
+  dependencies:
+    concat-with-sourcemaps "^1.0.4"
+    fs-promise "^2.0.2"
+    postcss "^5.0.12"
+    rollup-pluginutils "^2.0.1"
+    style-inject "^0.1.0"
+
 rollup-pluginutils@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.0.1.tgz#7ec95b3573f6543a46a6461bd9a7c544525d0fc0"
@@ -2810,7 +2871,7 @@ source-map@^0.4.4:
   dependencies:
     amdefine ">=0.0.4"
 
-source-map@^0.5.6, source-map@~0.5.1:
+source-map@^0.5.1, source-map@^0.5.6, source-map@~0.5.1:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
 
@@ -2829,8 +2890,8 @@ spdx-license-ids@^1.0.2:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
 sprintf-js@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.0.tgz#cffcaf702daf65ea39bb4e0fa2b299cec1a1be46"
 
 sshpk@^1.7.0:
   version "1.13.0"
@@ -2911,6 +2972,10 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
+style-inject@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/style-inject/-/style-inject-0.1.1.tgz#76e4d3940ef5545f34bac841d1e97ec1411c8b99"
+
 subtext@4.x.x:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/subtext/-/subtext-4.4.0.tgz#0cf137965f47fe0e126a56a2488bb1c88dc93514"
@@ -2925,9 +2990,15 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-svelte@^1.6.3:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-1.19.1.tgz#2f8ce41726a57e33948bc8f93d4712d89f5a120a"
+supports-color@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
+  dependencies:
+    has-flag "^1.0.0"
+
+svelte@^1.18.2:
+  version "1.20.2"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-1.20.2.tgz#62cc3305414ca71197d00d846b970f79f9d21ae8"
 
 tar-pack@^3.4.0:
   version "3.4.0"
@@ -2960,6 +3031,18 @@ tfunk@^3.0.1:
   dependencies:
     chalk "^1.1.1"
     object-path "^0.9.0"
+
+thenify-all@^1.0.0, thenify-all@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/thenify-all/-/thenify-all-1.6.0.tgz#1a1918d402d8fc3f98fbf234db0bcc8cc10e9726"
+  dependencies:
+    thenify ">= 3.1.0 < 4"
+
+"thenify@>= 3.1.0 < 4":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/thenify/-/thenify-3.2.1.tgz#251fd1c80aff6e5cf57cb179ab1fcb724269bd11"
+  dependencies:
+    any-promise "^1.0.0"
 
 timed-out@^4.0.0:
   version "4.0.1"
@@ -3131,9 +3214,9 @@ vlq@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.2.tgz#e316d5257b40b86bb43cb8d5fea5d7f54d6b0ca1"
 
-vudash-widget-ci@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/vudash-widget-ci/-/vudash-widget-ci-6.0.2.tgz#9980c2c3520933f0931177140969eeee1a2274ec"
+vudash-widget-ci@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vudash-widget-ci/-/vudash-widget-ci-7.0.0.tgz#44978b15b2947bfa8d29530906e01ad48d0467a9"
   dependencies:
     bluebird "^3.4.6"
     circleci "^0.3.2"
@@ -3141,9 +3224,9 @@ vudash-widget-ci@^6.0.2:
     joi "^9.2.0"
     travis-ci "^2.1.1"
 
-vudash-widget-gauge@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/vudash-widget-gauge/-/vudash-widget-gauge-6.0.2.tgz#6feeb02f9d8e4e759558dc623a2caf0b983c6de6"
+vudash-widget-gauge@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vudash-widget-gauge/-/vudash-widget-gauge-7.0.0.tgz#8a6f43231b989e24cd570c8a330fdaa1b6bf9f4b"
   dependencies:
     bluebird "^3.4.7"
     hoek "^4.1.0"
@@ -3152,25 +3235,25 @@ vudash-widget-progress@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/vudash-widget-progress/-/vudash-widget-progress-6.0.2.tgz#b4893a30fed7e8be129e15fd7fe6ec54d9c701ca"
 
-vudash-widget-statistic@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/vudash-widget-statistic/-/vudash-widget-statistic-6.0.2.tgz#3b08a18b49bbf412787ccc61e592cc8af2c3b013"
+vudash-widget-statistic@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vudash-widget-statistic/-/vudash-widget-statistic-7.0.0.tgz#9ff8b947ab4015d131bc2e3ec712c25952c3f331"
   dependencies:
-    chartist "^0.9.8"
+    chartist "^0.11.0"
     sprintf-js "^1.0.3"
 
-vudash-widget-status@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/vudash-widget-status/-/vudash-widget-status-6.0.2.tgz#22f5b3dba3342690c23653c9ae81d10e2ef9a689"
+vudash-widget-status@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vudash-widget-status/-/vudash-widget-status-7.0.0.tgz#ceca975595cc03f795d1cf6267719e3cef1c680d"
   dependencies:
     bluebird "^3.4.7"
     export-dir "^0.1.2"
     got "^6.7.1"
     hoek "^4.1.0"
 
-vudash-widget-time@^6.3.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/vudash-widget-time/-/vudash-widget-time-6.3.1.tgz#390dab2d966e4199fedff949db4c071340057e56"
+vudash-widget-time@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vudash-widget-time/-/vudash-widget-time-7.0.0.tgz#8b265d8fc01101d7212401bda30c82b24ef34e7f"
   dependencies:
     bluebird "^3.4.6"
     cron "^1.1.1"

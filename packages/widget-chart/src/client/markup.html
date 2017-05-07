@@ -1,0 +1,52 @@
+<div class="vudash-chart">
+  <div ref:chart class="value">
+  </div>
+  <div class="label">
+    {{ config.description }}
+  </div>
+</div>
+
+<style>
+  .value {
+    width: 100%;
+    height: 80%;
+  }
+
+  .ct-label.ct-horizontal,
+  .ct-label.ct-vertical,
+  .ct-grids > .ct-grid.ct-horizontal,
+  .ct-grids > .ct-grid.ct-vertical {
+    color: dimgrey;
+    stroke: dimgrey;
+  }
+</style>
+
+<script>
+  import Chartist from 'chartist'
+  import 'chartist/dist/chartist.css'
+  import ChartOptions from './chart-options'
+
+  export default {
+    oncreate () {
+      const config = this.get('config')
+      this.set({ labels: config.labels })
+
+      const { constructorName, options } = ChartOptions.get(config.type)
+      const chartConfig = Object.assign({ fullWidth: true }, options)
+      const ChartConstructor = Chartist[constructorName]
+
+      this.chart = new ChartConstructor(this.refs.chart, {
+        labels: this.get('labels'),
+        series: this.get('series')
+      }, chartConfig)
+    },
+
+    methods: {
+      update (data) {
+        const updates = { labels: this.get('labels'), series: data.series }
+        this.set(updates)
+        this.chart.update(updates)
+      }
+    }
+  }
+</script>

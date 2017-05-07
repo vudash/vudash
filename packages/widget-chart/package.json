@@ -1,0 +1,32 @@
+{
+  "name": "@vudash/widget-chart",
+  "version": "1.0.0",
+  "description": "Chart widget for Vudash",
+  "main": "widget.js",
+  "author": "Antony Jones",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "chartist": "^0.11.0"
+  },
+  "vudash": {
+    "component": "./src/client/markup.html"
+  },
+  "scripts": {
+    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
+  "keywords": [
+    "vudash",
+    "travis",
+    "travis-ci",
+    "travisci",
+    "widget",
+    "dashboard",
+    "dashing",
+    "build"
+  ]
+}
