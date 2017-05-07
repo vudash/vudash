@@ -24,6 +24,7 @@
 <script>
   import Chartist from 'chartist'
   import 'chartist/dist/chartist.css'
+  import ChartOptions from './chart-options'
 
   export default {
     data () {
@@ -37,15 +38,16 @@
     },
 
     oncreate () {
-      this.chart = new Chartist.Line(this.refs.chart, {
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      const config = this.get('config')
+
+      const { constructorName, options } = ChartOptions.get(config.type)
+      const chartConfig = Object.assign({ fullWidth: true }, options)
+      const ChartConstructor = Chartist[constructorName]
+
+      this.chart = new ChartConstructor(this.refs.chart, {
+        labels: config.labels,
         series: this.get('series')
-      }, {
-        fullWidth: true,
-        chartPadding: {
-          right: 60
-        }
-      })
+      }, chartConfig)
     },
 
     methods: {

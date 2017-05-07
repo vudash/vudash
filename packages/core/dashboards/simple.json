@@ -10,7 +10,9 @@
       "position": {"x": 0, "y": 1, "w": 2, "h": 2}, 
       "widget": "@vudash/widget-chart",
       "options": {
-        "description": "Total taken"
+        "description": "Total taken",
+        "type": "line",
+        "labels": ["Fish", "Eggs", "Meat", "Grains", "Seeds"]
       }
     }
   ]
