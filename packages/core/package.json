@@ -1,6 +1,6 @@
 {
   "name": "vudash",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "keywords": [
     "vudash",
     "dashboard",
@@ -69,7 +69,7 @@
     "vudash-widget-ci": "^7.0.0",
     "vudash-widget-gauge": "^7.0.0",
     "vudash-widget-progress": "^6.0.2",
-    "vudash-widget-statistic": "^7.0.0",
+    "vudash-widget-statistic": "^7.1.0",
     "vudash-widget-status": "^7.0.0",
     "vudash-widget-time": "^7.0.0"
   }
