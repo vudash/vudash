@@ -38,9 +38,5 @@
       "afterEach",
       "resource"
     ]
-  },
-  "dependencies": {
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-svelte": "^1.8.1"
   }
 }

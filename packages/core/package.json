@@ -60,6 +60,8 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-memory": "^2.0.0",
     "rollup-plugin-postcss": "^0.4.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-svelte": "^1.8.1",
     "socket.io": "^1.7.3",
     "svelte": "^1.18.2",
     "vision": "^4.1.0",
