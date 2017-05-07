@@ -1,7 +1,5 @@
 'use strict'
 
-const { Promise } = require('bluebird')
-
 const defaults = {
   description: '',
   schedule: 60 * 1000 * 5,
@@ -11,13 +9,23 @@ const defaults = {
 
 class ChartWidget {
 
-  register (options) {
+  register (options, emit, transport) {
+    const config = Object.assign({}, defaults, options)
+
     return {
-      schedule: options.schedule,
-      config: Object.assign({}, defaults, options),
+      schedule: config.schedule,
+      config,
 
       job: () => {
-        return Promise.resolve({})
+        return transport
+        .fetch()
+        .then(result => {
+          const names = Object.keys(result)
+          const series = names.map(names => {
+            return result[names]
+          })
+          return { series }
+        })
       }
     }
   }

@@ -4,6 +4,44 @@ Vudash has a number of widgets which are available on npm, these are in the `pac
 
 You will notice that widget definitions `position` and `datasource` attributes. These refer to the position of the widget on the display, and how the widget gets its data, and these are documented in [Plugins](/#/plugins) and the [Main Readme](/#/) respectively.
 
+## Chart Widget
+
+Shows Bar, Line, Chart, and Donut graphs for data series.
+
+### Screenshot
+
+Line Chart
+
+![line-chart](https://cloud.githubusercontent.com/assets/218949/25781884/57c8d264-3337-11e7-8e46-ae6737d20f50.png)
+
+### Configuration
+
+The chart widget has a number of configuration options:
+
+| Option | Default | Allowed Values | Description |
+| --- | --- |
+| `description` | `<empty string>` | any string | Widget description, shown at the bottom of the widget
+| `schedule` | 60 * 1000 * 5 | any integer | Widget update frequency, in milliseconds
+| `type` | `line` | `line, bar, pie, donut` | Graph type. Lowercased version of [chartist graph types](https://gionkunz.github.io/chartist-js/examples.html). Also applies some sensible styling to each graph type to make it fit with a Vudash dashboard. |
+| `labels` | `[]` | an array of label names | Labels which run along the X axis of a chart. Each label relates to its corresponding number in the data provided to the chart. |
+
+#### Configuration example
+
+You can configure any status page which uses [Atlassian StatusPage](https://www.atlassian.com/software/statuspage) easily:
+
+```json
+{ 
+  "position": { ... }, 
+  "widget": "@vudash/widget-chart",
+  "datasource": { ... },
+  "options": {
+    "type": "pie",
+    "description": "My Pie Chart",
+    "labels": ["Apples", "Pears", "Peaches", "Lemons", "Oranges"]
+  }
+}
+```
+
 ## CI Widget
 
 Connects to CI Providers and displays build results.
@@ -11,7 +49,10 @@ Connects to CI Providers and displays build results.
 Currently supports [CircleCI](http://www.circleci.com) and [TravisCI](http://www.travis-ci.org)
 
 ### Screenshot
-TBD
+
+Failing, and Passing:
+
+![ci-widget](https://cloud.githubusercontent.com/assets/218949/25781907/d0242da8-3337-11e7-904d-9c6f00b7ea27.gif)
 
 ### Configuration
 Add to a [Vudash](https://www.npmjs.com/package/vudash) dashboard with the following configuration:
@@ -64,7 +105,8 @@ Where `your-user` is your github organisation or user name, and `your-repo` is y
 Shows a VU-Meter like Gauge which represents numerical figures like percentages
 
 ### Screenshot
-TBD
+
+![gauge-widget](https://cloud.githubusercontent.com/assets/218949/25781923/339cd844-3338-11e7-8e12-0ff197e3876f.gif)
 
 ### Configuration
 Simply include in your dashboard, and configure as required (defaults are shown):
@@ -138,7 +180,8 @@ For example
 Shows the status of an external service like github, or any API which uses Atlassian StatusPage
 
 ### Screenshot
-TBD
+
+![status-widget](https://cloud.githubusercontent.com/assets/218949/25781933/62f3e344-3338-11e7-9cf8-dc7b29aa1a98.png)
 
 ### Configuration
 
@@ -185,7 +228,7 @@ Github status page monitoring is pretty much no-configuration. It will tell you 
 Simply shows the time, and has optional audiable alarams
 
 ### Screenshot
-TBD
+![time-widget](https://cloud.githubusercontent.com/assets/218949/25781881/50fffa66-3337-11e7-89dc-12871a2350b8.png)
 
 ### Configuration
 Simply include in your dashboard:
@@ -236,7 +279,8 @@ Options: `data` is a data-uri which contains the clip of audio to be played. You
 A simple widget with a beating heart, to let you know that the dashboard is alive.
 
 ### Screenshot
-TBD
+
+![health-widget](https://cloud.githubusercontent.com/assets/218949/25781948/a0314bfc-3338-11e7-99a9-3d81065b0518.png)
 
 ### Configuration
 

@@ -5,15 +5,6 @@
     "rows": 4
   },
   "widgets": [
-    { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" },
-    { 
-      "position": {"x": 0, "y": 1, "w": 2, "h": 2}, 
-      "widget": "@vudash/widget-chart",
-      "options": {
-        "description": "Total taken",
-        "type": "line",
-        "labels": ["Fish", "Eggs", "Meat", "Grains", "Seeds"]
-      }
-    }
+    { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" }
   ]
 }

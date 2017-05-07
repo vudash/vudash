@@ -1,6 +1,6 @@
 'use strict'
 
-const sprintf = require('sprintf-js').sprintf
+const { sprintf } = require('sprintf-js')
 
 const defaults = {
   'description': 'Statistics',

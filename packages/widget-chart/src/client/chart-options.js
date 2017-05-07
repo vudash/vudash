@@ -18,7 +18,9 @@ const ChartTypes = {
   'donut': {
     constructorName: 'Pie',
     options: {
-      donut: true
+      donut: true,
+      donutWidth: 60,
+      donutSolid: true
     }
   }
 }

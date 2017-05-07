@@ -27,32 +27,25 @@
   import ChartOptions from './chart-options'
 
   export default {
-    data () {
-      return {
-        series: [
-          [12, 9, 7, 8, 5],
-          [2, 1, 3.5, 7, 3],
-          [1, 3, 4, 5, 6]
-        ]
-      }
-    },
-
     oncreate () {
       const config = this.get('config')
+      this.set({ labels: config.labels })
 
       const { constructorName, options } = ChartOptions.get(config.type)
       const chartConfig = Object.assign({ fullWidth: true }, options)
       const ChartConstructor = Chartist[constructorName]
 
       this.chart = new ChartConstructor(this.refs.chart, {
-        labels: config.labels,
+        labels: this.get('labels'),
         series: this.get('series')
       }, chartConfig)
     },
 
     methods: {
       update (data) {
-        this.set({ series: data })
+        const updates = { labels: this.get('labels'), series: data.series }
+        this.set(updates)
+        this.chart.update(updates)
       }
     }
   }
