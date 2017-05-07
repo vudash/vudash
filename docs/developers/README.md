@@ -195,7 +195,7 @@ Datasources are how most widgets get data. Datasources provide an abstraction fo
 
 ### How to
 
-```
+
 1. Use the `datasource` parameter passed during widget construction.
 ```
  class YourWidget {
