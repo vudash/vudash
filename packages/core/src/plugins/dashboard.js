@@ -1,25 +1,12 @@
 'use strict'
 
-const Dashboard = require('../modules/dashboard')
-const Path = require('path')
 const Joi = require('joi')
 const indexHandler = require('./handlers/index.handler')
+const dashboardLoader = require('../modules/dashboard-loader')
+const { NotFoundError } = require('../errors')
 
 const DashboardPlugin = {
   register: function (server, options, next) {
-    const io = server.plugins.socket.io
-    let dashboards = {}
-
-    function loadDashboard (name) {
-      const path = Path.join(process.cwd(), 'dashboards', name)
-      const descriptor = require(path)
-      const dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
-
-      dashboards[name] = dashboard
-      return dashboard
-    }
-
     server.route({
       method: 'GET',
       path: '/',
@@ -38,8 +25,17 @@ const DashboardPlugin = {
       },
       handler: function (request, reply) {
         const dashboardName = request.params.board
-        // TODO: Cache indefinitely using server methods.
-        const dashboard = dashboards[dashboardName] || loadDashboard(dashboardName)
+
+        const io = server.plugins.socket.io
+        let dashboard
+        try {
+          dashboard = dashboardLoader.find(dashboardName, io)
+        } catch (e) {
+          if (e instanceof NotFoundError) {
+            return reply.redirect('/')
+          }
+          throw e
+        }
         const serverUrl = process.env.SERVER_URL || server.info.uri
 
         dashboard.toRenderModel()
@@ -58,7 +54,11 @@ const DashboardPlugin = {
       }
     })
 
-    server.expose('dashboards', dashboards)
+    server.route({
+      method: '*',
+      path: '/{p*}',
+      handler: indexHandler
+    })
 
     next()
   }

@@ -14,6 +14,7 @@ cli.main((args, options) => {
   }
 
   if (args[0] === 'create') {
+    console.log('Installing dependencies. This could take a minute or two...')
     const configFile = Path.join(__cwd, 'dashboards', 'default.json')
     const packageJson = Path.join(__cwd, 'package.json')
     fs.ensureDirSync(Path.join(__cwd, 'dashboards'))
