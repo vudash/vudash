@@ -16,6 +16,9 @@ See this project on NPM: [Vudash](https://npmjs.org/vudash)
 # Product Demo
 
 [Demo Dashboard](http://demo.vudash.com/)
+[Cryptocurrency Demo Dashboard](http://cryptodash.herokuapp.com/default.dashboard)
+
+Got a dashboard you want to showcase? Let us know!
 
 # Quick Start
 
