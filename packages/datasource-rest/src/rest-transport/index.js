@@ -1,25 +1,21 @@
 'use strict'
 
 const got = require('got')
-const { reach } = require('hoek')
+const { reach, applyToDefaults } = require('hoek')
 const pkg = require('../../package.json')
 
 const internals = {
   prepareRequest (config) {
-    const options = {
+    const options = applyToDefaults({
       json: true,
       headers: {
         'user-agent': `vudash/${pkg.version} (https://github.com/vudash/vudash)`,
         'content-type': 'application/json'
       }
-    }
+    }, config)
 
     if (config.body) {
       options.body = JSON.stringify(config.body)
-    }
-
-    if (config.query) {
-      options.query = config.query
     }
 
     return options
