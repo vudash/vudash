@@ -16,7 +16,7 @@ class StatisticWidget {
     this.transport = transport
 
     return {
-      config: { description: config.description },
+      config,
       schedule: config.schedule,
 
       job: this.job.bind(this)

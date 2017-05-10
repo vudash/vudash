@@ -60,7 +60,9 @@ export default {
   },
 
   oncreate () {
-    new FitText(this.refs.value, { fontRatio: config['font-ratio'] })
+    const config = this.get('config')
+    console.log(config)
+    new FitText(this.refs.value, { fontRatio: config['font-ratio'] || 4 })
   },
 
   methods: {
