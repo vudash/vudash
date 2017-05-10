@@ -60,8 +60,7 @@ export default {
   },
 
   oncreate () {
-    new FitText(this.refs.value)
-    const chartData = this.get('')
+    new FitText(this.refs.value, { fontRatio: config['font-ratio'] })
   },
 
   methods: {

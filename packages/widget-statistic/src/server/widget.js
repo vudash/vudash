@@ -3,9 +3,10 @@
 const { sprintf } = require('sprintf-js')
 
 const defaults = {
-  'description': 'Statistics',
-  'schedule': 60000,
-  'format': '%s'
+  description: 'Statistics',
+  'font-ratio': 4,
+  schedule: 60000,
+  format: '%s'
 }
 
 class StatisticWidget {
