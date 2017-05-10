@@ -29,7 +29,7 @@
   "scripts": {
     "watch": "BROWSER_SYNC=true ../../node_modules/.bin/nodemon -e html,js .",
     "start": "node app.js",
-    "test": "PORT=3418 ../../node_modules/.bin/lab  -I @@any-promise/REGISTRATION,describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
+    "test": "PORT=3418 ../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"
@@ -54,13 +54,13 @@
     "joi": "^8.1.0",
     "lodash": "^4.16.4",
     "moment": "^2.13.0",
-    "npm": "^3.9.3",
+    "npm": "^4.5.0",
     "require-directory": "^2.1.1",
     "rollup": "^0.41.6",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-memory": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-postcss": "^0.4.1",
+    "rollup-plugin-postcss": "^0.4.3",
     "rollup-plugin-svelte": "^1.8.1",
     "socket.io": "^1.7.3",
     "svelte": "^1.18.2",

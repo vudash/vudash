@@ -27,7 +27,7 @@ class StatisticWidget {
     .fetch()
     .then((result) => {
       if (Array.isArray(result)) {
-        const currentValue = result.pop()
+        const currentValue = result[result.length - 1]
         return { value: this._format(currentValue), history: result }
       }
 

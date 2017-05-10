@@ -1,5 +1,5 @@
 <div class="vudash-statistic">
-  <div class="value">
+  <div class="value" ref:value>
     {{ value }}
   </div>
   <div class="label">
@@ -9,8 +9,8 @@
 </div>
 
 <style>
-  .vudash-statistic .value {
-  font-size: 76px;
+.vudash-statistic .value {
+  width: 90%;
   font-weight: bold;
   text-align: center;
 }
@@ -34,6 +34,7 @@
 
 import Chartist from 'chartist'
 import 'chartist/dist/chartist.css'
+import FitText from 'fit-text'
 
 const options = {
   axisX: {
@@ -53,22 +54,25 @@ const options = {
 export default {
   data () {
     return {
+      value: '-',
       history: []
     }
   },
 
-  methods: {
-    update (data) {
-      if (data.history) {
-        const chartData = {
-          series: [
-            { data: data.history }
-          ]
-        }
-        this.chart = new Chartist.Line(this.refs.chart, chartData, options)
-      }
+  oncreate () {
+    new FitText(this.refs.value)
+    const chartData = this.get('')
+  },
 
-      this.set(data)
+  methods: {
+    update ({ value, history }) {
+      if (history) {
+        const chartData = { series: [history] }
+        this.chart = this.chart || new Chartist.Line(this.refs.chart, chartData, options)
+        this.chart.update(chartData)
+      }
+      const updates = { value, history }
+      this.set(updates)
     }
   }
 }
