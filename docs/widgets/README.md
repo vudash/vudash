@@ -50,6 +50,10 @@ Currently supports [CircleCI](http://www.circleci.com) and [TravisCI](http://www
 
 ### Screenshot
 
+Building:
+
+![ci-widget 1](https://cloud.githubusercontent.com/assets/218949/25973853/c90fe034-369d-11e7-80ef-639126d7e1dd.gif)
+
 Failing, and Passing:
 
 ![ci-widget](https://cloud.githubusercontent.com/assets/218949/25781907/d0242da8-3337-11e7-904d-9c6f00b7ea27.gif)
