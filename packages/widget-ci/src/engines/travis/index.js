@@ -13,6 +13,8 @@ class TravisEngine {
     this.repo = options.repo
     this.branch = options.branch
     this.mappings = {
+      started: BuildStatus.running,
+      created: BuildStatus.queued,
       passed: BuildStatus.passed,
       failed: BuildStatus.failed
     }
@@ -27,6 +29,7 @@ class TravisEngine {
         }
 
         const latestBuild = res.builds[0]
+        console.log(latestBuild.state)
         resolve(this.mappings[latestBuild.state] || BuildStatus.unknown)
       })
     })
