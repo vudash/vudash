@@ -122,13 +122,13 @@ Simply include in your dashboard, and configure as required (defaults are shown)
     "options": {
       "schedule": 60000, // Optional. How often to refresh
       "description": "Gauge", // Optional. Description shown below statistic,
-      'initial-value': 27,
-      'min': 0,
-      'max': 100,
-      'pointer.background-colour': 'orange' // Optional, Background colour of pointer,
-      'pointer.colour': 'indicatorColour', // Optional, Foreground colour of pointer.
-      'value.font-size': 'valueFontSize', // Optional. Font size of gauge value.
-      'value.colour': 'valueColour', // Optional. Colour of gauge value.
+      "initial-value": 27,
+      "min": 0,
+      "max": 100,
+      "pointer.background-colour": "orange" // Optional, Background colour of pointer,
+      "pointer.colour": "indicatorColour", // Optional, Foreground colour of pointer.
+      "value.font-size": "valueFontSize", // Optional. Font size of gauge value.
+      "value.colour": "valueColour", // Optional. Colour of gauge value.
     }
   }
 ```
@@ -138,10 +138,14 @@ Simply include in your dashboard, and configure as required (defaults are shown)
 Similar to VU Meter, but with a linear progress bar
 
 ### Screenshot
-TBD
+
+![progress](https://cloud.githubusercontent.com/assets/218949/25974011/81164970-369e-11e7-83b3-c42e87febabb.png)
 
 ### Configuration
-TBD
+
+The only configuration for the progress widget is the schedule.
+
+The datasource connected to the progress widget should ideally return numbers between 1 and 100, anything over 100 will be represented as 100% anyway.
 
 ## Statistics Widget
 
