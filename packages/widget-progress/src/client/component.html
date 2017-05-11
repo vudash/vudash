@@ -1,27 +1,29 @@
 <div class="vudash-progress">
    <div class="bar">
-     <div class="progress" style="width: {{ percentage }}%">
+     <div ref:progress class="progress">
      </div>
    </div>
    <div class="label">{{ config.description }}</div>
 </div>
 <style>
-  .vudash-progress > .bar {
+  .bar {
     width: 60%;
     border: 4px solid #fff;
     height: 40px;
   }
 
-  .vudash-progress > .bar > .progress {
-    background-color: #fff;
+  .bar > .progress {
+    background-color: #70b37d;
     display: block;
     height: 100%;
+    transition: width 1s
   }
 
-  .vudash-progress > .label {
-    margin-top: 10px;
+  .label {
+    position: absolute;
+    bottom: 30px;
+    font-size: 14px;
     font-weight: bold;
-    text-align: center;
   }
 </style>
 <script>
@@ -29,6 +31,8 @@
     methods: {
       update (data) {
         this.set(data)
+        const progress = this.get('percentage')
+        this.refs.progress.style.width = `${progress}%`
       }
     }
   }

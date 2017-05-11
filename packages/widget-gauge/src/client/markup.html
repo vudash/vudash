@@ -7,9 +7,20 @@
     <div class="pointer" style="transform: rotate({{ pointerDegrees }}deg)"></div>
     <div class="pointer-knob"></div>
   </div>
+  <div class="label">
+    {{ config.description }}
+  </div>
 </div>
 
 <style>
+  .label {
+    position: absolute;
+    bottom: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+
   .gauge {
     width: 200px;
     height: 100px;

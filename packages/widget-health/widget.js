@@ -12,8 +12,7 @@ class HealthWidget {
 
       job: () => {
         on = !on
-        const classes = on ? '' : 'small'
-        return Promise.resolve({ classes })
+        return Promise.resolve({ on })
       }
 
     }

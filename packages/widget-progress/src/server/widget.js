@@ -1,16 +1,8 @@
 'use strict'
 
 const defaults = {
-  'description': 'Completion',
-  'schedule': 30000,
-  'data-source': {
-    source: 'random',
-    method: 'integer',
-    options: {
-      min: 0,
-      max: 100
-    }
-  }
+  description: 'Completion',
+  schedule: 30000
 }
 
 class ProgressWidget {

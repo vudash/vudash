@@ -1,6 +1,6 @@
 <div class="vudash-health">
   <div class="value">
-    <i class="material-icons {{ classes }}">favorite</i>
+    <i ref:heartbeat class="material-icons">favorite</i>
   </div>
   <div class="label">
     Health
@@ -12,23 +12,21 @@
     text-align: center;
   }
 
-  .vudash-health > .label {
+  .label {
+    position: absolute;
+    bottom: 30px;
+    font-size: 14px;
     font-weight: bold;
   }
 
-  .vudash-health > .value {
+  .value {
     height: 80px;
     display: block;
   }
 
-  .vudash-health > .value > i {
+  .value > i {
     transition: font-size 0.5s;
     color: #FF695E;
-    font-size: 76px;
-  }
-
-  .vudash-health > .value > i.small {
-    font-size: 56px;
   }
 </style>
 
@@ -36,13 +34,14 @@
   export default {
     data () {
       return {
-        classes: ''
+        size: '92px'
       }
     },
 
     methods: {
       update (data) {
-        this.set(data)
+        this.set({ size: data.on ? '92px' : '56px' })
+        this.refs.heartbeat.style['font-size'] = this.get('size')
       }
     }
   }

@@ -9,19 +9,21 @@
 </div>
 
 <style>
-.vudash-statistic .value {
+.value {
   width: 90%;
   font-weight: bold;
   text-align: center;
 }
 
-.vudash-statistic .label {
+.label {
+  position: absolute;
+  bottom: 30px;
   font-size: 14px;
   font-weight: bold;
   text-align: center;
 }
 
-.vudash-statistic .chart {
+.chart {
   top: 0;
   position: absolute;
   float: left;
@@ -61,7 +63,6 @@ export default {
 
   oncreate () {
     const config = this.get('config')
-    console.log(config)
     new FitText(this.refs.value, { fontRatio: config['font-ratio'] || 4 })
   },
 
