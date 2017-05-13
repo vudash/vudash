@@ -1,7 +1,7 @@
 {
   "name": "vudash-widget-progress",
   "main": "index.js",
-  "version": "7.4.1",
+  "version": "7.5.0",
   "description": "Vudash Progress Widget",
   "scripts": {
     "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource ../../test/unit.lab.js"
