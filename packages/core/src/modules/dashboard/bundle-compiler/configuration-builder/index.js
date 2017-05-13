@@ -5,6 +5,7 @@ const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
 const memory = require('rollup-plugin-memory')
 const css = require('rollup-plugin-postcss')
+const svg = require('rollup-plugin-svg')
 
 exports.build = function (source) {
   return {
@@ -15,6 +16,7 @@ exports.build = function (source) {
     dest: 'bundle.js',
     format: 'iife',
     plugins: [
+      svg(),
       memory(),
       commonjs(),
       resolve({
@@ -23,7 +25,7 @@ exports.build = function (source) {
         }
       }),
       css(),
-      svelte({})
+      svelte()
     ]
   }
 }

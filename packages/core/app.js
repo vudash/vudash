@@ -8,6 +8,15 @@ const server = new Hapi.Server()
 const fs = require('fs')
 const Path = require('path')
 const chalk = require('chalk')
+const unhandled = require('unhandled-rejection')
+
+const rejectionEmitter = unhandled({
+  timeout: 5
+})
+
+rejectionEmitter.on('unhandledRejection', (error, promise) => {
+  console.error(error)
+})
 
 const src = (name) => { return `./src/${name}` }
 const plugin = (name) => { return src(`plugins/${name}`) }

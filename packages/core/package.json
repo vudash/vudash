@@ -62,8 +62,10 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-postcss": "^0.4.3",
     "rollup-plugin-svelte": "^1.8.1",
+    "rollup-plugin-svg": "^1.0.1",
     "socket.io": "^1.7.3",
     "svelte": "^1.18.2",
+    "unhandled-rejection": "^1.0.0",
     "vision": "^4.1.0",
     "vudash-widget-time": "^7.0.0"
   }
