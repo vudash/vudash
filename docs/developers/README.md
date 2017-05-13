@@ -127,16 +127,29 @@ Then, import it to your component:
       return {
         thing: world()
       }
-    },
-
-    methods: {
-      ...
     }
   }
 </script>
 ```
 
 It doesn't matter if the module you want to use isn't an es6 module (i.e. doesn't export a default object), because the `rollup` plugin [rollup-plugin-commonjs](https://www.npmjs.com/package/rollup-plugin-commonjs) is used which can convert traditional node modules into es6 modules for you.
+
+#### Images
+
+You can bundle SVG images as dependencies in your plugins too - the [rollup-plugin-svg](https://www.npmjs.com/package/rollup-plugin-svg) plugin is also included:
+
+<img src="{{ logo }}" />
+<script>
+  import { logo } from './logo.svg'
+
+  export default {
+    data () {
+      return {
+        logo
+      }
+    }
+  }
+</script>
 
 You can [read more about Rollup.js](https://rollupjs.org/) in order to better understand how to optimise your component's client side code.
 

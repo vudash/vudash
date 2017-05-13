@@ -29,7 +29,6 @@ class TravisEngine {
         }
 
         const latestBuild = res.builds[0]
-        console.log(latestBuild.state)
         resolve(this.mappings[latestBuild.state] || BuildStatus.unknown)
       })
     })
