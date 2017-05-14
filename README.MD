@@ -10,8 +10,8 @@ See this project on NPM: [Vudash](https://npmjs.org/vudash)
 
 # Screenshots
 
-![dashboard](https://cloud.githubusercontent.com/assets/218949/25785093/2d37aaf0-3370-11e7-9e7a-ec8f2d05ccf0.png)
-![graph](https://cloud.githubusercontent.com/assets/218949/18608448/68c9bf90-7ce1-11e6-95a9-15c864722271.png)
+![ezgif com-optimize](https://cloud.githubusercontent.com/assets/218949/26034067/979c074a-38ae-11e7-92ca-a9e4e650870e.gif)
+![cryptodash](https://cloud.githubusercontent.com/assets/218949/26034106/22d85638-38af-11e7-8c98-98bb9aef2caa.png)
 
 # Product Demo
 
