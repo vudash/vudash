@@ -162,3 +162,9 @@ lerna run test
  - Heroku easy deploy
  - You, sending Pull Requests.
  - Plugins
+
+# Credits
+
+ - Concept and foundation by Antony Jones / Desirable Objects Ltd
+ - Contributions from github committers
+ - Contains svg imagery from flaticons, by [Gregor Cresnar](http://www.flaticon.com/authors/gregor-cresnar), [Vectors Market](http://www.flaticon.com/authors/vectors-market)

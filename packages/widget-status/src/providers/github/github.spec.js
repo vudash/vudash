@@ -35,7 +35,8 @@ describe('providers.github', () => {
         return provider.fetch()
         .then((output) => {
           expect(output.description).to.equal('Github')
-          expect(output.overallHealth).to.equal(health)
+          expect(output.components[0].ligature).to.equal(health)
+          expect(output.components[0].name).to.equal('github')
         })
       })
     })

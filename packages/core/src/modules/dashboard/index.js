@@ -62,7 +62,7 @@ class Dashboard {
 
   emitResult (widget, emitter) {
     return widget.getJob().script().then((result) => {
-      result._updated = new Date().toLocaleTimeString()
+      result._updated = new Date()
       emitter.emit(`${widget.id}:update`, result)
       emitter = null
     })

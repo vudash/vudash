@@ -6,17 +6,6 @@ const { reach } = require('hoek')
 const { assign } = Object
 const Joi = require('joi')
 
-function transformOverallHealth (source) {
-  const mappings = {
-    none: HealthStatus.HEALTHY,
-    minor: HealthStatus.PARTIAL_OUTAGE,
-    major: HealthStatus.MAJOR_OUTAGE
-  }
-  const overallHealth = reach(source, 'status.indicator')
-
-  return mappings[overallHealth] || HealthStatus.UNKNOWN
-}
-
 function mapHealthStatus (status) {
   const mappings = {
     'operational': HealthStatus.HEALTHY,
@@ -59,8 +48,7 @@ class StatuspageIo {
 
       return {
         description: reach(body, 'page.name'),
-        components: filteredComponents,
-        overallHealth: transformOverallHealth(body)
+        components: filteredComponents
       }
     })
   }

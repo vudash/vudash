@@ -82,11 +82,6 @@ describe('providers.statuspageio', () => {
       done()
     })
 
-    it('Fetches overall status', (done) => {
-      expect(results.overallHealth).to.equal(HealthStatus.HEALTHY)
-      done()
-    })
-
     it('Fetches components', (done) => {
       expect(results.components).to.equal([
         assign({ name: 'Component A' }, HealthStatus.HEALTHY),

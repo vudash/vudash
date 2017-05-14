@@ -28,7 +28,9 @@ class Github {
     .then((response) => {
       const body = response.body
       return {
-        overallHealth: this.mapHealth(body),
+        components: [
+          { name: 'github', ligature: this.mapHealth(body) }
+        ],
         description: 'Github'
       }
     })
