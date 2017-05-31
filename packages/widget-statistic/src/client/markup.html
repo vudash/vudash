@@ -24,7 +24,9 @@
 }
 
 .chart {
-  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
   position: absolute;
   float: left;
   z-index: -999;
@@ -50,7 +52,12 @@ const options = {
   showPoint: false,
   showArea: true,
   fullWidth: true,
-  width: '100%'
+  width: '100%',
+  chartPadding: { 
+    left: -40,
+    right: 0,
+    bottom: -40
+  }
 }
 
 export default {
