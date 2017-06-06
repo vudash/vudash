@@ -63,6 +63,7 @@
     "rollup-plugin-postcss": "^0.4.3",
     "rollup-plugin-svelte": "^1.8.1",
     "rollup-plugin-svg": "^1.0.1",
+    "slash": "^1.0.0",
     "socket.io": "^2.0.1",
     "svelte": "^1.21.0",
     "unhandled-rejection": "^1.0.0",

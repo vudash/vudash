@@ -6,13 +6,14 @@ const { join } = require('path')
 const { existsSync } = require('fs')
 const directoryResolver = require('./directory-resolver')
 const { upperCamel } = require('../upper-camel')
+const slash = require('slash')
 
 function readPackage (directory) {
   const packageJson = require(resolveModuleDependency(directory, 'package.json'))
   const Module = require(directory)
   const componentPath = resolveComponent(directory, packageJson)
   const name = upperCamel(packageJson.name)
-  return { Module, name, component: componentPath }
+  return { Module, name, component: slash(componentPath) }
 }
 
 function resolveModuleDependency (directory, file) {
