@@ -35,7 +35,7 @@
     "vudash": "bin/vudash.js"
   },
   "engines": {
-    "node": ">=6.x"
+    "node": ">=8.x"
   },
   "author": "Antony Jones",
   "license": "MIT",
@@ -45,7 +45,6 @@
     "boom": "^5.1.0",
     "browser-sync": "^2.12.9",
     "chalk": "^1.1.3",
-    "cli": "^0.11.2",
     "fs-extra": "^0.30.0",
     "handlebars": "^4.0.10",
     "hapi": "^16.3.0",
