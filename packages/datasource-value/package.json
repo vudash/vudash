@@ -1,6 +1,6 @@
 {
   "name": "@vudash/datasource-value",
-  "version": "6.0.2",
+  "version": "7.7.0",
   "description": "Value datasource for Vudash dashboards",
   "scripts": {
     "test": "../../node_modules/.bin/lab  -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource,WebAssembly ../../test/unit.lab.js"
