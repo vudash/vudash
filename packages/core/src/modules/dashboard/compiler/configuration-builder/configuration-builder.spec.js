@@ -3,7 +3,7 @@
 const builder = require('.')
 const { reach } = require('hoek')
 
-describe('bundle-compiler.configuration-builder', () => {
+describe('dashboard/compiler/configuration-builder', () => {
   context('Dynamic Contents', () => {
     it('Contents correctly set', done => {
       const expected = 'xyz'

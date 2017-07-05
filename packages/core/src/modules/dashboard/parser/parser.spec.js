@@ -3,7 +3,7 @@
 const descriptorParser = require('.')
 const fs = require('fs')
 
-describe('modules/descriptor-parser', () => {
+describe('dashboard/parser', () => {
   context('Parse', () => {
     it('Throws on invalid schema', (done) => {
       const fn = () => { return descriptorParser.parse({}) }

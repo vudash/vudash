@@ -2,15 +2,15 @@
 
 const Emitter = require('../emitter')
 const id = require('../id-gen')
-const descriptorParser = require('../descriptor-parser')
+const parser = require('./parser')
 const Widget = require('../widget')
-const PluginLoader = require('./plugin-loader')
-const bundleBuilder = require('./bundle-builder')
+const PluginLoader = require('../plugin/loader')
+const bundler = require('./bundler')
 const bundleCompiler = require('./bundle-compiler')
 
 class Dashboard {
   constructor (json, io) {
-    const descriptor = descriptorParser.parse(json)
+    const descriptor = parser.parse(json)
 
     this.id = id()
     this.name = descriptor.name
@@ -81,7 +81,7 @@ class Dashboard {
       })
     }
 
-    const bundle = bundleBuilder.build(model.widgets)
+    const bundle = bundler.build(model.widgets)
 
     return bundleCompiler.compile(bundle.js)
     .then(({ js, css }) => {

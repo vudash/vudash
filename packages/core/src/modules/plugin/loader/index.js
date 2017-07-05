@@ -3,7 +3,7 @@
 const { reach } = require('hoek')
 const chalk = require('chalk')
 const { PluginRegistrationError } = require('../../../errors')
-const pluginResolver = require('./plugin-resolver')
+const resolver = require('../resolver')
 
 class PluginLoader {
 
@@ -14,7 +14,7 @@ class PluginLoader {
 
   load (config) {
     this.options = config.options || {}
-    const plugin = pluginResolver.resolve(config.module)
+    const plugin = resolver.resolve(config.module)
     plugin.register(this)
   }
 

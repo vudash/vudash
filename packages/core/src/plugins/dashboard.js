@@ -2,7 +2,7 @@
 
 const Joi = require('joi')
 const indexHandler = require('./handlers/index.handler')
-const dashboardLoader = require('../modules/dashboard-loader')
+const dashboardLoader = require('../modules/dashboard/loader')
 const { NotFoundError } = require('../errors')
 
 const DashboardPlugin = {

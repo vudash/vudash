@@ -29,7 +29,7 @@
   "scripts": {
     "watch": "BROWSER_SYNC=true ../../node_modules/.bin/nodemon -e html,js .",
     "start": "node app.js",
-    "test": "PORT=3418 ../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource,WebAssembly ../../test/unit.lab.js"
+    "test": "PORT=3418 lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource,WebAssembly ../../test/unit.lab.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"

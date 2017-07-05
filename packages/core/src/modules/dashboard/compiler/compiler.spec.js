@@ -4,7 +4,7 @@ const compiler = require('.')
 const { stub } = require('sinon')
 const rollup = require('rollup')
 
-describe('bundle-compiler', () => {
+describe('dashboard/compiler', () => {
   context('Bundle', () => {
     const compiled = 'abc123'
     let bundle

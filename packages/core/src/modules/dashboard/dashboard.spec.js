@@ -8,7 +8,7 @@ const Path = require('path')
 const { Promise } = require('bluebird')
 const pluginResolver = require('./plugin-loader/plugin-resolver')
 const cheerio = require('cheerio')
-const bundleBuilder = require('./bundle-builder')
+const bundler = require('./bundler')
 const bundleCompiler = require('./bundle-compiler')
 const { stub } = require('sinon')
 
@@ -161,7 +161,7 @@ describe('modules.dashboard', () => {
     .build()
 
     before(async () => {
-      stub(bundleBuilder, 'build').returns(bundle)
+      stub(bundler, 'build').returns(bundle)
       stub(bundleCompiler, 'compile').resolves(compiledBundle)
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
@@ -173,7 +173,7 @@ describe('modules.dashboard', () => {
     })
 
     after((done) => {
-      bundleBuilder.build.restore()
+      bundler.build.restore()
       bundleCompiler.compile.restore()
       done()
     })
