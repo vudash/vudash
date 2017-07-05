@@ -1,7 +1,7 @@
 'use strict'
 
-const { NotFoundError } = require('../../errors')
-const Dashboard = require('../dashboard')
+const { NotFoundError } = require('../../../errors')
+const Dashboard = require('..')
 const Path = require('path')
 const fs = require('fs')
 

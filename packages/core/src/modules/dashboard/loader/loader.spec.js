@@ -1,6 +1,6 @@
 'use strict'
 
-const { NotFoundError } = require('../../errors')
+const { NotFoundError } = require('../../../errors')
 const loader = require('.')
 
 describe('dashboard/loader', () => {

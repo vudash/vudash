@@ -1,11 +1,11 @@
 'use strict'
 
 const { reach } = require('hoek')
-const { ConfigurationError } = require('../../errors')
+const { ConfigurationError } = require('../../../errors')
 const { join } = require('path')
 const { existsSync } = require('fs')
 const directoryResolver = require('./directory-resolver')
-const { upperCamel } = require('../upper-camel')
+const { upperCamel } = require('../../upper-camel')
 const slash = require('slash')
 
 function readPackage (directory) {

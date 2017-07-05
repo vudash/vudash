@@ -6,10 +6,10 @@ const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
 const { Promise } = require('bluebird')
-const pluginResolver = require('./plugin-loader/plugin-resolver')
+const pluginResolver = require('../plugin/resolver')
 const cheerio = require('cheerio')
 const bundler = require('./bundler')
-const bundleCompiler = require('./bundle-compiler')
+const compiler = require('./compiler')
 const { stub } = require('sinon')
 
 describe('modules.dashboard', () => {
@@ -162,7 +162,7 @@ describe('modules.dashboard', () => {
 
     before(async () => {
       stub(bundler, 'build').returns(bundle)
-      stub(bundleCompiler, 'compile').resolves(compiledBundle)
+      stub(compiler, 'compile').resolves(compiledBundle)
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
       return dashboard
@@ -174,7 +174,7 @@ describe('modules.dashboard', () => {
 
     after((done) => {
       bundler.build.restore()
-      bundleCompiler.compile.restore()
+      compiler.compile.restore()
       done()
     })
 

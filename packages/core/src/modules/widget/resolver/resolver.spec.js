@@ -1,9 +1,9 @@
 'use strict'
 
 const moduleResolver = require('.')
-const { ComponentCompilationError } = require('../../errors')
+const { ComponentCompilationError } = require('../../../errors')
 
-describe('module-resolver', () => {
+describe('widget/resolver', () => {
   context('Programmatic Config', () => {
     const pkg = {
       Module: { register: () => {} },

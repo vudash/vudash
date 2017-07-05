@@ -3,10 +3,10 @@
 const Widget = require(fromSrc('modules/widget'))
 const sinon = require('sinon')
 
-const moduleResolver = require('../module-resolver')
+const resolver = require('./resolver')
 const datasourceLoader = require('./datasource-loader')
 
-describe('modules.widget', () => {
+describe('widget', () => {
   const position = { x: 0, y: 0, w: 1, h: 1 }
   const renderOptions = { position }
 
@@ -23,7 +23,7 @@ describe('modules.widget', () => {
     }
 
     beforeEach((done) => {
-      sinon.stub(moduleResolver, 'resolve')
+      sinon.stub(resolver, 'resolve')
       .withArgs('abcdef')
       .returns({
         Module: function () {
@@ -41,7 +41,7 @@ describe('modules.widget', () => {
     })
 
     afterEach((done) => {
-      moduleResolver.resolve.restore()
+      resolver.resolve.restore()
       datasourceLoader.load.restore()
       done()
     })

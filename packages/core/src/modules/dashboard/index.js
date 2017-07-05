@@ -6,7 +6,7 @@ const parser = require('./parser')
 const Widget = require('../widget')
 const PluginLoader = require('../plugin/loader')
 const bundler = require('./bundler')
-const bundleCompiler = require('./bundle-compiler')
+const compiler = require('./compiler')
 
 class Dashboard {
   constructor (json, io) {
@@ -83,7 +83,7 @@ class Dashboard {
 
     const bundle = bundler.build(model.widgets)
 
-    return bundleCompiler.compile(bundle.js)
+    return compiler.compile(bundle.js)
     .then(({ js, css }) => {
       const allCss = `${css}\n${bundle.css}`
       return { html: bundle.html, js, css: allCss, name: model.name }

@@ -15,7 +15,7 @@ describe('dashboard/parser', () => {
 
     boards.forEach((board) => {
       it(`Parses valid schema ${board}`, (done) => {
-        const json = require(`../../../dashboards/${board}`)
+        const json = require(`../../../../dashboards/${board}`)
         descriptorParser.parse(json)
         done()
       })
