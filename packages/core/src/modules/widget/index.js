@@ -1,11 +1,9 @@
 'use strict'
 
 const id = require('../id-gen')
-const markupRenderer = require('./markup-renderer')
 const WidgetPosition = require('./widget-position')
 const resolver = require('./resolver')
-const layoutStyleRenderer = require('./layout-style-renderer')
-const componentRenderer = require('./component-renderer')
+const renderer = require('./renderer')
 const datasourceLoader = require('./datasource-loader')
 
 class Widget {
@@ -31,7 +29,6 @@ class Widget {
   }
 
   build (module) {
-    this.css = layoutStyleRenderer.render(this.id, this.position, this.background)
     this.job = { script: module.job, schedule: module.schedule }
     this.config = module.config || {}
   }
@@ -49,13 +46,22 @@ class Widget {
   }
 
   toRenderModel () {
+    const { 
+      id, 
+      name, 
+      config, 
+      componentPath,
+      position,
+      background
+    } = this
+    
     return {
-      id: this.id,
-      name: this.name,
-      markup: markupRenderer.render(this),
-      css: this.css,
-      js: componentRenderer.render(this.id, this.name, this.config),
-      componentPath: this.componentPath
+      id,
+      name,
+      componentPath,
+      markup: renderer.renderHtml(id),
+      css: renderer.renderStyles(id, position, background),
+      js: renderer.renderScript(id, name, config)
     }
   }
 
