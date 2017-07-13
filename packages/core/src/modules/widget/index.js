@@ -2,7 +2,7 @@
 
 const id = require('../id-gen')
 const WidgetPosition = require('./widget-position')
-const resolver = require('./resolver')
+const loader = require('./loader')
 const renderer = require('./renderer')
 const datasourceLoader = require('./datasource-loader')
 
@@ -16,7 +16,7 @@ class Widget {
     this.position = new WidgetPosition(dashboard.layout, widgetConfig.position)
     this.config = options
 
-    const { Module, name, component } = resolver.resolve(widgetName)
+    const { Module, name, component } = loader.load(widgetName)
     this.componentPath = component
     this.name = name
 

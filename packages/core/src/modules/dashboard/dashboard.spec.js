@@ -6,7 +6,7 @@ const Dashboard = require(fromSrc('modules/dashboard'))
 const Widget = require(fromSrc('modules/widget'))
 const Path = require('path')
 const { Promise } = require('bluebird')
-const pluginResolver = require('../plugin/resolver')
+const resolver = require('../resolver')
 const cheerio = require('cheerio')
 const bundler = require('./bundler')
 const compiler = require('./compiler')
@@ -90,12 +90,12 @@ describe('modules.dashboard', () => {
     const pluginStub = {}
 
     before((done) => {
-      sinon.stub(pluginResolver, 'resolve')
+      sinon.stub(resolver, 'resolve')
       done()
     })
 
     beforeEach((done) => {
-      pluginResolver.resolve.returns(pluginStub)
+      resolver.resolve.returns(pluginStub)
       pluginStub.register = sinon.stub()
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
@@ -103,7 +103,7 @@ describe('modules.dashboard', () => {
     })
 
     after((done) => {
-      pluginResolver.resolve.restore()
+      resolver.resolve.restore()
       done()
     })
 
@@ -138,7 +138,7 @@ describe('modules.dashboard', () => {
     })
 
     it('Throws error', (done) => {
-      expect(fn).to.throw(Error, `Cannot find module '${Path.join(process.cwd(), badModuleName)}'`)
+      expect(fn).to.throw(Error, `Module dependency ${badModuleName} declared in widget could not be located`)
       done()
     })
   })

@@ -1,9 +1,9 @@
 'use strict'
 
-const moduleResolver = require('.')
+const loader = require('.')
 const { ComponentCompilationError } = require('../../../errors')
 
-describe('widget/resolver', () => {
+describe('widget/loader', () => {
   context('Programmatic Config', () => {
     const pkg = {
       Module: { register: () => {} },
@@ -12,7 +12,7 @@ describe('widget/resolver', () => {
     }
 
     it('Parses Component', (done) => {
-      const resolved = moduleResolver.resolve(pkg)
+      const resolved = loader.load(pkg)
       expect(resolved).to.equal(pkg)
       done()
     })
@@ -20,8 +20,8 @@ describe('widget/resolver', () => {
 
   context('Vudash Metadata', () => {
     it('fails to read component metadata', (done) => {
-      const message = "Component vudash-widget-missing is missing 'vudash.component' in package.json"
-      const fn = () => { moduleResolver.resolve(resource('widgets/missing')) }
+      const message = "Widget vudash-widget-missing is missing 'vudash.component' in package.json"
+      const fn = () => { loader.load(resource('widgets/missing')) }
       expect(fn).to.throw(ComponentCompilationError, message)
       done()
     })
@@ -29,7 +29,7 @@ describe('widget/resolver', () => {
 
   context('Valid Component', () => {
     it('reads component metadata', (done) => {
-      const { component } = moduleResolver.resolve(resource('widgets/example'))
+      const { component } = loader.load(resource('widgets/example'))
       expect(component).not.to.equal(undefined)
       done()
     })

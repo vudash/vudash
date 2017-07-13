@@ -3,7 +3,7 @@
 const PluginLoader = require('.')
 const DatasourceBuilder = require(fromTest('util/datasource.builder'))
 const { PluginRegistrationError } = require('../../../errors')
-const resolver = require('../resolver')
+const resolver = require('../../resolver')
 
 describe('plugin.loader', () => {
   context('Datasource registration', () => {

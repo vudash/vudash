@@ -2,8 +2,7 @@
 
 const Widget = require(fromSrc('modules/widget'))
 const sinon = require('sinon')
-
-const resolver = require('./resolver')
+const loader = require('./loader')
 const datasourceLoader = require('./datasource-loader')
 
 describe('widget', () => {
@@ -23,9 +22,7 @@ describe('widget', () => {
     }
 
     beforeEach((done) => {
-      sinon.stub(resolver, 'resolve')
-      .withArgs('abcdef')
-      .returns({
+      sinon.stub(loader, 'load').returns({
         Module: function () {
           return {
             register: sinon.stub().returns({
@@ -41,8 +38,8 @@ describe('widget', () => {
     })
 
     afterEach((done) => {
-      resolver.resolve.restore()
       datasourceLoader.load.restore()
+      loader.load.restore()
       done()
     })
 
@@ -68,7 +65,7 @@ describe('widget', () => {
       function fn () {
         return new Widget(dashboard, renderOptions, badModuleName)
       }
-      expect(fn).to.throw(Error, /Cannot find module /)
+      expect(fn).to.throw(Error, /could not be located/)
       done()
     })
 
