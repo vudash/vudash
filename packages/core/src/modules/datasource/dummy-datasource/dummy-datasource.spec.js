@@ -2,7 +2,7 @@
 
 const DummyDatasource = require('.')
 
-describe('dummy-datasource', () => {
+describe('datasource.dummy-datasource', () => {
   it('can be constructed', done => {
     expect(DummyDatasource).to.be.a.function()
     done()

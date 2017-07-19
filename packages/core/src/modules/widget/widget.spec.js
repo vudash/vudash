@@ -3,7 +3,7 @@
 const Widget = require(fromSrc('modules/widget'))
 const sinon = require('sinon')
 const loader = require('./loader')
-const datasourceLoader = require('./datasource-loader')
+const datasource = require('../datasource')
 
 describe('widget', () => {
   const position = { x: 0, y: 0, w: 1, h: 1 }
@@ -33,23 +33,23 @@ describe('widget', () => {
         html: '<h1></h1>',
         name: 'xxx'
       })
-      sinon.stub(datasourceLoader, 'load')
+      sinon.stub(datasource, 'load')
       done()
     })
 
     afterEach((done) => {
-      datasourceLoader.load.restore()
+      datasource.load.restore()
       loader.load.restore()
       done()
     })
 
     it('Registers widget data source', (done) => {
       const loadedDatasource = { foo: 'bar' }
-      datasourceLoader.load.returns(loadedDatasource)
+      datasource.load.returns(loadedDatasource)
 
       const widget = new Widget(dashboard, renderOptions, 'abcdef', {})
-      const datasource = widget.getDatasource()
-      expect(datasource).to.equal(loadedDatasource)
+      const ds = widget.getDatasource()
+      expect(ds).to.equal(loadedDatasource)
       done()
     })
   })

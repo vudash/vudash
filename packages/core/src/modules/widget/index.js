@@ -4,13 +4,13 @@ const id = require('../id-gen')
 const WidgetPosition = require('./widget-position')
 const loader = require('./loader')
 const renderer = require('./renderer')
-const datasourceLoader = require('./datasource-loader')
+const datasource = require('../datasource')
 
 class Widget {
 
   constructor (dashboard, widgetConfig, widgetName, options = {}) {
     this.id = id()
-    this.datasource = datasourceLoader.load(widgetName, dashboard, widgetConfig.datasource)
+    this.datasource = datasource.load(widgetName, dashboard, widgetConfig.datasource)
     this.dashboard = dashboard
     this.background = widgetConfig.background
     this.position = new WidgetPosition(dashboard.layout, widgetConfig.position)

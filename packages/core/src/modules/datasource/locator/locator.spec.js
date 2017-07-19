@@ -1,9 +1,9 @@
 'use strict'
 
-const { WidgetRegistrationError } = require('../../../../errors')
+const { WidgetRegistrationError } = require('../../../errors')
 const locator = require('.')
 
-describe('widget.datasource-locator', () => {
+describe('datasource.locator', () => {
   it('loads datasource', (done) => {
     const datasources = { abcde: { foo: 'bar' } }
     expect(
