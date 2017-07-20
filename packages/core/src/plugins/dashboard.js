@@ -1,9 +1,8 @@
 'use strict'
 
 const Joi = require('joi')
-const indexHandler = require('./handlers/index.handler')
-const dashboardLoader = require('../modules/dashboard/loader')
-const { NotFoundError } = require('../errors')
+const { handler: indexHandler } = require('./handlers/index')
+const { handler: dashboardHandler } = require('./handlers/dashboard')
 
 const DashboardPlugin = {
   register: function (server, options, next) {
@@ -23,35 +22,7 @@ const DashboardPlugin = {
           }
         }
       },
-      handler: function (request, reply) {
-        const dashboardName = request.params.board
-
-        const io = server.plugins.socket.io
-        let dashboard
-        try {
-          dashboard = dashboardLoader.find(dashboardName, io)
-        } catch (e) {
-          if (e instanceof NotFoundError) {
-            return reply.redirect('/')
-          }
-          throw e
-        }
-        const serverUrl = process.env.SERVER_URL || server.info.uri
-
-        dashboard.toRenderModel()
-        .then(({ name, html, js, css }) => {
-          const { code, map } = js
-          const model = {
-            serverUrl,
-            html,
-            name,
-            bundle: code,
-            map,
-            css
-          }
-          reply.view('dashboard', model)
-        })
-      }
+      handler: dashboardHandler
     })
 
     server.route({

@@ -1,6 +1,6 @@
 'use strict'
 
-const handler = require('./index.handler')
+const { handler } = require('.')
 
 describe('plugins/dashboard/handlers/index.handler', () => {
   context('Default Dashboard', () => {

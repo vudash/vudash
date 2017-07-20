@@ -4,7 +4,7 @@ const Path = require('path')
 const fs = require('fs')
 const Boom = require('boom')
 
-module.exports = function (request, reply) {
+exports.handler = function (request, reply) {
   const defaultDashboard = process.env.DEFAULT_DASHBOARD
   if (defaultDashboard) {
     return reply.redirect(`/${defaultDashboard}.dashboard`)
