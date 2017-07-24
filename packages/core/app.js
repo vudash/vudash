@@ -1,3 +1,5 @@
+'use strict'
+
 const requirePaths = require('app-module-path')
 requirePaths.addPath(process.cwd())
 requirePaths.addPath(`${process.cwd()}/node_modules`)
@@ -52,6 +54,7 @@ server.register([
         files: ['src/public/**/*.{js,css}']
       })
     }
+
     console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
     console.log(`Server ${chalk.green.bold('running')}`)
     console.log('Dashboards available:')
