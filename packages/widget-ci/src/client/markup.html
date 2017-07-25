@@ -20,15 +20,15 @@
 }
 
 @keyframes failed-pulse {
-  0% { background-color: #9F14FF; }
-  25% { background-color: #E812CD; }
-  50% { background-color: #FF2021; }
-  75% { background-color: #E85320; }
-  100% { background-color: #FF8B12; }
+  0% { background-color: rgb(159,20,255); }
+  25% { background-color: rgb(232,18,205) }
+  50% { background-color: rgb(255,32,33); }
+  75% { background-color: rgb(232,83,32); }
+  100% { background-color: rgb(255,139,18); }
 }
 
 .ci-widget.error, .ci-widget.failed {
-  background-color: #FF2021;
+  background-color: rgb(255,32,33);
   animation: failed-pulse 4s infinite alternate;
 }
 
