@@ -1,6 +1,6 @@
 {
   "name": "vudash",
-  "version": "7.8.2",
+  "version": "7.8.3",
   "keywords": [
     "vudash",
     "dashboard",
@@ -70,6 +70,6 @@
     "svelte": "^1.26.0",
     "unhandled-rejection": "^1.0.0",
     "vision": "^4.1.1",
-    "vudash-widget-time": "^7.7.0"
+    "vudash-widget-time": "^7.8.3"
   }
 }

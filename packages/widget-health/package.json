@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/vudash/vudash"
   },
-  "version": "7.7.0",
+  "version": "7.8.3",
   "dependencies": {
     "bluebird": "^3.4.7"
   }
