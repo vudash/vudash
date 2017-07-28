@@ -67,7 +67,7 @@
     "rollup-plugin-svg": "^1.0.1",
     "slash": "^1.0.0",
     "socket.io": "^2.0.1",
-    "svelte": "^1.26.0",
+    "svelte": "^1.26.2",
     "unhandled-rejection": "^1.0.0",
     "vision": "^4.1.1",
     "vudash-widget-time": "^7.8.3"
