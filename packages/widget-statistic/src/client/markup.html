@@ -60,6 +60,24 @@ const options = {
   }
 }
 
+const colours = [
+  '#d70206',
+  '#f05b4f',
+  '#f4c63d',
+  '#d17905',
+  '#453d3f',
+  '#59922b',
+  '#0544d3',
+  '#6b0392',
+  '#f05b4f',
+  '#dda458',
+  '#eacf7d',
+  '#86797d',
+  '#b2c326',
+  '#6188e2',
+  '#a748ca'
+]
+
 export default {
   data () {
     return {
@@ -77,11 +95,31 @@ export default {
     update ({ value, history }) {
       if (history) {
         const chartData = { series: [history] }
-        this.chart = this.chart || new Chartist.Line(this.refs.chart, chartData, options)
+        this.chart = this.chart || this.create(chartData)
         this.chart.update(chartData)
       }
       const updates = { value, history }
       this.set(updates)
+    },
+    create (chartData) {
+      const chart = new Chartist.Line(this.refs.chart, chartData, options)
+      chart.on('draw', () => {
+        const colour = colours[Math.floor(Math.random() * colours.length)]
+
+        const lineSelector = '.ct-series-a .ct-line'
+        const areaSelector = '.ct-series-a .ct-area'
+
+        const svg = this.refs.chart
+        const line = svg.querySelectorAll(lineSelector)[0]
+        const area = svg.querySelectorAll(areaSelector)[0]
+
+        line.style.stroke = colour
+        if (area) {
+          area.style.fill = colour
+          area.style.opacity = 0.5
+        }
+      })
+      return chart
     }
   }
 }
