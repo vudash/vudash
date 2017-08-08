@@ -2,6 +2,7 @@
 
 const dashboardLoader = require('../../../modules/dashboard/loader')
 const { NotFoundError } = require('../../../errors')
+const Boom = require('boom')
 
 function load (board, io, reply) {
   try {
@@ -31,8 +32,12 @@ exports.handler = async function (request, reply) {
   const { board } = request.params
   const { server } = request
   const { io } = server.plugins.socket
-
-  const dashboard = load(board, io, reply)
-  const model = await buildViewModel(dashboard, server)
-  return reply.view('dashboard', model)
+  try {
+    const dashboard = load(board, io, reply)
+    const model = await buildViewModel(dashboard, server)
+    return reply.view('dashboard', model)
+  } catch (e) {
+    console.log(e)
+    return reply(Boom.boomify(e))
+  }
 }
