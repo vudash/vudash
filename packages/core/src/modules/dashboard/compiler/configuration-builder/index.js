@@ -6,6 +6,7 @@ const commonjs = require('rollup-plugin-commonjs')
 const memory = require('rollup-plugin-memory')
 const css = require('rollup-plugin-postcss')
 const svg = require('rollup-plugin-svg')
+const buble = require('rollup-plugin-buble')
 
 exports.build = function (source) {
   return {
@@ -25,7 +26,8 @@ exports.build = function (source) {
         }
       }),
       css(),
-      svelte()
+      svelte(),
+      buble()
     ]
   }
 }
