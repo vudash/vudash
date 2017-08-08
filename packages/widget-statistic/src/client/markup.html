@@ -89,6 +89,8 @@ export default {
   oncreate () {
     const config = this.get('config')
     new FitText(this.refs.value, { fontRatio: config['font-ratio'] || 4 })
+    const colour = config.colour || colours[Math.floor(Math.random() * colours.length)]
+    this.set({ colour })
   },
 
   methods: {
@@ -103,9 +105,8 @@ export default {
     },
     create (chartData) {
       const chart = new Chartist.Line(this.refs.chart, chartData, options)
-      chart.on('draw', () => {
-        const colour = colours[Math.floor(Math.random() * colours.length)]
-
+      chart.on('created', () => {
+        const colour = this.get('colour')
         const lineSelector = '.ct-series-a .ct-line'
         const areaSelector = '.ct-series-a .ct-area'
 

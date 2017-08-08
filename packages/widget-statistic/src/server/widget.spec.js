@@ -1,12 +1,8 @@
-const expect = require('code').expect
-const Lab = require('lab')
-const lab = exports.lab = Lab.script()
+'use strict'
 
-const context = lab.describe
-const describe = lab.describe
-const it = lab.it
-
+const { expect } = require('code')
 const Widget = require('./widget')
+const { stub } = require('sinon')
 
 describe('widget', () => {
   it('Uses config', (done) => {
@@ -18,9 +14,9 @@ describe('widget', () => {
   })
 
   it('Will convert given value to string', () => {
-    const config = { 'data-source': { source: 'value', config: { value: [1, 2] } } }
+    const transport = { fetch: stub().resolves([1, 2]) }
     const widget = new Widget()
-    const configuration = widget.register(config)
+    const configuration = widget.register({}, null, transport)
     return configuration
     .job()
     .then((output) => {
@@ -30,9 +26,9 @@ describe('widget', () => {
 
   context('Formatting', () => {
     it('Will use default format value if none specified', () => {
-      const config = { 'data-source': { source: 'value', config: { value: 'things' } } }
+      const transport = { fetch: stub().resolves('things') }
       const widget = new Widget()
-      const configuration = widget.register(config)
+      const configuration = widget.register({}, null, transport)
       return configuration
       .job()
       .then((output) => {
@@ -41,9 +37,9 @@ describe('widget', () => {
     })
 
     it('Will format according to format config', () => {
-      const config = { format: '%d%%', 'data-source': { source: 'value', config: { value: 34 } } }
+      const transport = { fetch: stub().resolves(34) }
       const widget = new Widget()
-      const configuration = widget.register(config)
+      const configuration = widget.register({ format: '%d%%' }, null, transport)
       return configuration
       .job()
       .then((output) => {
@@ -52,16 +48,35 @@ describe('widget', () => {
     })
   })
 
+  context('Colours', () => {
+    it('With provided colour', (done) => {
+      const conf = { colour: '#fff' }
+      const widget = new Widget()
+      const { config } = widget.register(conf)
+      console.log(config)
+      expect(config.colour).to.equal('#fff')
+      done()
+    })
+
+    it('No colour passed', (done) => {
+      const widget = new Widget()
+      const { config } = widget.register({})
+      expect(config.colour).not.to.exist()
+      done()
+    })
+  })
+
   context('Arrays', () => {
     it("if it's an array, provide params for a graph", () => {
-      const config = { format: '%s', 'data-source': { source: 'value', config: { value: [1,2,3,4,5,6,7] } } }
+      const values = [1, 2, 3, 4, 5, 6, 7]
+      const transport = { fetch: stub().resolves(values) }
       const widget = new Widget()
-      const configuration = widget.register(config)
+      const configuration = widget.register({}, null, transport)
       return configuration
       .job()
       .then((output) => {
         expect(output.value).to.equal('7')
-        expect(output.history).to.equal([1,2,3,4,5,6])
+        expect(output.history).to.equal(values)
       })
     })
   })

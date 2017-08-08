@@ -167,7 +167,8 @@ Simply include in your dashboard, and configure as required:
       "schedule": 60000, // Optional. Default 60000ms, how often to refresh
       "description": "Visitor Count", // Optional. Default "Statistics" Description shown below statistic,
       "format": "%s", // Optional. Default %s. Format the incoming data (using sprintf-js),
-      "font-ratio": 4 // Optional. Default 4. Scaling ratio for main statistic (for longer text, increase this number)
+      "font-ratio": 4 // Optional. Default 4. Scaling ratio for main statistic (for longer text, increase this number),
+      "colour": "#86797d" // Optional. Defaults to a random colour from a pre-selected "pretty" list. Colour for line / fill-area of graph, if shown.
     }
   }
 ```
