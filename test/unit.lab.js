@@ -34,5 +34,4 @@ global.resource = requirePath => {
 }
 
 const tests = glob.sync(path.join(process.cwd(), './{,!(node_modules)/**/}*.spec.js'))
-console.log(tests)
 tests.forEach(fullPath => require(fullPath))

@@ -1,5 +1,7 @@
 'use strict'
 
-module.exports.resolve = (moduleName) => {
+require('app-module-path/cwd')
+
+module.exports.resolve = moduleName => {
   return require(moduleName)
 }
