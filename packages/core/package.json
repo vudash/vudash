@@ -40,7 +40,6 @@
   "author": "Antony Jones",
   "license": "MIT",
   "dependencies": {
-    "app-module-path": "^1.1.0",
     "bluebird": "^3.5.0",
     "boom": "^5.1.0",
     "browser-sync": "^2.12.9",
@@ -49,7 +48,7 @@
     "figlet": "^1.2.0",
     "fs-extra": "^0.30.0",
     "handlebars": "^4.0.10",
-    "hapi": "^16.3.0",
+    "hapi": "^16.6.1",
     "hoek": "^4.1.1",
     "inert": "^4.2.0",
     "joi": "^10.5.2",
