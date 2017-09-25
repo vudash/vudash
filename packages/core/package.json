@@ -40,6 +40,7 @@
   "author": "Antony Jones",
   "license": "MIT",
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "bluebird": "^3.5.0",
     "boom": "^5.1.0",
     "browser-sync": "^2.12.9",
