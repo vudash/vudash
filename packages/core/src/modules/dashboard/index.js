@@ -41,16 +41,8 @@ class Dashboard {
     this.buildJobs()
   }
 
-  getWidgets () {
-    return this.widgets
-  }
-
-  getJobs () {
-    return this.jobs
-  }
-
   buildJobs () {
-    this.jobs = this.getWidgets().map((widget) => {
+    this.jobs = this.widgets.map((widget) => {
       const job = widget.getJob()
       if (job) {
         let executeJob = this.emitResult.bind(this, widget, this.emitter)
@@ -76,7 +68,7 @@ class Dashboard {
   toRenderModel () {
     const model = {
       name: this.name,
-      widgets: this.getWidgets().map((widget) => {
+      widgets: this.widgets.map((widget) => {
         return widget.toRenderModel()
       })
     }

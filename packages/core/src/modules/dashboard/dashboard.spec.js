@@ -52,8 +52,8 @@ describe('modules.dashboard', () => {
     })
 
     it('loads correctly', (done) => {
-      expect(dashboard.getWidgets().length).to.equal(1)
-      expect(dashboard.getWidgets()[0]).to.be.an.instanceOf(Widget)
+      expect(dashboard.widgets.length).to.equal(1)
+      expect(dashboard.widgets[0]).to.be.an.instanceOf(Widget)
       done()
     })
   })
@@ -74,7 +74,7 @@ describe('modules.dashboard', () => {
     })
 
     it('Loads layout', (done) => {
-      expect(dashboard.getWidgets().length).to.equal(3)
+      expect(dashboard.widgets.length).to.equal(3)
       done()
     })
   })
@@ -209,7 +209,7 @@ describe('modules.dashboard', () => {
     })
 
     it('Loads jobs', (done) => {
-      expect(dashboard.getJobs().length).to.equal(1)
+      expect(dashboard.jobs.length).to.equal(1)
       done()
     })
   })
@@ -235,7 +235,7 @@ describe('modules.dashboard', () => {
     })
 
     it('is bound correctly', (done) => {
-      expect(dashboard.getJobs().length).to.equal(1)
+      expect(dashboard.jobs.length).to.equal(1)
       expect(job.callCount).to.be.above(0)
       done()
     })
