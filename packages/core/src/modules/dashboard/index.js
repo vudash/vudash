@@ -43,7 +43,7 @@ class Dashboard {
 
   buildJobs () {
     this.jobs = this.widgets.map((widget) => {
-      const job = widget.getJob()
+      const job = widget.job
       if (job) {
         let executeJob = this.emitResult.bind(this, widget, this.emitter)
         executeJob()
@@ -53,7 +53,7 @@ class Dashboard {
   }
 
   emitResult (widget, emitter) {
-    return widget.getJob().script().then((result) => {
+    return widget.job.script().then((result) => {
       result._updated = new Date()
       emitter.emit(`${widget.id}:update`, result)
       emitter = null

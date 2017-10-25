@@ -46,7 +46,7 @@ describe('widget', () => {
       datasource.load.returns(loadedDatasource)
 
       const widget = new Widget(dashboard, renderOptions, 'abcdef', {})
-      const ds = widget.getDatasource()
+      const ds = widget.datasource
       expect(ds).to.equal(loadedDatasource)
     })
   })
@@ -72,7 +72,7 @@ describe('widget', () => {
 
     it('Reads widget descriptor properties', () => {
       const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
-      const job = widget.getJob()
+      const job = widget.job
       expect(job).to.include({
         schedule: 1000
       })
@@ -109,7 +109,7 @@ describe('widget', () => {
 
     it('Loads jobs', () => {
       const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
-      const job = widget.getJob()
+      const job = widget.job
       expect(job.schedule).to.equal(1000)
 
     })
@@ -120,7 +120,7 @@ describe('widget', () => {
         working: true
       }
       const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
-      return widget.getJob().script().then((rawConfig) => {
+      return widget.job.script().then((rawConfig) => {
         expect(rawConfig).to.equal(overrides)
       })
     })
@@ -130,7 +130,7 @@ describe('widget', () => {
         working: true
       }
       const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
-      return widget.getJob().script().then((rawConfig) => {
+      return widget.job.script().then((rawConfig) => {
         expect(rawConfig).to.equal({
           foo: 'bar',
           working: true

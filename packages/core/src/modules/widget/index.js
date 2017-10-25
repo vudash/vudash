@@ -33,18 +33,6 @@ class Widget {
     this.config = module.config || {}
   }
 
-  getJob () {
-    return this.job
-  }
-
-  getDatasource () {
-    return this.datasource
-  }
-
-  getConfig () {
-    return this.config
-  }
-
   toRenderModel () {
     const { 
       id, 
