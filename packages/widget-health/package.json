@@ -2,7 +2,7 @@
   "name": "vudash-widget-health",
   "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource,WebAssembly ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },
   "vudash": {
     "component": "./component.html"

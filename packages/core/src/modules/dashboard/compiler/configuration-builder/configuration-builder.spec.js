@@ -5,12 +5,11 @@ const { reach } = require('hoek')
 
 describe('dashboard/compiler/configuration-builder', () => {
   context('Dynamic Contents', () => {
-    it('Contents correctly set', done => {
+    it('Contents correctly set', () => {
       const expected = 'xyz'
       const config = builder.build(expected)
       const actual = reach(config, 'entry.contents')
       expect(actual).to.exist().and.to.equal(expected)
-      done()
     })
   })
 })

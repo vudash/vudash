@@ -35,29 +35,29 @@ describe('engines.circleci', () => {
       })
     })
 
-    after((done) => {
+    after(() => {
       getBranchBuildsStub.restore()
-      done()
+      
     })
 
-    it('has correct repo', (done) => {
+    it('has correct repo', () => {
       expect(getBranchBuildsStub.firstCall.args[0].project).to.equal(options.repo)
-      done()
+      
     })
 
-    it('has correct user', (done) => {
+    it('has correct user', () => {
       expect(getBranchBuildsStub.firstCall.args[0].username).to.equal(options.user)
-      done()
+      
     })
 
-    it('has correct branch', (done) => {
+    it('has correct branch', () => {
       expect(getBranchBuildsStub.firstCall.args[0].branch).to.equal(options.branch)
-      done()
+      
     })
 
-    it('fetches correct status', (done) => {
+    it('fetches correct status', () => {
       expect(status).to.equal(BuildStatus.passed)
-      done()
+      
     })
   })
 })

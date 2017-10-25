@@ -5,12 +5,12 @@ const Widget = require('./widget')
 const { stub } = require('sinon')
 
 describe('widget', () => {
-  it('Uses config', (done) => {
+  it('Uses config', () => {
     const config = { schedule: 25000 }
     const widget = new Widget()
     const configuration = widget.register(config)
     expect(configuration.schedule).to.equal(config.schedule)
-    done()
+    
   })
 
   it('Will convert given value to string', () => {
@@ -49,20 +49,20 @@ describe('widget', () => {
   })
 
   context('Colours', () => {
-    it('With provided colour', (done) => {
+    it('With provided colour', () => {
       const conf = { colour: '#fff' }
       const widget = new Widget()
       const { config } = widget.register(conf)
       console.log(config)
       expect(config.colour).to.equal('#fff')
-      done()
+      
     })
 
-    it('No colour passed', (done) => {
+    it('No colour passed', () => {
       const widget = new Widget()
       const { config } = widget.register({})
       expect(config.colour).not.to.exist()
-      done()
+      
     })
   })
 

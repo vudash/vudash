@@ -4,17 +4,15 @@ const { handler } = require('.')
 
 describe('plugins/dashboard/handlers/index.handler', () => {
   context('Default Dashboard', () => {
-    before((done) => {
+    before(() => {
       process.env.DEFAULT_DASHBOARD = 'xxyyzz'
-      done()
     })
 
-    after((done) => {
+    after(() => {
       process.env.DEFAULT_DASHBOARD = undefined
-      done()
     })
 
-    it('Index points to default dashboard', (done) => {
+    it('Index points to default dashboard', done => {
       const replyFunc = {
         redirect: (uri) => {
           expect(uri).to.equal('/xxyyzz.dashboard')

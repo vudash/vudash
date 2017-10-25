@@ -3,14 +3,14 @@
 const Widget = require('./widget')
 
 describe('widget', () => {
-  context('Alarms', (done) => {
+  context('Alarms', () => {
     let widget
-    before((done) => {
+    before(() => {
       widget = new Widget()
-      done()
+      
     })
 
-    it('Allows alarm config', (done) => {
+    it('Allows alarm config', () => {
       const fn = () => {
         widget.register({
           alarms: [
@@ -30,24 +30,24 @@ describe('widget', () => {
       }
 
       expect(fn).not.to.throw()
-      done()
+      
     })
   })
 
-  context('No alarms', (done) => {
+  context('No alarms', () => {
     let widget
-    before((done) => {
+    before(() => {
       widget = new Widget()
-      done()
+      
     })
 
-    it('Allows config', (done) => {
+    it('Allows config', () => {
       const fn = () => {
         widget.register({})
       }
 
       expect(fn).not.to.throw()
-      done()
+      
     })
   })
 })

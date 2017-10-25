@@ -10,59 +10,49 @@ describe('widget/renderer', () => {
     const config = { a: 'b' }
     let rendered
     
-    before(done => {
+    before(() => {
       rendered = renderer.renderScript(id, 'AbcWidget', config)
-      done()
     })
   
-    it('update method is rendered', done => {
+    it('update method is rendered', () => {
       expect(rendered).to.include("socket.on('abc:update', ($data) => {")
-      done()
     })
 
-    it('target is set correctly', done => {
+    it('target is set correctly', () => {
       expect(rendered).to.include('target: document.getElementById("widget-container-abc")')
-      done()
     })
 
-    it('error handling exists', done => {
+    it('error handling exists', () => {
       expect(rendered).to.include('Widget "abc" encountered error')
-      done()
     })
 
-    it('default data contains config', done => {
+    it('default data contains config', () => {
       expect(rendered).to.include('data: { config: {"a":"b"} }')
-      done()
     })
 
-    it('widget update method is called', done => {
+    it('widget update method is called', () => {
       expect(rendered).to.include('widget_abc.update($data)')
-      done()
     })
 
-    it('component is rendered', done => {
+    it('component is rendered', () => {
       expect(rendered).to.startWith('const widget_abc = new AbcWidget')
-      done()
     })
   })
 
   context('#renderHtml()', () => {
     let $
-    before((done) => {
+    before(() => {
       const widget = { id: 'xyz' }
       const markup = renderer.renderHtml(widget.id)
       $ = Cheerio.load(markup)
-      done()
     })
 
-    it('Has correct id', (done) => {
+    it('Has correct id', () => {
       expect($('div').attr('id')).to.equal('widget-container-xyz')
-      done()
     })
 
-    it('Has correct class', (done) => {
+    it('Has correct class', () => {
       expect($('div').hasClass('widget-container')).to.be.true()
-      done()
     })
   })
 
@@ -78,40 +68,34 @@ describe('widget/renderer', () => {
 
     context('Css', () => {
       let css
-      before((done) => {
+      before(() => {
         css = renderer.renderStyles('xyz', widgetPosition, background)
-        done()
       })
 
-      it('Renders widget id', (done) => {
+      it('Renders widget id', () => {
         expect(css).to.startWith('#widget-container-xyz{')
-        done()
       })
 
-      it('Renders background correctly', (done) => {
+      it('Renders background correctly', () => {
         expect(css).to.contain('background:#fff')
-        done()
       })
 
-      it('Renders position correctly', (done) => {
+      it('Renders position correctly', () => {
         expect(css).to.contain('left:20%;')
         expect(css).to.contain('top:50%;')
         expect(css).to.contain('width:60%;')
         expect(css).to.contain('height:100%;')
-        done()
       })
     })
 
     context('No Background', () => {
       let css
-      before((done) => {
+      before(() => {
         css = renderer.renderStyles('abc', widgetPosition, undefined)
-        done()
       })
 
-      it('Does not contain background rule', (done) => {
+      it('Does not contain background rule', () => {
         expect(css).not.to.contain('background:')
-        done()
       })
     })
   })

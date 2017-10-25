@@ -2,7 +2,7 @@
 
 const { upperCamel } = require('.')
 
-describe('upper-camel', (done) => {
+describe('upper-camel', () => {
   const scenarios = [
     { input: 'some-name', output: 'SomeName' },
     { input: 'SomeName', output: 'SomeName' },
@@ -11,12 +11,11 @@ describe('upper-camel', (done) => {
   ]
 
   scenarios.forEach(({ input, output }) => {
-    it(`${input} becomes ${output}`, done => {
+    it(`${input} becomes ${output}`, () => {
       expect(upperCamel(input))
         .to.exist()
         .and.to.be.a.string()
         .and.to.equal(output)
-      done()
     })
   })
 })

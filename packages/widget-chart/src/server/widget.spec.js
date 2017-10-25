@@ -13,18 +13,18 @@ describe('widget', () => {
     ]
 
     scenarios.forEach(({ attribute, defaultValue, override }) => {
-      it(`Default ${attribute}`, done => {
+      it(`Default ${attribute}`, () => {
         const widget = new Widget()
         const model = widget.register({})
         expect(model.config[attribute]).to.equal(defaultValue)
-        done()
+        
       })
 
-      it(`Override ${attribute}`, done => {
+      it(`Override ${attribute}`, () => {
         const widget = new Widget()
         const model = widget.register({ [attribute]: override })
         expect(model.config[attribute]).to.equal(override)
-        done()
+        
       })
     })
   })
@@ -33,11 +33,11 @@ describe('widget', () => {
     let transport
     let model
 
-    before(done => {
+    before(() => {
       const widget = new Widget()
       transport = { fetch: stub() }
       model = widget.register({}, {}, transport)
-      done()
+      
     })
 
     it('Renders multiple datasets', () => {

@@ -21,15 +21,13 @@ describe('dashboard/compiler', () => {
         })
     })
 
-    after(done => {
+    after(() => {
       rollup.rollup.restore()
-      done()
     })
 
-    it('Returns compiled js', done => {
+    it('Returns compiled js', () => {
       const { js } = bundle
       expect(js).to.exist().and.to.equal(compiled)
-      done()
     })
   })
 })

@@ -1,9 +1,9 @@
 'use strict'
 
-const DashboardBuilder = require(fromTest('util/dashboard.builder'))
-const WidgetBuilder = require(fromTest('util/widget.builder'))
-const Dashboard = require(fromSrc('modules/dashboard'))
-const Widget = require(fromSrc('modules/widget'))
+const DashboardBuilder = require('util/dashboard.builder')
+const WidgetBuilder = require('util/widget.builder')
+const Dashboard = require('modules/dashboard')
+const Widget = require('modules/widget')
 const Path = require('path')
 const { Promise } = require('bluebird')
 const resolver = require('../resolver')
@@ -15,18 +15,16 @@ const { stub } = require('sinon')
 describe('modules.dashboard', () => {
   let io
 
-  before((done) => {
+  before(() => {
     io = {
       on: stub(),
       to: stub().returns({ emit: stub() })
     }
-    done()
   })
 
-  after((done) => {
+  after(() => {
     io.on.reset()
     io.to.reset()
-    done()
   })
 
   const baseDashboard = {
@@ -40,7 +38,7 @@ describe('modules.dashboard', () => {
 
   context('Local module', () => {
     let dashboard
-    before((done) => {
+    before(() => {
       const descriptor = Object.assign({}, baseDashboard, {
         widgets: [
           { position, widget: resource('widgets/example') }
@@ -48,20 +46,18 @@ describe('modules.dashboard', () => {
       })
 
       dashboard = new Dashboard(descriptor, io)
-      done()
     })
 
-    it('loads correctly', (done) => {
+    it('loads correctly', () => {
       expect(dashboard.widgets.length).to.equal(1)
       expect(dashboard.widgets[0]).to.be.an.instanceOf(Widget)
-      done()
     })
   })
 
   context('Layout', () => {
     let dashboard
 
-    before((done) => {
+    before(() => {
       const descriptor = DashboardBuilder.create()
       .addWidget()
       .addWidget()
@@ -70,12 +66,10 @@ describe('modules.dashboard', () => {
 
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
-      done()
     })
 
-    it('Loads layout', (done) => {
+    it('Loads layout', () => {
       expect(dashboard.widgets.length).to.equal(3)
-      done()
     })
   })
 
@@ -89,44 +83,39 @@ describe('modules.dashboard', () => {
       .build()
     const pluginStub = {}
 
-    before((done) => {
-      sinon.stub(resolver, 'resolve')
-      done()
+    before(() => {
+      stub(resolver, 'resolve')
     })
 
-    beforeEach((done) => {
+    beforeEach(() => {
       resolver.resolve.returns(pluginStub)
-      pluginStub.register = sinon.stub()
+      pluginStub.register = stub()
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
-      done()
     })
 
-    after((done) => {
+    after(() => {
       resolver.resolve.restore()
-      done()
     })
 
-    it('with no plugins stanza', (done) => {
+    it('with no plugins stanza', () => {
       const dashboardWithoutPlugins = DashboardBuilder
         .create()
         .build()
       const instance = new Dashboard(dashboardWithoutPlugins, io)
       const fn = () => { instance.initialise() }
       expect(fn).not.to.throw()
-      done()
     })
 
-    it('Asks each plugin to register', (done) => {
+    it('Asks each plugin to register', () => {
       expect(pluginStub.register.callCount).to.equal(1)
-      done()
     })
   })
 
   context('Invalid Descriptor', () => {
     const badModuleName = 'something:else'
     let fn
-    before((done) => {
+    before(() => {
       const descriptor = DashboardBuilder.create()
       .addWidget({ widget: badModuleName, position })
       .build()
@@ -134,12 +123,10 @@ describe('modules.dashboard', () => {
       fn = () => {
         return new Dashboard(descriptor, io)
       }
-      done()
     })
 
-    it('Throws error', (done) => {
+    it('Throws error', () => {
       expect(fn).to.throw(Error, `Module dependency ${badModuleName} declared in widget could not be located`)
-      done()
     })
   })
 
@@ -172,45 +159,38 @@ describe('modules.dashboard', () => {
       })
     })
 
-    after((done) => {
+    after(() => {
       bundler.build.restore()
       compiler.compile.restore()
-      done()
     })
 
-    it('Has dashboard name', (done) => {
+    it('Has dashboard name', () => {
       expect(renderModel.name).to.equal(dashName)
-      done()
     })
 
-    it('Has html', (done) => {
+    it('Has html', () => {
       expect(renderModel.html).to.exist().and.to.equal(bundle.html)
-      done()
     })
 
-    it('Has js', (done) => {
+    it('Has js', () => {
       expect(renderModel.js).to.only.include(compiledBundle.js)
-      done()
     })
 
-    it('Has css', (done) => {
+    it('Has css', () => {
       expect(renderModel.css).to.equal('xyz\nundefined')
-      done()
     })
   })
 
   context('Scheduled Jobs', () => {
     let dashboard
-    before((done) => {
+    before(() => {
       const descriptor = DashboardBuilder.create().addWidget().build()
       dashboard = new Dashboard(descriptor, io)
       dashboard.initialise()
-      done()
     })
 
-    it('Loads jobs', (done) => {
+    it('Loads jobs', () => {
       expect(dashboard.jobs.length).to.equal(1)
-      done()
     })
   })
 
@@ -218,32 +198,28 @@ describe('modules.dashboard', () => {
     let job
     let dashboard
 
-    before((done) => {
-      job = sinon.stub().returns(Promise.resolve({a: 'b'}))
+    before(() => {
+      job = stub().returns(Promise.resolve({a: 'b'}))
       const widget = WidgetBuilder.create().withJob(job, 1).build()
       const descriptor = DashboardBuilder.create().addWidget(widget).build()
       dashboard = new Dashboard(descriptor, io)
-      dashboard.emitter = { emit: sinon.stub() }
+      dashboard.emitter = { emit: stub() }
       dashboard.initialise()
-      done()
     })
 
-    after((done) => {
+    after(() => {
       job.reset()
       dashboard.emitter.emit.reset()
-      done()
     })
 
-    it('is bound correctly', (done) => {
+    it('is bound correctly', () => {
       expect(dashboard.jobs.length).to.equal(1)
       expect(job.callCount).to.be.above(0)
-      done()
     })
 
-    it('Emits metadata', (done) => {
+    it('Emits metadata', () => {
       expect(dashboard.emitter.emit.callCount).to.be.above(0)
       expect(dashboard.emitter.emit.firstCall.args[1]._updated).to.be.a.date()
-      done()
     })
   })
 })

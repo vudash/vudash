@@ -6,9 +6,9 @@ const nock = require('nock')
 
 describe('providers.github', () => {
   context('#configValidation', () => {
-    it('Returns an empty block', (done) => {
+    it('Returns an empty block', () => {
       expect(Provider.configValidation).to.equal({})
-      done()
+      
     })
   })
 
@@ -20,9 +20,9 @@ describe('providers.github', () => {
       { status: 'xyz', health: HealthStatus.UNKNOWN }
     ]
 
-    afterEach((done) => {
+    afterEach(() => {
       nock.cleanAll()
-      done()
+      
     })
 
     scenarios.forEach(({ status, health }) => {

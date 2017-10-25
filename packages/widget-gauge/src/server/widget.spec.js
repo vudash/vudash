@@ -25,59 +25,59 @@ describe('widget', () => {
       }
     }
 
-    before((done) => {
+    before(() => {
       widget = new Widget().register(config)
-      done()
+      
     })
 
-    it('Overrides schedule', (done) => {
+    it('Overrides schedule', () => {
       expect(widget.schedule).to.equal(config.schedule)
-      done()
+      
     })
 
-    it('Overrides initial value', (done) => {
+    it('Overrides initial value', () => {
       expect(widget.config.value).to.equal(config['initial-value'])
-      done()
+      
     })
 
-    it('Overrides minimum value', (done) => {
+    it('Overrides minimum value', () => {
       expect(widget.config.min).to.equal(config.min)
-      done()
+      
     })
 
-    it('Overrides maximum value', (done) => {
+    it('Overrides maximum value', () => {
       expect(widget.config.max).to.equal(config.max)
-      done()
+      
     })
 
-    it('Overrides description', (done) => {
+    it('Overrides description', () => {
       expect(widget.config.description).to.equal(config.description)
-      done()
+      
     })
 
-    it('Overrides pointer background colour', (done) => {
+    it('Overrides pointer background colour', () => {
       expect(widget.config.indicatorBackgroundColour).to.equal(config.pointer['background-colour'])
-      done()
+      
     })
 
-    it('Overrides pointer background colour', (done) => {
+    it('Overrides pointer background colour', () => {
       expect(widget.config.indicatorColour).to.equal(config.pointer['colour'])
-      done()
+      
     })
 
-    it('Overrides value background colour', (done) => {
+    it('Overrides value background colour', () => {
       expect(widget.config.valueBackgroundColour).to.equal(config.value['background-colour'])
-      done()
+      
     })
 
-    it('Overrides value colour', (done) => {
+    it('Overrides value colour', () => {
       expect(widget.config.valueColour).to.equal(config.value['colour'])
-      done()
+      
     })
 
-    it('Overrides value font size', (done) => {
+    it('Overrides value font size', () => {
       expect(widget.config.valueFontSize).to.equal(config.value['font-size'])
-      done()
+      
     })
   })
 
@@ -88,14 +88,14 @@ describe('widget', () => {
       schedule: 32768
     }
 
-    before((done) => {
+    before(() => {
       widget = new Widget().register(config)
-      done()
+      
     })
 
-    it('Overrides schedule', (done) => {
+    it('Overrides schedule', () => {
       expect(widget.schedule).to.equal(32768)
-      done()
+      
     })
   })
 })

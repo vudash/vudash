@@ -8,24 +8,24 @@ const Joi = require('joi')
 
 describe('providers.statuspageio', () => {
   context('#configValidation', () => {
-    it('Requires component list', (done) => {
+    it('Requires component list', () => {
       Joi.validate({ url: 'http://www.example.com' }, Provider.configValidation, (err) => {
         expect(err).to.exist()
-        done()
+        
       })
     })
 
-    it('Requires statuspage url', (done) => {
+    it('Requires statuspage url', () => {
       Joi.validate({ components: [] }, Provider.configValidation, (err) => {
         expect(err).to.exist()
-        done()
+        
       })
     })
 
-    it('Statuspage url must be an url', (done) => {
+    it('Statuspage url must be an url', () => {
       Joi.validate({ url: 'xxx', components: [] }, Provider.configValidation, (err) => {
         expect(err).to.exist()
-        done()
+        
       })
     })
   })
@@ -77,12 +77,12 @@ describe('providers.statuspageio', () => {
       })
     })
 
-    it('Has status page name', (done) => {
+    it('Has status page name', () => {
       expect(results.description).to.equal('Some Page')
-      done()
+      
     })
 
-    it('Fetches components', (done) => {
+    it('Fetches components', () => {
       expect(results.components).to.equal([
         assign({ name: 'Component A' }, HealthStatus.HEALTHY),
         assign({ name: 'Component B' }, HealthStatus.MAJOR_OUTAGE),
@@ -90,7 +90,7 @@ describe('providers.statuspageio', () => {
         assign({ name: 'Component D' }, HealthStatus.DEGRADED),
         assign({ name: 'Component E' }, HealthStatus.UNKNOWN)
       ])
-      done()
+      
     })
   })
 })

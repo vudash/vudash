@@ -2,7 +2,7 @@
   "name": "vudash-widget-status",
   "main": "widget.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource,WebAssembly ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },
   "vudash": {
     "component": "./src/client/markup.html"
@@ -25,6 +25,7 @@
     "export-dir": "^0.1.2",
     "got": "^6.7.1",
     "hoek": "^4.1.0",
+    "joi": "^13.0.1",
     "moment": "^2.18.1"
   },
   "version": "7.8.4"

@@ -6,20 +6,20 @@ const BuildStatus = require('../build-status.enum')
 const engineFactory = require('../engines/factory')
 
 describe('widget', () => {
-  it('No config for travis', (done) => {
+  it('No config for travis', () => {
     const config = { schedule: 25000, provider: 'travis', user: 'x', repo: 'y' }
     const widget = new Widget()
     const configuration = widget.register(config)
     expect(configuration.schedule).to.equal(config.schedule)
-    done()
+    
   })
 
-  it('Auth for circleci', (done) => {
+  it('Auth for circleci', () => {
     const config = { schedule: 25000, provider: 'circleci', user: 'x', repo: 'y', options: { auth: 'aaa' } }
     const widget = new Widget()
     const configuration = widget.register(config)
     expect(configuration.schedule).to.equal(config.schedule)
-    done()
+    
   })
 
   context('Given a particular status, job plays a sound', () => {
@@ -48,24 +48,24 @@ describe('widget', () => {
       return instance.job()
     })
 
-    after((done) => {
+    after(() => {
       sandbox.restore()
-      done()
+      
     })
 
-    it('Calls stub', (done) => {
+    it('Calls stub', () => {
       expect(emitStub.callCount).to.equal(1)
-      done()
+      
     })
 
-    it('Emits sound event', (done) => {
+    it('Emits sound event', () => {
       expect(emitStub.firstCall.args[0]).to.equal('audio:play')
-      done()
+      
     })
 
-    it('Delivers sound payload', (done) => {
+    it('Delivers sound payload', () => {
       expect(emitStub.firstCall.args[1]).to.equal({ data: 'recovery-sound' })
-      done()
+      
     })
 
     it('Sound only plays on state change', () => {
@@ -84,12 +84,12 @@ describe('widget', () => {
   ]
 
   soundScenarios.forEach((scenario) => {
-    it(`Sound config ${scenario}`, (done) => {
+    it(`Sound config ${scenario}`, () => {
       const config = { schedule: 25000, provider: 'travis', user: 'x', repo: 'y', sounds: scenario.sounds }
       const widget = new Widget()
       const configuration = widget.register(config)
       expect(configuration.schedule).to.equal(config.schedule)
-      done()
+      
     })
   })
 })

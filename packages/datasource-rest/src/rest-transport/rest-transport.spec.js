@@ -13,9 +13,8 @@ describe('transports.rest', () => {
     { method: 'post', host, path: '/some/path', payload: {a: 'b', one: 2, true: false}, query: { foot: 'bath' } }
   ]
 
-  afterEach((done) => {
+  afterEach(() => {
     nock.cleanAll()
-    done()
   })
 
   scenarios.forEach((scenario) => {
@@ -32,7 +31,7 @@ describe('transports.rest', () => {
 
       return transport
         .fetch()
-        .then((body) => {
+        .then(body => {
           expect(nock.isDone(), nock.pendingMocks()).to.equal(true)
           expect(body.a).to.equal('b')
         })
@@ -43,17 +42,14 @@ describe('transports.rest', () => {
     const body = { i: { love: { animals: 'dogs' } } }
     const options = { method: 'get', url: 'http://example.com/some/stuff' }
 
-    beforeEach((done) => {
+    beforeEach(() => {
       nock('http://example.com')
       .get('/some/stuff')
       .reply(200, body)
-
-      done()
     })
 
-    afterEach((done) => {
+    afterEach(() => {
       nock.cleanAll()
-      done()
     })
 
     it('Without graph specified, returns full object', () => {

@@ -3,7 +3,7 @@
   "version": "7.8.4",
   "main": "index.js",
   "scripts": {
-    "test": "../../node_modules/.bin/lab -I describe,context,it,sinon,fromSrc,fromTest,fromRoot,expect,beforeEach,afterEach,before,after,resource,WebAssembly ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },
   "vudash": {
     "component": "./src/client/markup.html"
