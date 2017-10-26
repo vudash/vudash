@@ -59,20 +59,20 @@ describe('widget', () => {
     }
 
     it('Barf on unknown widget', () => {
-      const badModuleName = resource('widgets/unknown')
+      const badModuleName = 'test/resources/widgets/unknown'
       function fn () {
         return new Widget(dashboard, renderOptions, badModuleName)
       }
-      expect(fn).to.throw(Error, /could not be located/)
+      expect(fn).to.throw(Error, /could not be resolved/)
     })
 
     it('Gains a dynamic id', () => {
-      const module = resource('widgets/example')
+      const module = 'test/resources/widgets/example'
       expect(new Widget(dashboard, renderOptions, module).id).to.exist()
     })
 
     it('Reads widget descriptor properties', () => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
       const job = widget.job
       expect(job).to.include({
         schedule: 1000
@@ -81,7 +81,7 @@ describe('widget', () => {
     })
 
     context('Render model', () => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
       const { js } = widget.toRenderModel()
 
       it('Converts widget to render model', () => {
@@ -93,7 +93,7 @@ describe('widget', () => {
     })
 
     it('Binds events on the client side', () => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
       const eventBinding = `
         socket.on('${widget.id}:update', ($data) => {
       `.trim()
@@ -102,14 +102,14 @@ describe('widget', () => {
     })
 
     it('Binds component update', () => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
       const componentBinding = `widget_${widget.id}.update($data)`
       const rendered = widget.toRenderModel().js
       expect(rendered).to.include(componentBinding)
     })
 
     it('Loads jobs', () => {
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/example'))
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
       const job = widget.job
       expect(job.schedule).to.equal(1000)
 
@@ -120,7 +120,7 @@ describe('widget', () => {
         foo: 'baz',
         working: true
       }
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/configurable', overrides)
       return widget.job.script().then((rawConfig) => {
         expect(rawConfig).to.equal(overrides)
       })
@@ -130,7 +130,7 @@ describe('widget', () => {
       const overrides = {
         working: true
       }
-      const widget = new Widget(dashboard, renderOptions, resource('widgets/configurable'), overrides)
+      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/configurable', overrides)
       return widget.job.script().then((rawConfig) => {
         expect(rawConfig).to.equal({
           foo: 'bar',

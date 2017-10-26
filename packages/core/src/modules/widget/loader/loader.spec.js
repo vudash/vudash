@@ -21,14 +21,14 @@ describe('widget/loader', () => {
   context('Vudash Metadata', () => {
     it('fails to read component metadata', () => {
       const message = "Widget vudash-widget-missing is missing 'vudash.component' in package.json"
-      const fn = () => { loader.load(resource('widgets/missing')) }
+      const fn = () => { loader.load('test/resources/widgets/missing') }
       expect(fn).to.throw(ComponentCompilationError, message)
     })
   })
 
   context('Valid Component', () => {
     it('reads component metadata', () => {
-      const { component } = loader.load(resource('widgets/example'))
+      const { component } = loader.load('test/resources/widgets/example')
       expect(component).not.to.equal(undefined)
     })
   })

@@ -43,7 +43,7 @@
   "dependencies": {
     "app-module-path": "^2.2.0",
     "bluebird": "^3.5.0",
-    "boom": "^5.1.0",
+    "boom": "^6.0.0",
     "browser-sync": "^2.12.9",
     "buble": "^0.15.2",
     "catbox-memory": "^3.0.0",
@@ -51,7 +51,7 @@
     "figlet": "^1.2.0",
     "fs-extra": "^0.30.0",
     "handlebars": "^4.0.10",
-    "hapi": "^16.6.1",
+    "hapi": "^16.6.2",
     "hoek": "^4.1.1",
     "inert": "^4.2.0",
     "joi": "^10.5.2",
@@ -73,7 +73,6 @@
     "socket.io": "^2.0.1",
     "svelte": "^1.26.2",
     "unhandled-rejection": "^1.0.0",
-    "vision": "^4.1.1",
-    "vudash-widget-time": "^7.8.3"
+    "vision": "^4.1.1"
   }
 }

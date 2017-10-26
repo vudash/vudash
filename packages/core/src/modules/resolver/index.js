@@ -1,7 +1,20 @@
 'use strict'
 
-require('app-module-path/cwd')
+const fs = require('fs')
 
-module.exports.resolve = moduleName => {
-  return require(moduleName)
+function discover (moduleName) {
+  const path = require('path').join(process.cwd(), moduleName)
+  if (!fs.existsSync(path)) {
+    throw new Error(`Module ${moduleName} could not be resolved at ${path}`)
+  }
+  return path
+}
+
+function resolve (moduleName) {
+  return require(discover(moduleName))
+}
+
+module.exports = {
+  discover,
+  resolve
 }

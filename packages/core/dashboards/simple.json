@@ -4,7 +4,21 @@
     "columns": 5,
     "rows": 4
   },
+  "plugins": {
+    "ds-rnd": {
+      "module": "../datasource-random",
+      "options": {
+        "method": "string"
+      }
+    }
+  },
   "widgets": [
-    { "position": {"x": 3, "y": 0, "w": 2, "h": 1}, "widget": "vudash-widget-time" }
+    {
+      "position": {"x": 3, "y": 0, "w": 2, "h": 1},
+      "widget": "../widget-statistic",
+      "datasource": {
+        "name": "ds-rnd"
+      }
+    }
   ]
 }

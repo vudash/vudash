@@ -42,7 +42,7 @@ describe('modules.dashboard', () => {
     before(() => {
       const descriptor = Object.assign({}, baseDashboard, {
         widgets: [
-          { position, widget: resource('widgets/example') }
+          { position, widget: 'test/resources/widgets/example' }
         ]
       })
 
@@ -131,8 +131,16 @@ describe('modules.dashboard', () => {
       }
     })
 
-    it('Throws error', () => {
-      expect(fn).to.throw(Error, `Module dependency ${badModuleName} declared in widget could not be located`)
+    it('throws error', () => {
+      expect(fn).to.throw(Error, /could not be resolved/)
+    })
+
+    it('contains required module name', () => {
+      expect(fn).to.throw(Error, /Module something:else/)
+    })
+
+    it('contains attempted path', () => {
+      expect(fn).to.throw(Error, /packages\/core\/something:else/)
     })
   })
 

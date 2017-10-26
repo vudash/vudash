@@ -129,7 +129,7 @@ When using a widget which allows a datasource, just pass in the id of the dataso
 
 In `dashboard.json`
 
-1. Add the datasource plugin under `plugins`:
+1. Add the datasource plugin under the `plugins` section:
 ```
 "plugins": {
   "plugin-id": { 
@@ -137,14 +137,14 @@ In `dashboard.json`
   }
 }
 ```
-2. Tell the widget to use the datasource:
+2. Tell the widget to use the datasource, by modifying your widget entry under `widgets`:
 ```
   {
-    "position: { ... },
-    "widget: "some-widget",
-    "datasource: {
-      "name: "plugin-id",
-      "options: {
+    "position": { ... },
+    "widget": "some-widget",
+    "datasource": {
+      "name": "plugin-id",
+      "options": {
         "url": "http://example.com/some/api",
         "method": "get",
         "graph": "some.nested.value"

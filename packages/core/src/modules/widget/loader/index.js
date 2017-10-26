@@ -1,22 +1,12 @@
 'use strict'
 
 const { reach } = require('hoek')
-const { ConfigurationError } = require('../../../errors')
 const { dirname, join } = require('path')
 const { existsSync } = require('fs')
 const resolver = require('../../resolver')
 const { upperCamel } = require('../../upper-camel')
+const { ConfigurationError } = require('errors')
 const slash = require('slash')
-
-function discoverModulePath (directory) {
-  try {
-    return dirname(require.resolve(directory))
-  } catch (e) {
-    throw new ConfigurationError(
-      `Module dependency ${directory} declared in widget could not be located`
-    )
-  }
-}
 
 function discoverComponentPath (packagePath, packageJson) {
   const relativeComponentPath = readComponentStanza(packageJson)
@@ -30,7 +20,7 @@ function discoverComponentPath (packagePath, packageJson) {
 }
 
 function readPackage (directory) {
-  const packageBasePath = discoverModulePath(directory)
+  const packageBasePath = resolver.discover(directory)
   const Module = require(packageBasePath)
   const packageJson = require(join(packageBasePath, 'package.json'))
   const componentPath = discoverComponentPath(packageBasePath, packageJson)
