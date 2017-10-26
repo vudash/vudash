@@ -1,8 +1,8 @@
 'use strict'
 
 const chance = require('chance')()
-
 const Widget = require('./widget')
+const { expect } = require('code')
 
 describe('widget', () => {
   context('All Configuration Options', () => {

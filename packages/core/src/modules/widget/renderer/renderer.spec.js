@@ -3,6 +3,7 @@
 const renderer = require('.')
 const WidgetPosition = require('../widget-position')
 const Cheerio = require('cheerio')
+const { expect } = require('code')
 
 describe('widget/renderer', () => {
   context('#renderScript()', () => {

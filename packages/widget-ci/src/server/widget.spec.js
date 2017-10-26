@@ -4,6 +4,8 @@ const Widget = require('./widget')
 const Travis = require('../engines/travis')
 const BuildStatus = require('../build-status.enum')
 const engineFactory = require('../engines/factory')
+const { expect } = require('code')
+const sinon = require('sinon')
 
 describe('widget', () => {
   it('No config for travis', () => {

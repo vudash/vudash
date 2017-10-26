@@ -2,6 +2,7 @@
 
 const loader = require('.')
 const { ComponentCompilationError } = require('errors')
+const { expect } = require('code')
 
 describe('widget/loader', () => {
   context('Programmatic Config', () => {

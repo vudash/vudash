@@ -2,6 +2,7 @@
 
 const { WidgetRegistrationError } = require('../../../errors')
 const locator = require('.')
+const { expect } = require('code')
 
 describe('datasource.locator', () => {
   it('loads datasource', () => {

@@ -2,6 +2,7 @@
 
 const Widget = require('./widget')
 const { stub } = require('sinon')
+const { expect } = require('code')
 
 describe('widget', () => {
   context('Default configuration', () => {

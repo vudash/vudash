@@ -4,6 +4,7 @@ const Joi = require('joi')
 const configUtil = require('../../test/config.util')
 const sinon = require('sinon')
 const validator = require('.')
+const { expect } = require('code')
 
 describe('datasource-google-sheets.config-validator', () => {
   const sandbox = sinon.sandbox.create()

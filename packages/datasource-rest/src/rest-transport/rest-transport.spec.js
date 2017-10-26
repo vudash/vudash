@@ -2,6 +2,7 @@
 
 const nock = require('nock')
 const RestTransport = require('.')
+const { expect } = require('code')
 
 describe('transports.rest', () => {
   const host = 'http://example.net'

@@ -2,6 +2,7 @@
 
 const builder = require('.')
 const { reach } = require('hoek')
+const { expect } = require('code')
 
 describe('dashboard/compiler/configuration-builder', () => {
   context('Dynamic Contents', () => {

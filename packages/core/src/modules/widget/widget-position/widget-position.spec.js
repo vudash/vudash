@@ -1,6 +1,7 @@
 'use strict'
 
 const WidgetPosition = require('.')
+const { expect } = require('code')
 
 describe('css-builder/widget-position', () => {
   const dashboard = { columns: 5, rows: 4 }

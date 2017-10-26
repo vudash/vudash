@@ -3,6 +3,7 @@
 const compiler = require('.')
 const { stub } = require('sinon')
 const rollup = require('rollup')
+const { expect } = require('code')
 
 describe('dashboard/compiler', () => {
   context('Bundle', () => {

@@ -5,6 +5,7 @@ const HealthStatus = require('../../health-status')
 const nock = require('nock')
 const { assign } = Object
 const Joi = require('joi')
+const { expect } = require('code')
 
 describe('providers.statuspageio', () => {
   context('#configValidation', () => {

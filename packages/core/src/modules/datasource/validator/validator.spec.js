@@ -3,6 +3,7 @@
 const validator = require('.')
 const configValidator = require('../../config-validator')
 const { stub } = require('sinon')
+const { expect } = require('code')
 
 describe('datasource.validator', () => {
   const datasourceOptions = { a: 'b' }

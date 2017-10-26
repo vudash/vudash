@@ -3,6 +3,7 @@
 const Provider = require('.')
 const HealthStatus = require('../../health-status')
 const nock = require('nock')
+const { expect } = require('code')
 
 describe('providers.github', () => {
   context('#configValidation', () => {

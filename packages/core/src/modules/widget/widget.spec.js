@@ -4,6 +4,7 @@ const Widget = require('modules/widget')
 const { stub } = require('sinon')
 const loader = require('./loader')
 const datasource = require('../datasource')
+const { expect } = require('code')
 
 describe('widget', () => {
   const position = { x: 0, y: 0, w: 1, h: 1 }

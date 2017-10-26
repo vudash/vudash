@@ -4,6 +4,8 @@ const PluginLoader = require('.')
 const DatasourceBuilder = require('util/datasource.builder')
 const { PluginRegistrationError } = require('../../../errors')
 const resolver = require('../../resolver')
+const { expect } = require('code')
+const { stub } = require('sinon')
 
 describe('plugin.loader', () => {
   context('Datasource registration', () => {
@@ -52,7 +54,7 @@ describe('plugin.loader', () => {
     const dashboard = {}
 
     beforeEach(() => {
-      sinon.stub(resolver, 'resolve').returns({ register: sinon.stub() })
+      stub(resolver, 'resolve').returns({ register: stub() })
       pluginLoader = new PluginLoader('some-id', dashboard)
       pluginLoader.load({ module: 'xyz' })
     })

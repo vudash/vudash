@@ -1,5 +1,6 @@
 'use strict'
 
+const { expect } = require('code')
 const { validate } = require('.')
 const Joi = require('joi')
 

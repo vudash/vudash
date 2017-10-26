@@ -34,15 +34,15 @@ class Widget {
   }
 
   toRenderModel () {
-    const { 
-      id, 
-      name, 
-      config, 
+    const {
+      id,
+      name,
+      config,
       componentPath,
       position,
       background
     } = this
-    
+
     return {
       id,
       name,

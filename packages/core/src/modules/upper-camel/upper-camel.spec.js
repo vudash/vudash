@@ -1,6 +1,7 @@
 'use strict'
 
 const { upperCamel } = require('.')
+const { expect } = require('code')
 
 describe('upper-camel', () => {
   const scenarios = [

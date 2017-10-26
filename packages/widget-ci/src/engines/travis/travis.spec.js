@@ -1,6 +1,6 @@
 'use strict'
 
-const expect = require('code').expect
+const { expect } = require('code')
 const sinon = require('sinon')
 
 const BuildStatus = require('../../build-status.enum')

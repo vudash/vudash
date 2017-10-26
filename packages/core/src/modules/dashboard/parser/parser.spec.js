@@ -2,6 +2,7 @@
 
 const descriptorParser = require('.')
 const fs = require('fs')
+const { expect } = require('code')
 
 describe('dashboard/parser', () => {
   context('Parse', () => {

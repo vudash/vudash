@@ -1,6 +1,7 @@
 'use strict'
 
 const DummyDatasource = require('.')
+const { expect } = require('code')
 
 describe('datasource.dummy-datasource', () => {
   it('can be constructed', () => {

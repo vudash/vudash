@@ -2,6 +2,7 @@
 
 const { NotFoundError } = require('../../../errors')
 const loader = require('.')
+const { expect } = require('code')
 
 describe('dashboard/loader', () => {
   it('Dashboard is not found', () => {

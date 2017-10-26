@@ -1,6 +1,7 @@
 'use strict'
 
 const ValueTransport = require('.')
+const { expect } = require('code')
 
 describe('value', () => {
   it('Returns value passed in config', () => {

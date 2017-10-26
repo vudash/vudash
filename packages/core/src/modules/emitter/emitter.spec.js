@@ -1,15 +1,17 @@
 'use strict'
 
 const Emitter = require('modules/emitter')
+const { expect } = require('code')
+const { stub, spy } = require('sinon')
 
 describe('module.emitter', () => {
   const room = 'my-room'
   const broadcastStub = {
-    emit: sinon.spy()
+    emit: spy()
   }
   const socketSpy = {
-    on: sinon.stub(),
-    to: sinon.stub().withArgs(room).returns(broadcastStub)
+    on: stub(),
+    to: stub().withArgs(room).returns(broadcastStub)
   }
   const emitter = new Emitter(socketSpy, room)
 
@@ -35,7 +37,7 @@ describe('module.emitter', () => {
   })
 
   it('On connect, socket is joined to a room', () => {
-    const mockSocket = { id: 'xyz', join: sinon.spy() }
+    const mockSocket = { id: 'xyz', join: spy() }
     emitter.clientJoinHandler(mockSocket)
     expect(mockSocket.join.callCount).to.equal(1)
     expect(mockSocket.join.firstCall.args[0]).to.equal(room)
@@ -44,7 +46,7 @@ describe('module.emitter', () => {
   it('On connect, socket is joined to a room', () => {
     const emit = broadcastStub.emit
     emit.reset()
-    const mockSocket = { id: 'xyz', join: sinon.spy() }
+    const mockSocket = { id: 'xyz', join: spy() }
     emitter.clientJoinHandler(mockSocket)
     expect(emit.callCount).to.equal(3)
     expect(emit.firstCall.args).to.equal(['abc', {id: 'abc'}])

@@ -11,6 +11,7 @@ const cheerio = require('cheerio')
 const bundler = require('./bundler')
 const compiler = require('./compiler')
 const { stub } = require('sinon')
+const { expect } = require('code')
 
 describe('modules.dashboard', () => {
   let io

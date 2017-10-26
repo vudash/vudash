@@ -4,9 +4,6 @@ const path = require('path')
 const glob = require('glob')
 const Code = require('code')
 
-global.expect = Code.expect
-global.sinon = require('sinon')
-
 require('sinon-as-promised')
 
 global.resource = requirePath => {

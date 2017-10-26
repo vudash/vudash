@@ -1,6 +1,7 @@
 'use strict'
 
 const server = require('server')
+const { expect } = require('code')
 
 describe('plugins.dashboard', () => {
   let app

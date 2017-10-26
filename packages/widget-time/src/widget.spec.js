@@ -1,6 +1,7 @@
 'use strict'
 
 const Widget = require('./widget')
+const { expect } = require('code')
 
 describe('widget', () => {
   context('Alarms', () => {

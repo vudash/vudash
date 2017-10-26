@@ -1,9 +1,10 @@
 'use strict'
 
+const { expect } = require('code')
 const CircleCI = require('circleci')
 const BuildStatus = require('../../build-status.enum')
-
 const Engine = require('.')
+const { stub } = require('sinon')
 
 describe('engines.circleci', () => {
   let getBranchBuildsStub
@@ -24,7 +25,7 @@ describe('engines.circleci', () => {
       const circleci = new CircleCI({ auth: 'x' })
       engine.circleci = circleci
 
-      getBranchBuildsStub = sinon.stub(circleci, 'getBranchBuilds')
+      getBranchBuildsStub = stub(circleci, 'getBranchBuilds')
       getBranchBuildsStub.resolves([{
         status: 'success'
       }])
@@ -37,7 +38,6 @@ describe('engines.circleci', () => {
 
     after(() => {
       getBranchBuildsStub.restore()
-      
     })
 
     it('has correct repo', () => {

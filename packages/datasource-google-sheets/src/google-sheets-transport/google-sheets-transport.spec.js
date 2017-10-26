@@ -1,6 +1,9 @@
+'use strict'
+
 const GoogleSheetsTransport = require('.')
 const configUtil = require('../../test/config.util')
 const sinon = require('sinon')
+const { expect } = require('code')
 
 describe('google-sheets-transport', () => {
   const sandbox = sinon.sandbox.create()

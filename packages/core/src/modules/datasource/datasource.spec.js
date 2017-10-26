@@ -5,14 +5,16 @@ const locator = require('./locator')
 const DatasourceBuilder = require('util/datasource.builder')
 const Joi = require('joi')
 const validator = require('./validator')
+const { expect } = require('code')
+const { stub } = require('sinon')
 
 context('datasource.validator', () => {
   const widget = DatasourceBuilder.create().build()
 
   context('Datasource specified', () => {
     beforeEach(() => {
-      sinon.stub(locator, 'locate')
-      sinon.stub(validator, 'validate').returns({})
+      stub(locator, 'locate')
+      stub(validator, 'validate').returns({})
     })
 
     afterEach(() => {

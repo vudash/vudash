@@ -1,6 +1,7 @@
 'use strict'
 
 const RandomTransport = require('./src/random-transport')
+const { expect } = require('code')
 
 describe('plugin', () => {
   const MT_SEED = 'a'

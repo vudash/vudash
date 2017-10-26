@@ -2,6 +2,7 @@
 
 const moment = require('moment-timezone')
 const service = require('.')
+const { expect } = require('code')
 
 describe('time', () => {
   it('with UTC locale', async () => {

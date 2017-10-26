@@ -1,5 +1,6 @@
 'use strict'
 
+const { expect } = require('code')
 const { handler } = require('.')
 
 describe('plugins/dashboard/handlers/index.handler', () => {

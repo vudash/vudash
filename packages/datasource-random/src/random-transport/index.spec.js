@@ -1,3 +1,6 @@
+'use strict'
+
+const { expect } = require('code')
 const RandomTransport = require('.')
 
 describe('random-transport', () => {
