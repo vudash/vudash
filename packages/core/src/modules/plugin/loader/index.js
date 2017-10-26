@@ -25,7 +25,11 @@ class PluginLoader {
     }
     console.info(`Adding datasource ${chalk.bold.magenta(this.id)}`)
     this.dashboard.datasources = this.dashboard.datasources || {}
-    this.dashboard.datasources[this.id] = { Constructor: constructorFunction, validation, options: this.options }
+    this.dashboard.datasources[this.id] = { 
+      Constructor: constructorFunction,
+      validation,
+      options: this.options
+    }
   }
 
 }

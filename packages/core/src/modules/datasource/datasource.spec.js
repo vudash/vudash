@@ -24,29 +24,35 @@ context('datasource.validator', () => {
 
     it('Registers widget data source', () => {
       locator.locate.returns({ Constructor: widget, options: {} })
-      loader.load('some-widget', {}, { name: 'a-datasource' })
+      loader.load('some-widget', {}, 'a-datasource')
       expect(locator.locate.callCount).to.equal(1)
       expect(locator.locate.firstCall.args[1]).to.equal('a-datasource')
     })
 
     it('calls for widget validation on load', () => {
       const options = { foo: 'bar' }
-      locator.locate.returns({ Constructor: widget, options: {}, validation: Joi.object().required() })
-      loader.load('some-widget', {}, { name: 'a-datasource', options })
+      locator.locate.returns({
+        Constructor: widget,
+        options,
+        validation: Joi.object().required()
+      })
+      loader.load('some-widget', {}, 'a-datasource')
       expect(validator.validate.callCount).to.equal(1)
       expect(validator.validate.firstCall.args[2]).to.equal(options)
     })
 
     it('no validation specified', () => {
-      locator.locate.returns({ Constructor: widget, options: {} })
-      loader.load('some-widget', {}, { name: 'a-datasource' })
+      locator.locate.returns({
+        Constructor: widget
+      })
+      loader.load('some-widget', {}, 'a-datasource')
       expect(validator.validate.callCount).to.equal(0)
     })
   })
 
   context('no datasource specified', () => {
     it('will polyfill a fetch method which throws', () => {
-      const loaded = loader.load('some-widget', {}, {})
+      const loaded = loader.load('some-widget', {}, undefined)
       function fn () { return loaded.fetch() }
       expect(fn).to.throw('Widget some-widget requested data, but no datasource was configured. Check the widget configuration in your dashboard config.')
     })

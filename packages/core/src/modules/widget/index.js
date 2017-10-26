@@ -9,11 +9,13 @@ const datasource = require('../datasource')
 class Widget {
 
   constructor (dashboard, widgetConfig, widgetName, options = {}) {
+    const { datasource: datasourceName, position, background } = widgetConfig
+
     this.id = id()
-    this.datasource = datasource.load(widgetName, dashboard, widgetConfig.datasource)
+    this.datasource = datasource.load(widgetName, dashboard, datasourceName)
     this.dashboard = dashboard
-    this.background = widgetConfig.background
-    this.position = new WidgetPosition(dashboard.layout, widgetConfig.position)
+    this.background = background
+    this.position = new WidgetPosition(dashboard.layout, position)
     this.config = options
 
     const { Module, name, component } = loader.load(widgetName)

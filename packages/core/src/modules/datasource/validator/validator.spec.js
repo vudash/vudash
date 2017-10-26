@@ -6,30 +6,40 @@ const { stub } = require('sinon')
 const { expect } = require('code')
 
 describe('datasource.validator', () => {
-  const datasourceOptions = { a: 'b' }
+  context('No validation specified', () => {
+    let options
+    beforeEach(() => {
+      stub(configValidator, 'validate')
+      options = validator.validate('a', null, { a: 'b' })
+    })
 
-  before(() => {
-    stub(configValidator, 'validate')
+    afterEach(() => {
+      configValidator.validate.restore()
+    })
+
+    it('returns datasource options', () => {
+      expect(
+        options
+      ).to.equal({ a: 'b' })
+    })
+  
+    it('validation is not called as it does not exist', () => {
+      expect(configValidator.validate.callCount).to.equal(0)
+    })
   })
 
-  after(() => {
-    configValidator.validate.restore()
-  })
+  context('Validation specified', () => {
+    beforeEach(() => {
+      stub(configValidator, 'validate')
+    })
 
-  it('combines all datasource options', () => {
-    expect(
-      validator.validate('a', { options: { c: 'd' }}, { a: 'b' })
-    ).to.equal({ a: 'b', c: 'd' })
-  })
+    afterEach(() => {
+      configValidator.validate.restore()
+    })
 
-  it('local options override global options', () => {
-    expect(
-      validator.validate('a', { options: { a: 'd', c: 'd' }}, { a: 'b' })
-    ).to.equal({ a: 'b', c: 'd' })
-  })
-
-  it('validation is called if available', () => {
-    validator.validate('a', { validation: {} }, {})
-    expect(configValidator.validate.callCount).to.equal(1)
+    it('validation is called if available', () => {
+      validator.validate('a', {}, {})
+      expect(configValidator.validate.callCount).to.equal(1)
+    })
   })
 })

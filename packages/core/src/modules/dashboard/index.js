@@ -30,9 +30,9 @@ class Dashboard {
 
     this.widgets = descriptor.widgets.map(({ position, background, datasource, widget, options }) => {
       return new Widget(this, {
-        position: position,
-        background: background,
-        datasource: datasource
+        position,
+        background,
+        datasource
       }, widget, options)
     })
   }
