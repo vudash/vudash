@@ -170,7 +170,7 @@ The Vudash Value Datasource returns hardcoded values.
 
 Simply specify the value you want returned.
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-value",
   "options": {
@@ -188,7 +188,7 @@ Value Datasource can return anything you can provide in JSON
 
 Simply specify the value you want returned.
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-value",
   "options": {
@@ -207,7 +207,7 @@ The Vudash REST Datasource allows fetching data from external APIs.
 
 The default method is GET. Simply specify an URL.
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-rest",
   "options": {
@@ -221,7 +221,7 @@ The default method is GET. Simply specify an URL.
 Say you wanted to POST to the endpoint `/v1/api` at `https://example.org` on port 3333.
 Furthermore, you want to send JSON request data as specified in "payload" below.
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-rest",
   "options": {
@@ -241,7 +241,7 @@ Furthermore, you want to send JSON request data as specified in "payload" below.
 Say you wanted to POST to the endpoint `/v1/api` at `https://example.org` on port 3333.
 Furthermore, you want to send JSON request data as specified in "payload" below.
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-rest",
   "options": {
@@ -263,7 +263,7 @@ Selection is done using [Hoek.reach](https://www.npmjs.com/package/hoek), so nul
 
 Say that your desired API returns the following payload in JSON:
 
-```json
+```javascript
 { 
   "one": {
     "two": {
@@ -275,7 +275,7 @@ Say that your desired API returns the following payload in JSON:
 
 Lets say we wanted the value of "three" buried down in the middle there. It's easy:
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-rest",
   "options": {
@@ -287,7 +287,7 @@ Lets say we wanted the value of "three" buried down in the middle there. It's ea
 
 And if you actually want the contents of two? (As an object of course):
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-rest",
   "options": {
@@ -340,7 +340,7 @@ The Vudash Random Datasource returns hardcoded values.
 
 Vudash Random Datasource uses ChanceJS underneath. That means you can it bare, to generate a random integer:
 
-```json
+```javascript
 {
   "source": "random"
 }
@@ -350,7 +350,7 @@ Vudash Random Datasource uses ChanceJS underneath. That means you can it bare, t
 
 or you can define the method used to generate your random data:
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-random",
   "options": {
@@ -367,7 +367,7 @@ You need to pass parameters to `n()`, the method used to generate the values, th
 
 The code used below is the equivalent of calling [chance.n(chance.integer, 12, {min: 15, max: 32})](http://chancejs.com/#n).
 
-```json
+```javascript
 {
   "module": "@vudash/datasource-random",
   "options": {

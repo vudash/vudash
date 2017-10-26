@@ -11,7 +11,7 @@ A widget is packaged as a node module, but a node module can simply be a folder 
 Building a widget is simply a node module, and really only needs a couple of files.
 
 ### package.json
-```json
+```javascript
   { 
     "name": "vudash-widget-example", 
     "main": "widget.js",
@@ -65,7 +65,7 @@ Create your svelte component as a single html file, and reference it as a module
 #### Example of a component
 
 package.json
-```json
+```javascript
 {
   "name": "vudash-widget-health",
   "main": "widget.js",

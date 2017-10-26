@@ -40,7 +40,7 @@ A dashboard is a collection of widgets separated into rows and columns.
 ## Creating Dashboards
 
 Dashboards are in JSON format and take the form:
-```json
+```javascript
 {
   "name": "Happy",
   "layout": {

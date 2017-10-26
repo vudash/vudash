@@ -29,7 +29,7 @@ The chart widget has a number of configuration options:
 
 You can configure any status page which uses [Atlassian StatusPage](https://www.atlassian.com/software/statuspage) easily:
 
-```json
+```javascript
 { 
   "position": { ... }, 
   "widget": "@vudash/widget-chart",
@@ -65,7 +65,7 @@ Add to a [Vudash](https://www.npmjs.com/package/vudash) dashboard with the follo
 
 The simplest configuration is very straightforward
 
-```json
+```javascript
   { "position": { ... },
     "widget": "vudash-widget-ci",
     "datasource": { ... },
@@ -201,7 +201,7 @@ Currently this widget has two integrations.
 
 You can configure any status page which uses [Atlassian StatusPage](https://www.atlassian.com/software/statuspage) easily:
 
-```json
+```javascript
 { 
   "position": { ... }, 
   "widget": "vudash-widget-status",
@@ -222,7 +222,7 @@ You can configure any status page which uses [Atlassian StatusPage](https://www.
 
 Github status page monitoring is pretty much no-configuration. It will tell you when it is up, down, or otherwise.
 
-```json
+```javascript
 { 
   "position": { ... }, 
   "datasource": { ... },
