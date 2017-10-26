@@ -1,28 +1,48 @@
 <div class="vudash-progress">
-  <div class="bar">
-    <div ref:progress class="progress">
-    </div>
-  </div>
   <div class="label">{{ config.description }}</div>
+	<div class="stat">
+		<span class="value">{{ percentage }}</span>
+		<span class="total">/ {{ total }}</span>
+	</div>
+	<div class="bar">
+    <div ref:progress class="progress">
+  </div>
+  </div>
 </div>
 
 <style>
  .bar {
-   width: 60%;
-   border: 4px solid rgb(255,255,255);
-   height: 40px;
+	 position: absolute;
+	 bottom: 0;
+   width: 100%;
+   height: 10px;
  }
+	
+ .stat {
+   position: absolute;
+	 bottom: 14%;
+	 left: 12%;
+ }
+	
+  .stat > .value {
+	  font-size: 120px;
+	}
+	
+	.stat > .total {
+	  font-size: 50px;
+		color: #bbb;
+	}
 
  .bar > .progress {
    background-color: rgb(112,179,125);
    display: block;
    height: 100%;
-   transition: width 1s
+   transition: width 1s;
  }
 
  .label {
-   position: absolute;
-   bottom: 30px;
+	 position: absolute;
+	 top: 20%;
    font-size: 14px;
    font-weight: bold;
  }
