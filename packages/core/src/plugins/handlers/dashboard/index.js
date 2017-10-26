@@ -4,9 +4,9 @@ const dashboardLoader = require('../../../modules/dashboard/loader')
 const { NotFoundError } = require('../../../errors')
 const Boom = require('boom')
 
-function load (board, io, reply) {
+function load (cache, board, io, reply) {
   try {
-    return dashboardLoader.find(board, io)
+    return dashboardLoader.find(cache, board, io)
   } catch (e) {
     if (e instanceof NotFoundError) {
       return reply.redirect('/')
@@ -32,8 +32,9 @@ exports.handler = async function (request, reply) {
   const { board } = request.params
   const { server } = request
   const { io } = server.plugins.socket
+  const { dashboards } = server.plugins.dashboard
   try {
-    const dashboard = load(board, io, reply)
+    const dashboard = load(dashboards, board, io, reply)
     const model = await buildViewModel(dashboard, server)
     return reply.view('dashboard', model)
   } catch (e) {

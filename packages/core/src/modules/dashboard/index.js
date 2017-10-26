@@ -38,18 +38,26 @@ class Dashboard {
   }
 
   initialise () {
-    this.buildJobs()
+    this.jobs = this.collectJobs()
   }
 
-  buildJobs () {
-    this.jobs = this.widgets.map((widget) => {
-      const job = widget.job
-      if (job) {
-        let executeJob = this.emitResult.bind(this, widget, this.emitter)
-        executeJob()
-        return setInterval(executeJob, job.schedule)
-      }
+  destroy () {
+    const jobs = this.jobs
+    console.log(`Dashboard ${this.id} cleaning up ${jobs.length} jobs.`)
+    jobs.forEach(job => {
+      clearInterval(job)
     })
+  }
+
+  collectJobs () {
+    return this.widgets.reduce((jobs, widget) => {
+      if (widget.job) {
+        const executeJob = this.emitResult.bind(this, widget, this.emitter)
+        executeJob()
+        jobs.push(setInterval(executeJob, widget.job.schedule))
+      }
+      return jobs
+    }, [])
   }
 
   emitResult (widget, emitter) {

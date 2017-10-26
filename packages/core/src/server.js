@@ -5,7 +5,6 @@ requirePaths.addPath(process.cwd())
 requirePaths.addPath(`${process.cwd()}/node_modules`)
 
 const Hapi = require('hapi')
-const Hoek = require('hoek')
 const fs = require('fs')
 const Path = require('path')
 const chalk = require('chalk')
@@ -71,7 +70,24 @@ function start (server) {
   })
 }
 
+function cleanup (server) {
+  const cache = Object.values(server.plugins.dashboard.dashboards)
+  cache.forEach(dashboard => {
+    dashboard.destroy()
+  })
+}
+
+function stop (server) {
+  server.stop({
+    timeout: 60000
+  }, () => {
+    cleanup(server)
+    return Promise.resolve()
+  })
+}
+
 module.exports = {
   register,
-  start
+  start,
+  stop
 }

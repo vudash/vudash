@@ -1,8 +1,18 @@
 'use strict'
 
-const { register, start } = require('./src/server')
+const { register, start, stop } = require('./src/server')
+
+let server
 
 register()
-.then(server => {
+.then(registered => {
+  server = registered
   start(server)
+})
+
+process.on('SIGUSR2', () => {
+  stop(server)
+  .then(() => {
+    process.exit()
+  })
 })

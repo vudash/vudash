@@ -10,8 +10,8 @@ describe('plugins.dashboard', () => {
     app = await server.register()
   })
 
-  after(() => {
-    app.shutdown()
+  after(async () => {
+    await server.stop(app)
   })
 
   it('Loads dashboards into memory', () => {
@@ -19,5 +19,10 @@ describe('plugins.dashboard', () => {
     .then(reply => {
       expect(reply.statusCode).to.equal(200)
     })
+  })
+
+  it('Builds dashboard cache', () => {
+    const cachedDashboards = Object.keys(app.plugins.dashboard.dashboards)
+    expect(cachedDashboards).to.only.include('simple')
   })
 })

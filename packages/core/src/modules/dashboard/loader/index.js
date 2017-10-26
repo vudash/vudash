@@ -5,10 +5,8 @@ const Dashboard = require('..')
 const Path = require('path')
 const fs = require('fs')
 
-const dashboards = {}
-
 // TODO: Cache indefinitely using server methods.
-function load (name, io) {
+function load (cache, name, io) {
   const path = `${Path.join(process.cwd(), 'dashboards', name)}.json`
   if (!fs.existsSync(path)) {
     throw new NotFoundError(`Dashboard ${name} does not exist.`)
@@ -18,12 +16,12 @@ function load (name, io) {
   const dashboard = new Dashboard(descriptor, io)
   dashboard.initialise()
 
-  dashboards[name] = dashboard
+  cache[name] = dashboard
   return dashboard
 }
 
-function find (name, io) {
-  return dashboards[name] || load(name, io)
+function find (cache, name, io) {
+  return cache[name] || load(cache, name, io)
 }
 
 module.exports = {

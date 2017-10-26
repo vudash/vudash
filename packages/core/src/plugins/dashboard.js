@@ -31,6 +31,8 @@ const DashboardPlugin = {
       handler: indexHandler
     })
 
+    server.expose('dashboards', {})
+
     next()
   }
 }
