@@ -2,6 +2,6 @@
 
 const Joi = require('joi')
 
-module.exports.validation = Joi.object({
+module.exports.validation = {
   value: Joi.any().required().description('Value to return')
-})
+}
