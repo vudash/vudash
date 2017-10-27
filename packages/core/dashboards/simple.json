@@ -7,8 +7,8 @@
   "plugins": {
     "ds-rnd": {
       "module": "../datasource-random",
-      "schedule": 1000,
       "options": {
+        "schedule": 1000,
         "method": "string"
       }
     }

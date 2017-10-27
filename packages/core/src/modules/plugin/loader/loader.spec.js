@@ -37,7 +37,10 @@ describe('plugin.loader', () => {
 
     it("Registers a datasource's options", () => {
       pluginLoader.contributeDatasource(SomeDatasource)
-      expect(dashboard.datasources['some-id'].options).to.equal(options)
+      expect(dashboard.datasources['some-id'].options).to.equal({
+        foo: 'bar',
+        schedule: 30000
+      })
     })
 
     it("Registers a datasource's validation", () => {
@@ -63,9 +66,11 @@ describe('plugin.loader', () => {
       resolver.resolve.restore()
     })
 
-    it("Registers a datasource's options", () => {
+    it("Registers a datasource with default options", () => {
       pluginLoader.contributeDatasource(SomeDatasource)
-      expect(dashboard.datasources['some-id'].options).to.equal({})
+      expect(dashboard.datasources['some-id'].options).to.equal({
+        schedule: 30000
+      })
     })
   })
 })

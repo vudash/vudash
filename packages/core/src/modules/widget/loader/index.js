@@ -5,7 +5,7 @@ const { dirname, join } = require('path')
 const { existsSync } = require('fs')
 const resolver = require('../../resolver')
 const { upperCamel } = require('../../upper-camel')
-const { ConfigurationError } = require('errors')
+const { ConfigurationError } = require('../../../errors')
 const slash = require('slash')
 
 function discoverComponentPath (packagePath, packageJson) {

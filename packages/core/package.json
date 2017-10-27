@@ -29,14 +29,14 @@
   "scripts": {
     "lint": "../../node_modules/.bin/standard",
     "watch": "BROWSER_SYNC=true ../../node_modules/.bin/nodemon -e html,js .",
-    "start": "node app.js",
+    "start": "./bin/vudash.js",
     "test": "PORT=3418 NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },
   "bin": {
     "vudash": "bin/vudash.js"
   },
   "engines": {
-    "node": ">=8.x"
+    "node": ">=7.x"
   },
   "author": "Antony Jones",
   "license": "MIT",
