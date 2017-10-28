@@ -34,7 +34,7 @@ context('datasource.validator', () => {
       locator.locate.returns({
         Constructor: widget,
         options,
-        validation: Joi.object().required()
+        validation: {}
       })
       loader.load('some-widget', {}, 'a-datasource')
       expect(validator.validate.callCount).to.equal(1)

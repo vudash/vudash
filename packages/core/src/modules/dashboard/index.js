@@ -49,6 +49,7 @@ class Dashboard {
     })
   }
 
+  // TODO: xyz
   collectJobs () {
     return this.widgets.reduce((jobs, widget) => {
       if (widget.job) {
