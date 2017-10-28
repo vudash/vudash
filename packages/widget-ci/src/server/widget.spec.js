@@ -1,30 +1,48 @@
 'use strict'
 
-const Widget = require('./widget')
+const Widget = require('.')
 const Travis = require('../engines/travis')
 const BuildStatus = require('../build-status.enum')
 const engineFactory = require('../engines/factory')
 const { expect } = require('code')
 const sinon = require('sinon')
 
-describe('widget', () => {
-  it('No config for travis', () => {
-    const config = { schedule: 25000, provider: 'travis', user: 'x', repo: 'y' }
-    const widget = new Widget()
-    const configuration = widget.register(config)
-    expect(configuration.schedule).to.equal(config.schedule)
-    
+describe('widget-ci/server', () => {
+  context('branch configuration', () => {
+    it('defaults to master branch', () => {
+      const config = { provider: 'travis', user: 'x', repo: 'y' }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      expect(configuration.config.branch).to.equal('master')
+    })
+
+    it('can override branch', () => {
+      const config = { provider: 'travis', user: 'x', repo: 'y', branch: 'feature/xyz' }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      expect(configuration.config.branch).to.equal('feature/xyz')
+    })
   })
 
-  it('Auth for circleci', () => {
-    const config = { schedule: 25000, provider: 'circleci', user: 'x', repo: 'y', options: { auth: 'aaa' } }
-    const widget = new Widget()
-    const configuration = widget.register(config)
-    expect(configuration.schedule).to.equal(config.schedule)
-    
+  context('provider is travis', () => {
+    it('No config for travis', () => {
+      const config = { provider: 'travis', user: 'x', repo: 'y' }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      expect(configuration.config.provider).to.equal(config.provider)
+    })
   })
 
-  context('Given a particular status, job plays a sound', () => {
+  context('provider is circleci', () => {
+    it('Auth for circleci', () => {
+      const config = { provider: 'circleci', user: 'x', repo: 'y', options: { auth: 'aaa' } }
+      const widget = new Widget()
+      const configuration = widget.register(config)
+      expect(configuration.config.provider).to.equal(config.provider)
+    })
+  })
+
+  context('Sound configuration', () => {
     let instance
     let sandbox
     let emitStub
@@ -52,22 +70,18 @@ describe('widget', () => {
 
     after(() => {
       sandbox.restore()
-      
     })
 
     it('Calls stub', () => {
       expect(emitStub.callCount).to.equal(1)
-      
     })
 
     it('Emits sound event', () => {
       expect(emitStub.firstCall.args[0]).to.equal('audio:play')
-      
     })
 
     it('Delivers sound payload', () => {
       expect(emitStub.firstCall.args[1]).to.equal({ data: 'recovery-sound' })
-      
     })
 
     it('Sound only plays on state change', () => {
@@ -76,22 +90,21 @@ describe('widget', () => {
         expect(emitStub.callCount).to.equal(1)
       })
     })
-  })
 
-  const soundScenarios = [
-    { scenario: 'all specified', sounds: { passed: 'x', failed: 'y', unknown: 'z' } },
-    { scenario: 'passed specified', sounds: { passed: 'x' } },
-    { scenario: 'failed specified', sounds: { failed: 'y' } },
-    { scenario: 'unknown specified', sounds: { unknown: 'z' } }
-  ]
+    const scenarios = [
+      { scenario: 'all specified', sounds: { passed: 'x', failed: 'y', unknown: 'z' } },
+      { scenario: 'passed specified', sounds: { passed: 'x' } },
+      { scenario: 'failed specified', sounds: { failed: 'y' } },
+      { scenario: 'unknown specified', sounds: { unknown: 'z' } }
+    ]
 
-  soundScenarios.forEach((scenario) => {
-    it(`Sound config ${scenario}`, () => {
-      const config = { schedule: 25000, provider: 'travis', user: 'x', repo: 'y', sounds: scenario.sounds }
-      const widget = new Widget()
-      const configuration = widget.register(config)
-      expect(configuration.schedule).to.equal(config.schedule)
-      
+    scenarios.forEach(({ scenario, sounds }) => {
+      it(`Sound config ${scenario}`, () => {
+        const config = { provider: 'travis', user: 'x', repo: 'y', sounds }
+        const widget = new Widget()
+        const configuration = widget.register(config)
+        expect(configuration.config.provider).to.equal(config.provider)
+      })
     })
   })
 })

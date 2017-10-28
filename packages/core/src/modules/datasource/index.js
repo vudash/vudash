@@ -14,8 +14,7 @@ exports.load = function (widgetName, dashboard, datasourceName) {
   }
 
   const { Constructor, validation, options } = locator.locate(dashboard.datasources, datasourceName)
-  console.log('ext', validation, datasourceValidation)
-  const fullValidation = validation ? Object.assign(datasourceValidation, validation) : datasourceValidation
+  const fullValidation = validation ? applyToDefaults(datasourceValidation, validation) : datasourceValidation
   const configuration = options ? validator.validate(widgetName, fullValidation, options) : {}
 
   return new Constructor(configuration)

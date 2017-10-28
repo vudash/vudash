@@ -23,7 +23,7 @@ class ConfigValidator {
   }
 
   get validation () {
-    return Joi.object().keys({
+    return {
       sheet: Joi.string().required().description('Sheet id'),
       tab: Joi.string().required().description('Tab Name'),
       columns: this.columnSchema,
@@ -32,7 +32,7 @@ class ConfigValidator {
         this.inlineCredentialsValidation,
         this.fileCredentialsValidation
       ]).required().description('Service account credentials')
-    }).required().description('Configuration')
+    }
   }
 
   get columnSchema () {

@@ -5,8 +5,7 @@ const engineFactory = require('../engines/factory')
 class CiWidget {
 
   get validation () {
-    return Joi.object({
-      schedule: Joi.number().optional().description('Update frequency (ms)'),
+    return {
       repo: Joi.string().required().description('Repository Name'),
       user: Joi.string().required().description('Account/Organisation Name'),
       branch: Joi.string().optional().description('Branch name'),
@@ -23,7 +22,7 @@ class CiWidget {
         }).required(),
         otherwise: Joi.forbidden()
       })
-    })
+    }
   }
 
   register (options, emit) {
@@ -37,7 +36,6 @@ class CiWidget {
 
     return {
       config,
-      schedule: config.schedule || 60000,
 
       job: () => {
         return provider.fetchBuildStatus()

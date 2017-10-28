@@ -4,7 +4,6 @@ const Joi = require('joi')
 const { ConfigurationError } = require('../../errors')
 
 exports.validate = function (name, rules, options) {
-  console.log(rules)
   const result = Joi.validate(options, rules)
   if (result.error) {
     throw new ConfigurationError(

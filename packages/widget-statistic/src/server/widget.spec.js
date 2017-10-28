@@ -10,7 +10,6 @@ describe('widget', () => {
     const widget = new Widget()
     const configuration = widget.register(config)
     expect(configuration.schedule).to.equal(config.schedule)
-    
   })
 
   it('Will convert given value to string', () => {
@@ -53,16 +52,13 @@ describe('widget', () => {
       const conf = { colour: '#fff' }
       const widget = new Widget()
       const { config } = widget.register(conf)
-      console.log(config)
       expect(config.colour).to.equal('#fff')
-      
     })
 
     it('No colour passed', () => {
       const widget = new Widget()
       const { config } = widget.register({})
       expect(config.colour).not.to.exist()
-      
     })
   })
 
