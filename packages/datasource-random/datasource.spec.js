@@ -16,9 +16,7 @@ describe('plugin', () => {
 
   it('Unknown method returns an error', () => {
     const transport = new RandomTransport({ method: 'abcdefg' }, MT_SEED)
-
     expect(transport.fetch.bind(transport)).to.throw(Error, /is not a known chance method/)
-    
   })
 
   it('Passes options to method', () => {

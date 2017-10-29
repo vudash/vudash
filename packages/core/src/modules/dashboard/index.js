@@ -1,10 +1,11 @@
 'use strict'
 
+const { reach } = require('hoek')
 const Emitter = require('../emitter')
 const id = require('../id-gen')
 const parser = require('./parser')
 const Widget = require('../widget')
-const PluginLoader = require('../plugin/loader')
+const datasourceLoader = require('../datasource-loader')
 const bundler = require('./bundler')
 const compiler = require('./compiler')
 
@@ -17,18 +18,19 @@ class Dashboard {
     this.emitter = new Emitter(io, this.id)
     this.layout = descriptor.layout
 
-    this.datasources = {}
+    this.descriptor = descriptor
+  }
 
-    const pluginIds = descriptor.plugins && Object.keys(descriptor.plugins)
-    if (pluginIds) {
-      pluginIds.forEach((id) => {
-        const pluginConfig = descriptor.plugins[id]
-        const pluginLoader = new PluginLoader(id, this)
-        pluginLoader.load(pluginConfig)
-      })
-    }
+  loadDatasources () {
+    const datasources = reach(this, 'descriptor.datasources')
+    this.datasources = datasourceLoader.load(datasources)
+  }
 
-    this.widgets = descriptor.widgets.map(({ position, background, datasource, widget, options }) => {
+  loadWidgets () {
+    const widgets = reach(this, 'descriptor.widgets')
+    this.widgets = widgets.map(descriptor => {
+      const { position, background, datasource, widget, options } = descriptor
+
       return new Widget(this, {
         position,
         background,
@@ -37,30 +39,15 @@ class Dashboard {
     })
   }
 
-  initialise () {
-    this.jobs = this.collectJobs()
-  }
-
   destroy () {
-    const jobs = this.jobs
-    console.log(`Dashboard ${this.id} cleaning up ${jobs.length} jobs.`)
-    jobs.forEach(job => {
-      clearInterval(job)
+    const datasources = this.datasources
+    console.log(`Dashboard ${this.id} cleaning up ${datasources.length} datasources.`)
+    datasources.forEach(datasource => {
+      clearInterval(datasource.timer)
     })
   }
 
-  // TODO: xyz
-  collectJobs () {
-    return this.widgets.reduce((jobs, widget) => {
-      if (widget.job) {
-        const executeJob = this.emitResult.bind(this, widget, this.emitter)
-        executeJob()
-        jobs.push(setInterval(executeJob, widget.job.schedule))
-      }
-      return jobs
-    }, [])
-  }
-
+  // TODO: remove
   emitResult (widget, emitter) {
     return widget.job.script().then((result) => {
       result._updated = new Date()

@@ -4,11 +4,11 @@
     "columns": 5,
     "rows": 4
   },
-  "plugins": {
+  "datasources": {
     "ds-rnd": {
       "module": "../datasource-random",
+      "schedule": 1000,
       "options": {
-        "schedule": 1000,
         "method": "string"
       }
     }
