@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-gauge",
-  "version": "7.8.4",
+  "version": "8.0.0",
   "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",

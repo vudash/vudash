@@ -1,6 +1,6 @@
 {
   "name": "@vudash/widget-chart",
-  "version": "7.7.0",
+  "version": "8.0.0",
   "description": "Chart widget for Vudash",
   "main": "./src/server",
   "author": "Antony Jones",
