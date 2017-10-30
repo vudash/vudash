@@ -25,6 +25,13 @@ class TimeWidget {
     const data = time(this.config.timezone)
     this.emitter.emit('update', data)
   }
+
+  destroy () {
+    clearInterval(this.timer)
+    this.alarms.forEach(actions => {
+      actions.forEach(action => action.stop())
+    })
+  }
 }
 
 exports.register = function (options, emitter) {
