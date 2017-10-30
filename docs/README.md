@@ -47,12 +47,14 @@ Dashboards are in JSON format and take the form:
     "columns": 5,
     "rows": 4
   },
-  "plugins": {
+  "datasources": {
     "datasource-exchange-rates": { 
       "module": "@vudash/datasource-rest",
+      "schedule": 30000,
       "options": {
         "url": "http://exchangerat.es/api/v1/rates",
-        "method": "get"
+        "method": "get",
+        "graph": "rates.GBP" 
       }
     }
   },
@@ -62,20 +64,16 @@ Dashboards are in JSON format and take the form:
     { "position": {"x": 4, "y": 1, "w": 1, "h": 1}, "widget": "./widgets/github" },
     { "position": {"x": 0, "y": 1, "w": 2, "h": 1},
       "widget": "vudash-widget-statistic",
-      "datasource": {
-        "name": "datasource-exchange-rates",
-        "options": {
-          "graph": "rates.GBP"  
-        }
-      },
+      "datasource": "datasource-exchange-rates",
       "options": {
         "description": "EUR -> GBP",
-        "schedule": 60000 
       }
     },
-    { "position": {"x": 4, "y": 2, "w": 1, "h": 1},
+    { 
+      "position": {"x": 4, "y": 2, "w": 1, "h": 1},
       "widget": "vudash-widget-travis",
       "options": {
+        "schedule": 60000,
         "user": "vudash",
         "repo": "vudash-widget-travis"
       }
@@ -92,24 +90,24 @@ Widgets can be either a path to a directory containing a widget (see below), or 
 
 # Widgets
 
-Widgets are configured in the dashboard.json file, in the format:
+Widgets are configured as an array in the `dashboard.json` file, in the format:
 
 ```javascript
-{
-  "widget": "./widgets/pluck", // widget file path, node module name, or class definition
-  "position": {
-    "x": 1, // x position (row number) of widget
-    "y": 1, // y position (column number) of widget
-    "w": 1, // widget width in columns
-    "h": 1  // widget height in columns
-  },
-  "options": { // widget specific config
-    "your" : "config"
-  },
-  "datasource": {
-    // datasource configuration for fetching data
+"widgets": [
+  {
+    "widget": "./widgets/pluck", // widget file path, node module name, or class definition
+    "datasource": "datasource-xyz", // name of a datasource listed in `datasources`
+    "position": {
+      "x": 1, // x position (row number) of widget
+      "y": 1, // y position (column number) of widget
+      "w": 1, // widget width in columns
+      "h": 1  // widget height in columns
+    },
+    "options": { // widget specific config
+      "your" : "config"
+    }
   }
-}
+]
 ```
 
 Widgets have some optional properties:
@@ -117,6 +115,28 @@ Widgets have some optional properties:
 | property name | description                          | example |
 | ------------- | ------------------------------------ | ------- |
 | background    | css for "background" style attribute | #ffffff |
+
+# Datasources
+
+Unless a widget specifies its own data fetching method, data is fetched by a datasource.
+
+Datasources are specified as a hash in the `dashboard.json` as follows:
+
+```javascript
+{
+  "datasources": {
+    "datasource-id": { // can be anything as long as it is unique
+      "module": "../datasource-random", // as with widgets, a node module name or directory
+      "schedule": 1000, // how often (in ms) the datasource should be refreshed
+      "options": { // options for the datasource
+        "method": "string"
+      }
+    }
+  }
+}
+```
+
+Each refresh, the datasource will fetch new data, and tell all widgets that listen to it about the new data.
 
 # Troubleshooting
 
@@ -146,7 +166,7 @@ lerna run test
 
 # Features
 
-* will happily run on a free heroku instance
+* will happily run on heroku, now.sh, or any other hosting you fancy.
 * es6
 * all cross-origin requests done server side
 * websockets rather than polling
@@ -154,12 +174,11 @@ lerna run test
 * Custom widgets
 * Custom dashboards
 * Simple row-by-row layout
-* Dashboard arrangement is simply the config order (see below)
 * Super simple widget structure
 
 # Roadmap
 
- - Heroku easy deploy
+ - now.sh 5-second howto
  - You, sending Pull Requests.
  - Plugins
 

@@ -2,7 +2,7 @@
 
 Vudash has a number of widgets which are available on npm, these are in the `packages/` directory of the monorepo, and also available on npm.
 
-You will notice that widget definitions `position` and `datasource` attributes. These refer to the position of the widget on the display, and how the widget gets its data, and these are documented in [Plugins](/#/plugins) and the [Main Readme](/#/) respectively.
+You will notice that widget definitions `position` and `datasource` attributes. These refer to the position of the widget on the display, and how the widget gets its data, and these are documented in [Datasources](/#/datasource) and the [Main Readme](/#/) respectively.
 
 ## Chart Widget
 
@@ -21,7 +21,6 @@ The chart widget has a number of configuration options:
 | Option | Default | Allowed Values | Description |
 | --- | --- |
 | `description` | `<empty string>` | any string | Widget description, shown at the bottom of the widget
-| `schedule` | 60 * 1000 * 5 | any integer | Widget update frequency, in milliseconds
 | `type` | `line` | `line, bar, pie, donut` | Graph type. Lowercased version of [chartist graph types](https://gionkunz.github.io/chartist-js/examples.html). Also applies some sensible styling to each graph type to make it fit with a Vudash dashboard. |
 | `labels` | `[]` | an array of label names | Labels which run along the X axis of a chart. Each label relates to its corresponding number in the data provided to the chart. |
 
@@ -120,7 +119,6 @@ Simply include in your dashboard, and configure as required (defaults are shown)
     "widget": "vudash-widget-statistic",
     "datasource": { ... },
     "options": {
-      "schedule": 60000, // Optional. How often to refresh
       "description": "Gauge", // Optional. Description shown below statistic,
       "initial-value": 27,
       "min": 0,
@@ -143,7 +141,17 @@ Similar to VU Meter, but with a linear progress bar
 
 ### Configuration
 
-The only configuration for the progress widget is the schedule.
+The only configuration for the progress widget is the description.
+
+```javascript
+  {
+    "widget": "vudash-widget-progress"
+    "datasource": { ... },
+    "options": {
+      "description": "Stuff", // Optional. Default "Progress" Description shown below statistic
+    }
+  }
+```
 
 The datasource connected to the progress widget should ideally return numbers between 1 and 100, anything over 100 will be represented as 100% anyway.
 
@@ -164,7 +172,6 @@ Simply include in your dashboard, and configure as required:
     "widget": "vudash-widget-statistic",
     "datasource": { ... },
     "options": {
-      "schedule": 60000, // Optional. Default 60000ms, how often to refresh
       "description": "Visitor Count", // Optional. Default "Statistics" Description shown below statistic,
       "format": "%s", // Optional. Default %s. Format the incoming data (using sprintf-js),
       "font-ratio": 4 // Optional. Default 4. Scaling ratio for main statistic (for longer text, increase this number),
@@ -173,12 +180,12 @@ Simply include in your dashboard, and configure as required:
   }
 ```
 
-Note that `datasource` tells the widget how to get data, and is using a datasource plugin, which is documented in the [Plugins documentation](/#/plugins)
+Note that `datasource` tells the widget how to get data, and is using a datasource, which is documented in the [Datasources documentation](/#/datasources)
 
 #### Graphs
 This widget will graph data which is passed in as an array.
 
-This means that if your data-source resolves an array of numbers as data, the first number in the array 
+This means that if your data-source resolves an array of numbers as data, the last number in the array 
 will be shown as the statistic value, and a line graph will be drawn behind the widget using the remaining numbers.
 
 For example
@@ -207,20 +214,23 @@ You can configure any status page which uses [Atlassian StatusPage](https://www.
   "widget": "vudash-widget-status",
   "datasource": { ... },
   "options": {
+    "schedule": 300000,
     "type": "statuspageio",
-    "url": "https://status.newrelic.com/", // URL to the status page
-    "components": [ // List the names of components you want to monitor the status of
-      "APM",
-      "Data Collection",
-      "Alerts"
-    ]
+    "config": {
+      "url": "https://status.newrelic.com/", // URL to the status page
+      "components": [ // List the names of components you want to monitor the status of
+        "APM",
+        "Data Collection",
+        "Alerts"
+      ]
+    }
   }
 }
 ```
 
 #### Github
 
-Github status page monitoring is pretty much no-configuration. It will tell you when it is up, down, or otherwise.
+Github status page monitoring is no-configuration. It will tell you when it is up, down, or otherwise.
 
 ```javascript
 { 
@@ -228,6 +238,7 @@ Github status page monitoring is pretty much no-configuration. It will tell you 
   "datasource": { ... },
   "widget": "vudash-widget-status",
   "options": {
+    "schedule": 300000,
     "type": "github"
   }
 }
@@ -243,38 +254,41 @@ Simply shows the time, and has optional audiable alarams
 ### Configuration
 Simply include in your dashboard:
 
-```
-  {"widget": "vudash-widget-time", "options": ...}
+```javascript
+  {
+    "widget": "vudash-widget-time",
+    "options": { ... }  
+  }
 ```
 
 #### Timezone support
 The timezone can be set via configuration. The list of allowed timezones is that of the `moment-timezone` library.
 
-```
-        "options": {
-          "timezone": "Europe/London"
-        }
+```javascript
+  "options": {
+    "timezone": "Europe/London"
+  }
 ```
 
 #### Alarms
 This widget can play sounds! Simply pass 'alarms' into your configuration:
 
-```
-        "options": {
-          "alarms": [
-            {
-              "expression": "5 * * * * *",
-              "actions": [
-                {
-                  "action": "sound",
-                  "options": {
-                    "data": "data:audio/ogg;base64, ..."
-                  }
-                }
-              ]
+```javascript
+  "options": {
+    "alarms": [
+      {
+        "expression": "5 * * * * *",
+        "actions": [
+          {
+            "action": "sound",
+            "options": {
+              "data": "data:audio/ogg;base64, ..."
             }
-          ]
-        }
+          }
+        ]
+      }
+    ]
+  }
 ```
 
 `expression` is a cron expression which determines when the sound will be played.

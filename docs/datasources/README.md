@@ -1,18 +1,10 @@
-# Plugins
+# Datasources
 
-## What is a Plugin
+## What is a Datasource
 
-A plugin is a way of contributing behaviour to vudash, such as a way to obtain data, or an extra action that widgets can perform.
+A datasource provides the mechanism for widgets to recieve the information they show.
 
-Datasources are a good example of plugins, as they provide the mechanism for widgets to recieve the information they show.
-
-## What can a Plugin do
-
-Currently, plugins can contribute the following behaviour
-
-* Add a datasource
-
-## How to add a plugin to the dashboard
+## How to add a datasource to the dashboard
 
 In this guide, we'll install the `value` datasource and use it in a widget.
 
@@ -20,12 +12,13 @@ In this guide, we'll install the `value` datasource and use it in a widget.
   ```
   npm install --save @vudash/datasource-value
   ```
-2. Next, configure the plugin. We'll give this plugin an id of `value-datasource`, and pass it some default options. Add the plugin to your `<dashboard-name>.json` file under plugins
+2. Next, configure the datasource. We'll give this datasource an id of `value-datasource`, and pass it some default options. Add the datasource to your `<dashboard-name>.json` file under datasources. Don't forget to set the update schedule.
   ```
   { 
-    "plugins": {
-      "value-datasource": {
+    "datasources": {
+      "my-datasource-id": {
         "module": "@vudash/datasource-value",
+        "schedule": 30000,
         "options": {
           "value": "12345"
         }
@@ -33,18 +26,15 @@ In this guide, we'll install the `value` datasource and use it in a widget.
     }
   }
   ```
-3. Add the datasource to one of your widgets, by adding a `datasource` attribute to the widget's config, with the id of the plugin (`value-datasource`), and optionally, some options - in this instance, we won't add any. Again, in the `<dashboard-name>.json` file, this time under widgets:
+3. Add the datasource to one of your widgets, by adding a `datasource` attribute to the widget's config, with the id of the datasource (`value-datasource`), in the `<dashboard-name>.json` file, this time under widgets:
 ```
   "widgets": [
     ...,
     { 
       "position": ...,
       "widget": "vudash-widget-statistic",
-      "datasource": {
-        "name": "value-datasource"
-      },
+      "datasource": "my-datasource-id",
       "options": {
-        "schedule": 30000,
         "description": "Some Description"
       }
     }
@@ -52,15 +42,15 @@ In this guide, we'll install the `value` datasource and use it in a widget.
 ```
 4. You're good to go! Your widget will now use the `value-datasource` to fetch its data.
 
-## Shared plugin configuration
+## Shared datasource configuration
 
-When you install a plugin to the dashboard, you can pass it some configuration using the `options` attribute. This can be useful because all consumers of the plugin will receive those options:
+When you install a datasource to the dashboard, you can pass it some configuration using the `options` attribute. This can be useful because all consumers of the datasource will receive those options:
 
- ```
+ ```javascript
   { 
-    "plugins": {
-      "plugin-id": {
-        "module": "some-plugin-npm-package-name",
+    "datasources": {
+      "datasource-id": {
+        "module": "some-datasource-npm-package-name",
         "options": {
           "number": 1,
           "foo": "bar"
@@ -68,49 +58,13 @@ When you install a plugin to the dashboard, you can pass it some configuration u
       }
     }
   }
-  ```
-
-When you use a plugin, the options you pass there are merged (and will override) the defaults passed in the `plugins` block (shown above)
-
-Note that we override `options.number` below:
-
-```
-  "widgets": [
-    ...,
-    { 
-      "position": ...,
-      "widget": "vudash-widget-statistic",
-      "datasource": {
-        "name": "value-datasource",
-        "options": {
-          "number": 2
-        }
-      },
-      ...
-    }
-  ]
 ```
 
-The final configuration for the datasource will be:
-
-```
-  options: {
-    number: 2,
-    foo: "bar"
-  }
-```
-
-Both sets of options are optional.
-
-## Built in Plugins
-
-## Datasources
-
-Datasources are an easy way for widgets to get their data from a growing variety of sources.
+## Provided Datasources
 
 ### Benefits
 
-Vudash Datasources are installed as plugins, then referenced using the `datasource` attribute of a widget.
+Vudash Datasources are referenced using the `datasource` attribute of a widget.
 
 This saves time for a widget developer, and means that any widget can easily fetch data from a number of different sources.
 
@@ -125,42 +79,36 @@ This saves time for a widget developer, and means that any widget can easily fet
 
 ### Usage in widgets
 
-When using a widget which allows a datasource, just pass in the id of the datasource (registered in `plugins`), and any configuration you want it to have.
+When using a widget which allows a datasource, just pass in the id of the datasource (registered in `datasource`), and any configuration you want it to have.
 
 In `dashboard.json`
 
-1. Add the datasource plugin under the `plugins` section:
-```
-"plugins": {
-  "plugin-id": { 
-    "module": "plugin-package-name"
+1. Add the datasource under the `datasource` section. The `options` will contain the configuration for the datasource:
+```javascript
+"datasource": {
+  "datasource-id": { 
+    "module": "datasource-package-name",
+    "options": {
+      "url": "http://example.com/some/api",
+      "method": "get",
+      "graph": "some.nested.value"
+    }
   }
 }
 ```
 2. Tell the widget to use the datasource, by modifying your widget entry under `widgets`:
-```
+```javascript
   {
     "position": { ... },
     "widget": "some-widget",
-    "datasource": {
-      "name": "plugin-id",
-      "options": {
-        "url": "http://example.com/some/api",
-        "method": "get",
-        "graph": "some.nested.value"
-      }
-    },
+    "datasource": "datasource-id",
     "options": {
       ...
     }
   }
 ```
 
-`datasource.options` will contain the configuration for the datasource plugin.
-
-You can put the datasource `options` under either the plugin's config, or the widget's datasource config. The widget's datasource config will override any values from the plugin's config (for that widget only).
-
-Configuration is validated when the widgets are registered by the dashboard, if the datasource plugin supports it.
+Configuration is validated when the datasources are registered by the dashboard, if a datasource supports it.
 
 ### Value datasource
 

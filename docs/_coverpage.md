@@ -9,7 +9,7 @@
 - Uses websockets for realtime updates
 - Integrates with a huge number of services
 - Familiar JSON configuration
-- Extensible plugin system
+- Extensible datasource system
 
 [GitHub](https://github.com/vudash/vudash)
 [Get Started](#quick-start)
