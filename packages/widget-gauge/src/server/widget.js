@@ -47,8 +47,8 @@ class GaugeWidget {
   }
 
   update (value) {
-    const { min, max } = this.config
-    return { value, min, max }
+    const config = this.config
+    return { value, config }
   }
 }
 

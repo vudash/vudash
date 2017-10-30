@@ -1,12 +1,11 @@
 'use strict'
 
-const Promise = require('bluebird')
 const moment = require('moment-timezone')
 
-exports.time = (locale) => {
+exports.time = locale => {
   const now = moment().tz(locale)
-  return Promise.resolve({
+  return {
     time: now.format('HH:mm:ss'),
     date: now.format('MMMM Do YYYY')
-  })
+  }
 }

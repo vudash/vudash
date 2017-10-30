@@ -8,7 +8,7 @@ function getBasicValidation () {
 
   return {
     type: Joi.string().required().only(availableProviders).description('Status page type'),
-    schedule: Joi.number().optional().default(60000).describe('CI Refresh schedule'),
+    schedule: Joi.number().optional().default(60000).description('CI Refresh schedule'),
     config: Joi.object().optional().default({}).description('Provider configuration')
   }
 }

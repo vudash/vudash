@@ -28,8 +28,16 @@
 </style>
 <script>
   export default {
+    data () {
+      return {
+        config: {
+          description: 'Progress'
+        }
+      }
+    },
+
     methods: {
-      update (data) {
+      update ({ data, meta }) {
         this.set(data)
         const progress = this.get('percentage')
         this.refs.progress.style.width = `${progress}%`

@@ -14,10 +14,16 @@ class TimeWidget {
 
     this.config = value
     this.alarms = parseAlarms(this.config, this.emitter)
+
+    this.timer = setInterval(function () {
+      this.run()
+    }.bind(this), 1000)
+    this.run()
   }
 
-  update (data) {
-    return time(this.timezone)
+  run () {
+    const data = time(this.config.timezone)
+    this.emitter.emit('update', data)
   }
 }
 

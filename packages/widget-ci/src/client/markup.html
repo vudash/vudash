@@ -67,7 +67,7 @@ const icons = { passed, failed, queued, running, unknown }
 
 export default {
   methods: {
-    update (data) {
+    update ({ meta, data }) {
       let ligature = icons[data.status]
       let backgroundClass = data.status
 

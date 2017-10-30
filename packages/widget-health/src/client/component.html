@@ -31,7 +31,7 @@
 </style>
 
 <script>
-  import heart from './images/heart.svg'
+  import heart from '../images/heart.svg'
 
   export default {
     data () {
@@ -42,7 +42,7 @@
     },
 
     methods: {
-      update (data) {
+      update ({ meta, data }) {
         this.set({ size: data.on ? '92' : '56' })
         this.refs.heartbeat.width = this.get('size')
         this.refs.heartbeat.height = this.get('size')

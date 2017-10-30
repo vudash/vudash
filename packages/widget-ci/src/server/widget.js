@@ -6,10 +6,12 @@ const engineFactory = require('../engines/factory')
 const validation = require('./validation')
 
 class CiWidget {
-  constructor (options, emitter) {
-    Joi.validate(options, validation, (err) => {
-      if (err) { throw err }
-    })
+  constructor (config, emitter) {
+    const { error, value: options } = Joi.validate(config, validation)
+
+    if (error) {
+      throw new Error(`Could not load CI widget, ${error.message}`)
+    }
 
     this.emitter = emitter
     this.config = Object.assign({ branch: 'master' }, options)

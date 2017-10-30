@@ -1,18 +1,14 @@
 'use strict'
 
-const defaults = {
-  description: 'Completion',
-  schedule: 30000
-}
-
 class ProgressWidget {
   constructor (options) {
-    this.config = Object.assign({}, defaults, options)
+    this.config = options
   }
 
-  update (percentage) {
-    if (percentage < 0) { percentage = 0 }
-    if (percentage > 100) { percentage = 100 }
+  update (data) {
+    let percentage = data
+    if (data < 0) { percentage = 0 }
+    if (data > 100) { percentage = 100 }
     return { percentage }
   }
 }

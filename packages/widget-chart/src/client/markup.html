@@ -49,7 +49,7 @@
     },
 
     methods: {
-      update (data) {
+      update ({ meta, data }) {
         const updates = { labels: this.get('labels'), series: data.series }
         this.set(updates)
         this.chart.update(updates)

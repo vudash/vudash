@@ -7,13 +7,13 @@ class HealthWidget {
 
     this.timer = setInterval(function () {
       this.run()
-    }.bind(this), options.schedule)
+    }.bind(this), options.schedule || 1000)
     this.run()
   }
 
   run () {
     this.on = !this.on
-    this.emitter.emit('update', this.on)
+    this.emitter.emit('update', { on: this.on })
   }
 
   destroy () {
