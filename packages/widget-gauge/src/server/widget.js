@@ -1,6 +1,6 @@
 'use strict'
 
-const Hoek = require('hoek')
+const { transform, applyToDefaults } = require('hoek')
 
 const defaults = {
   schedule: 3000,
@@ -29,9 +29,8 @@ const defaults = {
 }
 
 class GaugeWidget {
-
-  register (options, emit, transport) {
-    const overrides = Hoek.transform(options, {
+  constructor (options) {
+    const overrides = transform(options, {
       value: 'initial-value',
       min: 'min',
       max: 'max',
@@ -44,22 +43,15 @@ class GaugeWidget {
       description: 'description'
     })
 
-    const config = Hoek.applyToDefaults(defaults, overrides, false)
-
-    return {
-      config,
-      schedule: config.schedule,
-
-      job: () => {
-        return transport
-        .fetch()
-        .then((value) => {
-          return { value, min: config.min, max: config.max }
-        })
-      }
-    }
+    this.config = applyToDefaults(defaults, overrides, false)
   }
 
+  update (value) {
+    const { min, max } = this.config
+    return { value, min, max }
+  }
 }
 
-module.exports = GaugeWidget
+exports.register = function (options) {
+  return new GaugeWidget(options)
+}

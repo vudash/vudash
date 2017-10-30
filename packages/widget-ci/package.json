@@ -2,7 +2,7 @@
   "name": "vudash-widget-ci",
   "version": "7.8.3",
   "description": "A CI Widget for Vudash",
-  "main": "widget.js",
+  "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },

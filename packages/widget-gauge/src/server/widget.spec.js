@@ -1,7 +1,7 @@
 'use strict'
 
 const chance = require('chance')()
-const Widget = require('./widget')
+const { register } = require('./widget')
 const { expect } = require('code')
 
 describe('widget', () => {
@@ -9,7 +9,6 @@ describe('widget', () => {
     let widget
 
     const config = {
-      schedule: chance.natural(),
       'initial-value': chance.integer({min: 0, max: 100}),
       min: chance.integer({min: 0, max: 100}),
       max: chance.integer({min: 0, max: 100}),
@@ -26,76 +25,43 @@ describe('widget', () => {
     }
 
     before(() => {
-      widget = new Widget().register(config)
-      
-    })
-
-    it('Overrides schedule', () => {
-      expect(widget.schedule).to.equal(config.schedule)
-      
+      widget = register(config)
     })
 
     it('Overrides initial value', () => {
       expect(widget.config.value).to.equal(config['initial-value'])
-      
     })
 
     it('Overrides minimum value', () => {
       expect(widget.config.min).to.equal(config.min)
-      
     })
 
     it('Overrides maximum value', () => {
       expect(widget.config.max).to.equal(config.max)
-      
     })
 
     it('Overrides description', () => {
       expect(widget.config.description).to.equal(config.description)
-      
     })
 
     it('Overrides pointer background colour', () => {
       expect(widget.config.indicatorBackgroundColour).to.equal(config.pointer['background-colour'])
-      
     })
 
     it('Overrides pointer background colour', () => {
       expect(widget.config.indicatorColour).to.equal(config.pointer['colour'])
-      
     })
 
     it('Overrides value background colour', () => {
       expect(widget.config.valueBackgroundColour).to.equal(config.value['background-colour'])
-      
     })
 
     it('Overrides value colour', () => {
       expect(widget.config.valueColour).to.equal(config.value['colour'])
-      
     })
 
     it('Overrides value font size', () => {
       expect(widget.config.valueFontSize).to.equal(config.value['font-size'])
-      
-    })
-  })
-
-  context('Configuration Defaults', () => {
-    let widget
-
-    const config = {
-      schedule: 32768
-    }
-
-    before(() => {
-      widget = new Widget().register(config)
-      
-    })
-
-    it('Overrides schedule', () => {
-      expect(widget.schedule).to.equal(32768)
-      
     })
   })
 })

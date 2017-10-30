@@ -9,7 +9,7 @@ exports.load = function (dashboard, widgets = [], datasources = {}) {
     const dashboardEmitter = dashboard.emitter
 
     const widget = Widget.create(widgetPath, { position, background, options })
-    widget.register()
+    widget.register(dashboardEmitter)
 
     datasourceEmitter.on('update', value => {
       const data = {

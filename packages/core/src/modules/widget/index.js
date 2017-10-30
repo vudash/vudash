@@ -16,12 +16,12 @@ class Widget {
     this.position = position
   }
 
-  register () {
+  register (emitter) {
     const { widget, name, componentPath } = loader.load(this.widgetPath)
     this.componentPath = componentPath
     this.name = name
 
-    this.widget = widget.register(this.options)
+    this.widget = widget.register(this.options, emitter)
   }
 
   update (value) {

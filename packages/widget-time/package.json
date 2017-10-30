@@ -2,7 +2,7 @@
   "name": "vudash-widget-time",
   "version": "7.8.3",
   "description": "Vudash time widget",
-  "main": "widget.js",
+  "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },

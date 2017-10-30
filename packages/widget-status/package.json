@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-status",
-  "main": "widget.js",
+  "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },

@@ -24,13 +24,14 @@ describe('widget', () => {
     let widget
     const register = stub()
     const options = { foo: 'bar' }
+    const dashboardEmitter = { xyz: 'abc' }
 
     beforeEach(() => {
       stub(loader, 'load').returns({
         widget: { register }
       })
       widget = create('xyz', { options })
-      widget.register()
+      widget.register(dashboardEmitter)
     })
 
     afterEach(() => {
@@ -43,6 +44,10 @@ describe('widget', () => {
 
     it('registers options with widget', () => {
       expect(register.firstCall.args[0]).to.equal(options)
+    })
+
+    it('passes the emitter to the register method', () => {
+      expect(register.firstCall.args[1]).to.equal(dashboardEmitter)
     })
   })
 
