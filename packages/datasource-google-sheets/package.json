@@ -2,7 +2,7 @@
   "name": "@vudash/datasource-google-sheets",
   "version": "7.7.0",
   "description": "Google Sheets datasource for Vudash",
-  "main": "plugin.js",
+  "main": "datasource.js",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },

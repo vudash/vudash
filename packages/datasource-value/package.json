@@ -5,7 +5,7 @@
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },
-  "main": "plugin.js",
+  "main": "datasource.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/vudash/vudash"

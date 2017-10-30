@@ -1,6 +1,8 @@
+'use strict'
+
 const path = require('path')
 const fs = require('fs')
-const Promise = require('bluebird').Promise
+const { Promise } = require('bluebird')
 const spreadsheetToJson = require('spreadsheet-to-json')
 const configValidator = require('../config-validator')
 

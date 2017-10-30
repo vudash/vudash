@@ -2,7 +2,7 @@
   "name": "@vudash/datasource-rest",
   "version": "7.11.0",
   "description": "REST Datasource for Vudash",
-  "main": "plugin.js",
+  "main": "datasource.js",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"  
   },
