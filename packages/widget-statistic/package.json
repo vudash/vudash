@@ -3,7 +3,8 @@
   "version": "7.10.0",
   "main": "./src/server",
   "scripts": {
-    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
+    "link": "npm link"
   },
   "dependencies": {
     "chartist": "^0.11.0",

@@ -3,7 +3,8 @@
   "version": "7.7.0",
   "description": "Value datasource for Vudash dashboards",
   "scripts": {
-    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
+    "link": "npm link"
   },
   "main": "datasource.js",
   "repository": {

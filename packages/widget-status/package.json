@@ -2,7 +2,8 @@
   "name": "vudash-widget-status",
   "main": "./src/server",
   "scripts": {
-    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
+    "link": "npm link"
   },
   "vudash": {
     "component": "./src/client/markup.html"

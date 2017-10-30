@@ -13,7 +13,8 @@
     "component": "./src/client/markup.html"
   },
   "scripts": {
-    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
+    "link": "npm link"
   },
   "repository": {
     "type": "git",

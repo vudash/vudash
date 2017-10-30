@@ -187,13 +187,14 @@ describe('dashboard', () => {
     context('when no datasources exist', () => {
       it('succeeds silently', () => {
         dashboard.datasources = {}
+        dashboard.widgets = []
         expect(() => {
           dashboard.destroy()
         }).not.to.throw()
       })
     })
 
-    context.only('with list of widgets', () => {
+    context('with list of widgets', () => {
       const widgets = [
         { destroy: stub() },
         { }
@@ -213,6 +214,7 @@ describe('dashboard', () => {
     context('when no widgets exist', () => {
       it('succeeds silently', () => {
         dashboard.datasources = {}
+        dashboard.widgets = []
         expect(() => {
           dashboard.destroy()
         }).not.to.throw()

@@ -30,7 +30,8 @@
     "lint": "../../node_modules/.bin/standard",
     "watch": "BROWSER_SYNC=true ../../node_modules/.bin/nodemon -e html,js .",
     "start": "./bin/vudash.js",
-    "test": "PORT=3418 NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js"
+    "test": "PORT=3418 NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
+    "link": "npm link"
   },
   "bin": {
     "vudash": "bin/vudash.js"
