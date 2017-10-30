@@ -5,6 +5,6 @@ const { validation } = require('./src/datasource-validation')
 
 exports.validation = validation
 
-exports.register = function (host, options) {
+exports.register = function (options) {
   return new RandomTransport(options)
 }

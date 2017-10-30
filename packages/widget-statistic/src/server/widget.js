@@ -5,35 +5,22 @@ const { sprintf } = require('sprintf-js')
 const defaults = {
   description: 'Statistics',
   'font-ratio': 4,
-  schedule: 60000,
   format: '%s'
 }
 
 class StatisticWidget {
 
-  register (options, emit, transport) {
-    const config = this.config = Object.assign({}, defaults, options)
-    this.transport = transport
-
-    return {
-      config,
-      schedule: config.schedule,
-
-      job: this.job.bind(this)
-    }
+  constructor (options) {
+    this.config = Object.assign({}, defaults, options)
   }
 
-  job () {
-    return this.transport
-    .fetch()
-    .then((result) => {
-      if (Array.isArray(result)) {
-        const currentValue = result[result.length - 1]
-        return { value: this._format(currentValue), history: result }
-      }
+  update (value) {
+    if (Array.isArray(value)) {
+      const currentValue = value.pop()
+      return { value: this._format(currentValue), history: value }
+    }
 
-      return { value: this._format(result) }
-    })
+    return { value: this._format(value) }
   }
 
   _format (value) {
@@ -42,4 +29,6 @@ class StatisticWidget {
 
 }
 
-module.exports = StatisticWidget
+exports.register = function () {
+  return new StatisticWidget()
+}

@@ -22,7 +22,7 @@ function register (registrationFn, configuration) {
   return registrationFn(configuration)
 }
 
-function initialise (registrationFn, configuration, schedule) {
+function initialise (registrationFn, configuration = {}, schedule) {
   const datasource = register(registrationFn, configuration)
 
   if (typeof datasource.fetch !== 'function') {

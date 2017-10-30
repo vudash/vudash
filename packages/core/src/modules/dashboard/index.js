@@ -4,8 +4,8 @@ const { reach } = require('hoek')
 const Emitter = require('../emitter')
 const id = require('../id-gen')
 const parser = require('./parser')
-const Widget = require('../widget')
 const datasourceLoader = require('../datasource-loader')
+const widgetBinder = require('../widget-binder')
 const bundler = require('./bundler')
 const compiler = require('./compiler')
 
@@ -22,21 +22,15 @@ class Dashboard {
   }
 
   loadDatasources () {
-    const datasources = reach(this, 'descriptor.datasources')
-    this.datasources = datasourceLoader.load(datasources)
+    const datasources = reach(this, 'descriptor.datasources', { default: {} })
+    const hasDatasources = Object.keys(datasources).length
+    this.datasources = hasDatasources ? datasourceLoader.load(datasources) : {}
   }
 
   loadWidgets () {
-    const widgets = reach(this, 'descriptor.widgets')
-    this.widgets = widgets.map(descriptor => {
-      const { position, background, datasource, widget, options } = descriptor
-
-      return new Widget(this, {
-        position,
-        background,
-        datasource
-      }, widget, options)
-    })
+    const widgets = reach(this, 'descriptor.widgets', { default: [] })
+    const hasWidgets = Object.keys(widgets).length
+    this.widgets = hasWidgets ? widgetBinder.load(this, widgets, this.datasources) : {}
   }
 
   destroy () {
@@ -47,25 +41,11 @@ class Dashboard {
     })
   }
 
-  // TODO: remove
-  emitResult (widget, emitter) {
-    return widget.job.script().then((result) => {
-      result._updated = new Date()
-      emitter.emit(`${widget.id}:update`, result)
-      emitter = null
-    })
-    .catch((err) => {
-      console.error(`Error in widget ${widget.descriptor} (${widget.id})`, err)
-      emitter.emit(widget.id, { error: { message: (err && err.message) || 'An unknown error occured' } })
-      emitter = null
-    })
-  }
-
   toRenderModel () {
     const model = {
       name: this.name,
       widgets: this.widgets.map((widget) => {
-        return widget.toRenderModel()
+        return widget.toRenderModel(this.layout)
       })
     }
 

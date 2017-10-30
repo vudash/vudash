@@ -94,7 +94,9 @@ export default {
   },
 
   methods: {
-    update ({ value, history }) {
+    update ({ data, meta }) {
+      const { value, history } = data
+
       if (history) {
         const chartData = { series: [history] }
         this.chart = this.chart || this.create(chartData)
@@ -103,6 +105,7 @@ export default {
       const updates = { value, history }
       this.set(updates)
     },
+
     create (chartData) {
       const chart = new Chartist.Line(this.refs.chart, chartData, options)
       chart.on('created', () => {

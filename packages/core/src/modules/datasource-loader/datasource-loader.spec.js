@@ -7,7 +7,7 @@ const resolver = require('../resolver')
 const binder = require('../datasource-binder')
 const validator = require('../config-validator')
 
-describe.only('core/datasource-loader', () => {
+describe('datasource-loader', () => {
   describe('datasource prototype', () => {
     const descriptor = {
       someDatasource: {
@@ -63,6 +63,36 @@ describe.only('core/datasource-loader', () => {
       afterEach(() => {
         resolver.resolve.restore()
       })
+    })
+  })
+
+  context('no datasource options specified', () => {
+    const descriptor = {
+      someDatasource: {
+        module: '../some/path',
+        schedule: 1000
+      }
+    }
+
+    const someDatasource = {
+      register: stub()
+    }
+
+    beforeEach(() => {
+      stub(resolver, 'resolve').returns(someDatasource)
+      datasourceLoader.load(descriptor)
+    })
+
+    it('should call register', () => {
+      expect(someDatasource.register.callCount).to.equal(1)
+    })
+
+    it('should pass empty options', () => {
+      expect(someDatasource.register.firstCall.args[0]).to.equal({})
+    })
+
+    afterEach(() => {
+      resolver.resolve.restore()
     })
   })
 

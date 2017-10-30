@@ -4,57 +4,54 @@ const id = require('../id-gen')
 const WidgetPosition = require('./widget-position')
 const loader = require('./loader')
 const renderer = require('./renderer')
-const datasource = require('../datasource')
 
 class Widget {
-
-  constructor (dashboard, widgetConfig, widgetName, options = {}) {
-    const { datasource: datasourceName, position, background } = widgetConfig
+  constructor (widgetPath, config) {
+    const { position, background, options = {} } = config
 
     this.id = id()
-    this.datasource = datasource.load(widgetName, dashboard, datasourceName)
-    this.dashboard = dashboard
+    this.widgetPath = widgetPath
+    this.options = options
     this.background = background
-    this.position = new WidgetPosition(dashboard.layout, position)
-    this.config = options
+    this.position = position
+  }
 
-    const { Module, name, component } = loader.load(widgetName)
-    this.componentPath = component
+  register () {
+    const { widget, name, componentPath } = loader.load(this.widgetPath)
+    this.componentPath = componentPath
     this.name = name
 
-    const buildable = new Module().register(
-      options,
-      this.dashboard.emitter.emit.bind(this.dashboard.emitter),
-      this.datasource
-    )
-    this.build(buildable)
+    this.widget = widget.register(this.options)
   }
 
-  build (module) {
-    this.job = { script: module.job, schedule: module.schedule }
-    this.config = module.config || {}
+  update (value) {
+    return this.widget.update(value)
   }
 
-  toRenderModel () {
+  toRenderModel (dashboardLayout) {
     const {
       id,
       name,
-      config,
+      options,
       componentPath,
-      position,
-      background
+      background,
+      position
     } = this
+
+    const widgetPosition = new WidgetPosition(dashboardLayout, position)
 
     return {
       id,
       name,
       componentPath,
       markup: renderer.renderHtml(id),
-      css: renderer.renderStyles(id, position, background),
-      js: renderer.renderScript(id, name, config)
+      css: renderer.renderStyles(id, widgetPosition, background),
+      js: renderer.renderScript(id, name, options)
     }
   }
 
 }
 
-module.exports = Widget
+exports.create = function (widgetPath, config) {
+  return new Widget(widgetPath, config)
+}

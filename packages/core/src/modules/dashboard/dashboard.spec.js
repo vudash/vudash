@@ -10,6 +10,7 @@ const resolver = require('../resolver')
 const cheerio = require('cheerio')
 const bundler = require('./bundler')
 const compiler = require('./compiler')
+const datasourceLoader = require('../datasource-loader')
 const { stub } = require('sinon')
 const { expect } = require('code')
 
@@ -37,24 +38,6 @@ describe('modules.dashboard', () => {
 
   const position = { x: 0, y: 0, w: 0, h: 0 }
 
-  context('Local module', () => {
-    let dashboard
-    before(() => {
-      const descriptor = Object.assign({}, baseDashboard, {
-        widgets: [
-          { position, widget: 'test/resources/widgets/example' }
-        ]
-      })
-
-      dashboard = new Dashboard(descriptor, io)
-    })
-
-    it('loads correctly', () => {
-      expect(dashboard.widgets.length).to.equal(1)
-      expect(dashboard.widgets[0]).to.be.an.instanceOf(Widget)
-    })
-  })
-
   context('Layout', () => {
     let dashboard
 
@@ -78,43 +61,79 @@ describe('modules.dashboard', () => {
     })
   })
 
-  context('Plugin registration', () => {
-    let dashboard
+  describe('Datasources', () => {
+    context('no datasources specified', () => {
+      it('loads without issue', () => {
+        const descriptor = DashboardBuilder
+          .create()
+          .build()
 
-    const datasourceOptions = { foo: 'bar' }
-    const descriptor = DashboardBuilder
-      .create()
-      .addPlugin('some-modulename', datasourceOptions)
-      .build()
-    const pluginStub = {}
-
-    before(() => {
-      stub(resolver, 'resolve')
+        const instance = new Dashboard(descriptor, io)
+        expect(() => {
+          instance.loadDatasources()
+        }).not.to.throw()
+      })
     })
 
-    beforeEach(() => {
-      resolver.resolve.returns(pluginStub)
-      pluginStub.register = stub()
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
+    context('with datasources', () => {
+      const datasources = { foo: 'bar' }
+
+      beforeEach(() => {
+        stub(datasourceLoader, 'load').returns(datasources)
+      })
+
+      afterEach(() => {
+        datasourceLoader.load.restore()
+      })
+
+      it('loads without issue', () => {
+        const descriptor = DashboardBuilder
+          .create()
+          .addDatasource({ baz: 'qux' })
+          .build()
+
+        const instance = new Dashboard(descriptor, io)
+        instance.loadDatasources()
+        expect(instance.datasources).to.equal(datasources)
+      })
+    })
+  })
+
+  context('Widgets', () => {
+    context('no widgets specified', () => {
+      it('loads without issue', () => {
+        const descriptor = DashboardBuilder
+          .create()
+          .build()
+
+        const instance = new Dashboard(descriptor, io)
+        expect(() => {
+          instance.loadWidgets()
+        }).not.to.throw()
+      })
     })
 
-    after(() => {
-      resolver.resolve.restore()
-      dashboard.destroy()
-    })
+    context('with widgets', () => {
+      const widgets = [{ foo: 'bar' }]
 
-    it('with no plugins stanza', () => {
-      const dashboardWithoutPlugins = DashboardBuilder
-        .create()
-        .build()
-      const instance = new Dashboard(dashboardWithoutPlugins, io)
-      const fn = () => { instance.initialise() }
-      expect(fn).not.to.throw()
-    })
+      beforeEach(() => {
+        stub(widgetLoader, 'load').returns(widgets)
+      })
 
-    it('Asks each plugin to register', () => {
-      expect(pluginStub.register.callCount).to.equal(1)
+      afterEach(() => {
+        widgetLoader.load.restore()
+      })
+
+      it('loads without issue', () => {
+        const descriptor = DashboardBuilder
+          .create()
+          .addWidget({ baz: 'qux' })
+          .build()
+
+        const instance = new Dashboard(descriptor, io)
+        instance.loadWidgets()
+        expect(instance.widgets).to.equal(widgets)
+      })
     })
   })
 

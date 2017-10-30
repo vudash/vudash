@@ -14,7 +14,8 @@ function load (cache, name, io) {
 
   const descriptor = require(path)
   const dashboard = new Dashboard(descriptor, io)
-  dashboard.initialise()
+  dashboard.loadDatasources()
+  dashboard.loadWidgets()
 
   cache[name] = dashboard
   return dashboard

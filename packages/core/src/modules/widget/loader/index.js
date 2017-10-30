@@ -1,8 +1,7 @@
 'use strict'
 
 const { reach } = require('hoek')
-const { dirname, join } = require('path')
-const { existsSync } = require('fs')
+const { join } = require('path')
 const resolver = require('../../resolver')
 const { upperCamel } = require('../../upper-camel')
 const { ConfigurationError } = require('../../../errors')
@@ -21,12 +20,12 @@ function discoverComponentPath (packagePath, packageJson) {
 
 function readPackage (directory) {
   const packageBasePath = resolver.discover(directory)
-  const Module = require(packageBasePath)
+  const widget = require(packageBasePath)
   const packageJson = require(join(packageBasePath, 'package.json'))
   const componentPath = discoverComponentPath(packageBasePath, packageJson)
 
   const name = upperCamel(packageJson.name)
-  return { Module, name, component: componentPath }
+  return { widget, name, componentPath }
 }
 
 function readComponentStanza (packageJson) {

@@ -1,164 +1,153 @@
 'use strict'
 
-const Widget = require('modules/widget')
+const { create } = require('modules/widget')
 const { stub } = require('sinon')
 const loader = require('./loader')
-const datasource = require('../datasource')
 const { expect } = require('code')
+const WidgetPosition = require('./widget-position')
+const renderer = require('./renderer')
 
 describe('widget', () => {
-  const position = { x: 0, y: 0, w: 1, h: 1 }
-  const renderOptions = { position }
+  describe('#create()', () => {
+    it('has an auto-generated id', () => {
+      const widget = create('xyz', {})
+      expect(widget.id).to.exist()
+    })
 
-  context('Datasources', () => {
-    const dashboard = {
-      layout: { rows: 4, columns: 5 },
-      emitter: { emit: stub() },
-      datasources: {
-        'xxx': {
-          constructor: () => {},
-          options: { foo: 'bar' }
-        }
-      }
-    }
+    it('has an auto-generated id', () => {
+      const widget = create('xyz', {})
+      expect(widget.options).to.equal({})
+    })
+  })
+
+  describe('#register()', () => {
+    let widget
+    const register = stub()
+    const options = { foo: 'bar' }
 
     beforeEach(() => {
       stub(loader, 'load').returns({
-        Module: function () {
-          return {
-            register: stub().returns({
-              job: stub()
-            })
-          }
-        },
-        html: '<h1></h1>',
-        name: 'xxx'
+        widget: { register }
       })
-      stub(datasource, 'load')
+      widget = create('xyz', { options })
+      widget.register()
     })
 
     afterEach(() => {
-      datasource.load.restore()
       loader.load.restore()
     })
 
-    it('Registers widget data source', () => {
-      const loadedDatasource = { foo: 'bar' }
-      datasource.load.returns(loadedDatasource)
+    it('widget is registered', () => {
+      expect(register.callCount).to.equal(1)
+    })
 
-      const widget = new Widget(dashboard, renderOptions, 'abcdef', {})
-      const ds = widget.datasource
-      expect(ds).to.equal(loadedDatasource)
+    it('registers options with widget', () => {
+      expect(register.firstCall.args[0]).to.equal(options)
     })
   })
 
-  context('Widget construction', () => {
-    const dashboard = {
-      layout: { rows: 4, columns: 5 },
-      emitter: { emit: stub() }
-    }
+  describe('update', () => {
+    let widget
+    const data = { foo: 'bar' }
 
-    it('Barf on unknown widget', () => {
-      const badModuleName = 'test/resources/widgets/unknown'
-      function fn () {
-        return new Widget(dashboard, renderOptions, badModuleName)
-      }
-      expect(fn).to.throw(Error, /could not be resolved/)
+    beforeEach(() => {
+      widget = create('xyz', {})
+      widget.widget = { update: stub() }
+      widget.update(data)
     })
 
-    it('Gains a dynamic id', () => {
-      const module = 'test/resources/widgets/example'
-      expect(new Widget(dashboard, renderOptions, module).id).to.exist()
+    it('update calls widget update', () => {
+      expect(widget.widget.update.callCount).to.equal(1)
     })
 
-    it('Reads widget descriptor properties', () => {
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
-      const job = widget.job
-      expect(job).to.include({
-        schedule: 1000
+    it('calls with update data', () => {
+      expect(widget.widget.update.firstCall.args[0]).to.equal(data)
+    })
+  })
+
+  describe('#toRenderModel()', () => {
+    let widget
+    let renderModel
+
+    const dashboardLayout = { rows: 1, columns: 1 }
+    const background = '#fff'
+    const options = { foo: 'bar' }
+
+    beforeEach(() => {
+      stub(renderer, 'renderHtml').returns('html')
+      stub(renderer, 'renderStyles').returns('css')
+      stub(renderer, 'renderScript').returns('js')
+
+      widget = create('xxx', { options, background })
+      widget.id = 'my-id'
+      widget.name = 'some-widget'
+      widget.componentPath = 'xyz'
+      renderModel = widget.toRenderModel(dashboardLayout)
+    })
+
+    afterEach(() => {
+      renderer.renderHtml.restore()
+      renderer.renderStyles.restore()
+      renderer.renderScript.restore()
+    })
+
+    describe('renders HTML', () => {
+      it('renders html', () => {
+        expect(renderer.renderHtml.callCount).to.equal(1)
       })
-      expect(job.script).to.be.a.function() 
-    })
 
-    context('Render model', () => {
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
-      const { js } = widget.toRenderModel()
-
-      it('Converts widget to render model', () => {
-        const widgetId = widget.id
-        expect(js).to.contain(`const widget_${widgetId} = new VudashWidgetExample({`)
-        expect(js).to.contain(`target: document.getElementById("widget-container-${widgetId}")`)
-        expect(js).to.contain('data: { config: {} }')
-      })
-    })
-
-    it('Binds events on the client side', () => {
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
-      const eventBinding = `
-        socket.on('${widget.id}:update', ($data) => {
-      `.trim()
-      const rendered = widget.toRenderModel().js
-      expect(rendered).to.include(eventBinding)
-    })
-
-    it('Binds component update', () => {
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
-      const componentBinding = `widget_${widget.id}.update($data)`
-      const rendered = widget.toRenderModel().js
-      expect(rendered).to.include(componentBinding)
-    })
-
-    it('Loads jobs', () => {
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/example')
-      const job = widget.job
-      expect(job.schedule).to.equal(1000)
-
-    })
-
-    it('Overrides config for jobs', () => {
-      const overrides = {
-        foo: 'baz',
-        working: true
-      }
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/configurable', overrides)
-      return widget.job.script().then((rawConfig) => {
-        expect(rawConfig).to.equal(overrides)
+      it('passes id to html renderer', () => {
+        expect(renderer.renderHtml.firstCall.args[0]).to.equal(widget.id)
       })
     })
 
-    it('Does not override all config for jobs', () => {
-      const overrides = {
-        working: true
-      }
-      const widget = new Widget(dashboard, renderOptions, 'test/resources/widgets/configurable', overrides)
-      return widget.job.script().then((rawConfig) => {
-        expect(rawConfig).to.equal({
-          foo: 'bar',
-          working: true
+    describe('renders styles', () => {
+      it('renders css', () => {
+        expect(renderer.renderStyles.callCount).to.equal(1)
+      })
+
+      it('passes id to style renderer', () => {
+        expect(renderer.renderStyles.firstCall.args[0]).to.equal(widget.id)
+      })
+
+      it('passes position to style renderer', () => {
+        expect(renderer.renderStyles.firstCall.args[1]).to.be.an.instanceOf(WidgetPosition)
+      })
+
+      it('passes background to style renderer', () => {
+        expect(renderer.renderStyles.firstCall.args[2]).to.equal(background)
+      })
+    })
+
+    describe('renders scripts', () => {
+      it('renders js', () => {
+        expect(renderer.renderScript.callCount).to.equal(1)
+      })
+
+      it('passes id to style renderer', () => {
+        expect(renderer.renderScript.firstCall.args[0]).to.equal(widget.id)
+      })
+
+      it('passes position to style renderer', () => {
+        expect(renderer.renderScript.firstCall.args[1]).to.equal(widget.name)
+      })
+
+      it('passes background to style renderer', () => {
+        expect(renderer.renderScript.firstCall.args[2]).to.equal(options)
+      })
+    })
+
+    describe('rendered model', () => {
+      it('outputs model for renderer', () => {
+        expect(renderModel).to.equal({
+          id: widget.id,
+          name: widget.name,
+          componentPath: widget.componentPath,
+          markup: 'html',
+          css: 'css',
+          js: 'js'
         })
       })
-    })
-  })
-
-  context('Event Emitter', () => {
-    const dashboard = {
-      layout: { rows: 4, columns: 5 },
-      emitter: { emit: stub() }
-    }
-
-    let expectedEmitFn
-
-    class MyWidget {
-      register (options, emitter) {
-        expectedEmitFn = emitter
-        return {}
-      }
-    }
-
-    it('Recieves an event emitter on construction', () => {
-      const widget = new Widget(dashboard, renderOptions, { html: 'hi', name: 'VudashMyWidget', Module: MyWidget })
-      expect(widget).to.exist()
-      expect(expectedEmitFn).to.be.a.function()
     })
   })
 })
