@@ -49,7 +49,6 @@ class Widget {
       js: renderer.renderScript(id, name, options)
     }
   }
-
 }
 
 exports.create = function (widgetPath, config) {

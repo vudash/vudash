@@ -54,7 +54,8 @@ describe('widget-binder', () => {
   })
 
   context.skip('widgets', () => {
-    it('calls register on each widget')
-    const widgets = load({}, [])
+    it('calls register on each widget', () => {
+
+    })
   })
 })

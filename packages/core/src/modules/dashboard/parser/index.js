@@ -43,7 +43,6 @@ const dashboardSchema = Joi.object({
 }).description('Dashboard Descriptor')
 
 class DescriptorParser {
-
   parse (json) {
     const result = Joi.validate(json, dashboardSchema, { allowUnknown: true })
     if (result.error) {

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const { dirname } = require('path')
 const create = require('../src/cli/create')
 const help = require('../src/cli/help')
 const logo = require('../src/cli/logo')

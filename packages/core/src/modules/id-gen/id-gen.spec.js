@@ -8,6 +8,5 @@ describe('id-gen', () => {
     expect(id())
       .to.exist()
       .and.to.be.a.string()
-    
   })
 })

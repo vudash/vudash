@@ -33,7 +33,6 @@ describe('module.emitter', () => {
     const recentEvents = emitter.getRecentEvents()
     expect(Object.keys(recentEvents)).to.have.length(3)
     expect(recentEvents.def).to.equal({id: 'pqr'})
-    
   })
 
   it('On connect, socket is joined to a room', () => {
@@ -53,5 +52,4 @@ describe('module.emitter', () => {
     expect(emit.secondCall.args).to.equal(['def', {id: 'pqr'}])
     expect(emit.thirdCall.args).to.equal(['ghi', {id: 'ghi'}])
   })
-
 })

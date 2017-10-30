@@ -1,25 +1,25 @@
 'use strict'
 
-if (typeof Object.assign != 'function') {
+if (typeof Object.assign !== 'function') {
   Object.assign = function (target, varArgs) {
-    'use strict';
+    'use strict'
     if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object');
+      throw new TypeError('Cannot convert undefined or null to object')
     }
 
-    var to = Object(target);
+    var to = Object(target)
 
     for (var index = 1; index < arguments.length; index++) {
-      var nextSource = arguments[index];
+      var nextSource = arguments[index]
 
       if (nextSource != null) {
         for (var nextKey in nextSource) {
           if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-            to[nextKey] = nextSource[nextKey];
+            to[nextKey] = nextSource[nextKey]
           }
         }
       }
     }
-    return to;
-  };
+    return to
+  }
 }

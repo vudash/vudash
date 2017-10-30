@@ -10,11 +10,11 @@ describe('widget/renderer', () => {
     const id = 'abc'
     const config = { a: 'b' }
     let rendered
-    
+
     before(() => {
       rendered = renderer.renderScript(id, 'AbcWidget', config)
     })
-  
+
     it('update method is rendered', () => {
       expect(rendered).to.include("socket.on('abc:update', ($data) => {")
     })

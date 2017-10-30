@@ -3,7 +3,6 @@
 const loader = require('.')
 const locator = require('./locator')
 const DatasourceBuilder = require('util/datasource.builder')
-const Joi = require('joi')
 const validator = require('./validator')
 const { expect } = require('code')
 const { stub } = require('sinon')

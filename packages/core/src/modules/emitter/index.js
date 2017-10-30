@@ -3,7 +3,6 @@
 const chalk = require('chalk')
 
 class Emitter {
-
   constructor (socketio, room) {
     this.io = socketio
     this.room = room

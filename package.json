@@ -22,19 +22,5 @@
   },
   "engines": {
     "node": ">=8.x"
-  },
-  "standard": {
-    "globals": [
-      "describe",
-      "context",
-      "it",
-      "sinon",
-      "expect",
-      "before",
-      "after",
-      "beforeEach",
-      "afterEach",
-      "resource"
-    ]
   }
 }

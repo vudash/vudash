@@ -22,7 +22,7 @@ describe('datasource.validator', () => {
         options
       ).to.equal({ a: 'b' })
     })
-  
+
     it('validation is not called as it does not exist', () => {
       expect(configValidator.validate.callCount).to.equal(0)
     })

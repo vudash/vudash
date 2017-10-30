@@ -3,7 +3,6 @@
 const WidgetBuilder = require('./widget.builder')
 
 class DashboardBuilder {
-
   constructor () {
     this.overrides = {
       widgets: []

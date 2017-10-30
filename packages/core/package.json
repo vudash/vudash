@@ -74,5 +74,16 @@
     "svelte": "^1.26.2",
     "unhandled-rejection": "^1.0.0",
     "vision": "^4.1.1"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }
