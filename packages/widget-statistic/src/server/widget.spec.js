@@ -1,79 +1,75 @@
 'use strict'
 
 const { expect } = require('code')
-const Widget = require('./widget')
-const { stub } = require('sinon')
+const { register } = require('./widget')
 
 describe('widget', () => {
   it('Uses config', () => {
-    const config = { schedule: 25000 }
-    const widget = new Widget()
-    const configuration = widget.register(config)
-    expect(configuration.schedule).to.equal(config.schedule)
+    const config = { foo: 'bar' }
+    const configuration = register(config)
+    expect(configuration.config.foo).to.equal(config.foo)
+  })
+
+  it('Has default config values', () => {
+    const config = {}
+    const configuration = register(config)
+    expect(configuration.config.description).to.equal('Statistics')
+  })
+
+  it('Merges config with default values', () => {
+    const config = { description: 'hello' }
+    const configuration = register(config)
+    expect(configuration.config.description).to.equal(config.description)
   })
 
   it('Will convert given value to string', () => {
-    const transport = { fetch: stub().resolves([1, 2]) }
-    const widget = new Widget()
-    const configuration = widget.register({}, null, transport)
-    return configuration
-    .job()
-    .then((output) => {
-      expect(output.value).to.equal('2')
-    })
+    const configuration = register({})
+    const { value } = configuration.update([1, 2])
+    expect(value).to.equal('2')
   })
 
   context('Formatting', () => {
     it('Will use default format value if none specified', () => {
-      const transport = { fetch: stub().resolves('things') }
-      const widget = new Widget()
-      const configuration = widget.register({}, null, transport)
-      return configuration
-      .job()
-      .then((output) => {
-        expect(output).to.equal({ value: 'things' })
-      })
+      const configuration = register({})
+      const output = configuration.update('things')
+      expect(output).to.equal({ value: 'things' })
     })
 
     it('Will format according to format config', () => {
-      const transport = { fetch: stub().resolves(34) }
-      const widget = new Widget()
-      const configuration = widget.register({ format: '%d%%' }, null, transport)
-      return configuration
-      .job()
-      .then((output) => {
-        expect(output).to.equal({ value: '34%' })
-      })
+      const configuration = register({ format: '%d%%' })
+      const output = configuration.update(34)
+      expect(output).to.equal({ value: '34%' })
     })
   })
 
   context('Colours', () => {
     it('With provided colour', () => {
       const conf = { colour: '#fff' }
-      const widget = new Widget()
-      const { config } = widget.register(conf)
+      const { config } = register(conf)
       expect(config.colour).to.equal('#fff')
     })
 
     it('No colour passed', () => {
-      const widget = new Widget()
-      const { config } = widget.register({})
+      const { config } = register({})
       expect(config.colour).not.to.exist()
     })
   })
 
   context('Arrays', () => {
-    it("if it's an array, provide params for a graph", () => {
-      const values = [1, 2, 3, 4, 5, 6, 7]
-      const transport = { fetch: stub().resolves(values) }
-      const widget = new Widget()
-      const configuration = widget.register({}, null, transport)
-      return configuration
-      .job()
-      .then((output) => {
-        expect(output.value).to.equal('7')
-        expect(output.history).to.equal(values)
-      })
+    const values = [1, 2, 3, 4, 5, 6, 7]
+    let output
+
+    beforeEach(() => {
+      const configuration = register({})
+      output = configuration.update(values)
+    })
+
+    it('uses first value as display value', () => {
+      expect(output.value).to.equal('7')
+    })
+
+    it('if data is an array, provide params for a graph', () => {
+      expect(output.history).to.equal(values)
     })
   })
 })
