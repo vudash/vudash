@@ -7,6 +7,7 @@ module.exports = {
   repo: Joi.string().required().description('Repository Name'),
   user: Joi.string().required().description('Account/Organisation Name'),
   branch: Joi.string().optional().description('Branch name'),
+  schedule: Joi.number().optional().default(60000).description('Update frequency (ms)'),
   provider: Joi.string().required().only(engineFactory.availableEngines).description('CI Provider name'),
   sounds: Joi.object({
     passed: Joi.string().optional().description('Sound to play on build pass'),

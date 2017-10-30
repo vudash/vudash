@@ -1,13 +1,23 @@
 'use strict'
 
 class HealthWidget {
-  constructor () {
+  constructor (options, emitter) {
+    this.emitter = emitter
     this.on = false
+
+    this.timer = setInterval(function () {
+      this.run()
+    }.bind(this), this.config.schedule)
+    this.run()
   }
 
-  update () {
+  run () {
     this.on = !this.on
-    return this.on
+    this.emitter.emit('update', this.on)
+  }
+
+  destroy () {
+    clearInterval(this.timer)
   }
 }
 

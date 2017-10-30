@@ -172,6 +172,7 @@ describe('dashboard', () => {
           foo: { timer: timer1 },
           bar: { timer: timer2 }
         }
+        dashboard.widgets = []
         clock.tick(1)
       })
 
@@ -184,6 +185,32 @@ describe('dashboard', () => {
     })
 
     context('when no datasources exist', () => {
+      it('succeeds silently', () => {
+        dashboard.datasources = {}
+        expect(() => {
+          dashboard.destroy()
+        }).not.to.throw()
+      })
+    })
+
+    context.only('with list of widgets', () => {
+      const widgets = [
+        { destroy: stub() },
+        { }
+      ]
+
+      beforeEach(() => {
+        dashboard.widgets = widgets
+        dashboard.datasources = {}
+      })
+
+      it('calls destroy on widgets which support it', () => {
+        dashboard.destroy()
+        expect(widgets[0].destroy.callCount).to.equal(1)
+      })
+    })
+
+    context('when no widgets exist', () => {
       it('succeeds silently', () => {
         dashboard.datasources = {}
         expect(() => {

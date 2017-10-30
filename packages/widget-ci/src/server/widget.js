@@ -16,20 +16,29 @@ class CiWidget {
 
     const Provider = engineFactory.getEngine(this.config.provider)
     this.provider = new Provider(this.config)
+
+    this.timer = setInterval(function () {
+      this.run()
+    }.bind(this), this.config.schedule)
+    this.run()
   }
 
-  update (data) {
+  run () {
     return this.provider
     .fetchBuildStatus()
     .then((status) => {
       const sound = Hoek.reach(this.config, `sounds.${status}`)
       if (sound && this.previousState !== status) {
-        this.emitter.emit('audio:play', { data: sound })
+        this.emitter.emit('plugin', 'audio:play', { data: sound })
       }
 
       this.previousState = status
-      return { status }
+      this.emitter.emit('update', { status })
     })
+  }
+
+  destroy () {
+    clearInterval(this.timer)
   }
 }
 

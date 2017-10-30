@@ -15,7 +15,7 @@ exports.parseAlarms = function (config, emitter) {
       return new CronJob({
         cronTime: alarm.expression,
         onTick: function () {
-          this.emitter.emit('audio:play', {
+          this.emitter.emit('plugin', 'audio:play', {
             data: this.options.data
           })
         },

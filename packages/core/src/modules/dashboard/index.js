@@ -39,6 +39,12 @@ class Dashboard {
     datasources.forEach(datasource => {
       clearInterval(datasource.timer)
     })
+
+    const widgets = Object.values(this.widgets)
+    console.log(`Dashboard ${this.id} attempting cleanup of ${widgets.length} widgets.`)
+    widgets.forEach(widget => {
+      widget.hasOwnProperty('destroy') && widget.destroy()
+    })
   }
 
   toRenderModel () {
