@@ -27,9 +27,22 @@ describe('widget/loader', () => {
   })
 
   context('Valid Component', () => {
-    it('reads component metadata', () => {
-      const { component } = loader.load('test/resources/widgets/example')
-      expect(component).not.to.equal(undefined)
+    let component
+
+    beforeEach(() => {
+      component = loader.load('test/resources/widgets/example')
+    })
+
+    it('returns registration method', () => {
+      expect(component.widget.register).to.be.a.function()
+    })
+
+    it('returns markup path', () => {
+      expect(component.componentPath).to.endWith('test/resources/widgets/example/markup.html')
+    })
+
+    it('returns registration method', () => {
+      expect(component.name).to.exist().and.to.equal('VudashWidgetExample')
     })
   })
 })

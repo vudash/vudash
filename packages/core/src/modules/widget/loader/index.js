@@ -38,7 +38,10 @@ function readComponentStanza (packageJson) {
   return componentPath
 }
 
-exports.load = function (descriptor) {
-  if (typeof descriptor === 'object') { return descriptor }
-  return readPackage(descriptor)
+exports.load = function (pathOrDescriptor) {
+  const isPreParsed = typeof pathOrDescriptor === 'object'
+  if (isPreParsed) {
+    return pathOrDescriptor
+  }
+  return readPackage(pathOrDescriptor)
 }

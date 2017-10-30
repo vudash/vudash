@@ -1,24 +1,21 @@
-const Promise = require('bluebird').Promise
+'use strict'
 
+const { Promise } = require('bluebird')
 const defaults = {
   foo: 'bar',
   working: false
 }
 
-class ConfigurableWidget {
+class ExampleWidget {
+  constructor (options) {
+    this.options = Object.assign({}, defaults, options)
+  }
 
-  register (options) {
-    const config = Object.assign({}, defaults, options)
-
-    return {
-      config,
-      schedule: 10000,
-
-      job: () => {
-        return Promise.resolve(config)
-      }
-    }
+  update (data) {
+    return Promise.resolve(this.options)
   }
 }
 
-module.exports = ConfigurableWidget
+exports.register = (options) => {
+  return new ExampleWidget(options)
+}

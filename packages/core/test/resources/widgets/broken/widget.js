@@ -1,13 +1,5 @@
 'use strict'
 
-class BrokenWidget {
-
-  register () {
-    return {
-      markup: 'markup.html'
-    }
-  }
-
+exports.register = () => {
+  return {}
 }
-
-module.exports = BrokenWidget

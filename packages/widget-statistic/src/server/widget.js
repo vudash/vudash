@@ -9,7 +9,6 @@ const defaults = {
 }
 
 class StatisticWidget {
-
   constructor (options) {
     this.config = Object.assign({}, defaults, options)
   }
@@ -29,6 +28,6 @@ class StatisticWidget {
 
 }
 
-exports.register = function () {
-  return new StatisticWidget()
+exports.register = function (options) {
+  return new StatisticWidget(options)
 }

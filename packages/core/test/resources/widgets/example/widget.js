@@ -1,22 +1,14 @@
-const Promise = require('bluebird').Promise
+'use strict'
+
+const { Promise } = require('bluebird')
 
 class ExampleWidget {
-
-  register () {
-    return {
-      schedule: 1000,
-      markup: 'markup.html',
-      clientJs: 'client.js',
-      css: 'style.css',
-      update: 'update.js',
-
-      job: () => {
-        return Promise.resolve({x: 'y'})
-      }
-
-    }
+  update (data) {
+    return Promise.resolve({x: 'y'})
   }
-
 }
 
-module.exports = ExampleWidget
+exports.register = () => {
+  console.log('registering')
+  return new ExampleWidget()
+}

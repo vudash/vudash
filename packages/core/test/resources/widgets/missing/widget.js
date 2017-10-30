@@ -1,9 +1,5 @@
-class OptionalWidget {
+'use strict'
 
-  register () {
-    return {}
-  }
-
+exports.register = () => {
+  return {}
 }
-
-module.exports = OptionalWidget

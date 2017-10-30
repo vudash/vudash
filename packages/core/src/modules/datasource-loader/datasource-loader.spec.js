@@ -75,11 +75,12 @@ describe('datasource-loader', () => {
     }
 
     const someDatasource = {
-      register: stub()
+      register: stub().returns({ fetch: stub() })
     }
 
     beforeEach(() => {
       stub(resolver, 'resolve').returns(someDatasource)
+      stub(binder, 'bind')
       datasourceLoader.load(descriptor)
     })
 
@@ -93,6 +94,7 @@ describe('datasource-loader', () => {
 
     afterEach(() => {
       resolver.resolve.restore()
+      binder.bind.restore()
     })
   })
 
