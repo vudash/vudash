@@ -6,17 +6,17 @@ const id = require('../id-gen')
 const parser = require('./parser')
 const datasourceLoader = require('../datasource-loader')
 const widgetBinder = require('../widget-binder')
-const bundler = require('./bundler')
-const compiler = require('./compiler')
+const renderer = require('./renderer')
 
 class Dashboard {
   constructor (json, io) {
     const descriptor = parser.parse(json)
+    const { name, layout } = descriptor
 
     this.id = id()
-    this.name = descriptor.name
+    this.name = name
     this.emitter = new Emitter(io, this.id)
-    this.layout = descriptor.layout
+    this.layout = layout
 
     this.descriptor = descriptor
   }
@@ -34,7 +34,7 @@ class Dashboard {
   }
 
   destroy () {
-    const datasources = this.datasources
+    const datasources = Object.values(this.datasources)
     console.log(`Dashboard ${this.id} cleaning up ${datasources.length} datasources.`)
     datasources.forEach(datasource => {
       clearInterval(datasource.timer)
@@ -42,21 +42,16 @@ class Dashboard {
   }
 
   toRenderModel () {
-    const model = {
-      name: this.name,
-      widgets: this.widgets.map((widget) => {
-        return widget.toRenderModel(this.layout)
-      })
-    }
+    const {
+      name,
+      widgets,
+      layout
+    } = this
 
-    const bundle = bundler.build(model.widgets)
-
-    return compiler.compile(bundle.js)
-    .then(({ js, css }) => {
-      const allCss = `${css}\n${bundle.css}`
-      return { html: bundle.html, js, css: allCss, name: model.name }
-    })
+    return renderer.buildRenderModel(name, widgets, layout)
   }
 }
 
-module.exports = Dashboard
+exports.create = function (descriptor, io) {
+  return new Dashboard(descriptor, io)
+}

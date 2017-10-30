@@ -1,264 +1,231 @@
 'use strict'
 
-const DashboardBuilder = require('util/dashboard.builder')
-const WidgetBuilder = require('util/widget.builder')
-const Dashboard = require('modules/dashboard')
-const Widget = require('modules/widget')
-const Path = require('path')
-const { Promise } = require('bluebird')
-const resolver = require('../resolver')
-const cheerio = require('cheerio')
-const bundler = require('./bundler')
-const compiler = require('./compiler')
+const Emitter = require('../emitter')
+const { create } = require('modules/dashboard')
+const widgetBinder = require('../widget-binder')
+const renderer = require('./renderer')
 const datasourceLoader = require('../datasource-loader')
-const { stub } = require('sinon')
+const parser = require('./parser')
+const { stub, useFakeTimers } = require('sinon')
 const { expect } = require('code')
 
-describe('modules.dashboard', () => {
-  let io
-
-  before(() => {
-    io = {
-      on: stub(),
-      to: stub().returns({ emit: stub() })
-    }
-  })
-
-  after(() => {
-    io.on.reset()
-    io.to.reset()
-  })
-
-  const baseDashboard = {
-    layout: {
-      rows: 4,
-      columns: 5
-    }
-  }
-
-  const position = { x: 0, y: 0, w: 0, h: 0 }
-
-  context('Layout', () => {
+describe('dashboard', () => {
+  describe('constructor', () => {
     let dashboard
+    const descriptor = { name: 'bar', layout: { columns: 4, rows: 6 } }
 
-    before(() => {
-      const descriptor = DashboardBuilder.create()
-      .addWidget()
-      .addWidget()
-      .addWidget()
-      .build()
-
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
-    })
-
-    after(() => {
-      dashboard.destroy()
-    })
-
-    it('Loads layout', () => {
-      expect(dashboard.widgets.length).to.equal(3)
-    })
-  })
-
-  describe('Datasources', () => {
-    context('no datasources specified', () => {
-      it('loads without issue', () => {
-        const descriptor = DashboardBuilder
-          .create()
-          .build()
-
-        const instance = new Dashboard(descriptor, io)
-        expect(() => {
-          instance.loadDatasources()
-        }).not.to.throw()
+    beforeEach(() => {
+      stub(parser, 'parse').returns(descriptor)
+      dashboard = create({}, {
+        on: stub()
       })
     })
 
-    context('with datasources', () => {
-      const datasources = { foo: 'bar' }
+    afterEach(() => {
+      parser.parse.restore()
+    })
 
+    it('generates a dashboard id', () => {
+      expect(dashboard.id).to.exist()
+    })
+
+    it('assigns dashboard name', () => {
+      expect(dashboard.name).to.equal(descriptor.name)
+    })
+
+    it('assigns dashboard layout', () => {
+      expect(dashboard.layout).to.equal(descriptor.layout)
+    })
+
+    it('assigns descriptor for future use', () => {
+      expect(dashboard.descriptor).to.equal(descriptor)
+    })
+
+    it('creates emitter', () => {
+      expect(dashboard.emitter).to.be.an.instanceOf(Emitter)
+    })
+  })
+
+  describe('#loadDatasources()', () => {
+    let dashboard
+
+    const emitter = { on: stub() }
+
+    beforeEach(() => {
+      stub(parser, 'parse')
+    })
+
+    afterEach(() => {
+      parser.parse.restore()
+    })
+
+    context('empty datasource stanza', () => {
+      it('empty datasources when none are specified', () => {
+        parser.parse.returns({})
+        dashboard = create({}, emitter)
+        dashboard.loadDatasources()
+        expect(dashboard.datasources).to.equal({})
+      })
+    })
+
+    context('list of datasources', () => {
       beforeEach(() => {
-        stub(datasourceLoader, 'load').returns(datasources)
+        parser.parse.returns({
+          datasources: {
+            foo: { foo: 'bar' }
+          }
+        })
+        stub(datasourceLoader, 'load').returns('bar')
+
+        dashboard = create({}, emitter)
+        dashboard.loadDatasources()
       })
 
       afterEach(() => {
         datasourceLoader.load.restore()
       })
 
-      it('loads without issue', () => {
-        const descriptor = DashboardBuilder
-          .create()
-          .addDatasource({ baz: 'qux' })
-          .build()
+      it('calls loader to load datasources', () => {
+        expect(datasourceLoader.load.callCount).to.equal(1)
+      })
 
-        const instance = new Dashboard(descriptor, io)
-        instance.loadDatasources()
-        expect(instance.datasources).to.equal(datasources)
+      it('calls loader to load datasources', () => {
+        expect(dashboard.datasources).to.equal('bar')
       })
     })
   })
 
-  context('Widgets', () => {
-    context('no widgets specified', () => {
-      it('loads without issue', () => {
-        const descriptor = DashboardBuilder
-          .create()
-          .build()
+  describe('#loadWidgets()', () => {
+    let dashboard
 
-        const instance = new Dashboard(descriptor, io)
-        expect(() => {
-          instance.loadWidgets()
-        }).not.to.throw()
+    const emitter = { on: stub() }
+
+    beforeEach(() => {
+      stub(parser, 'parse')
+    })
+
+    afterEach(() => {
+      parser.parse.restore()
+    })
+
+    context('empty widget stanza', () => {
+      it('empty widgets when none are specified', () => {
+        parser.parse.returns({})
+        dashboard = create({}, emitter)
+        dashboard.loadWidgets()
+        expect(dashboard.widgets).to.equal({})
       })
     })
 
-    context('with widgets', () => {
-      const widgets = [{ foo: 'bar' }]
-
+    context('list of widgets', () => {
       beforeEach(() => {
-        stub(widgetLoader, 'load').returns(widgets)
+        parser.parse.returns({
+          widgets: [
+            { foo: 'bar' }
+          ]
+        })
+        stub(widgetBinder, 'load').returns('bar')
+
+        dashboard = create({}, emitter)
+        dashboard.loadWidgets()
       })
 
       afterEach(() => {
-        widgetLoader.load.restore()
+        widgetBinder.load.restore()
       })
 
-      it('loads without issue', () => {
-        const descriptor = DashboardBuilder
-          .create()
-          .addWidget({ baz: 'qux' })
-          .build()
+      it('calls loader to load widgets', () => {
+        expect(widgetBinder.load.callCount).to.equal(1)
+      })
 
-        const instance = new Dashboard(descriptor, io)
-        instance.loadWidgets()
-        expect(instance.widgets).to.equal(widgets)
+      it('calls loader to load widgets', () => {
+        expect(dashboard.widgets).to.equal('bar')
       })
     })
   })
 
-  context('Invalid Descriptor', () => {
-    const badModuleName = 'something:else'
-    let fn
-    before(() => {
-      const descriptor = DashboardBuilder.create()
-      .addWidget({ widget: badModuleName, position })
-      .build()
-
-      fn = () => {
-        return new Dashboard(descriptor, io)
-      }
-    })
-
-    it('throws error', () => {
-      expect(fn).to.throw(Error, /could not be resolved/)
-    })
-
-    it('contains required module name', () => {
-      expect(fn).to.throw(Error, /Module something:else/)
-    })
-
-    it('contains attempted path', () => {
-      expect(fn).to.throw(Error, /packages\/core\/something:else/)
-    })
-  })
-
-  context('Render Model', () => {
-    const dashName = 'my-dash'
-    const bundle = { html: 'html' }
-    const compiledBundle = { js: { code: 'abc' }, css: 'xyz'}
+  describe('#destroy()', () => {
     let dashboard
-    let renderModel
+    let clock
 
-    const myWidget = WidgetBuilder
-    .create()
-    .build()
-
-    const descriptor = DashboardBuilder
-    .create()
-    .withName(dashName)
-    .addWidget(myWidget)
-    .build()
-
-    before(async () => {
-      stub(bundler, 'build').returns(bundle)
-      stub(compiler, 'compile').resolves(compiledBundle)
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
-      return dashboard
-      .toRenderModel()
-      .then((result) => {
-        renderModel = result
+    beforeEach(() => {
+      clock = useFakeTimers()
+      stub(parser, 'parse').returns({})
+      dashboard = create({}, {
+        on: stub()
       })
     })
 
-    after(() => {
-      bundler.build.restore()
-      compiler.compile.restore()
-      dashboard.destroy()
+    afterEach(() => {
+      parser.parse.restore()
+      clock.restore()
     })
 
-    it('Has dashboard name', () => {
-      expect(renderModel.name).to.equal(dashName)
+    context('with list of datasources', () => {
+      let stub1 = stub()
+      let stub2 = stub()
+
+      beforeEach(() => {
+        const timer1 = setInterval(stub1, 1)
+        const timer2 = setInterval(stub2, 1)
+        dashboard.datasources = {
+          foo: { timer: timer1 },
+          bar: { timer: timer2 }
+        }
+        clock.tick(1)
+      })
+
+      it('clears all timers', () => {
+        dashboard.destroy()
+        clock.tick(1)
+        expect(stub1.callCount).to.equal(1)
+        expect(stub1.callCount).to.equal(1)
+      })
     })
 
-    it('Has html', () => {
-      expect(renderModel.html).to.exist().and.to.equal(bundle.html)
-    })
-
-    it('Has js', () => {
-      expect(renderModel.js).to.only.include(compiledBundle.js)
-    })
-
-    it('Has css', () => {
-      expect(renderModel.css).to.equal('xyz\nundefined')
-    })
-  })
-
-  context('Scheduled Jobs', () => {
-    let dashboard
-    before(() => {
-      const descriptor = DashboardBuilder.create().addWidget().build()
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.initialise()
-    })
-
-    after(() => {
-      dashboard.destroy()
-    })
-
-    it('Loads jobs', () => {
-      expect(dashboard.jobs.length).to.equal(1)
+    context('when no datasources exist', () => {
+      it('succeeds silently', () => {
+        dashboard.datasources = {}
+        expect(() => {
+          dashboard.destroy()
+        }).not.to.throw()
+      })
     })
   })
 
-  context('Binds emitter', () => {
-    let job
+  describe('#toRenderModel()', () => {
     let dashboard
 
-    before(() => {
-      job = stub().returns(Promise.resolve({a: 'b'}))
-      const widget = WidgetBuilder.create().withJob(job, 1).build()
-      const descriptor = DashboardBuilder.create().addWidget(widget).build()
-      dashboard = new Dashboard(descriptor, io)
-      dashboard.emitter = { emit: stub() }
-      dashboard.initialise()
+    const descriptor = {
+      name: 'some-name',
+      layout: 'some-layout'
+    }
+
+    beforeEach(() => {
+      stub(parser, 'parse').returns(descriptor)
+      stub(renderer, 'buildRenderModel')
+      dashboard = create({}, {
+        on: stub()
+      })
+      dashboard.widgets = [{ foo: 'bar' }]
+      dashboard.toRenderModel()
     })
 
-    after(() => {
-      job.reset()
-      dashboard.emitter.emit.reset()
-      dashboard.destroy()
+    afterEach(() => {
+      parser.parse.restore()
+      renderer.buildRenderModel.restore()
     })
 
-    it('is bound correctly', () => {
-      expect(dashboard.jobs.length).to.equal(1)
-      expect(job.callCount).to.be.above(0)
+    it('calls renderer with name', () => {
+      expect(renderer.buildRenderModel.firstCall.args[0]).to.equal(dashboard.name)
     })
 
-    it('Emits metadata', () => {
-      expect(dashboard.emitter.emit.callCount).to.be.above(0)
-      expect(dashboard.emitter.emit.firstCall.args[1]._updated).to.be.a.date()
+    it('calls renderer with widgets', () => {
+      expect(renderer.buildRenderModel.firstCall.args[1]).to.equal(dashboard.widgets)
+    })
+
+    it('calls renderer with layout', () => {
+      expect(renderer.buildRenderModel.firstCall.args[2]).to.equal(dashboard.layout)
     })
   })
 })

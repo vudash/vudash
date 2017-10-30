@@ -23,6 +23,9 @@ const widgetSchema = Joi.object({
 
 const widgetsSchema = Joi.array().required().items(widgetSchema).description('List of widgets')
 
+const datasourcesSchema = Joi.object().optional().description('Hash of datasources')
+
+// TODO: Remove?
 const jsAssetsSchema = Joi.array().items(Joi.string()).optional().description('Paths to third-party Javascript files to include')
 const cssAssetsSchema = Joi.array().items(Joi.string()).optional().description('Paths to third-party CSS files to include')
 
@@ -35,6 +38,7 @@ const dashboardSchema = Joi.object({
   name: Joi.string().optional().description('Dashboard name'),
   assets: assetsSchema,
   layout: layoutSchema,
+  datasources: datasourcesSchema,
   widgets: widgetsSchema
 }).description('Dashboard Descriptor')
 
