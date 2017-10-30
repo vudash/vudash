@@ -38,7 +38,6 @@ exports.handler = async function (request, reply) {
     const model = await buildViewModel(dashboard, server)
     return reply.view('dashboard', model)
   } catch (e) {
-    console.log(e)
     return reply(Boom.boomify(e))
   }
 }

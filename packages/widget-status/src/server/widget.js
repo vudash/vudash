@@ -1,26 +1,29 @@
 'use strict'
 
 const providers = require('../providers')
-const { validate } = require('./validator')
+const { validateConfig, validateProvider } = require('./validator')
 
 class StatusWidget {
 
   constructor (options, emitter) {
     this.emitter = emitter
-    this.config = validate(options)
-    const ProviderClass = providers[this.config.type]
-    this.provider = new ProviderClass(options)
+
+    const { type, schedule, config } = validateConfig(options)
+    const ProviderClass = providers[type]
+
+    const providerConfig = validateProvider(ProviderClass, config)
+    this.provider = new ProviderClass(providerConfig)
 
     this.timer = setInterval(function () {
       this.run()
-    }.bind(this), this.config.schedule)
+    }.bind(this), schedule)
     this.run()
   }
 
   run () {
     return this
     .provider
-    .fetch(this.config)
+    .fetch()
     .then(data => {
       this.emitter.emit('update', data)
     })
@@ -31,6 +34,6 @@ class StatusWidget {
   }
 }
 
-exports.register = function (options) {
-  return new StatusWidget(options)
+exports.register = function (options, emitter) {
+  return new StatusWidget(options, emitter)
 }

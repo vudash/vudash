@@ -12,21 +12,18 @@ describe('providers.statuspageio', () => {
     it('Requires component list', () => {
       Joi.validate({ url: 'http://www.example.com' }, Provider.configValidation, (err) => {
         expect(err).to.exist()
-        
       })
     })
 
     it('Requires statuspage url', () => {
       Joi.validate({ components: [] }, Provider.configValidation, (err) => {
         expect(err).to.exist()
-        
       })
     })
 
     it('Statuspage url must be an url', () => {
       Joi.validate({ url: 'xxx', components: [] }, Provider.configValidation, (err) => {
         expect(err).to.exist()
-        
       })
     })
   })
@@ -80,7 +77,6 @@ describe('providers.statuspageio', () => {
 
     it('Has status page name', () => {
       expect(results.description).to.equal('Some Page')
-      
     })
 
     it('Fetches components', () => {
@@ -91,7 +87,6 @@ describe('providers.statuspageio', () => {
         assign({ name: 'Component D' }, HealthStatus.DEGRADED),
         assign({ name: 'Component E' }, HealthStatus.UNKNOWN)
       ])
-      
     })
   })
 })

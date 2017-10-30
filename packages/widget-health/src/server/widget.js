@@ -7,7 +7,7 @@ class HealthWidget {
 
     this.timer = setInterval(function () {
       this.run()
-    }.bind(this), this.config.schedule)
+    }.bind(this), options.schedule)
     this.run()
   }
 
@@ -21,6 +21,6 @@ class HealthWidget {
   }
 }
 
-exports.register = function (options) {
-  return new HealthWidget(options)
+exports.register = function (options, emitter) {
+  return new HealthWidget(options, emitter)
 }

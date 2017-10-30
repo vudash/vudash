@@ -6,6 +6,7 @@ const resolver = require('../../resolver')
 const { upperCamel } = require('../../upper-camel')
 const { ConfigurationError } = require('../../../errors')
 const slash = require('slash')
+const findRoot = require('find-root')
 
 function discoverComponentPath (packagePath, packageJson) {
   const relativeComponentPath = readComponentStanza(packageJson)
@@ -18,11 +19,20 @@ function discoverComponentPath (packagePath, packageJson) {
   return localPath
 }
 
+function findPackageRoot (directory) {
+  const moduleEntrypoint = resolver.discover(directory)
+  return findRoot(moduleEntrypoint)
+}
+
+function loadPackageJson (packageRoot) {
+  return require(join(packageRoot, 'package.json'))
+}
+
 function readPackage (directory) {
-  const packageBasePath = resolver.discover(directory)
-  const widget = require(packageBasePath)
-  const packageJson = require(join(packageBasePath, 'package.json'))
-  const componentPath = discoverComponentPath(packageBasePath, packageJson)
+  const packageRoot = findPackageRoot(directory)
+  const widget = require(packageRoot)
+  const packageJson = loadPackageJson(packageRoot)
+  const componentPath = discoverComponentPath(packageRoot, packageJson)
 
   const name = upperCamel(packageJson.name)
   return { widget, name, componentPath }

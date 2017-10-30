@@ -1,21 +1,33 @@
 'use strict'
 
-const { Promise } = require('bluebird')
 const Joi = require('joi')
 const providers = require('../providers')
-const validate = Promise.promisify(Joi.validate)
 
-exports.validate = function (options) {
+function getBasicValidation () {
   const availableProviders = Object.keys(providers)
 
-  const validation = Joi.object({
-    type: Joi.string().only(availableProviders).description('Status page type')
-  })
+  return {
+    type: Joi.string().required().only(availableProviders).description('Status page type'),
+    schedule: Joi.number().optional().default(60000).describe('CI Refresh schedule'),
+    config: Joi.object().optional().default({}).description('Provider configuration')
+  }
+}
 
-  const baseValidation = { type: options.type }
-  validate(baseValidation, validation)
+function validate (schema, config) {
+  const { error, value } = Joi.validate(config, schema)
 
-  const providerValidation = providers[options.type].configValidation
-  const fullValidation = Object.assign({}, baseValidation, providerValidation)
-  validate(options, fullValidation)
+  if (error) {
+    throw new Error(`Unable to configure status widget: ${error.message}`)
+  }
+
+  return value
+}
+
+exports.validateConfig = function (options) {
+  return validate(getBasicValidation(), options)
+}
+
+exports.validateProvider = function (ProviderClass, config) {
+  const { configValidation } = ProviderClass
+  return validate(configValidation, config)
 }
