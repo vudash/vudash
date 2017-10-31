@@ -3,7 +3,9 @@
 const server = require('server')
 const { expect } = require('code')
 
-describe('plugins.dashboard', () => {
+describe('plugins.dashboard', function () {
+  this.timeout(10000)
+
   let app
   const dashboard = 'simple'
 
