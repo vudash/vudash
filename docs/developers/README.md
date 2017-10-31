@@ -6,9 +6,9 @@ Creating widgets and datasources is designed to be quick and painless. They are 
 
 A widget is a visible indicator of some sort of statistic or other monitor, which emits new data using websockets, and updates its display in the dashboard based on the information given in this data.
 
-A widget is packaged as a node module, but a node module can simply be a folder with a `package.json` file. It can then contain a number of files:
+A widget is packaged as a node module, but a node module can simply be a folder with a `package.json` file.
 
-Building a widget is simply a node module, and really only needs a couple of files.
+A widget is simply a node module, and really only needs a couple of files.
 
 ### package.json
 ```javascript
@@ -62,6 +62,8 @@ exports.register function (options, emitter) {
 Client side components are defined using [svelte](https://svelte.technology/) which allows you to build framework-independent client side components with ease.
 
 Create your svelte component as a single html file, and reference it as a module-absolute path named `vudash.component` in your widget's package.json.
+
+In order to ease development, [a 'harness' exists](https://svelte.technology/repl?version=1.40.1&gist=0ef39c92a284251d65d1e29c63cd1ca8) for rapidly building Vudash widgets using the Svelte REPL. Edit the `widget.html` file there and then simply copy-paste it into the file you reference under `vudash.component` in `package.json`.
 
 #### Example of a component
 
@@ -164,7 +166,6 @@ Datasources are how most widgets get data. Datasources provide an abstraction fo
 
 ### Benefits
 
-  * Two lines of code to retrieve data from any datasource
   * Consumer chooses where your widget gets its data
   * Don't need to implement any data fetching code yourself
   * Focus your widget on displaying data, not fetching it
@@ -172,20 +173,15 @@ Datasources are how most widgets get data. Datasources provide an abstraction fo
 
 ### How to
 
-1. Use the `datasource` parameter passed during widget construction.
+1. When a datasource emits data, it will call your Svelte component's `update` method with the data. You can then add it to your Svelte component's data model for use in the template.
+```javascript
+    update ({ data, meta }) {
+      this.set({ someValue: data.myValue })
+    }
 ```
- class YourWidget {
-   register (options, emit, datasource) {
-     ...
-   }
- }
-```
-1. To fetch data, just ask the Datasource for it.
-```
-    datasource.fetch()
-    .then((data) => {
-      // do something with data
-    })
+1. Then simply use it in your markup
+```html
+<h1>{{ someValue }}</h1>
 ```
 
 ### Writing a component without a datasource

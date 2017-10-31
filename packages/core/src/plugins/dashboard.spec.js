@@ -19,8 +19,8 @@ describe('plugins.dashboard', function () {
 
   it('Loads dashboards into memory', () => {
     return app.inject({ url: `/${dashboard}.dashboard` })
-    .then(reply => {
-      expect(reply.statusCode).to.equal(200)
+    .then(({ statusCode }) => {
+      expect(statusCode).to.equal(200)
     })
   })
 
