@@ -1,0 +1,23 @@
+{
+  "name": "@vudash/datasource-trello",
+  "version": "8.0.0",
+  "description": "Trello datasource for vudash dashboards",
+  "scripts": {
+    "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
+    "link": "npm link"
+  },
+  "main": "datasource.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vudash/vudash"
+  },
+  "author": "Antony Jones",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "joi": "^10.2.2"
+  }
+}
