@@ -277,7 +277,8 @@ describe('dashboard', () => {
       dashboard.widgets = {
         xyz: {
           history: {
-            insert: stub()
+            insert: stub(),
+            fetch: stub().returns([{ foo: 'bar '}])
           }
         }
       }
@@ -297,6 +298,14 @@ describe('dashboard', () => {
       it('calls widget event history', () => {
         dashboard.emit('xyz:update', exampleEvent)
         expect(dashboard.widgets.xyz.history.insert.callCount).to.equal(1)
+      })
+
+      it('returns existing history', () => {
+        dashboard.emit('xyz:update', exampleEvent)
+        expect(
+          dashboardEmitter.emit.firstCall.args[1].history
+        ).to.exist()
+        .and.to.equal([{ foo: 'bar '}])
       })
 
       it('widget does not exist', () => {

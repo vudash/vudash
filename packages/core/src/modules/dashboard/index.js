@@ -30,15 +30,16 @@ class Dashboard {
       return this.emitter.emit(eventId, data, historical)
     }
 
-    if (!historical) {
-      const widgetId = eventId.split(':')[0]
-      const widget = this.widgets[widgetId]
-      if (widget) {
-        widget.history.insert(data)
-      }
+    const widgetId = eventId.split(':')[0]
+    const widget = this.widgets[widgetId]
+
+    if (!historical && widget) {
+      widget.history.insert(data)
     }
 
-    this.emitter.emit(eventId, data, historical)
+    const history = widget ? widget.history.fetch() : {}
+    const update = Object.assign({ history }, data)
+    this.emitter.emit(eventId, update, historical)
   }
 
   loadDatasources () {
