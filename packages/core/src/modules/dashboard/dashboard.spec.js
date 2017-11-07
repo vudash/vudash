@@ -1,6 +1,6 @@
 'use strict'
 
-const Emitter = require('../emitter')
+const Emitter = require('./emitter')
 const { create } = require('modules/dashboard')
 const widgetBinder = require('../widget-binder')
 const renderer = require('./renderer')
@@ -172,7 +172,7 @@ describe('dashboard', () => {
           foo: { timer: timer1 },
           bar: { timer: timer2 }
         }
-        dashboard.widgets = []
+        dashboard.widgets = {}
         clock.tick(1)
       })
 
@@ -187,7 +187,7 @@ describe('dashboard', () => {
     context('when no datasources exist', () => {
       it('succeeds silently', () => {
         dashboard.datasources = {}
-        dashboard.widgets = []
+        dashboard.widgets = {}
         expect(() => {
           dashboard.destroy()
         }).not.to.throw()
@@ -195,10 +195,10 @@ describe('dashboard', () => {
     })
 
     context('with list of widgets', () => {
-      const widgets = [
-        { destroy: stub() },
-        { }
-      ]
+      const widgets = {
+        abc: { destroy: stub() },
+        def: { }
+      }
 
       beforeEach(() => {
         dashboard.widgets = widgets
@@ -207,14 +207,14 @@ describe('dashboard', () => {
 
       it('calls destroy on widgets which support it', () => {
         dashboard.destroy()
-        expect(widgets[0].destroy.callCount).to.equal(1)
+        expect(widgets.abc.destroy.callCount).to.equal(1)
       })
     })
 
     context('when no widgets exist', () => {
       it('succeeds silently', () => {
         dashboard.datasources = {}
-        dashboard.widgets = []
+        dashboard.widgets = {}
         expect(() => {
           dashboard.destroy()
         }).not.to.throw()
@@ -236,7 +236,7 @@ describe('dashboard', () => {
       dashboard = create({}, {
         on: stub()
       })
-      dashboard.widgets = [{ foo: 'bar' }]
+      dashboard.widgets = { abc: { foo: 'bar' }}
       dashboard.toRenderModel()
     })
 
@@ -255,6 +255,81 @@ describe('dashboard', () => {
 
     it('calls renderer with layout', () => {
       expect(renderer.buildRenderModel.firstCall.args[2]).to.equal(dashboard.layout)
+    })
+  })
+
+  describe('#emit()', () => {
+    const exampleEvent = { some: 'data' }
+    let dashboard
+    
+    const socketEmitter = {
+      on: stub()
+    }
+
+    const dashboardEmitter = {
+      emit: stub()
+    }
+
+    beforeEach(() => {
+      stub(parser, 'parse').returns({})
+      dashboard = create({}, socketEmitter)
+      dashboard.emitter = dashboardEmitter
+      dashboard.widgets = {
+        xyz: {
+          history: {
+            insert: stub()
+          }
+        }
+      }
+    })
+
+    afterEach(() => {
+      parser.parse.restore()
+      dashboardEmitter.emit.reset()
+    })
+
+    context('a widget event', () => {
+      it('emits event', () => {
+        dashboard.emit('xyz:update', exampleEvent)
+        expect(dashboardEmitter.emit.callCount).to.equal(1)
+      })
+
+      it('calls widget event history', () => {
+        dashboard.emit('xyz:update', exampleEvent)
+        expect(dashboard.widgets.xyz.history.insert.callCount).to.equal(1)
+      })
+
+      it('widget does not exist', () => {
+        expect(() => {
+          dashboard.emit('abc:update', exampleEvent)
+        }).not.to.throw()
+      })
+
+      it('stores non-historical event', () => {
+        dashboard.emit('xyz:update', exampleEvent)
+        expect(
+          dashboard.widgets.xyz.history.insert.firstCall.args[0]
+        ).to.equal(exampleEvent)
+      })
+
+      it('does not store non-historical event', () => {
+        dashboard.emit('xyz:update', exampleEvent, true)
+        expect(dashboard.widgets.xyz.history.insert.callCount).to.equal(0)
+      })
+    })
+
+    context('a non widget event', () => {
+      it('emits event', () => {
+        dashboard.emit('xyz:abc', exampleEvent)
+        expect(dashboardEmitter.emit.callCount).to.equal(1)
+      })
+
+      it('does not add event to history', () => {
+        dashboard.emit('xyz:update', exampleEvent, true)
+        expect(
+          dashboard.widgets.xyz.history.insert.callCount
+        ).to.equal(0)
+      })
     })
   })
 })

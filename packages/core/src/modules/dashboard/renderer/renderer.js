@@ -4,7 +4,8 @@ const bundler = require('../bundler')
 const compiler = require('../compiler')
 
 function renderWidgets (widgets, layout) {
-  return widgets.map(widget => {
+  const widgetModel = Object.values(widgets)
+  return widgetModel.map(widget => {
     return widget.toRenderModel(layout)
   })
 }

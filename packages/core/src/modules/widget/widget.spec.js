@@ -14,9 +14,14 @@ describe('widget', () => {
       expect(widget.id).to.exist()
     })
 
-    it('has an auto-generated id', () => {
+    it('has options', () => {
       const widget = create('xyz', {})
       expect(widget.options).to.equal({})
+    })
+
+    it('has options', () => {
+      const widget = create('xyz', {})
+      expect(widget.history).to.exist()
     })
   })
 

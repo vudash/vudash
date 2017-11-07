@@ -13,36 +13,36 @@ function buildUpdate (data) {
   }
 }
 
-function bindDatasourceEmitter (widget, datasources, datasource, dashboardEmitter) {
+function bindDatasourceEmitter (widget, datasources, datasource, dashboard) {
   const datasourceEmitter = reach(datasources, `${datasource}.emitter`)
   if (datasourceEmitter) {
     datasourceEmitter.on('update', value => {
       const data = buildUpdate(widget.update(value))
-      dashboardEmitter.emit(`${widget.id}:update`, data)
+      dashboard.emit(`${widget.id}:update`, data)
     })
   }
 }
 
 exports.load = function (dashboard, widgets = [], datasources = {}) {
-  return widgets.map(descriptor => {
+  return widgets.reduce((curr, descriptor) => {
     const { position, background, datasource, widget: widgetPath, options } = descriptor
-    const dashboardEmitter = dashboard.emitter
     const widgetEmitter = new EventEmitter()
 
     const widget = Widget.create(widgetPath, { position, background, options })
     widget.register(widgetEmitter)
 
-    bindDatasourceEmitter(widget, datasources, datasource, dashboardEmitter)
+    bindDatasourceEmitter(widget, datasources, datasource, dashboard)
 
     widgetEmitter.on('update', value => {
       const data = buildUpdate(value)
-      dashboardEmitter.emit(`${widget.id}:update`, data)
+      dashboard.emit(`${widget.id}:update`, data)
     })
 
     widgetEmitter.on('plugin', (eventName, data) => {
-      dashboardEmitter.emit(eventName, data)
+      dashboard.emit(eventName, data)
     })
 
-    return widget
-  })
+    curr[widget.id] = widget
+    return curr
+  }, {})
 }

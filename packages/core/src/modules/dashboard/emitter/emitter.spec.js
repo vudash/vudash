@@ -1,10 +1,10 @@
 'use strict'
 
-const Emitter = require('modules/emitter')
+const Emitter = require('.')
 const { expect } = require('code')
 const { stub, spy } = require('sinon')
 
-describe('module.emitter', () => {
+describe('dashboard/emitter', () => {
   const room = 'my-room'
   const broadcastStub = {
     emit: spy()
@@ -24,13 +24,13 @@ describe('module.emitter', () => {
     emitter.emit('abc', {id: 'abc'})
     emitter.emit('def', {id: 'def'})
     emitter.emit('ghi', {id: 'ghi'})
-    const recentEvents = emitter.getRecentEvents()
+    const recentEvents = emitter.recentEvents
     expect(Object.keys(recentEvents)).to.have.length(3)
   })
 
   it('Repeated event updates previous event', () => {
     emitter.emit('def', {id: 'pqr'})
-    const recentEvents = emitter.getRecentEvents()
+    const recentEvents = emitter.recentEvents
     expect(Object.keys(recentEvents)).to.have.length(3)
     expect(recentEvents.def).to.equal({id: 'pqr'})
   })

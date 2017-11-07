@@ -1,12 +1,16 @@
 'use strict'
 
 const { reach } = require('hoek')
-const Emitter = require('../emitter')
+const Emitter = require('./emitter')
 const id = require('../id-gen')
 const parser = require('./parser')
 const datasourceLoader = require('../datasource-loader')
 const widgetBinder = require('../widget-binder')
 const renderer = require('./renderer')
+
+function isWidgetEvent (eventId) {
+  return eventId.endsWith(':update')
+}
 
 class Dashboard {
   constructor (json, io) {
@@ -19,6 +23,22 @@ class Dashboard {
     this.layout = layout
 
     this.descriptor = descriptor
+  }
+
+  emit (eventId, data, historical) {
+    if (!isWidgetEvent(eventId)) {
+      return this.emitter.emit(eventId, data, historical)
+    }
+
+    if (!historical) {
+      const widgetId = eventId.split(':')[0]
+      const widget = this.widgets[widgetId]
+      if (widget) {
+        widget.history.insert(data)
+      }
+    }
+
+    this.emitter.emit(eventId, data, historical)
   }
 
   loadDatasources () {

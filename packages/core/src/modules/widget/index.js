@@ -4,16 +4,18 @@ const id = require('../id-gen')
 const WidgetPosition = require('./widget-position')
 const loader = require('./loader')
 const renderer = require('./renderer')
+const History = require('./history')
 
 class Widget {
   constructor (widgetPath, config) {
-    const { position, background, options = {} } = config
+    const { position, background, options = {}, history } = config
 
     this.id = id()
     this.widgetPath = widgetPath
     this.options = options
     this.background = background
     this.position = position
+    this.history = History.create(history)
   }
 
   register (emitter) {

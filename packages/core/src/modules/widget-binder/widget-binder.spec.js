@@ -10,7 +10,7 @@ describe('widget-binder', () => {
   context('no widgets specified', () => {
     it('has empty widget list', () => {
       const widgets = load({}, [], {})
-      expect(widgets).to.equal([])
+      expect(widgets).to.equal({})
     })
   })
 
@@ -32,7 +32,7 @@ describe('widget-binder', () => {
     })
 
     context('datasource provides emitter', () => {
-      const dashboard = { emitter: new EventEmitter() }
+      const dashboard = { emit: stub() }
       const emitter = new EventEmitter()
 
       beforeEach(() => {
@@ -42,16 +42,12 @@ describe('widget-binder', () => {
 
       afterEach(() => {
         widget.update.reset()
-        dashboard.emitter.removeAllListeners()
-        emitter.removeAllListeners()
+        dashboard.emit.reset()
       })
 
-      it('binds dashboard emitter', done => {
-        dashboard.emitter.on('zzz:update', data => {
-          expect(data.data).to.equal('xxx')
-          done()
-        })
+      it('binds dashboard emitter', () => {
         emitter.emit('update', 'xxx')
+        expect(dashboard.emit.callCount).to.equal(1)
       })
 
       it('dashboard emitter calls update on widget', () => {

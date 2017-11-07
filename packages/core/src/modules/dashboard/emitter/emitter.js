@@ -14,13 +14,13 @@ class Emitter {
 
   clientJoinHandler (socket) {
     socket.join(this.room)
-    const eventHistory = this.getRecentEvents()
-    const eventIds = Object.keys(eventHistory)
+    const historicalEvents = this.recentEvents
+    const eventIds = Object.keys(historicalEvents)
     console.log(`Client ${chalk.bold.green(socket.id)} 
       connected to ${chalk.bold.red(this.room)}. 
       Receives ${chalk.bold.yellow(eventIds.length)} historical events.`)
-    eventIds.map((eventId) => {
-      this.emit(eventId, eventHistory[eventId], true)
+    eventIds.map(eventId => {
+      this.emit(eventId, historicalEvents[eventId], true)
     })
   }
 
@@ -29,10 +29,6 @@ class Emitter {
     if (!historical) {
       this.recentEvents[event] = data
     }
-  }
-
-  getRecentEvents () {
-    return this.recentEvents
   }
 }
 
