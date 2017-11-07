@@ -33,9 +33,10 @@ describe('widget-binder', () => {
 
     context('datasource provides emitter', () => {
       const dashboard = { emit: stub() }
-      const emitter = new EventEmitter()
+      let emitter
 
       beforeEach(() => {
+        emitter = new EventEmitter()
         const widgets = [{ datasource: 'xyz' }]
         load(dashboard, widgets, { 'xyz': { emitter } })
       })
@@ -46,35 +47,31 @@ describe('widget-binder', () => {
       })
 
       it('binds dashboard emitter', () => {
-        emitter.emit('update', 'xxx')
+        emitter.emit('update', 'aaa')
         expect(dashboard.emit.callCount).to.equal(1)
       })
 
       it('dashboard emitter calls update on widget', () => {
-        emitter.emit('update', 'xxx')
+        emitter.emit('update', 'bbb')
         expect(widget.update.callCount).to.equal(1)
       })
 
       it('dashboard emitter passes new data to widget', () => {
         widget.update.returns('yyy')
-        emitter.emit('update', 'xxx')
-        expect(widget.update.firstCall.args[0]).to.equal('xxx')
+        emitter.emit('update', 'ccc')
+        expect(widget.update.firstCall.args[0]).to.equal('ccc')
       })
 
-      it('dashboard emitter includes metadata', done => {
-        dashboard.emitter.on('zzz:update', data => {
-          expect(data.meta).to.exist()
-          done()
-        })
-        emitter.emit('update', 'xxx')
+      it('dashboard emitter includes metadata', () => {
+        emitter.emit('update', 'ddd')
+        expect(dashboard.emit.firstCall.args[1].meta).to.exist()
       })
 
-      it('metadata contains updated date', done => {
-        dashboard.emitter.on('zzz:update', data => {
-          expect(data.meta.updated).to.exist().and.to.be.a.date()
-          done()
-        })
-        emitter.emit('update', 'xxx')
+      it('metadata contains updated date', () => {
+        emitter.emit('update', 'eee')
+        expect(
+          dashboard.emit.firstCall.args[1].meta.updated
+        ).to.exist().and.to.be.a.date()
       })
     })
 
