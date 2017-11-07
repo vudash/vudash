@@ -101,8 +101,9 @@ component.html
       *
       * data: the actual update data given by the datasource
       * meta: metadata about the update. This currently contains 'updated' which is the data fetch time.
+      * history: the last x events, where `x` is defined by the 'history' option in the widget's config.
       **/
-      update ({ data, meta }) {
+      update ({ data, meta, history }) {
         this.set(data)
       }
     }
@@ -175,7 +176,7 @@ Datasources are how most widgets get data. Datasources provide an abstraction fo
 
 1. When a datasource emits data, it will call your Svelte component's `update` method with the data. You can then add it to your Svelte component's data model for use in the template.
 ```javascript
-    update ({ data, meta }) {
+    update ({ data, meta, history }) {
       this.set({ someValue: data.myValue })
     }
 ```
@@ -219,7 +220,7 @@ exports.register = function (options, emitter) {
 
 Important things to note here are:
 
-* We emit our own data using `emitter`. Emitting an event called `update` with your data will result in the widget's view receving the `data` you emit into its `update({ data, meta })` method.
+* We emit our own data using `emitter`. Emitting an event called `update` with your data will result in the widget's view receving the `data` you emit into its `update({ data, meta, history })` method.
 
 * We have to call our `run()` method somehow to update the data. This is done using a `setInterval`
 

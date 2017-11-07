@@ -94,8 +94,8 @@ export default {
   },
 
   methods: {
-    update ({ data, meta }) {
-      const { value, history } = data
+    update ({ data, meta, history }) {
+      const { value } = data
 
       if (history) {
         const chartData = { series: [history] }

@@ -54,22 +54,4 @@ describe('widget', () => {
       expect(config.colour).not.to.exist()
     })
   })
-
-  context('Arrays', () => {
-    const values = [1, 2, 3, 4, 5, 6, 7]
-    let output
-
-    beforeEach(() => {
-      const configuration = register({})
-      output = configuration.update(values)
-    })
-
-    it('uses first value as display value', () => {
-      expect(output.value).to.equal('7')
-    })
-
-    it('if data is an array, provide params for a graph', () => {
-      expect(output.history).to.equal(values)
-    })
-  })
 })

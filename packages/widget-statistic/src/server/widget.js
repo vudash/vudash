@@ -14,11 +14,6 @@ class StatisticWidget {
   }
 
   update (value) {
-    if (Array.isArray(value)) {
-      const currentValue = value.pop()
-      return { value: this._format(currentValue), history: value }
-    }
-
     return { value: this._format(value) }
   }
 
