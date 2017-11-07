@@ -65,6 +65,7 @@ Dashboards are in JSON format and take the form:
     { "position": {"x": 0, "y": 1, "w": 2, "h": 1},
       "widget": "vudash-widget-statistic",
       "datasource": "datasource-exchange-rates",
+      "history": 100,
       "options": {
         "description": "EUR -> GBP",
       }
@@ -85,6 +86,8 @@ Dashboards are in JSON format and take the form:
 Where 'widgets' is an array of widgets. The position in the grid (specified by `layout`) is indicated by the widget's `x` and `y` `position` values.
 
 The values for `position.w` and `position.h` are the number of grid units the widget occupies in width and height, respectively.
+
+The `history` attribute of a widget defines how many historical items a widget should store (i.e. where history is `X`, the widget will store `X` previous values) - the value history can be read by widgets, and used in things like graphs.
 
 Widgets can be either a path to a directory containing a widget (see below), or an npm module of the same. If the widget is a npm module, you would need to `npm install --save <widget-name>` first.
 

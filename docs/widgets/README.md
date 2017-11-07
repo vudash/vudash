@@ -67,7 +67,7 @@ The simplest configuration is very straightforward
 ```javascript
   { "position": { ... },
     "widget": "vudash-widget-ci",
-    "datasource": { ... },
+    "datasource": "some-data-source-id",
     "options": {
       "provider": "circleci",
       "repo": "some-repo",
@@ -117,7 +117,7 @@ Simply include in your dashboard, and configure as required (defaults are shown)
 ```javascript
   {
     "widget": "vudash-widget-statistic",
-    "datasource": { ... },
+    "datasource": "some-data-source-id",
     "options": {
       "description": "Gauge", // Optional. Description shown below statistic,
       "initial-value": 27,
@@ -146,7 +146,7 @@ The only configuration for the progress widget is the description.
 ```javascript
   {
     "widget": "vudash-widget-progress"
-    "datasource": { ... },
+    "datasource": "some-data-source-id",
     "options": {
       "description": "Stuff", // Optional. Default "Progress" Description shown below statistic
     }
@@ -170,7 +170,7 @@ Simply include in your dashboard, and configure as required:
 ```javascript
   {
     "widget": "vudash-widget-statistic",
-    "datasource": { ... },
+    "datasource": "some-data-source-id",
     "options": {
       "description": "Visitor Count", // Optional. Default "Statistics" Description shown below statistic,
       "format": "%s", // Optional. Default %s. Format the incoming data (using sprintf-js),
@@ -212,7 +212,7 @@ You can configure any status page which uses [Atlassian StatusPage](https://www.
 { 
   "position": { ... }, 
   "widget": "vudash-widget-status",
-  "datasource": { ... },
+  "datasource": "some-data-source-id",
   "options": {
     "schedule": 300000,
     "type": "statuspageio",
@@ -235,7 +235,7 @@ Github status page monitoring is no-configuration. It will tell you when it is u
 ```javascript
 { 
   "position": { ... }, 
-  "datasource": { ... },
+  "datasource": "some-data-source-id",
   "widget": "vudash-widget-status",
   "options": {
     "schedule": 300000,
