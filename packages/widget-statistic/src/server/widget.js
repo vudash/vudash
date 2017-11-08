@@ -8,19 +8,18 @@ const defaults = {
   format: '%s'
 }
 
+function format (format, value) {
+  return sprintf(format, value)
+}
+
 class StatisticWidget {
   constructor (options) {
     this.config = Object.assign({}, defaults, options)
   }
 
   update (value) {
-    return { value: this._format(value) }
+    return { value: format(this.config.format, value) }
   }
-
-  _format (value) {
-    return sprintf(this.config.format, value)
-  }
-
 }
 
 exports.register = function (options) {

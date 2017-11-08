@@ -24,7 +24,7 @@ describe('widget', () => {
 
   it('Will convert given value to string', () => {
     const configuration = register({})
-    const { value } = configuration.update([1, 2])
+    const { value } = configuration.update(2)
     expect(value).to.equal('2')
   })
 

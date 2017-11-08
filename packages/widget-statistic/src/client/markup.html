@@ -81,8 +81,7 @@ const colours = [
 export default {
   data () {
     return {
-      value: '-',
-      history: []
+      value: '-'
     }
   },
 
@@ -96,14 +95,27 @@ export default {
   methods: {
     update ({ data, meta, history }) {
       const { value } = data
+      this.buildHistory(history)
+      const updates = { value }
+      this.set(updates)
+    },
 
+    buildHistory (history) {
       if (history) {
-        const chartData = { series: [history] }
+        const series = history.reduce((curr, item) => {
+          try {
+            curr.push(Number.parseFloat(item.data.value))
+          } catch (e) {
+            // do nothing
+          } finally {
+            return curr
+          }
+        }, [])
+
+        const chartData = { series: [series] }
         this.chart = this.chart || this.create(chartData)
         this.chart.update(chartData)
       }
-      const updates = { value, history }
-      this.set(updates)
     },
 
     create (chartData) {
