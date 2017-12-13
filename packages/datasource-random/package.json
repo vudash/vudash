@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "bluebird": "^3.4.7",
-    "chance": "^1.0.4"
+    "chance": "^1.0.4",
+    "joi": "^13.0.2"
   }
 }
