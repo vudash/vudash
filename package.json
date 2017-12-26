@@ -22,5 +22,16 @@
   },
   "engines": {
     "node": ">=8.x"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

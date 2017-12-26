@@ -2,43 +2,34 @@
 
 const Widget = require('../widget')
 const EventEmitter = require('events')
+const widgetDatasourceBinding = require('../widget-datasource-binding')
 const { reach } = require('hoek')
 
-function buildUpdate (data) {
-  return {
-    meta: {
-      updated: new Date()
-    },
-    data
+function fetchDatasource (datasources, datasourceId) {
+  const loopbackDatasource = {
+    emitter: new EventEmitter()
   }
-}
 
-function bindDatasourceEmitter (widget, datasources, datasource, dashboard) {
-  const datasourceEmitter = reach(datasources, `${datasource}.emitter`)
-  if (datasourceEmitter) {
-    datasourceEmitter.on('update', value => {
-      const data = buildUpdate(widget.update(value))
-      dashboard.emit(`${widget.id}:update`, data)
-    })
-  }
+  return reach(datasources, datasourceId, { default: loopbackDatasource })
 }
 
 exports.load = function (dashboard, widgets = [], datasources = {}) {
   return widgets.reduce((curr, descriptor) => {
-    const { position, background, datasource, widget: widgetPath, options } = descriptor
-    const widgetEmitter = new EventEmitter()
+    const {
+      position,
+      background,
+      datasource: datasourceId,
+      widget: widgetPath,
+      options
+    } = descriptor
 
     const widget = Widget.create(widgetPath, { position, background, options })
-    widget.register(widgetEmitter)
 
-    bindDatasourceEmitter(widget, datasources, datasource, dashboard)
+    const datasource = fetchDatasource(datasources, datasourceId)
+    widgetDatasourceBinding.bindEvent(dashboard, widget, datasource, [])
+    widget.register(datasource.emitter)
 
-    widgetEmitter.on('update', value => {
-      const data = buildUpdate(value)
-      dashboard.emit(`${widget.id}:update`, data)
-    })
-
-    widgetEmitter.on('plugin', (eventName, data) => {
+    datasource.emitter.on('plugin', (eventName, data) => {
       dashboard.emit(eventName, data)
     })
 
