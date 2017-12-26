@@ -3,14 +3,13 @@
 const Widget = require('../widget')
 const EventEmitter = require('events')
 const widgetDatasourceBinding = require('../widget-datasource-binding')
-const { reach } = require('hoek')
 
 function fetchDatasource (datasources, datasourceId) {
   const loopbackDatasource = {
     emitter: new EventEmitter()
   }
 
-  return reach(datasources, datasourceId, { default: loopbackDatasource })
+  return datasources[datasourceId] || loopbackDatasource
 }
 
 exports.load = function (dashboard, widgets = [], datasources = {}) {
