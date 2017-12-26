@@ -4,6 +4,7 @@ const { load } = require('.')
 const { expect } = require('code')
 const { stub } = require('sinon')
 const Widget = require('../widget')
+const widgetDatasourceBinding = require('../widget-datasource-binding')
 const EventEmitter = require('events')
 
 describe('widget-binder', () => {
@@ -14,159 +15,89 @@ describe('widget-binder', () => {
     })
   })
 
-  context('event emitter', () => {
-    const registerStub = stub()
-
-    const widget = {
-      id: 'zzz',
-      register: registerStub,
-      update: stub().returns('xxx')
-    }
+  context('widget specified without datasource', () => {
+    let result
+    let stubWidget
 
     beforeEach(() => {
-      stub(Widget, 'create').returns(widget)
+      const widgets = [{}]
+      stubWidget = { register: stub() }
+      stub(Widget, 'create').returns(stubWidget)
+      stub(widgetDatasourceBinding, 'bindEvent')
+      result = load({}, widgets, {})
+    })
+
+    afterEach(() => {
+      widgetDatasourceBinding.bindEvent.restore()
+      Widget.create.restore()
+    })
+
+    it('returns a list of initialised widgets', () => {
+      const widgetIds = Object.keys(result)
+      expect(widgetIds).to.have.length(1)
+    })
+
+    it('widget is registered', () => {
+      expect(stubWidget.register.callCount).to.equal(1)
+    })
+
+    it('loopback datasource is wired up', () => {
+      expect(stubWidget.register.firstCall.args[0]).to.be.an.instanceof(EventEmitter)
+    })
+  })
+
+  context('widget and datasource specified', () => {
+    const datasources = { xyz: { emitter: new EventEmitter() } }
+    let stubWidget
+
+    beforeEach(() => {
+      const widgets = [{ datasource: 'xyz' }]
+      stubWidget = { register: stub() }
+      stub(Widget, 'create').returns(stubWidget)
+      stub(widgetDatasourceBinding, 'bindEvent')
+      load({}, widgets, datasources)
+    })
+
+    afterEach(() => {
+      widgetDatasourceBinding.bindEvent.restore()
+      Widget.create.restore()
+    })
+
+    it('widget is registered', () => {
+      expect(stubWidget.register.callCount).to.equal(1)
+    })
+
+    it('datasource is wired up', () => {
+      expect(stubWidget.register.firstCall.args[0]).to.equal(datasources.xyz.emitter)
+    })
+  })
+
+  context('plugin event fired', () => {
+    const dashboard = { emit: null }
+
+    beforeEach(() => {
+      const widgets = [{ datasource: 'xyz' }]
+      const datasources = { xyz: { emitter: new EventEmitter() } }
+      stub(Widget, 'create').returns({ register: stub() })
+      dashboard.emit = stub()
+      load(dashboard, widgets, datasources)
+      datasources.xyz.emitter.emit('plugin', 'xyzzy', 'abcde')
     })
 
     afterEach(() => {
       Widget.create.restore()
     })
 
-    context('datasource provides emitter', () => {
-      const dashboard = { emit: stub() }
-      let emitter
-
-      beforeEach(() => {
-        emitter = new EventEmitter()
-        const widgets = [{ datasource: 'xyz' }]
-        load(dashboard, widgets, { 'xyz': { emitter } })
-      })
-
-      afterEach(() => {
-        widget.update.reset()
-        dashboard.emit.reset()
-      })
-      // widgetEmitter.on('update', value => {
-      //   const data = dashboardEvent.build(value)
-      //   dashboard.emit(`${widget.id}:update`, data)
-      // })
-
-      it('binds dashboard emitter', () => {
-        emitter.emit('update', 'aaa')
-        expect(dashboard.emit.callCount).to.equal(1)
-      })
-
-      it('dashboard emitter calls update on widget', () => {
-        emitter.emit('update', 'bbb')
-        expect(widget.update.callCount).to.equal(1)
-      })
-
-      it('dashboard emitter passes new data to widget', () => {
-        widget.update.returns('yyy')
-        emitter.emit('update', 'ccc')
-        expect(widget.update.firstCall.args[0]).to.equal('ccc')
-      })
-
-      it('dashboard emitter includes metadata', () => {
-        emitter.emit('update', 'ddd')
-        expect(dashboard.emit.firstCall.args[1].meta).to.exist()
-      })
-
-      it('metadata contains updated date', () => {
-        emitter.emit('update', 'eee')
-        expect(
-          dashboard.emit.firstCall.args[1].meta.updated
-        ).to.exist().and.to.be.a.date()
-      })
+    it('plugin event from widget causes dashboard emit', () => {
+      expect(dashboard.emit.callCount).to.equal(1)
     })
 
-    context('non-emitting datasource', () => {
-      const datasources =  { 'xyz': {} }
-      const dashboard = { emitter: new EventEmitter() }
-
-      beforeEach(() => {
-        registerStub.reset()
-      })
-
-      it('widget does not declare a datasource', () => {
-        const widgets = [{ datasource: 'xyz' }]
-        load(dashboard, widgets, datasources)
-        expect(registerStub.callCount).to.equal(1)
-      })
-
-      it('datasource cannot be found', () => {
-        const widgets = [{ datasource: 'abc' }]
-        load(dashboard, widgets, {})
-        expect(registerStub.callCount).to.equal(1)
-      })
-
-      it('datasource does not have an emitter', () => {
-        const widgets = [{ datasource: 'xyz' }]
-        load(dashboard, widgets, datasources)
-        expect(registerStub.callCount).to.equal(1)
-      })
-    })
-  })
-
-  describe('output transformation', () => {
-
-    // const registerStub = stub()
-
-    // const widget = {
-    //   id: 'zzz',
-    //   register: registerStub,
-    //   update: stub().returns('xxx')
-    // }
-
-    // beforeEach(() => {
-    //   stub(Widget, 'create').returns(widget)
-    // })
-
-    // afterEach(() => {
-    //   Widget.create.restore()
-    // })
-
-    const datasources =  { xyz: {} }
-
-    it('loads specified transformer on bind', () => {
-      const widgets = [{ datasource: 'xyz' }]
-      load(dashboard, widgets, )
-      expect(registerStub.callCount).to.equal(1)
+    it('dashboard plugin event has correct name', () => {
+      expect(dashboard.emit.firstCall.args[0]).to.equal('xyzzy')
     })
 
-    it('multi-transform', () => {
-
-    })
-
-    it('no transformers specified', () => {
-
-    })
-
-  })
-
-  describe('widget registration', () => {
-
-  })
-
-  describe('inward event binding', () => {
-
-  })
-
-  describe('widget serverside update', () => {
-
-  })
-
-  describe('outward event binding', () => {
-
-  })
-
-  context('datasource does not exist', () => {
-
-  })
-
-
-  context.skip('widgets', () => {
-    it('calls register on each widget', () => {
-
+    it('dashboard plugin event has correct data', () => {
+      expect(dashboard.emit.firstCall.args[1]).to.equal('abcde')
     })
   })
 })
