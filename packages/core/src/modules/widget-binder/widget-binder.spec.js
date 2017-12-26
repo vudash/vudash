@@ -45,6 +45,10 @@ describe('widget-binder', () => {
         widget.update.reset()
         dashboard.emit.reset()
       })
+      // widgetEmitter.on('update', value => {
+      //   const data = dashboardEvent.build(value)
+      //   dashboard.emit(`${widget.id}:update`, data)
+      // })
 
       it('binds dashboard emitter', () => {
         emitter.emit('update', 'aaa')
@@ -76,6 +80,7 @@ describe('widget-binder', () => {
     })
 
     context('non-emitting datasource', () => {
+      const datasources =  { 'xyz': {} }
       const dashboard = { emitter: new EventEmitter() }
 
       beforeEach(() => {
@@ -84,7 +89,7 @@ describe('widget-binder', () => {
 
       it('widget does not declare a datasource', () => {
         const widgets = [{ datasource: 'xyz' }]
-        load(dashboard, widgets, { 'xyz': {} })
+        load(dashboard, widgets, datasources)
         expect(registerStub.callCount).to.equal(1)
       })
 
@@ -96,10 +101,46 @@ describe('widget-binder', () => {
 
       it('datasource does not have an emitter', () => {
         const widgets = [{ datasource: 'xyz' }]
-        load(dashboard, widgets, { 'xyz': {} })
+        load(dashboard, widgets, datasources)
         expect(registerStub.callCount).to.equal(1)
       })
     })
+  })
+
+  describe('output transformation', () => {
+
+    // const registerStub = stub()
+
+    // const widget = {
+    //   id: 'zzz',
+    //   register: registerStub,
+    //   update: stub().returns('xxx')
+    // }
+
+    // beforeEach(() => {
+    //   stub(Widget, 'create').returns(widget)
+    // })
+
+    // afterEach(() => {
+    //   Widget.create.restore()
+    // })
+
+    const datasources =  { xyz: {} }
+
+    it('loads specified transformer on bind', () => {
+      const widgets = [{ datasource: 'xyz' }]
+      load(dashboard, widgets, )
+      expect(registerStub.callCount).to.equal(1)
+    })
+
+    it('multi-transform', () => {
+
+    })
+
+    it('no transformers specified', () => {
+
+    })
+
   })
 
   describe('widget registration', () => {
