@@ -76,11 +76,20 @@ describe('widget-binder', () => {
   context('loads transformations from configuration', () => {
     let stubWidget
 
+    const widgets = [{
+      name: 'xyz',
+      transformations: [{
+        transformer: 'xxx',
+        options: {
+          foo: 'bar'
+        }
+      }]
+    }]
+
     beforeEach(() => {
-      const widgets = [{ transformations: [] }]
       stubWidget = { register: stub() }
       stub(Widget, 'create').returns(stubWidget)
-      stub(transformLoader, 'load').returns([])
+      stub(transformLoader, 'load').returns([{ baz: 'qux' }])
       stub(widgetDatasourceBinding, 'bindEvent')
       load({}, widgets, {})
     })
@@ -97,6 +106,18 @@ describe('widget-binder', () => {
 
     it('transformations are loaded', () => {
       expect(transformLoader.load.callCount).to.equal(1)
+    })
+
+    it('transformation loader gets widget name', () => {
+      expect(transformLoader.load.firstCall.args[0]).to.equal('xyz')
+    })
+
+    it('transformation loader gets transformation configuration', () => {
+      expect(transformLoader.load.firstCall.args[1]).to.equal(widgets[0].transformations)
+    })
+
+    it('calls bindEvent with transformer map', () => {
+      expect(widgetDatasourceBinding.bindEvent.firstCall.args[3]).to.equal([{ baz: 'qux' }])
     })
   })
 

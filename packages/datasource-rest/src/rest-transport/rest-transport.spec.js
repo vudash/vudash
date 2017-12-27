@@ -39,7 +39,7 @@ describe('transports.rest', () => {
     })
   })
 
-  context('Extract values', () => {
+  context('Json body', () => {
     const body = { i: { love: { animals: 'dogs' } } }
     const options = { method: 'get', url: 'http://example.com/some/stuff' }
 
@@ -53,27 +53,11 @@ describe('transports.rest', () => {
       nock.cleanAll()
     })
 
-    it('Without graph specified, returns full object', () => {
+    it('returns full body', () => {
       const transport = new RestTransport(options)
       return transport.fetch()
       .then((value) => {
         expect(value).to.equal(body)
-      })
-    })
-
-    it('extracts a specified value from JSON', () => {
-      const transport = new RestTransport(Object.assign({ graph: 'i.love.animals' }, options))
-      return transport.fetch()
-      .then((value) => {
-        expect(value).to.equal('dogs')
-      })
-    })
-
-    it('Simply returns undefined for unreachable value', () => {
-      const transport = new RestTransport(Object.assign({ graph: 'i.love.people' }, options))
-      return transport.fetch()
-      .then((value) => {
-        expect(value).to.equal(undefined)
       })
     })
   })

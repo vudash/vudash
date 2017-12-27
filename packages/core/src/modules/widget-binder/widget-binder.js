@@ -16,6 +16,7 @@ function fetchDatasource (datasources, datasourceId) {
 exports.load = function (dashboard, widgets = [], datasources = {}) {
   return widgets.reduce((curr, descriptor) => {
     const {
+      name,
       position,
       background,
       datasource: datasourceId,
@@ -29,7 +30,7 @@ exports.load = function (dashboard, widgets = [], datasources = {}) {
     const datasource = fetchDatasource(datasources, datasourceId)
     widget.register(datasource.emitter)
 
-    const transforms = transformations ? transformLoader.load(transformations) : []
+    const transforms = transformations ? transformLoader.load(name, transformations) : []
     widgetDatasourceBinding.bindEvent(dashboard, widget, datasource, transforms)
 
     datasource.emitter.on('plugin', (eventName, data) => {

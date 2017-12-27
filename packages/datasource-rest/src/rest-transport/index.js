@@ -1,7 +1,7 @@
 'use strict'
 
 const got = require('got')
-const { reach, applyToDefaults } = require('hoek')
+const { applyToDefaults } = require('hoek')
 const pkg = require('../../package.json')
 
 const internals = {
@@ -31,9 +31,7 @@ class RestTransport {
   fetch () {
     const options = internals.prepareRequest(this.config)
     return got[this.config.method](this.config.url, options)
-    .then(({ body }) => {
-      return reach(body, this.config.graph)
-    })
+    .then(({ body }) => body)
   }
 }
 
