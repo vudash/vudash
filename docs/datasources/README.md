@@ -90,8 +90,7 @@ In `dashboard.json`
     "module": "datasource-package-name",
     "options": {
       "url": "http://example.com/some/api",
-      "method": "get",
-      "graph": "some.nested.value"
+      "method": "get"
     }
   }
 }
@@ -205,45 +204,7 @@ Furthermore, you want to send JSON request data as specified in "payload" below.
 
 #### Parsing data
 
-Vudash automatically parses returned JSON which means it can be easily formatted. To determine what is returned, you can use the `graph` param to select it.
-
-Selection is done using [Hoek.reach](https://www.npmjs.com/package/hoek), so null values, function traversal etc is automatically handled, and won't throw errors.
-
-Say that your desired API returns the following payload in JSON:
-
-```javascript
-{ 
-  "one": {
-    "two": {
-      "three": "abcde"
-    }
-  }
-}
-```
-
-Lets say we wanted the value of "three" buried down in the middle there. It's easy:
-
-```javascript
-{
-  "module": "@vudash/datasource-rest",
-  "options": {
-    "url": "http://example.com/some/api",
-    "graph": "one.two.three"
-  }
-}
-```
-
-And if you actually want the contents of two? (As an object of course):
-
-```javascript
-{
-  "module": "@vudash/datasource-rest",
-  "options": {
-    "url": "http://example.com/some/api",
-    "graph": "one.two"
-  }
-}
-```
+Vudash automatically parses returned JSON which means it can be easily formatted. To determine what is returned, you can use a [transformer](/#/transformers) to modify the json response before the widget receives it. Consult the documentation for information on the transformers available to you and how to use them.
 
 ## Troubleshooting SSL
 

@@ -161,20 +161,30 @@ You can bundle SVG images as dependencies in your widgets too - the [rollup-plug
 
 You can [read more about Rollup.js](https://rollupjs.org/) in order to better understand how to optimise your component's client side code.
 
-## Using datasources
+### Using datasources
 
 Datasources are how most widgets get data. Datasources provide an abstraction for fetching data from a multitude of sources, and deliver it as a single blob of json to the widgets. As a developer you should strongly consider providing datasource support in your widget.
 
-### Benefits
+#### Benefits
 
   * Consumer chooses where your widget gets its data
   * Don't need to implement any data fetching code yourself
   * Focus your widget on displaying data, not fetching it
   * Shared configuration for consumers, datasources are configured globally, and/or on a widget level.
 
-### How to
+#### How to
 
-1. When a datasource emits data, it will call your Svelte component's `update` method with the data. You can then add it to your Svelte component's data model for use in the template.
+1. When the datasource emits data, it will then be sent to your widget's serverside `update` method where you can make further modifications to it before returning it.
+
+```javascript
+  update(value) {
+    // do something with the value, like add an emoji!
+    return `🌟 ${value}`
+  }
+```
+
+1. The dashboard will then re-emit your data with some metadata, and a history, if configured. It will call your Svelte component's `update` method with the data. You can then add it to your Svelte component's data model for use in the template.
+
 ```javascript
     update ({ data, meta, history }) {
       this.set({ someValue: data.myValue })
@@ -227,6 +237,67 @@ Important things to note here are:
 * In case the user doesn't configure a schedule for the widget in its `options`, we default to 1000ms.
 
 * We provide a `destroy()` hook to destroy our timer. This is useful to avoid memory leaks, unecessary fetching, and is especically useful for unit-testing.
+
+
+## Developing Datasources
+
+TBC - for now, have a look at the source code in `vudash/packages/datasource-*`
+
+## Developing Transformers
+
+Data can come from datasources in a variety of different formats, not all of which can directly translate to something usable by a widget. [Transformers](/#/transformers) are designed for a dashboard consumer to manipulate data fetched using datasources (or directly inside widgets) before it is emitted to the dashboard.
+
+The format of a transformer is relatively simple. Here's a very simple transformer:
+
+```javascript
+'use strict'
+
+class AddingTransformer {
+  constructor (numberToAdd) {
+    this.numberToAdd = numberToAdd
+  }
+
+  transform (data) {
+    return data + this.numberToAdd
+  }
+}
+
+module.exports = AddingTransformer
+```
+
+A transformer takes the configuration provided by the dashboard (//widgets[]/transformations) as its only constructor argument.
+
+When new data is fetched by a datasource or a widget and sent to the dashboard for consumption by listening widgets, it is first transformed by the list of transformers configured in the widget's configuration by calling each transformer's `transform` method. The argument passed to transform is the result of the previous transformer's transform method.
+
+You might configure the transformer as part of the following dashboard:
+
+```javascript
+  { 
+    "datasources": {
+      "my-datasource-hundred": {
+        "module": "@vudash/datasource-value",
+        "options": {
+          "value": 100
+        }
+      }
+    }
+  },
+  {
+    "datasource": "my-datasource-hundred",
+    "transformations": [
+      {
+        "transformer": "./adding-transformer.js",
+        "options": 100
+      }
+    ],
+    "options": {
+      "description": "Shows two-hundred"
+    },
+    "widget": "vudash-widget-statistic"
+  }
+```
+
+The resulting dashboard widget would show the value `200` as the value `100` is transformed by adding `100` to it.
 
 ## Dashboard Events
 
