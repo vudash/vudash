@@ -4,17 +4,6 @@ const dashboardLoader = require('../../../modules/dashboard/loader')
 const { NotFoundError } = require('../../../errors')
 const Boom = require('boom')
 
-function load (cache, board, io, reply) {
-  try {
-    return dashboardLoader.find(cache, board, io)
-  } catch (e) {
-    if (e instanceof NotFoundError) {
-      return reply.redirect('/')
-    }
-    throw e
-  }
-}
-
 async function buildViewModel (dashboard, server) {
   const serverUrl = process.env.SERVER_URL || server.info.uri
   const { name, html, js, css } = await dashboard.toRenderModel()
@@ -34,10 +23,13 @@ exports.handler = async function (request, reply) {
   const { io } = server.plugins.socket
   const { dashboards } = server.plugins.dashboard
   try {
-    const dashboard = load(dashboards, board, io, reply)
+    const dashboard = dashboardLoader.find(dashboards, board, io)
     const model = await buildViewModel(dashboard, server)
     return reply.view('dashboard', model)
   } catch (e) {
+    if (e instanceof NotFoundError) {
+      return reply.redirect('/')
+    }
     console.log(e)
     return reply(Boom.boomify(e))
   }
