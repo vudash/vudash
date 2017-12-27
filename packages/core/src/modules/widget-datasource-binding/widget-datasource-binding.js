@@ -16,7 +16,6 @@ exports.bindEvent = function (dashboard, widget, datasource, transformers) {
   datasource.emitter.on('update', value => {
     const event = `${widget.id}:update`
     const hasTransformers = transformers && transformers.length
-
     const data = widget.update(value)
     const transformed = hasTransformers ? transform(data, transformers) : data
     const payload = dashboardEvent.build(transformed)
