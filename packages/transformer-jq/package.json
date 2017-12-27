@@ -1,0 +1,11 @@
+{
+  "name": "@vudash/transformer-jq",
+  "version": "1.0.0",
+  "description": "Vudash data transformer which uses jq to make complex json transformations",
+  "main": "transformer.js",
+  "author": "Antony Jones",
+  "license": "MIT",
+  "dependencies": {
+    "jq-web": "^0.1.3"
+  }
+}

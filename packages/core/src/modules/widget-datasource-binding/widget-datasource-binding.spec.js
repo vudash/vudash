@@ -17,17 +17,6 @@ describe('widget-datasource-binding', () => {
     })
   })
 
-  context('datasource was not found', () => {
-    const widget = {}
-    const dashboard = {}
-
-    it('no event bound', () => {
-      expect(
-        widgetDatasourceBinder.bindEvent(dashboard, widget, null, [])
-      ).to.be.undefined()
-    })
-  })
-
   context('widget emits data', () => {
     const rawData = {
       user: {
@@ -67,16 +56,23 @@ describe('widget-datasource-binding', () => {
   })
 
   context('output is transformed', () => {
-    const transformedData = {
+    const widgetOutput = {
       fullName: 'Alfred Wilks'
     }
 
-    const widget = { update: stub() }
-    const dashboard = { emit: stub() }
-    const datasource = { emitter: new EventEmitter() }
+    const transformedData = { foo: 'bar' }
+
     const transformers = [{
       transform: stub().returns(transformedData)
     }]
+
+    const widget = {
+      update: stub()
+        .withArgs(transformedData)
+        .returns(widgetOutput)
+    }
+    const dashboard = { emit: stub() }
+    const datasource = { emitter: new EventEmitter() }
 
     before(() => {
       widgetDatasourceBinder.bindEvent(dashboard, widget, datasource, transformers)
@@ -92,7 +88,7 @@ describe('widget-datasource-binding', () => {
     it('emitted event has transformed data', () => {
       expect(
         dashboard.emit.firstCall.args[1].data
-      ).to.equal(transformedData)
+      ).to.equal(widgetOutput)
     })
   })
 })
