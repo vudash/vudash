@@ -22,12 +22,11 @@ class Widget {
     const { widget, name, componentPath } = loader.load(this.widgetPath)
     this.componentPath = componentPath
     this.name = name
-
     this.widget = widget.register(this.options, emitter)
   }
 
   update (value) {
-    return this.widget.update(value)
+    return this.widget.update ? this.widget.update(value) : value
   }
 
   toRenderModel (dashboardLayout) {

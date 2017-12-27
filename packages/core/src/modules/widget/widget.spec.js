@@ -60,18 +60,35 @@ describe('widget', () => {
     let widget
     const data = { foo: 'bar' }
 
-    beforeEach(() => {
-      widget = create('xyz', {})
-      widget.widget = { update: stub() }
-      widget.update(data)
+    context('widget implements update function', () => {
+      const modified = { foo: 'bar' }
+
+      beforeEach(() => {
+        widget = create('xyz', {})
+        widget.widget = { update: stub().returns(modified) }
+      })
+
+      it('update calls widget update', () => {
+        widget.update(data)
+        expect(widget.widget.update.callCount).to.equal(1)
+      })
+
+      it('calls with update data', () => {
+        widget.update(data)
+        expect(widget.widget.update.firstCall.args[0]).to.equal(data)
+      })
+
+      it('returns modified data', () => {
+        expect(widget.update(data)).to.equal(modified)
+      })
     })
 
-    it('update calls widget update', () => {
-      expect(widget.widget.update.callCount).to.equal(1)
-    })
-
-    it('calls with update data', () => {
-      expect(widget.widget.update.firstCall.args[0]).to.equal(data)
+    context('widget does not implement update function', () => {
+      it('returns update data', () => {
+        widget = create('xyz', {})
+        widget.widget = {}
+        expect(widget.update(data)).to.equal(data)
+      })
     })
   })
 

@@ -25,8 +25,9 @@ exports.load = function (dashboard, widgets = [], datasources = {}) {
     const widget = Widget.create(widgetPath, { position, background, options })
 
     const datasource = fetchDatasource(datasources, datasourceId)
-    widgetDatasourceBinding.bindEvent(dashboard, widget, datasource, [])
     widget.register(datasource.emitter)
+
+    widgetDatasourceBinding.bindEvent(dashboard, widget, datasource, [])
 
     datasource.emitter.on('plugin', (eventName, data) => {
       dashboard.emit(eventName, data)
