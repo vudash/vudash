@@ -2,6 +2,7 @@
 
 const Widget = require('../widget')
 const EventEmitter = require('events')
+const transformLoader = require('../transform-loader')
 const widgetDatasourceBinding = require('../widget-datasource-binding')
 
 function fetchDatasource (datasources, datasourceId) {
@@ -18,6 +19,7 @@ exports.load = function (dashboard, widgets = [], datasources = {}) {
       position,
       background,
       datasource: datasourceId,
+      transformations,
       widget: widgetPath,
       options
     } = descriptor
@@ -27,7 +29,8 @@ exports.load = function (dashboard, widgets = [], datasources = {}) {
     const datasource = fetchDatasource(datasources, datasourceId)
     widget.register(datasource.emitter)
 
-    widgetDatasourceBinding.bindEvent(dashboard, widget, datasource, [])
+    const transforms = transformations ? transformLoader.load(transformations) : []
+    widgetDatasourceBinding.bindEvent(dashboard, widget, datasource, transforms)
 
     datasource.emitter.on('plugin', (eventName, data) => {
       dashboard.emit(eventName, data)

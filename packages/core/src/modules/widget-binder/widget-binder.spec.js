@@ -6,6 +6,7 @@ const { stub } = require('sinon')
 const Widget = require('../widget')
 const widgetDatasourceBinding = require('../widget-datasource-binding')
 const EventEmitter = require('events')
+const transformLoader = require('../transform-loader')
 
 describe('widget-binder', () => {
   context('no widgets specified', () => {
@@ -69,6 +70,33 @@ describe('widget-binder', () => {
 
     it('datasource is wired up', () => {
       expect(stubWidget.register.firstCall.args[0]).to.equal(datasources.xyz.emitter)
+    })
+  })
+
+  context('loads transformations from configuration', () => {
+    let stubWidget
+
+    beforeEach(() => {
+      const widgets = [{ transformations: [] }]
+      stubWidget = { register: stub() }
+      stub(Widget, 'create').returns(stubWidget)
+      stub(transformLoader, 'load').returns([])
+      stub(widgetDatasourceBinding, 'bindEvent')
+      load({}, widgets, {})
+    })
+
+    afterEach(() => {
+      transformLoader.load.restore()
+      widgetDatasourceBinding.bindEvent.restore()
+      Widget.create.restore()
+    })
+
+    it('widget is registered', () => {
+      expect(stubWidget.register.callCount).to.equal(1)
+    })
+
+    it('transformations are loaded', () => {
+      expect(transformLoader.load.callCount).to.equal(1)
     })
   })
 
