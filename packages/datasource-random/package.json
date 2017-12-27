@@ -1,6 +1,6 @@
 {
   "name": "@vudash/datasource-random",
-  "version": "8.1.2",
+  "version": "9.0.0",
   "description": "Random Datasource for Vudash",
   "main": "datasource.js",
   "scripts": {
