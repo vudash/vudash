@@ -1,6 +1,6 @@
 <div class="ci-widget {{ backgroundClass }}">
   <div class="value">
-    <img src="{{ ligature }}" alt="" />
+    <img src="{{ ligature }}" alt="{{ status }}" />
   </div>
   <div class="label">
     <span class="ci-user">{{ config.user }}</span> / <span class="ci-repo">{{ config.repo }}</span>
@@ -14,10 +14,21 @@
 }
 
 .label {
-  position: absolute;
-  bottom: 30px;
-  font-size: 14px;
+  height: 10vh;
+  margin-bottom: 3vh;
+  font-size: 2vh;
   font-weight: bold;
+}
+
+.value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.value > img {
+  height: 20vh;
 }
 
 @keyframes failed-pulse {
@@ -77,7 +88,7 @@ export default {
         backgroundClass = 'error'
       }
 
-      this.set({ ligature, backgroundClass })
+      this.set({ status: data.status, ligature, backgroundClass })
     }
   }
 }

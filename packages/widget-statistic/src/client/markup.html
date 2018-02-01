@@ -1,6 +1,6 @@
 <div class="vudash-statistic">
   <div class="value" ref:value>
-    {{ value }}
+    <span>{{ value }}</span>
   </div>
   <div class="label">
     {{ config.description }}
@@ -9,20 +9,29 @@
 </div>
 
 <style>
-.vudash-statistic > .label, .vudash-statistic > .value {
+.vudash-statistic {
+  justify-content: space-between;
+}
+
+.vudash-statistic > .label,
+.vudash-statistic > .value {
   width: 100%;
   text-align: center;
   font-weight: bold;
 }
 
 .value {
-  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12vh;
+  height: 90vh;
 }
 
 .label {
-  position: absolute;
-  bottom: 30px;
-  font-size: 14px;
+  height: 10vh;
+  margin-bottom: 3vh;
+  font-size: 2vh;
 }
 
 .chart {
@@ -40,7 +49,6 @@
 
 import Chartist from 'chartist'
 import 'chartist/dist/chartist.css'
-import FitText from 'fit-text'
 
 const options = {
   axisX: {
@@ -89,7 +97,6 @@ export default {
 
   oncreate () {
     const config = this.get('config')
-    new FitText(this.refs.value, { fontRatio: config['font-ratio'] || 4 })
     const colour = config.colour || colours[Math.floor(Math.random() * colours.length)]
     this.set({ colour })
   },
