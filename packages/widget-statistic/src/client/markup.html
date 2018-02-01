@@ -1,6 +1,6 @@
 <div class="vudash-statistic">
   <div class="value" ref:value>
-    <span>{{ value }}</span>
+    {{ value }}
   </div>
   <div class="label">
     {{ config.description }}
@@ -24,14 +24,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12vh;
-  height: 90vh;
+  height: 70%;
+  font-size: 14vmin;
 }
 
 .label {
-  height: 10vh;
-  margin-bottom: 3vh;
-  font-size: 2vh;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100%;
 }
 
 .chart {
