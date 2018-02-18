@@ -8,11 +8,10 @@ exports.compile = function (source) {
 
   return rollup
   .rollup(config)
-  .then((bundle) => {
+  .then(bundle => {
     const js = bundle.generate({
       format: 'iife'
     })
-    const css = ''
-    return { js, css }
+    return js
   })
 }

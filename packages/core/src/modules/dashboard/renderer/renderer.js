@@ -10,22 +10,16 @@ function renderWidgets (widgets, layout) {
   })
 }
 
-// TODO: why do we do this?
-function compileCss (bundleCss, compiledCss) {
-  return `${compiledCss}\n${bundleCss}`
-}
-
 exports.buildRenderModel = function (name, widgets, layout) {
   const renderedWidgets = renderWidgets(widgets, layout)
-  const { js: bundledJs, css, html } = bundler.build(renderedWidgets)
+  const { js, html } = bundler.build(renderedWidgets)
 
-  return compiler.compile(bundledJs)
-  .then(({ js, compiledCss }) => {
+  return compiler.compile(js)
+  .then(script => {
     return {
       name,
       html,
-      js,
-      css: compileCss(css, compiledCss)
+      js: script
     }
   })
 }
