@@ -8,18 +8,14 @@ const { expect } = require('code')
 describe('dashboard/compiler', () => {
   context('Bundle', () => {
     const compiled = 'abc123'
-    let bundle
+    let js
 
-    before(() => {
+    before(async () => {
       stub(rollup, 'rollup')
 
       const bundleStub = { generate: stub().returns(compiled) }
       rollup.rollup.resolves(bundleStub)
-      return compiler
-        .compile('zzz')
-        .then((result) => {
-          bundle = result
-        })
+      js = await compiler.compile('zzz')
     })
 
     after(() => {
@@ -27,7 +23,6 @@ describe('dashboard/compiler', () => {
     })
 
     it('Returns compiled js', () => {
-      const { js } = bundle
       expect(js).to.exist().and.to.equal(compiled)
     })
   })
