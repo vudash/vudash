@@ -8,6 +8,7 @@ const datasourceLoader = require('../datasource-loader')
 const parser = require('./parser')
 const { stub, useFakeTimers } = require('sinon')
 const { expect } = require('code')
+const Css = require('json-to-css')
 
 describe('dashboard', () => {
   describe('constructor', () => {
@@ -223,45 +224,88 @@ describe('dashboard', () => {
   })
 
   describe('#toRenderModel()', () => {
-    let dashboard
+    context('no additiona css', () => {
+      let dashboard
 
-    const descriptor = {
-      name: 'some-name',
-      layout: 'some-layout'
-    }
+      const descriptor = {
+        name: 'some-name',
+        layout: 'some-layout'
+      }
 
-    beforeEach(() => {
-      stub(parser, 'parse').returns(descriptor)
-      stub(renderer, 'buildRenderModel')
-      dashboard = create({}, {
-        on: stub()
+      beforeEach(() => {
+        stub(parser, 'parse').returns(descriptor)
+        stub(renderer, 'buildRenderModel').returns({})
+        dashboard = create({}, {
+          on: stub()
+        })
+        dashboard.additionalCss = { some: 'css' }
+        dashboard.widgets = { abc: { foo: 'bar' } }
+        dashboard.toRenderModel()
       })
-      dashboard.widgets = { abc: { foo: 'bar' }}
-      dashboard.toRenderModel()
+
+      afterEach(() => {
+        parser.parse.restore()
+        renderer.buildRenderModel.restore()
+      })
+
+      it('calls renderer with name', () => {
+        expect(renderer.buildRenderModel.firstCall.args[0]).to.equal(dashboard.name)
+      })
+
+      it('calls renderer with widgets', () => {
+        expect(renderer.buildRenderModel.firstCall.args[1]).to.equal(dashboard.widgets)
+      })
+
+      it('calls renderer with layout', () => {
+        expect(renderer.buildRenderModel.firstCall.args[2]).to.equal(dashboard.layout)
+      })
     })
 
-    afterEach(() => {
-      parser.parse.restore()
-      renderer.buildRenderModel.restore()
-    })
+    context('additional css', () => {
+      let dashboard
+      let renderModel
 
-    it('calls renderer with name', () => {
-      expect(renderer.buildRenderModel.firstCall.args[0]).to.equal(dashboard.name)
-    })
+      const descriptor = {
+        name: 'some-name',
+        layout: 'some-layout'
+      }
 
-    it('calls renderer with widgets', () => {
-      expect(renderer.buildRenderModel.firstCall.args[1]).to.equal(dashboard.widgets)
-    })
+      beforeEach(() => {
+        stub(parser, 'parse').returns(descriptor)
+        stub(renderer, 'buildRenderModel').returns({})
+        stub(Css, 'of').returns('some: css')
+        dashboard = create({}, {
+          on: stub()
+        })
+        dashboard.additionalCss = { some: 'css' }
+        dashboard.widgets = {}
+        renderModel = dashboard.toRenderModel()
+      })
 
-    it('calls renderer with layout', () => {
-      expect(renderer.buildRenderModel.firstCall.args[2]).to.equal(dashboard.layout)
+      afterEach(() => {
+        Css.of.restore()
+        parser.parse.restore()
+        renderer.buildRenderModel.restore()
+      })
+
+      it('compiles css', () => {
+        expect(Css.of.callCount).to.equal(1)
+      })
+
+      it('compiles css', () => {
+        expect(Css.of.firstCall.args[0]).to.equal({ some: 'css' })
+      })
+
+      it('contains compiled css', () => {
+        expect(renderModel.css).to.equal('some: css')
+      })
     })
   })
 
   describe('#emit()', () => {
     const exampleEvent = { some: 'data' }
     let dashboard
-    
+
     const socketEmitter = {
       on: stub()
     }
@@ -278,7 +322,7 @@ describe('dashboard', () => {
         xyz: {
           history: {
             insert: stub(),
-            fetch: stub().returns([{ foo: 'bar '}])
+            fetch: stub().returns([{ foo: 'bar' }])
           }
         }
       }
@@ -305,7 +349,7 @@ describe('dashboard', () => {
         expect(
           dashboardEmitter.emit.firstCall.args[1].history
         ).to.exist()
-        .and.to.equal([{ foo: 'bar '}])
+        .and.to.equal([{ foo: 'bar' }])
       })
 
       it('widget does not exist', () => {

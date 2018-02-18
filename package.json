@@ -21,7 +21,7 @@
     "standard": "^7.1.2"
   },
   "engines": {
-    "node": ">=8.x"
+    "node": ">=9.x"
   },
   "standard": {
     "globals": [

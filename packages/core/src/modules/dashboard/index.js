@@ -1,5 +1,6 @@
 'use strict'
 
+const Css = require('json-to-css')
 const { reach } = require('hoek')
 const Emitter = require('./emitter')
 const id = require('../id-gen')
@@ -15,10 +16,11 @@ function isWidgetEvent (eventId) {
 class Dashboard {
   constructor (json, io) {
     const descriptor = parser.parse(json)
-    const { name, layout } = descriptor
+    const { name, layout, css } = descriptor
 
     this.id = id()
     this.name = name
+    this.additionalCss = css || {}
     this.emitter = new Emitter(io, this.id)
     this.layout = layout
 
@@ -68,14 +70,17 @@ class Dashboard {
     })
   }
 
-  toRenderModel () {
-    const {
-      name,
-      widgets,
-      layout
-    } = this
+  compileAdditionalCss () {
+    return Css.of(this.additionalCss)
+  }
 
-    return renderer.buildRenderModel(name, widgets, layout)
+  toRenderModel () {
+    const model = renderer.buildRenderModel(
+      this.name, this.widgets, this.layout
+    )
+
+    model.css = this.compileAdditionalCss()
+    return model
   }
 }
 
