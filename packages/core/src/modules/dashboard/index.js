@@ -74,8 +74,8 @@ class Dashboard {
     return Css.of(this.additionalCss)
   }
 
-  toRenderModel () {
-    const model = renderer.buildRenderModel(
+  async toRenderModel () {
+    const model = await renderer.buildRenderModel(
       this.name, this.widgets, this.layout
     )
 

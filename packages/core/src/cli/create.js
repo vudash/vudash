@@ -21,7 +21,7 @@ exports.run = function () {
     main: 'vudash',
     scripts: { start: 'vudash' },
     'engines': {
-      'node': '>=8.x'
+      'node': '>=9.x'
     }
   })
   fs.writeJsonSync(configFile, dashboard)

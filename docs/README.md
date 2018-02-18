@@ -91,6 +91,30 @@ The `history` attribute of a widget defines how many historical items a widget s
 
 Widgets can be either a path to a directory containing a widget (see below), or an npm module of the same. If the widget is a npm module, you would need to `npm install --save <widget-name>` first.
 
+## Custom CSS
+
+You can add to (or override) the CSS for a dashboard, using the `css` attribute in your dashboard's json configuration.
+
+Because the dashboard configuration is in JSON format, your CSS must be too, and uses the [json-to-css package](https://www.npmjs.com/package/json-to-css) to transform json into minified CSS.
+
+As a (rather ugly) example, lets change the dashboard's background colour to red.
+
+```javascript
+{
+  "name": "dashboard-with-custom-css",
+  "layout": { ... },
+  "css": {
+    "body": {
+      "background-color": "red"
+    }
+  },
+  "datasources": { ... },
+  "widgets": [ ... ]
+}
+```
+
+As you can see, the hash under `css` follows the basic format of css, and is rendered into the dashboard after all the default vudash, and widget generated CSS.
+
 # Widgets
 
 Widgets are configured as an array in the `dashboard.json` file, in the format:

@@ -37,7 +37,7 @@
     "vudash": "bin/vudash.js"
   },
   "engines": {
-    "node": ">=7.x"
+    "node": ">=9.x"
   },
   "author": "Antony Jones",
   "license": "MIT",

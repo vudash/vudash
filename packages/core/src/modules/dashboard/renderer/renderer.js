@@ -10,16 +10,15 @@ function renderWidgets (widgets, layout) {
   })
 }
 
-exports.buildRenderModel = function (name, widgets, layout) {
+exports.buildRenderModel = async function (name, widgets, layout) {
   const renderedWidgets = renderWidgets(widgets, layout)
   const { js, html } = bundler.build(renderedWidgets)
 
-  return compiler.compile(js)
-  .then(script => {
-    return {
-      name,
-      html,
-      js: script
-    }
-  })
+  const script = await compiler.compile(js)
+
+  return {
+    name,
+    html,
+    js: script
+  }
 }
