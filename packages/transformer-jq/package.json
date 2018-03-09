@@ -6,7 +6,7 @@
   "author": "Antony Jones",
   "license": "MIT",
   "dependencies": {
-    "jq-web": "^0.1.3"
+    "jq-web": "0.2.0"
   },
   "publishConfig": {
     "access": "public"
