@@ -113,8 +113,10 @@ You could use the following configuration to pass the string "empty of useless t
   "datasource": "ds-rest",
   "transformations": [
     {
-      "transformer": "@vudash/transformer-map",
-      "options": ".a.big.json | [\"empty\", .[1], \"useless\", .[3]] | join(\" \")"
+      "transformer": "@vudash/transformer-jq",
+      "options":  {
+        "value": ".a.big.json | [\"empty\", .[1], \"useless\", .[3]] | join(\" \")"
+      }
     }
   ],
   "options": {

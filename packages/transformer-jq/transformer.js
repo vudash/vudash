@@ -8,7 +8,7 @@ class JqTransformer {
   }
 
   transform (data) {
-    return jq(data, this.transformation)
+    return jq(data, this.transformation.value)
   }
 }
 
