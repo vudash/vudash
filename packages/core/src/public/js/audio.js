@@ -2,11 +2,15 @@
 
 var VUDASH = window.VUDASH
 
-var Player = function () {}
+var Player = function () {
+  this.audio = new Audio();
+}
 
 Player.prototype.play = function (data) {
-  var snd = new window.Audio(data)
-  snd.play()
+  this.audio.src = data
+  this.audio.addEventListener('canplaythrough', function() {
+    this.play();
+  });
 }
 
 VUDASH.player = new Player()
