@@ -32,5 +32,8 @@
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
     "travis-ci": "^2.1.1"
+  },
+  "devDependencies": {
+    "moment": "^2.22.0"
   }
 }
