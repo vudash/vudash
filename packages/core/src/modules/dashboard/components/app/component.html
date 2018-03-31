@@ -1,0 +1,46 @@
+<script>
+  import iziToast from 'izitoast'
+  import 'izitoast/dist/css/iziToast.css'
+
+  const VUDASH = window.VUDASH
+  const socket = io(VUDASH.config.serverUrl)
+
+  export default {
+    oncreate () {
+      socket.on('error', e => {
+        iziToast.show({
+          title: 'Socket Error',
+          theme: 'dark',
+          color: 'red',
+          message: e.message,
+          timeout: 5000,
+          onOpen: () => {
+            console.error(e)
+          }
+        })
+      })
+
+      socket.on('disconnect', () => {
+        iziToast.show({
+          id: 'disconnect',
+          title: 'Socket Disconnected',
+          theme: 'light',
+          color: 'red',
+          message: 'Will reload soon to restore connection...',
+          timeout: process.env.DISCONNECT_RELOAD_TIMEOUT || 30000,
+          onClosed: () => {
+            window.location.reload()
+          }
+        })
+      })
+
+      socket.on('audio:play', data => {
+        VUDASH.player.play(data.data)
+      })
+
+      socket.on('view:current', data => {
+        window.location.pathname = `/${data.dashboard}.dashboard`
+      })
+    }
+  }
+</script>

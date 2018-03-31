@@ -2,18 +2,41 @@
 
 exports.renderScript = function (id, name, config) {
   return `
-    const widget_${id} = new ${name}({ 
-      target: document.getElementById("widget-container-${id}"), 
-      data: { config: ${JSON.stringify(config)} }
-    });
+    <div id="widget-container-${id}" class="widget-container">
+      <${name} ref:${id} config="${config}" />
+    </div>
 
-    socket.on('${id}:update', ($data) => {
-      if ($data.error) {
-        console.error('Widget "${id}" encountered error: ' + $data.error.message)
+    <script>
+      export default {
+        data () {
+          return ${JSON.stringify(config)}
+        }
+
+        oncreate () {
+          socket.on('${id}:update', $data => {
+            if ($data.error) {
+              console.error('Widget "${id}" encountered error: ' + $data.error.message)
+            }
+            this.refs.${id}.update($data)
+          })
+        }
       }
-      widget_${id}.update($data)
-    })
-  `.trim()
+    </script>
+  `
+
+  // return `
+  //   const widget_${id} = new ${name}({ 
+  //     target: document.getElementById("widget-container-${id}"), 
+  //     data: { config: ${JSON.stringify(config)} }
+  //   });
+
+  //   socket.on('${id}:update', ($data) => {
+  //     if ($data.error) {
+  //       console.error('Widget "${id}" encountered error: ' + $data.error.message)
+  //     }
+  //     widget_${id}.update($data)
+  //   })
+  // `.trim()
 }
 
 exports.renderHtml = function (id) {
