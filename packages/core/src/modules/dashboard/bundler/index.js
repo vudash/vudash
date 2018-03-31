@@ -17,7 +17,7 @@ const base = `
     })
   })
 
-  socket.on('disconnect',function () {
+  socket.on('disconnect', function () {
     iziToast.show({
       id: 'disconnect',
       title: 'Socket Disconnected',
