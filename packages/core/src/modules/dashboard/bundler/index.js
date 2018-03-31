@@ -4,8 +4,31 @@ const base = `
   const VUDASH = window.VUDASH
   const socket = io(VUDASH.config.serverUrl)
 
-  socket.on('error', function(e) {
-    console.error('Error.', e)
+  socket.on('error', function (e) {
+    iziToast.show({
+      title: 'Socket Error',
+      theme: 'dark',
+      color: 'red',
+      message: e.message,
+      timeout: 5000,
+      onOpen: function () {
+        console.error(e)
+      }
+    })
+  })
+
+  socket.on('disconnect',function () {
+    iziToast.show({
+      id: 'disconnect',
+      title: 'Socket Disconnected',
+      theme: 'light',
+      color: 'red',
+      message: 'Will reload soon to restore connection...',
+      timeout: ${process.env.DISCONNECT_RELOAD_TIMEOUT} || 30000,
+      onClosed: function () {
+        window.location.reload()
+      }
+    })
   })
 
   socket.on('audio:play', function (data) {

@@ -1,15 +1,27 @@
 'use strict'
 
-const Path = require('path')
+const { join } = require('path')
 
 const AssetsPlugin = {
   register: function (server, options, next) {
+    const root = join(__dirname, '..', '..', '..')
+
+    server.route({
+      method: 'GET',
+      path: '/vendor/{param*}',
+      handler: {
+        directory: {
+          path: join(root, 'node_modules')
+        }
+      }
+    })
+
     server.route({
       method: 'GET',
       path: '/assets/{param*}',
       handler: {
         directory: {
-          path: Path.join(__dirname, '..', '..', '..', 'src/public')
+          path: join(root, 'src/public')
         }
       }
     })

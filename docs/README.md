@@ -165,6 +165,16 @@ Datasources are specified as a hash in the `dashboard.json` as follows:
 
 Each refresh, the datasource will fetch new data, and tell all widgets that listen to it about the new data.
 
+# Configuration
+
+When running the server, a number of environment variables are available:
+
+| environment variable      | description                                                            | default value |
+| ------------------------- | ---------------------------------------------------------------------- | ------------- |
+| DEFAULT_DASHBOARD         | specify default dashboard to mount at /                                | none               |
+| DISCONNECT_RELOAD_TIMEOUT | default number of milliseconds to wait to reload if server disconnects | 30000         |
+| API_KEY                   | api key used to access the vudash api                                  | (random)      |
+
 # Troubleshooting
 
 * Q. The console shows that the websocket is failing to connect, and my widgets aren't updating.
