@@ -10,8 +10,8 @@ function resolveDatasource (path) {
   return resolver.resolve(path)
 }
 
-function parseConfiguration (pluginName, validation, options) {
-  return configValidator.validate(pluginName, validation, options)
+function parseConfiguration (datasourceName, validation, options) {
+  return configValidator.validate(datasourceName, validation, options)
 }
 
 function register (registrationFn, configuration) {
@@ -22,14 +22,14 @@ function register (registrationFn, configuration) {
   return registrationFn(configuration)
 }
 
-function initialise (registrationFn, configuration = {}, schedule) {
+function initialise (name, registrationFn, configuration = {}, schedule) {
   const datasource = register(registrationFn, configuration)
 
   if (typeof datasource.fetch !== 'function') {
     throw new Error(`${loadError} (no fetch function)`)
   }
 
-  return datasourceBinder.bind(datasource, schedule)
+  return datasourceBinder.bind(name, datasource, schedule)
 }
 
 exports.load = function (descriptor) {
@@ -38,7 +38,7 @@ exports.load = function (descriptor) {
     const { module: path, options, schedule } = descriptor[name]
     const { validation, register } = resolveDatasource(path)
     const configuration = parseConfiguration(name, validation, options)
-    datasources[name] = initialise(register, configuration, schedule)
+    datasources[name] = initialise(name, register, configuration, schedule)
     return datasources
   }, {})
 }

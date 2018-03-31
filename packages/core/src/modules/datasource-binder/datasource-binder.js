@@ -1,8 +1,9 @@
 'use strict'
 
 const { createEmitter } = require('./datasource-emitter')
+const chalk = require('chalk')
 
-exports.bind = function (datasource, schedule = 30000) {
+exports.bind = function (name, datasource, schedule = 30000) {
   const emitter = createEmitter()
 
   function fetchFunction () {
@@ -11,10 +12,15 @@ exports.bind = function (datasource, schedule = 30000) {
     .then(data => {
       emitter.emit('update', data)
     })
+    .catch(e => {
+      console.error(chalk.red.bold(`Error updating datasource ${name}`), chalk.yellow(e.message))
+      console.error(chalk.red(e.stack))
+    })
   }
 
-  fetchFunction()
   const timer = setInterval(fetchFunction, schedule)
+
+  fetchFunction()
 
   return {
     timer,

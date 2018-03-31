@@ -1,6 +1,9 @@
 'use strict'
 
 const base = `
+  import iziToast from 'izitoast'
+  import 'izitoast/dist/css/iziToast.css'
+
   const VUDASH = window.VUDASH
   const socket = io(VUDASH.config.serverUrl)
 

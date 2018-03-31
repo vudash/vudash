@@ -21,7 +21,7 @@ describe('datasource-binder', () => {
     beforeEach(() => {
       stub(datasourceEmitter, 'createEmitter').returns(emitter)
       clock = useFakeTimers()
-      const result = binder.bind(datasource, 500)
+      const result = binder.bind('xyz', datasource, 500)
       timer = result.timer
     })
 
@@ -62,7 +62,7 @@ describe('datasource-binder', () => {
     beforeEach(() => {
       stub(datasourceEmitter, 'createEmitter').returns(emitter)
       clock = useFakeTimers()
-      const result = binder.bind(datasource)
+      const result = binder.bind('xyz', datasource)
       timer = result.timer
     })
 
@@ -90,7 +90,7 @@ describe('datasource-binder', () => {
     }
 
     beforeEach(() => {
-      const result = binder.bind(datasource, 500)
+      const result = binder.bind('xyz', datasource, 500)
       timer = result.timer
       emitter = result.emitter
     })
