@@ -23,7 +23,7 @@ function register () {
   const server = new Hapi.Server()
   server.connection({ port: process.env.PORT || 3300 })
 
-  server.settings.app.serverUrl = process.env.SERVER_URL || server.info.uri
+  server.settings.app = { serverUrl: process.env.SERVER_URL || server.info.uri }
   const apiKey = process.env['API_KEY'] || id()
 
   return server.register([
