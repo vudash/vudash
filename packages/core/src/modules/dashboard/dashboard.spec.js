@@ -1,14 +1,13 @@
 'use strict'
 
 const Emitter = require('./emitter')
-const { create } = require('modules/dashboard')
 const widgetBinder = require('../widget-binder')
 const renderer = require('./renderer')
 const datasourceLoader = require('../datasource-loader')
 const parser = require('./parser')
 const { stub, useFakeTimers } = require('sinon')
 const { expect } = require('code')
-const Css = require('json-to-css')
+const { create } = require('.')
 
 describe('dashboard', () => {
   describe('constructor', () => {
@@ -238,7 +237,6 @@ describe('dashboard', () => {
         dashboard = create({}, {
           on: stub()
         })
-        dashboard.additionalCss = { some: 'css' }
         dashboard.widgets = { abc: { foo: 'bar' } }
         dashboard.toRenderModel()
       })
@@ -270,33 +268,33 @@ describe('dashboard', () => {
         layout: 'some-layout'
       }
 
-      beforeEach(() => {
+      beforeEach(async () => {
         stub(parser, 'parse').returns(descriptor)
         stub(renderer, 'buildRenderModel').returns({})
-        stub(Css, 'of').returns('some: css')
+        stub(renderer, 'compileAdditionalCss').returns('some: css')
         dashboard = create({}, {
           on: stub()
         })
         dashboard.additionalCss = { some: 'css' }
         dashboard.widgets = {}
-        renderModel = dashboard.toRenderModel()
+        renderModel = await dashboard.toRenderModel()
       })
 
       afterEach(() => {
-        Css.of.restore()
+        renderer.compileAdditionalCss.restore()
         parser.parse.restore()
         renderer.buildRenderModel.restore()
       })
 
-      it('compiles css', () => {
-        expect(Css.of.callCount).to.equal(1)
+      it('calls css transpiler', () => {
+        expect(renderer.compileAdditionalCss.callCount).to.equal(1)
       })
 
-      it('compiles css', () => {
-        expect(Css.of.firstCall.args[0]).to.equal({ some: 'css' })
+      it('css is compiled', () => {
+        expect(renderer.compileAdditionalCss.firstCall.args[0]).to.equal({ some: 'css' })
       })
 
-      it('contains compiled css', () => {
+      it('dashboard css contains additional css', () => {
         expect(renderModel.css).to.equal('some: css')
       })
     })

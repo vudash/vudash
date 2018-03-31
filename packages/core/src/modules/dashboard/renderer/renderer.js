@@ -2,6 +2,7 @@
 
 const bundler = require('../bundler')
 const compiler = require('../compiler')
+const Css = require('json-to-css')
 
 function renderWidgets (widgets, layout) {
   const widgetModel = Object.values(widgets)
@@ -21,4 +22,8 @@ exports.buildRenderModel = async function (name, widgets, layout) {
     html,
     js: script
   }
+}
+
+exports.compileAdditionalCss = function (css) {
+  return Css.of(css)
 }

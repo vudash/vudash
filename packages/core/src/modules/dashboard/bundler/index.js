@@ -11,6 +11,10 @@ const base = `
   socket.on('audio:play', function (data) {
     VUDASH.player.play(data.data)
   })
+
+  socket.on('view:current', function (data) {
+    window.location.pathname = '/' + data.dashboard + '.dashboard'
+  })
 `
 
 exports.build = function (widgets) {

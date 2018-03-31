@@ -54,6 +54,7 @@
     "fs-extra": "^0.30.0",
     "handlebars": "^4.0.10",
     "hapi": "^16.6.2",
+    "hapi-api-secret-key": "^1.1.0",
     "hoek": "^4.1.1",
     "inert": "^4.2.0",
     "joi": "^10.5.2",

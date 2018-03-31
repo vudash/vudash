@@ -3,7 +3,7 @@
 const server = require('server')
 const { expect } = require('code')
 
-describe('plugins.dashboard', function () {
+describe('core/plugins/ui', function () {
   this.timeout(10000)
 
   let app
@@ -25,7 +25,7 @@ describe('plugins.dashboard', function () {
   })
 
   it('Builds dashboard cache', () => {
-    const cachedDashboards = Object.keys(app.plugins.dashboard.dashboards)
+    const cachedDashboards = Object.keys(app.plugins.ui.dashboards)
     expect(cachedDashboards).to.only.include('simple')
   })
 })

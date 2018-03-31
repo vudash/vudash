@@ -38,7 +38,7 @@ const DashboardPlugin = {
 }
 
 DashboardPlugin.register.attributes = {
-  name: 'dashboard',
+  name: 'ui',
   version: '1.0.0',
   dependencies: ['socket']
 }

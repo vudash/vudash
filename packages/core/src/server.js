@@ -9,6 +9,7 @@ const fs = require('fs')
 const Path = require('path')
 const chalk = require('chalk')
 const unhandled = require('unhandled-rejection')
+const id = require('./modules/id-gen')
 
 const rejectionEmitter = unhandled({
   timeout: 5
@@ -22,12 +23,21 @@ function register () {
   const server = new Hapi.Server()
   server.connection({ port: process.env.PORT || 3300 })
 
+  const apiKey = process.env['API_KEY'] || id()
+
   return server.register([
     require('vision'),
     require('inert'),
     require('./plugins/socket'),
     require('./plugins/static'),
-    require('./plugins/dashboard')
+    require('./plugins/ui'),
+    {
+      register: require('hapi-api-secret-key').plugin,
+      options: {
+        secrets: [ apiKey ]
+      }
+    },
+    require('./plugins/api')
   ])
   .then(() => {
     server.views({
@@ -40,6 +50,7 @@ function register () {
 
     console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
     console.log(`Server ${chalk.green.bold('running')}`)
+    console.log(`Api key: ${chalk.magenta.bold(apiKey)}`)
     console.log('Dashboards available:')
     const dashboardDir = Path.join(process.cwd(), 'dashboards')
     const boards = fs.readdirSync(dashboardDir)
@@ -71,7 +82,7 @@ function start (server) {
 }
 
 function cleanup (server) {
-  const cache = Object.values(server.plugins.dashboard.dashboards)
+  const cache = Object.values(server.plugins.ui.dashboards)
   cache.forEach(dashboard => {
     dashboard.destroy()
   })

@@ -3,7 +3,7 @@
 const { expect } = require('code')
 const { handler } = require('.')
 
-describe('plugins/dashboard/handlers/index.handler', () => {
+describe('plugins/ui/handlers/index', () => {
   context('Default Dashboard', () => {
     before(() => {
       process.env.DEFAULT_DASHBOARD = 'xxyyzz'
