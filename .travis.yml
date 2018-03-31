@@ -20,6 +20,8 @@ env:
   - TEST_DIR=vudash-widget-progress
   - TEST_DIR=vudash-widget-statistic
   - TEST_DIR=vudash-widget-time
+  - TEST_DIR=vudash-widget-status
+  - TEST_DIR=@vudash/widget-chart
 script:
   - lerna bootstrap
   - lerna run test --scope $TEST_DIR
