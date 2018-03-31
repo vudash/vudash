@@ -23,6 +23,7 @@ function register () {
   const server = new Hapi.Server()
   server.connection({ port: process.env.PORT || 3300 })
 
+  server.settings.app.serverUrl = process.env.SERVER_URL || server.info.uri
   const apiKey = process.env['API_KEY'] || id()
 
   return server.register([
@@ -57,7 +58,7 @@ function register () {
     for (let board of boards) {
       const loaded = require(Path.join(dashboardDir, board))
       const boardUrl = `${Path.basename(board, '.json')}.dashboard`
-      console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.info.uri}/${boardUrl}`))
+      console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.settings.app.serverUrl}/${boardUrl}`))
     }
 
     return Promise.resolve(server)

@@ -5,7 +5,7 @@ const { NotFoundError } = require('../../../../errors')
 const Boom = require('boom')
 
 async function buildViewModel (dashboard, server) {
-  const serverUrl = process.env.SERVER_URL || server.info.uri
+  const serverUrl = server.settings.app.serverUrl
   const { name, html, js, css } = await dashboard.toRenderModel()
   return {
     serverUrl,

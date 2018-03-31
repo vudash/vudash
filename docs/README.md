@@ -174,6 +174,7 @@ When running the server, a number of environment variables are available:
 | DEFAULT_DASHBOARD         | specify default dashboard to mount at /                                | none               |
 | DISCONNECT_RELOAD_TIMEOUT | default number of milliseconds to wait to reload if server disconnects | 30000         |
 | API_KEY                   | api key used to access the vudash api                                  | (random)      |
+| SERVER_URL                | external server url (for when node can't resolve it by itself)         | (inferred)    |
 
 # Troubleshooting
 
