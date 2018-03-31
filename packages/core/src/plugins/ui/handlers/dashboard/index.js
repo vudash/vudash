@@ -6,14 +6,11 @@ const Boom = require('boom')
 
 async function buildViewModel (dashboard, server) {
   const serverUrl = server.settings.app.serverUrl
-  const { name, html, js, css } = await dashboard.toRenderModel()
+  const { name, app, css } = await dashboard.toRenderModel()
   return {
     serverUrl,
-    html,
     name,
-    bundle: js.code,
-    map: js.map,
-    css
+    app
   }
 }
 

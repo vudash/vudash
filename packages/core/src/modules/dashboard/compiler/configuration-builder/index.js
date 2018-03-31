@@ -3,22 +3,19 @@
 const svelte = require('rollup-plugin-svelte')
 const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
-const memory = require('rollup-plugin-memory')
+const virtual = require('rollup-plugin-virtual')
 const css = require('rollup-plugin-postcss')
 const svg = require('rollup-plugin-svg')
 const buble = require('rollup-plugin-buble')
 
 exports.build = function (source) {
-  return {
-    entry: {
-      path: 'dashboard.js',
-      contents: source
-    },
-    dest: 'bundle.js',
-    format: 'iife',
+  const inputOptions = {
+    input: 'dashboard.js',
     plugins: [
       svg(),
-      memory(),
+      virtual({
+        'dashboard.js': source
+      }),
       commonjs(),
       resolve({
         customResolveOptions: {
@@ -30,4 +27,11 @@ exports.build = function (source) {
       buble()
     ]
   }
+
+  const outputOptions = {
+    file: 'bundle.js',
+    format: 'iife'
+  }
+
+  return { inputOptions, outputOptions }
 }

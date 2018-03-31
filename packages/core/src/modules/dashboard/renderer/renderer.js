@@ -13,14 +13,13 @@ function renderWidgets (widgets, layout) {
 
 exports.buildRenderModel = async function (name, widgets, layout) {
   const renderedWidgets = renderWidgets(widgets, layout)
-  const { js, html } = bundler.build(renderedWidgets)
+  const app = bundler.build(renderedWidgets)
 
-  const script = await compiler.compile(js)
+  const script = await compiler.compile(app)
 
   return {
     name,
-    html,
-    js: script
+    app
   }
 }
 
