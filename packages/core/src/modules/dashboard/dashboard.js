@@ -6,7 +6,7 @@ const id = require('../id-gen')
 const parser = require('./parser')
 const datasourceLoader = require('../datasource-loader')
 const widgetBinder = require('../widget-binder')
-const renderer = require('./renderer')
+const renderer = require('./new-renderer')
 
 function isWidgetEvent (eventId) {
   return eventId.endsWith(':update')
@@ -70,12 +70,22 @@ class Dashboard {
   }
 
   async toRenderModel () {
-    const model = await renderer.buildRenderModel(
-      this.name, this.widgets, this.layout
-    )
+    const { name, widgets, layout, additionalCss } = this
 
-    model.css = renderer.compileAdditionalCss(this.additionalCss)
-    return model
+    const widgetInstance = Object.values(widgets)
+    const widgetModels = widgetInstance.map(w => w.toRenderModel(layout))
+
+    const model = await renderer.render({
+      name,
+      widgets: widgetModels,
+      layout,
+      additionalCss
+    })
+
+    return {
+      name,
+      app: model.code
+    }
   }
 }
 

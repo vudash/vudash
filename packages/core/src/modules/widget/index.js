@@ -45,7 +45,6 @@ class Widget {
       id,
       name,
       componentPath,
-      markup: renderer.renderHtml(id),
       css: renderer.renderStyles(id, widgetPosition, background),
       js: renderer.renderScript(id, name, options)
     }

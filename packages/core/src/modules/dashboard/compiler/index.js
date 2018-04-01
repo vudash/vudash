@@ -9,7 +9,6 @@ exports.compile = function (source) {
   return rollup
   .rollup(inputOptions)
   .then(bundle => {
-    const js = bundle.generate(outputOptions)
-    return js
+    return bundle.generate(outputOptions)
   })
 }

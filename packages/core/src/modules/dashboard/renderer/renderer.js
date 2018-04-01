@@ -23,6 +23,10 @@ exports.buildRenderModel = async function (name, widgets, layout) {
   }
 }
 
+exports.renderApp = async function (name, widgets, layout) {
+  
+}
+
 exports.compileAdditionalCss = function (css) {
   return Css.of(css)
 }

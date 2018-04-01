@@ -223,7 +223,7 @@ describe('dashboard', () => {
   })
 
   describe('#toRenderModel()', () => {
-    context('no additiona css', () => {
+    context('no additional css', () => {
       let dashboard
 
       const descriptor = {
