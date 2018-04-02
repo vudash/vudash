@@ -33,12 +33,12 @@ function initialise (name, registrationFn, configuration = {}, schedule) {
 }
 
 exports.load = function (descriptor) {
-  const datasourceNames = Object.keys(descriptor)
-  return datasourceNames.reduce((datasources, name) => {
-    const { module: path, options, schedule } = descriptor[name]
+  const datasourceIds = Object.keys(descriptor)
+  return datasourceIds.reduce((datasources, id) => {
+    const { module: path, options, schedule } = descriptor[id]
     const { validation, register } = resolveDatasource(path)
-    const configuration = parseConfiguration(name, validation, options)
-    datasources[name] = initialise(name, register, configuration, schedule)
+    const configuration = parseConfiguration(id, validation, options)
+    datasources[id] = initialise(id, register, configuration, schedule)
     return datasources
   }, {})
 }

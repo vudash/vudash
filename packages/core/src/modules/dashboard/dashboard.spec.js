@@ -8,11 +8,13 @@ const parser = require('./parser')
 const { stub, useFakeTimers } = require('sinon')
 const { expect } = require('code')
 const { create } = require('.')
+const { NotFoundError } = require('errors')
 
 describe('dashboard', () => {
+  const descriptor = { name: 'bar', layout: { columns: 4, rows: 6 } }
+
   describe('constructor', () => {
     let dashboard
-    const descriptor = { name: 'bar', layout: { columns: 4, rows: 6 } }
 
     beforeEach(() => {
       stub(parser, 'parse').returns(descriptor)
@@ -91,6 +93,41 @@ describe('dashboard', () => {
 
       it('calls loader to load datasources', () => {
         expect(dashboard.datasources).to.equal('bar')
+      })
+    })
+  })
+
+  describe('#getDatasource()', () => {
+    let dashboard
+
+    beforeEach(() => {
+      stub(parser, 'parse').returns(descriptor)
+      dashboard = create({}, {
+        on: stub()
+      })
+      
+      dashboard.datasources = {
+        foo: 'bar'
+      }
+    })
+
+    afterEach(() => {
+      parser.parse.restore()
+    })
+    
+    context('datasource for given id exists', () => {
+      it('returns datasource', () => {
+        expect(
+          dashboard.getDatasource('foo')
+        ).to.equal('bar')
+      })
+    })
+
+    context('datasource for given id does not exist', () => {
+      it('throws error', () => {
+        expect(() => {
+          dashboard.getDatasource('baz')
+        }).to.throw(NotFoundError)
       })
     })
   })
@@ -225,11 +262,6 @@ describe('dashboard', () => {
   describe('#toRenderModel()', () => {
     context('no additiona css', () => {
       let dashboard
-
-      const descriptor = {
-        name: 'some-name',
-        layout: 'some-layout'
-      }
 
       beforeEach(() => {
         stub(parser, 'parse').returns(descriptor)

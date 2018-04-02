@@ -7,6 +7,7 @@ const parser = require('./parser')
 const datasourceLoader = require('../datasource-loader')
 const widgetBinder = require('../widget-binder')
 const renderer = require('./renderer')
+const { NotFoundError } = require('errors')
 
 function isWidgetEvent (eventId) {
   return eventId.endsWith(':update')
@@ -67,6 +68,16 @@ class Dashboard {
     widgets.forEach(widget => {
       widget.hasOwnProperty('destroy') && widget.destroy()
     })
+  }
+
+  getDatasource (id) {
+    const datasource = this.datasources[id]
+
+    if (!datasource) {
+      throw new NotFoundError(`Datasource ${id} does not exist in the context of Dashboard ${this.id}`)
+    }
+
+    return datasource
   }
 
   async toRenderModel () {

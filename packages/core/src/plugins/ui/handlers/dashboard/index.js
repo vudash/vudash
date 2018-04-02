@@ -1,6 +1,6 @@
 'use strict'
 
-const dashboardLoader = require('../../../../modules/dashboard/loader')
+const dashboardLoader = require('modules/dashboard/loader')
 const { NotFoundError } = require('../../../../errors')
 const Boom = require('boom')
 
@@ -20,7 +20,7 @@ exports.handler = async function (request, reply) {
   const { io } = server.plugins.socket
   const { dashboards } = server.plugins.ui
   try {
-    const dashboard = dashboardLoader.find(dashboards, board, io)
+    const dashboard = dashboardLoader.load(dashboards, board, io)
     const model = await buildViewModel(dashboard, server)
     return reply.view('dashboard', model)
   } catch (e) {
