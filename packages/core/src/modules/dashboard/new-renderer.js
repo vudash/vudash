@@ -12,8 +12,8 @@ function renderWidget (id, name) {
 }
 
 exports.render = async function ({ name, widgets, layout, additionalCss }) {
-  const { markup, css, events, components, config } = widgets.reduce((curr, widget) => {
-    const { id, name, config, componentPath, css, js } = widget
+  const { markup, css, events, components } = widgets.reduce((curr, widget) => {
+    const { id, name, js } = widget
 
     curr.components[name] = componentPath
     curr.markup.push(renderWidget(id, name, config))

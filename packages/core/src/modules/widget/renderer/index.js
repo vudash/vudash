@@ -3,7 +3,7 @@
 exports.renderScript = function (id, name, config) {
   return `
     <div id="widget-container-${id}" class="widget-container">
-      <${name} ref:r${id} config="${config}" />
+      <${name} ref:r${id} config="{{ config }}" />
     </div>
 
     <script>
