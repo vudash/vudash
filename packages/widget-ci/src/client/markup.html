@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="label">
-    <span class="ci-user">{{ config.user }}</span> / <span class="ci-repo">{{ config.repo }}</span>
+    {{#if !config.hideOwner}}<span class="ci-user">{{ config.user }}</span> / {{/if}}<span class="ci-repo">{{ config.repo }}</span>
   </div>
 </div>
 

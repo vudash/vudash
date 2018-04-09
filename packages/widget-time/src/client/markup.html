@@ -25,17 +25,17 @@
 
 <script>
   export default {
-  data () {
-    return {
-      time: '--:--:--',
-      date: '--- -- --- ----'
-    }
-  },
+    data () {
+      return {
+        time: '--:--:--',
+        date: '--- -- --- ----'
+      }
+    },
 
-  methods: {
-    update ({ meta, data }) {
-      this.set(data)
+    methods: {
+      update ({ meta, data }) {
+        this.set(data)
+      }
     }
   }
-}
 </script>
