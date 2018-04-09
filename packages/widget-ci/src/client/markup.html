@@ -1,6 +1,42 @@
-<div class="ci-widget {{ backgroundClass }}">
+<div class="ci-widget {{ icon }}">
   <div class="value">
-    <img src="{{ ligature }}" alt="status" />
+    <div class="loader">
+      {{#if icon === 'running'}}
+      <svg width="54%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         viewBox="0 0 50 50" xml:space="preserve">
+        <path id="running" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+        <animateTransform attributeType="xml"
+          attributeName="transform"
+          type="rotate"
+          from="0 25 25"
+          to="360 25 25"
+          dur="1s"
+          repeatCount="indefinite"/>
+        </path>
+      </svg>
+      {{/if}}
+      {{#if icon === 'passed'}}
+        <svg width="58%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="50 0 100 100" x="0px" y="0px">
+          <circle cx="100" cy="50" r="32" stroke-width="8" fill="none" />
+        </svg>
+      {{/if}}
+      {{#if icon === 'failed'}}
+        <svg width="40%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000"  xml:space="preserve">
+          <path d="M962.6,830.4L632.1,500l330.5-330.5c36.5-36.5,36.5-95.6,0-132.1c-36.5-36.4-95.6-36.5-132.2,0L500,367.8L169.5,37.4c-36.4-36.4-95.6-36.5-132.1,0c-36.5,36.5-36.4,95.7,0,132.1L367.8,500L37.4,830.4c-36.4,36.5-36.4,95.7,0,132.2c36.5,36.5,95.7,36.4,132.1,0L500,632.1l330.4,330.5c36.6,36.5,95.6,36.5,132.2,0C999.1,926.1,999.1,867,962.6,830.4z" />
+        </svg>
+      {{/if}}
+      {{#if icon === 'queued'}}
+        <svg width="40%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -200 1600 1600"  xml:space="preserve">
+          <path id="pause"
+            d="M 1536,1344 V -64 q 0,-26 -19,-45 -19,-19 -45,-19 H 960 q -26,0 -45,19 -19,19 -19,45 v 1408 q 0,26 19,45 19,19 45,19 h 512 q 26,0 45,-19 19,-19 19,-45 z m -896,0 V -64 q 0,-26 -19,-45 -19,-19 -45,-19 H 64 q -26,0 -45,19 -19,19 -19,45 v 1408 q 0,26 19,45 19,19 45,19 h 512 q 26,0 45,-19 19,-19 19,-45 z" />   
+        </svg>
+      {{/if}}
+      {{#if icon === 'error'}}
+        <svg width="60%" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+          <path id="error" d="M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z"/>
+        </svg>
+      {{/if}}
+    </div>
   </div>
   <div class="label">
     <span class="ci-user">{{ config.user }}</span> / <span class="ci-repo">{{ config.repo }}</span>
@@ -8,76 +44,62 @@
 </div>
 
 <style>
-.ci-widget > * {
-  width: 100%;
-  text-align: center;
-}
-
-.label {
-  position: absolute;
-  bottom: 30px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-@keyframes failed-pulse {
-  0% { background-color: rgb(159,20,255); }
-  25% { background-color: rgb(232,18,205) }
-  50% { background-color: rgb(255,32,33); }
-  75% { background-color: rgb(232,83,32); }
-  100% { background-color: rgb(255,139,18); }
-}
-
-.ci-widget.error, .ci-widget.failed {
-  background-color: rgb(255,32,33);
-  animation: failed-pulse 4s infinite alternate;
-}
-
-@-webkit-keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+  .ci-widget > * {
+    width: 100%;
+    text-align: center;
   }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+
+  .label {
+    position: absolute;
+    bottom: 30px;
+    font-size: 14px;
+    font-weight: bold;
   }
-}
-@keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+
+  svg {
+		display: block;
+		margin: auto;
+	}
+
+  svg path#running {
+    fill: #fff;
   }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+
+	svg path#pause {
+	  fill: #ffd700;
+	}
+
+  svg path#error {
+	  fill: #000;
+	}
+
+  svg circle {
+    stroke: #0f0;
   }
-}
+
+  @keyframes failed-pulse {
+    0% { background-color: rgb(159,20,255); }
+    25% { background-color: rgb(232,18,205) }
+    50% { background-color: rgb(255,32,33); }
+    75% { background-color: rgb(232,83,32); }
+    100% { background-color: rgb(255,139,18); }
+  }
+
+  .ci-widget.error, .ci-widget.failed {
+    background-color: rgb(255,32,33);
+    animation: failed-pulse 4s infinite alternate;
+  }
 </style>
 
 <script>
 'use strict'
 
-import passed from './images/passed.svg'
-import failed from './images/failed.svg'
-import queued from './images/queued.svg'
-import running from './images/running.svg'
-import unknown from './images/unknown.svg'
-
-const icons = { passed, failed, queued, running, unknown }
-
 export default {
   methods: {
     update ({ meta, data }) {
-      let ligature = icons[data.status]
-      let backgroundClass = data.status
+      const icon = data.error ? 'error' : data.status
 
-      if (data.error) {
-        ligature = icons.unknown
-        backgroundClass = 'error'
-      }
-
-      this.set({ ligature, backgroundClass })
+      this.set({ icon })
     }
   }
 }
