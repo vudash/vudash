@@ -4,14 +4,12 @@ const rollup = require('rollup')
 const { build } = require('./configuration-builder')
 
 exports.compile = function (source) {
-  const config = build(source)
+  const { inputConfig, outputConfig } = build(source)
 
   return rollup
-  .rollup(config)
+  .rollup(inputConfig)
   .then(bundle => {
-    const js = bundle.generate({
-      format: 'iife'
-    })
+    const js = bundle.generate(outputConfig)
     return js
   })
 }
