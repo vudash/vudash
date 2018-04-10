@@ -1,6 +1,8 @@
 <div class="vudash-health">
   <div class="value">
-    <img alt="heart {{ heart }}" ref:heartbeat src="{{ heart }}" />
+    <svg width="34%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170.71 156.07">
+      <path ref:heart d="M156.07,14.64a50,50,0,0,0-70.71,0A50,50,0,0,0,14.64,85.36l70.71,70.71,70.71-70.71A50,50,0,0,0,156.07,14.64Z"/>
+    </svg>
   </div>
   <div class="label">
     Health
@@ -21,32 +23,50 @@
   }
 
   .value {
-    height: 80px;
     display: block;
   }
 
-  .value > img {
-    transition: width 0.5s, height 0.5s;
-    color: rgb(255,105,94);
+  svg {
+    padding: 10px;
+  }
+  
+  path {
+    fill: transparent; 
+    stroke: #ff7bac;  
+    stroke-width: 4px;
+    stroke-dasharray: 514.2344970703125px;
   }
 </style>
 
 <script>
-  import heart from '../images/heart.svg'
+  import TimelineLite from 'gsap/TimelineLite'
 
   export default {
-    data () {
-      return {
-        heart: heart,
-        size: '92'
-      }
+    oncreate () {
+      const el = this.refs.heart
+      const tl = new TimelineLite()
+      this.set({ tl })
+
+      tl
+        .to(el, 0, { 
+          fill: 'rgba(0,0,0,0)',
+          'stroke-dashoffset': '-514.2344970703125px'
+        })
+        .to(el, .25, {
+          fill: 'rgba(0,0,0,0)'
+        })
+        .to(el, .25, {
+          'stroke-dashoffset': '0'
+        })
+        .to(el, .25, {
+          fill: '#ff7bac'
+        })
     },
 
     methods: {
-      update ({ meta, data }) {
-        this.set({ size: data.on ? '92' : '56' })
-        this.refs.heartbeat.width = this.get('size')
-        this.refs.heartbeat.height = this.get('size')
+      update ({ data }) {
+        const tl = this.get('tl')
+        data.on ? tl.play() : tl.reverse()
       }
     }
   }

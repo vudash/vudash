@@ -7,6 +7,7 @@ const virtual = require('rollup-plugin-virtual')
 const css = require('rollup-plugin-postcss')
 const svg = require('rollup-plugin-svg')
 const buble = require('rollup-plugin-buble')
+const uglify = require('rollup-plugin-uglify')
 
 exports.build = function (source) {
   const inputConfig = {
@@ -24,7 +25,8 @@ exports.build = function (source) {
       }),
       css(),
       svelte(),
-      buble()
+      buble(),
+      uglify()
     ]
   }
 
