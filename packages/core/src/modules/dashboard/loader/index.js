@@ -4,11 +4,14 @@ const { NotFoundError } = require('../../../errors')
 const Dashboard = require('..')
 const Path = require('path')
 const fs = require('fs')
+const { join } = require('path')
 
 // TODO: Cache indefinitely using server methods.
 function load (cache, name, io) {
-  const path = `${Path.join(process.cwd(), 'dashboards', name)}.json`
+  const path = join(process.cwd(), 'dashboards', `${name}.json`)
+
   if (!fs.existsSync(path)) {
+    console.log(path, 'nah')
     throw new NotFoundError(`Dashboard ${name} does not exist.`)
   }
 

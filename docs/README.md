@@ -72,11 +72,11 @@ Dashboards are in JSON format and take the form:
     },
     { 
       "position": {"x": 4, "y": 2, "w": 1, "h": 1},
-      "widget": "vudash-widget-travis",
+      "widget": "@vudash/widget-ci",
       "options": {
         "schedule": 60000,
         "user": "vudash",
-        "repo": "vudash-widget-travis"
+        "repo": "vudash-widget-ci"
       }
     }
   ]
@@ -90,6 +90,26 @@ The values for `position.w` and `position.h` are the number of grid units the wi
 The `history` attribute of a widget defines how many historical items a widget should store (i.e. where history is `X`, the widget will store `X` previous values) - the value history can be read by widgets, and used in things like graphs.
 
 Widgets can be either a path to a directory containing a widget (see below), or an npm module of the same. If the widget is a npm module, you would need to `npm install --save <widget-name>` first.
+
+### Environment variables
+
+You can use environment variables in your dashboard or widget configuration:
+
+```javascript
+  { 
+    "position": { ... },
+    "widget": "@vudash/widget-ci",
+    "options": {
+      "user": "vudash",
+      "repo": "vudash-widget-ci",
+      "auth": {
+        "$env": "ENVIRONMENT_VARIABLE_NAME" 
+      }
+    }
+  }
+```
+
+Where the value of `auth` in the configuration will be replaced with the contents of the environment variable `ENVIRONMENT_VARIABLE_NAME`.
 
 ## Custom CSS
 

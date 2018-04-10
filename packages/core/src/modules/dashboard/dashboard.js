@@ -3,6 +3,7 @@
 const { reach } = require('hoek')
 const Emitter = require('./emitter')
 const id = require('../id-gen')
+const validator = require('./validator')
 const parser = require('./parser')
 const datasourceLoader = require('../datasource-loader')
 const widgetBinder = require('../widget-binder')
@@ -14,7 +15,8 @@ function isWidgetEvent (eventId) {
 
 class Dashboard {
   constructor (json, io) {
-    const descriptor = parser.parse(json)
+    const preprocessed = parser.parse(json)
+    const descriptor = validator.validate(preprocessed)
     const { name, layout, css } = descriptor
 
     this.id = id()
