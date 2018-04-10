@@ -1,6 +1,6 @@
 {
   "name": "@vudash/datasource-rest",
-  "version": "9.0.1",
+  "version": "9.3.3",
   "description": "REST Datasource for Vudash",
   "main": "datasource.js",
   "scripts": {
