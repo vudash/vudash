@@ -76,6 +76,21 @@ The simplest configuration is very straightforward
   }
 ```
 
+#### Display
+
+You can turn the display of the repository owner on and off, which might be useful if all your repositories belong to a single organisation:
+
+```javascript
+  { "position": { ... },
+    "widget": "vudash-widget-ci",
+    "datasource": "some-data-source-id",
+    "options": {
+      "hideOwner": true
+      ...
+    }
+  }
+```
+
 #### Build Noises
 
 ```javascript

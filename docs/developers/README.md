@@ -146,7 +146,7 @@ It doesn't matter if the module you want to use isn't an es6 module (i.e. doesn'
 
 You can bundle SVG images as dependencies in your widgets too - the [rollup-plugin-svg](https://www.npmjs.com/package/rollup-plugin-svg) plugin is also included:
 
-<img src="{{ logo }}" />
+<img alt="logo" src="{{ logo }}" />
 <script>
   import { logo } from './logo.svg'
 
