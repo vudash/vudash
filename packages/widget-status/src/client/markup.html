@@ -18,9 +18,11 @@
 
   .updated {
     position: absolute;
-    top: 30px;
+    top: 1vw;
+    right: 1vw;
     text-align: right;
-    color: rgb(64,64,64);
+    font-size: 0.8vw;
+    color: rgb(128,128,128);
   }
 
   .label {
@@ -32,10 +34,10 @@
 	
 	ul {
     padding: 0;
-    margin: 10vw auto;
 	}
 	
 	ul li {
+    margin: 0 4%;
     list-style-type: none;
     text-align: left;
 		font-size: 1.2vw;
@@ -95,7 +97,7 @@
 
     computed: {
       when: _updated => {
-        return moment(_updated).fromNow()
+        return moment(_updated).fromNow(true)
       }
     }
   }
