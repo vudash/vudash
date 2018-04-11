@@ -24,15 +24,15 @@ describe('widget-ci/server', () => {
 
   context('show owner', () => {
     it('do not show repo owner', () => {
-      const config = { provider: 'travis', user: 'x', repo: 'y', showOwner: false }
+      const config = { provider: 'travis', user: 'x', repo: 'y', hideOwner: true }
       const configuration = register(config)
-      expect(configuration.config.showOwner).to.be.false()
+      expect(configuration.config.hideOwner).to.be.true()
     })
 
     it('show repo owner', () => {
       const config = { provider: 'travis', user: 'x', repo: 'y' }
       const configuration = register(config)
-      expect(configuration.config.showOwner).to.be.true()
+      expect(configuration.config.hideOwner).to.be.false()
     })
   })
 

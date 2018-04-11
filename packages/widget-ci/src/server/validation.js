@@ -9,7 +9,7 @@ module.exports = {
   branch: Joi.string().optional().description('Branch name'),
   schedule: Joi.number().optional().default(60000).description('Update frequency (ms)'),
   provider: Joi.string().required().only(engineFactory.availableEngines).description('CI Provider name'),
-  hideOwner: Joi.boolean().optional().description('Hide repo owner from display'),
+  hideOwner: Joi.boolean().optional().default(false).description('Hide repo owner from display'),
   sounds: Joi.object({
     passed: Joi.string().optional().description('Sound to play on build pass'),
     failed: Joi.string().optional().description('Sound to play on build fail'),
