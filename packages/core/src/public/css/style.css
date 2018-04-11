@@ -1,21 +1,23 @@
 body {
   font-family: 'Ubuntu', sans-serif;
   color: #fff;
-  background-color: #292929;
+  background-color: #000;
 }
 
 .widget-container {
   position: absolute;
   display: block;
   box-sizing: border-box;
-  border: 2px solid #393939;
+  background-color: #393939;
+  border: 3px solid #000;
+  border-radius: 10px;
 }
 
 .widget-container > *:first-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
 }
 
 .widget-container > *:first-child {
