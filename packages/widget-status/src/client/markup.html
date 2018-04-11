@@ -1,8 +1,8 @@
 <div class="vudash-status">
   <span class="updated">{{ when }}</span>
-  <ul class="pips">
+  <ul>
     {{#each components as cmp}}
-      <li><img alt="{{cmp.ligature}}" class="{{ cmp.class }}" src="{{ ligatures[cmp.ligature] }}" style="width: 32px; height: 32px;" /></li>
+    <li class="{{ cmp.class }}">{{ cmp.name }}</li>
     {{/each}}
   </ul>
   <div class="label">
@@ -19,6 +19,7 @@
   .updated {
     position: absolute;
     top: 30px;
+    text-align: right;
     color: rgb(64,64,64);
   }
 
@@ -28,40 +29,59 @@
     font-size: 14px;
     font-weight: bold;
   }
-
-  .label > .updated {
-    font-weight: normal;
-    font-style: italic;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0 auto;
-    padding: 0;
-    width: 80%;
-  }
-
-  ul > li {
-    display: inline-block;
-    margin: auto 0;
-    padding: 10px;
+	
+	ul {
+		padding: 0;
+	}
+	
+	ul li {
+		list-style-type: none;
+		font-size: 7vh
+	}
+	
+	ul li::before {
+		margin: 0 10px 0 0;
+	}
+	
+	ul li.healthy::before {
+		color: green;
+		content: '\25B2 ';
+	}
+	
+	ul li.minor::before {
+		color: yellow;
+		content: '\25B2 ';
+	}
+	
+	ul li.major::before {
+		content: '\25BC ';
+		animation: failed-pulse 4s infinite alternate;
+	}
+	
+	ul li.unknown::before {
+		color: grey;
+		margin: 0 10px 0 4px;
+		content: '\25CF ';
+	}
+	
+	 @keyframes failed-pulse {
+    0% { color: rgb(159,20,255); }
+    25% { color: rgb(232,18,205) }
+    50% { color: rgb(255,32,33); }
+    75% { color: rgb(232,83,32); }
+    100% { color: rgb(255,139,18); }
   }
 </style>
 
 <script>
   'use strict'
   import moment from 'moment'
-  import good from './images/good.svg'
-  import major from './images/major.svg'
-  import minor from './images/minor.svg'
-  import unknown from './images/waiting.svg'
 
   export default {
     data () {
       return {
-        description: '...',
-        components: {},
-        ligatures: { good, major, minor, unknown }
+        description: '-',
+        components: {}
       }
     },
 
