@@ -2,7 +2,7 @@
   <span class="updated">{{ when }}</span>
   <ul>
     {{#each components as cmp}}
-    <li class="{{ cmp.class }}">{{ cmp.name }}</li>
+    <li class="{{ cmp.ligature }}">{{ cmp.name }}</li>
     {{/each}}
   </ul>
   <div class="label">
@@ -31,19 +31,21 @@
   }
 	
 	ul {
-		padding: 0;
+    padding: 0;
+    margin: 10vw auto;
 	}
 	
 	ul li {
-		list-style-type: none;
-		font-size: 7vh
+    list-style-type: none;
+    text-align: left;
+		font-size: 1.2vw;
 	}
 	
 	ul li::before {
 		margin: 0 10px 0 0;
 	}
 	
-	ul li.healthy::before {
+	ul li.good::before {
 		color: green;
 		content: '\25B2 ';
 	}
@@ -58,7 +60,7 @@
 		animation: failed-pulse 4s infinite alternate;
 	}
 	
-	ul li.unknown::before {
+	ul li.waiting::before {
 		color: grey;
 		margin: 0 10px 0 4px;
 		content: '\25CF ';
