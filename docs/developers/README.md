@@ -226,6 +226,11 @@ class HealthWidget {
 exports.register = function (options, emitter) {
   return new HealthWidget(options, emitter)
 }
+
+// Validation is optional
+exports.validation = Joi.object({
+  'some-option': Joi.string().required()
+})
 ```
 
 Important things to note here are:
@@ -238,6 +243,7 @@ Important things to note here are:
 
 * We provide a `destroy()` hook to destroy our timer. This is useful to avoid memory leaks, unecessary fetching, and is especically useful for unit-testing.
 
+* We export an optional `validation` schema, which is a Joi schema. It can include default values, too! If this is not exported, it is not called, and options will be passed to your register method verbatim.
 
 ## Developing Datasources
 
