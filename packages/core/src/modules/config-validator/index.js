@@ -14,5 +14,8 @@ exports.validate = function (name, rules = {}, json = {}, options = {}) {
       `Could not register ${name} due to invalid configuration: ${error}`
     )
   }
+
+  console.log('aft', name, value)
+
   return value
 }

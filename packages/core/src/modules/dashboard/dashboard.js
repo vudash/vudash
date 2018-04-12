@@ -17,7 +17,7 @@ function isWidgetEvent (eventId) {
 class Dashboard {
   constructor (json, io) {
     const preprocessed = parser.parse(json)
-    const descriptor = configValidator.validate(preprocessed.name, preprocessed, schema, { allowUnknown: true })
+    const descriptor = configValidator.validate(preprocessed.name, schema, preprocessed, { allowUnknown: true })
     const { name, layout, css } = descriptor
 
     this.id = id()

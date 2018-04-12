@@ -5,6 +5,7 @@ const WidgetPosition = require('./widget-position')
 const loader = require('./loader')
 const renderer = require('./renderer')
 const History = require('./history')
+const validator = require('./validator')
 
 class Widget {
   constructor (widgetPath, config) {
@@ -22,7 +23,9 @@ class Widget {
     const { widget, name, componentPath } = loader.load(this.widgetPath)
     this.componentPath = componentPath
     this.name = name
-    this.widget = widget.register(this.options, emitter)
+
+    const config = validator.validate(name, widget.validation, this.options)
+    this.widget = widget.register(config, emitter)
   }
 
   update (value) {

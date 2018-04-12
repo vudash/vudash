@@ -1,7 +1,7 @@
 'use strict'
 
 const { time } = require('../time')
-const { validation } = require('./validator')
+const { schema } = require('./validation')
 const { parseAlarms } = require('./alarms')
 
 class TimeWidget {
@@ -29,7 +29,7 @@ class TimeWidget {
   }
 }
 
-exports.validation = validation
+exports.validation = schema
 
 exports.register = function (options, emitter) {
   return new TimeWidget(options, emitter)

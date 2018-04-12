@@ -2,7 +2,6 @@
 
 const { NotFoundError } = require('../../../errors')
 const Dashboard = require('..')
-const Path = require('path')
 const fs = require('fs')
 const { join } = require('path')
 
