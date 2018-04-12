@@ -15,7 +15,5 @@ exports.validate = function (name, rules = {}, json = {}, options = {}) {
     )
   }
 
-  console.log('aft', name, value)
-
   return value
 }

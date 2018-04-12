@@ -9,6 +9,5 @@ class ExampleWidget {
 }
 
 exports.register = () => {
-  console.log('registering')
   return new ExampleWidget()
 }

@@ -30,7 +30,6 @@ exports.handler = async function (request, reply) {
     if (e instanceof NotFoundError) {
       return reply.redirect('/')
     }
-    console.log(e)
     return reply(Boom.boomify(e))
   }
 }

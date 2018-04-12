@@ -5,12 +5,10 @@ const Dashboard = require('..')
 const fs = require('fs')
 const { join } = require('path')
 
-// TODO: Cache indefinitely using server methods.
 function load (cache, name, io) {
   const path = join(process.cwd(), 'dashboards', `${name}.json`)
 
   if (!fs.existsSync(path)) {
-    console.log(path, 'nah')
     throw new NotFoundError(`Dashboard ${name} does not exist.`)
   }
 
