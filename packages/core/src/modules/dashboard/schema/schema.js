@@ -17,13 +17,18 @@ const widgetPositionSchema = Joi.object({
 const widgetSchema = Joi.object({
   position: widgetPositionSchema,
   widget: Joi.any().required().description('Path to widget, Node package name, or Class'),
+  datasource: Joi.string().optional().description('Datasource name'),
   options: Joi.object().optional().description('Widget configuration'),
   background: Joi.string().optional().description('Optional background styling, used as css background')
 }).description('Widget Configuration')
 
 const widgetsSchema = Joi.array().required().items(widgetSchema).description('List of widgets')
 
-const datasourcesSchema = Joi.object().optional().description('Hash of datasources')
+const datasourcesSchema = Joi.object().pattern(/.*/, Joi.object({
+  module: Joi.string().required().description('Datasource module name or directory path'),
+  schedule: Joi.number().required().description('Update frequency, milliseconds'),
+  options: Joi.object().optional().description('Datasource specific options')
+})).optional().description('Hash of datasources')
 
 const dashboardSchema = Joi.object({
   name: Joi.string().optional().description('Dashboard name'),
@@ -32,11 +37,4 @@ const dashboardSchema = Joi.object({
   widgets: widgetsSchema
 }).description('Dashboard Descriptor')
 
-
-exports.validate = function (json) {
-  const result = Joi.validate(json, dashboardSchema, { allowUnknown: true })
-  if (result.error) {
-    throw new Error(result.error)
-  }
-  return result.value
-}
+exports.schema = dashboardSchema

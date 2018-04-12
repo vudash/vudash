@@ -4,7 +4,7 @@ const { expect } = require('code')
 const { parse } = require('.')
 const { ConfigurationError } = require('../../../errors')
 
-describe.only('dashboard/parser', () => {
+describe('dashboard/parser', () => {
   beforeEach(() => {
     process.env.SOME_KEY = 'abcde'
   })

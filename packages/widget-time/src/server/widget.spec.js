@@ -1,6 +1,6 @@
 'use strict'
 
-const { register } = require('./widget')
+const { register } = require('.')
 const { expect } = require('code')
 const { stub } = require('sinon')
 
@@ -21,12 +21,13 @@ describe('widget', () => {
             }
           ]
         }
-      ]
+      ],
+      timezone: 'UTC'
     }
 
     it('Allows alarm config', () => {
       expect(() => {
-         widget = register(config, { emit: stub() })
+        widget = register(config, { emit: stub() })
       }).not.to.throw()
     })
 
@@ -40,7 +41,9 @@ describe('widget', () => {
 
     it('Allows config', () => {
       expect(() => {
-        widget = register({}, { emit: stub() })
+        widget = register({
+          timezone: 'UTC'
+        }, { emit: stub() })
       }).not.to.throw()
     })
 
@@ -56,7 +59,9 @@ describe('widget', () => {
     const action2 = { stop: stub() }
 
     beforeEach(() => {
-      widget = register({}, { emit: stub() })
+      widget = register({
+        timezone: 'UTC'
+      }, { emit: stub() })
       widget.alarms = [
         [
           action1,

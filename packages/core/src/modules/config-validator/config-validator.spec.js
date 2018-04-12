@@ -16,7 +16,7 @@ describe('config-validator', () => {
     }).to.throw()
   })
 
-  it('with no options', () => {
+  it('with no json', () => {
     const result = validate('some-name', {}, undefined)
     expect(result).to.equal({})
   })
@@ -29,5 +29,15 @@ describe('config-validator', () => {
   it('with empty rules', () => {
     const result = validate('some-name', {}, 'hello')
     expect(result).to.equal('hello')
+  })
+
+  it('with options', () => {
+    const result = validate(
+      'some-name',
+      Joi.object({ a: Joi.string() }),
+      { a: 'x', b: 'y' },
+      { allowUnknown: true }
+    )
+    expect(result).to.equal({a: 'x', b: 'y'})
   })
 })

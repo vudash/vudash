@@ -5,6 +5,7 @@ const widgetBinder = require('../widget-binder')
 const renderer = require('./renderer')
 const datasourceLoader = require('../datasource-loader')
 const parser = require('./parser')
+const configValidator = require('../config-validator')
 const { stub, useFakeTimers } = require('sinon')
 const { expect } = require('code')
 const { create } = require('.')
@@ -16,6 +17,7 @@ describe('dashboard', () => {
 
     beforeEach(() => {
       stub(parser, 'parse').returns(descriptor)
+      stub(configValidator, 'validate').returns(descriptor)
       dashboard = create({}, {
         on: stub()
       })
@@ -23,6 +25,7 @@ describe('dashboard', () => {
 
     afterEach(() => {
       parser.parse.restore()
+      configValidator.validate.restore()
     })
 
     it('generates a dashboard id', () => {
@@ -53,15 +56,18 @@ describe('dashboard', () => {
 
     beforeEach(() => {
       stub(parser, 'parse')
+      stub(configValidator, 'validate')
     })
 
     afterEach(() => {
       parser.parse.restore()
+      configValidator.validate.restore()
     })
 
     context('empty datasource stanza', () => {
       it('empty datasources when none are specified', () => {
         parser.parse.returns({})
+        configValidator.validate.returns({})
         dashboard = create({}, emitter)
         dashboard.loadDatasources()
         expect(dashboard.datasources).to.equal({})
@@ -70,11 +76,13 @@ describe('dashboard', () => {
 
     context('list of datasources', () => {
       beforeEach(() => {
-        parser.parse.returns({
+        const descriptor = {
           datasources: {
             foo: { foo: 'bar' }
           }
-        })
+        }
+        parser.parse.returns(descriptor)
+        configValidator.validate.returns(descriptor)
         stub(datasourceLoader, 'load').returns('bar')
 
         dashboard = create({}, emitter)
@@ -102,15 +110,18 @@ describe('dashboard', () => {
 
     beforeEach(() => {
       stub(parser, 'parse')
+      stub(configValidator, 'validate')
     })
 
     afterEach(() => {
       parser.parse.restore()
+      configValidator.validate.restore()
     })
 
     context('empty widget stanza', () => {
       it('empty widgets when none are specified', () => {
         parser.parse.returns({})
+        configValidator.validate.returns({})
         dashboard = create({}, emitter)
         dashboard.loadWidgets()
         expect(dashboard.widgets).to.equal({})
@@ -119,11 +130,13 @@ describe('dashboard', () => {
 
     context('list of widgets', () => {
       beforeEach(() => {
-        parser.parse.returns({
+        const descriptor = {
           widgets: [
             { foo: 'bar' }
           ]
-        })
+        }
+        parser.parse.returns(descriptor)
+        configValidator.validate.returns(descriptor)
         stub(widgetBinder, 'load').returns('bar')
 
         dashboard = create({}, emitter)
@@ -151,6 +164,7 @@ describe('dashboard', () => {
     beforeEach(() => {
       clock = useFakeTimers()
       stub(parser, 'parse').returns({})
+      stub(configValidator, 'validate').returns({})
       dashboard = create({}, {
         on: stub()
       })
@@ -158,6 +172,7 @@ describe('dashboard', () => {
 
     afterEach(() => {
       parser.parse.restore()
+      configValidator.validate.restore()
       clock.restore()
     })
 
@@ -233,6 +248,7 @@ describe('dashboard', () => {
 
       beforeEach(() => {
         stub(parser, 'parse').returns(descriptor)
+        stub(configValidator, 'validate').returns(descriptor)
         stub(renderer, 'buildRenderModel').returns({})
         dashboard = create({}, {
           on: stub()
@@ -243,6 +259,7 @@ describe('dashboard', () => {
 
       afterEach(() => {
         parser.parse.restore()
+        configValidator.validate.restore()
         renderer.buildRenderModel.restore()
       })
 
@@ -270,6 +287,7 @@ describe('dashboard', () => {
 
       beforeEach(async () => {
         stub(parser, 'parse').returns(descriptor)
+        stub(configValidator, 'validate').returns({})
         stub(renderer, 'buildRenderModel').returns({})
         stub(renderer, 'compileAdditionalCss').returns('some: css')
         dashboard = create({}, {
@@ -283,6 +301,7 @@ describe('dashboard', () => {
       afterEach(() => {
         renderer.compileAdditionalCss.restore()
         parser.parse.restore()
+        configValidator.validate.restore()
         renderer.buildRenderModel.restore()
       })
 
@@ -314,6 +333,7 @@ describe('dashboard', () => {
 
     beforeEach(() => {
       stub(parser, 'parse').returns({})
+      stub(configValidator, 'validate').returns({})
       dashboard = create({}, socketEmitter)
       dashboard.emitter = dashboardEmitter
       dashboard.widgets = {
@@ -328,6 +348,7 @@ describe('dashboard', () => {
 
     afterEach(() => {
       parser.parse.restore()
+      configValidator.validate.restore()
       dashboardEmitter.emit.reset()
     })
 
