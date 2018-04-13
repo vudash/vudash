@@ -127,7 +127,7 @@ Shows a VU-Meter like Gauge which represents numerical figures like percentages
 ![gauge-widget](https://cloud.githubusercontent.com/assets/218949/25781923/339cd844-3338-11e7-8e12-0ff197e3876f.gif)
 
 ### Configuration
-Simply include in your dashboard, and configure as required (defaults are shown):
+Simply include in your dashboard, and configure as required:
 
 ```javascript
   {
@@ -135,13 +135,7 @@ Simply include in your dashboard, and configure as required (defaults are shown)
     "datasource": "some-data-source-id",
     "options": {
       "description": "Gauge", // Optional. Description shown below statistic,
-      "initial-value": 27,
-      "min": 0,
-      "max": 100,
-      "pointer.background-colour": "orange" // Optional, Background colour of pointer,
-      "pointer.colour": "indicatorColour", // Optional, Foreground colour of pointer.
-      "value.font-size": "valueFontSize", // Optional. Font size of gauge value.
-      "value.colour": "valueColour", // Optional. Colour of gauge value.
+      "maximum": 3983 // Required, the maximum value the gauge can ever reach
     }
   }
 ```

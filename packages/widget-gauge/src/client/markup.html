@@ -74,7 +74,7 @@
           maximum: 100
         },
         highest: 0,
-        value: 300,
+        value: 0,
 				radius: 100
 			}
 		},
@@ -83,8 +83,8 @@
 			dimension: radius => (radius * 2) + 100,
 			cf: radius => 2 * Math.PI * radius,
 			semi: cf => cf / 2,
-			current: (semi, config) => semi / config.maximum * config.value,
-			max: (semi, config) => semi / config.maximum * config.highest,
+			current: (semi, config, value) => semi / config.maximum * value,
+			max: (semi, config, highest) => semi / config.maximum * highest,
 			ends: semi => semi - 2,
 			maskStroke: radius => radius / 5 + 10,
 			rangeStroke: maskStroke => maskStroke - 5
@@ -92,8 +92,10 @@
 		
     methods: {
       update ({ data, meta, history }) {
-        const highest = Math.max(...history)
         const { value } = data
+        const highest = history.reduce((curr, h) => {
+          return h.data.value > curr ? h.data.value : curr
+        }, value)
         this.set({ value, highest })
       }
     }
