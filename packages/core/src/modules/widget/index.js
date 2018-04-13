@@ -24,8 +24,8 @@ class Widget {
     this.componentPath = componentPath
     this.name = name
 
-    const config = validator.validate(name, widget.validation, this.options)
-    this.widget = widget.register(config, emitter)
+    this.options = validator.validate(name, widget.validation, this.options)
+    this.widget = widget.register(this.options, emitter)
   }
 
   update (value) {

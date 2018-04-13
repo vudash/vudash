@@ -27,6 +27,7 @@ exports.handler = async function (request, reply) {
     const model = await buildViewModel(dashboard, server)
     return reply.view('dashboard', model)
   } catch (e) {
+    console.error(e)
     if (e instanceof NotFoundError) {
       return reply.redirect('/')
     }
