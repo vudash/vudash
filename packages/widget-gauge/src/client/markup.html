@@ -1,11 +1,34 @@
 <div class="widget-gauge">
-  <div class="gauge-cont" data-percentage="80">
-    <div class="gauge">
-      <div class="inner"></div>
-      <div class="spinner" style="transform: rotate({{ degrees }}deg)"></div>
-    </div>
-    <div class="pointer" style="transform: rotate({{ pointerDegrees }}deg)"></div>
-    <div class="pointer-knob"></div>
+  <div class="wrapper" style="width: {{dimension}}px; height: {{dimension}}px">
+    <svg class="meter">
+      <circle r="{{radius}}" id="mask" 
+              stroke-dasharray="{{semi}},{{cf}}"
+              stroke-width="{{maskStroke}}" 
+              class="circle" cx="50%" cy="50%">
+      </circle>
+      <circle r="{{radius}}" id="outline-curves" 
+              stroke-dasharray="{{semi}},{{cf}}"
+              stroke-width="{{maskStroke}}" 
+              class="circle outline" cx="50%" cy="50%">
+      </circle>
+      <circle r="{{radius}}" id="high" 
+              stroke-dasharray="{{max}},{{cf}}" 
+              stroke-width="{{rangeStroke}}"
+              class="circle range" cx="50%" cy="50%" 
+              stroke="#E04644">
+      </circle>
+      <circle r="{{radius}}" id="avg" 
+              stroke-dasharray="{{current}},{{cf}}" 
+              stroke-width="{{rangeStroke}}"
+              class="circle range" cx="50%" cy="50%" 
+              stroke="#50D050">
+      </circle>
+      <circle r="{{radius}}" id="outline-ends" 
+              stroke-dasharray="2,{{ends}}" 
+              stroke-width="{{maskStroke}}" 
+              class="circle outline" cx="50%" cy="50%">
+      </circle>
+    </svg>
   </div>
   <div class="label">
     {{ config.description }}
@@ -18,130 +41,60 @@
     bottom: 30px;
     font-size: 14px;
     font-weight: bold;
-    text-align: center;
-    width: 100%;
   }
-
-  .gauge {
-    width: 200px;
-    height: 100px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .inner {
-    width: 200px;
-    height: 100px;
-    display: block;
-    background-color: rgb(68,68,68);
-    border-radius: 200px 200px 0 0;
-    z-index: 1;
-  }
-  .inner:after {
-    content: '';
-    width: 120px;
-    height: 60px;
-    top: 40px;
-    left: 40px;
-    background-color: rgb(42,42,42);
-    border-radius: 200px 200px 0 0;
-    position: absolute;
-    z-index: 3;
-  }
-
-  .spinner {
-    width: 200px;
-    height: 100px;
-    background-color: rgb(112,179,125);
-    position: absolute;
-    z-index: 2;
-    -webkit-transform-origin: top center;
-            transform-origin: top center;
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transition: -webkit-transform 800ms ease;
-    transition: -webkit-transform 800ms ease;
-    transition: transform 800ms ease;
-    transition: transform 800ms ease, -webkit-transform 800ms ease;
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    border-radius: 0 0 200px 200px;
-  }
-  .spinner.alt {
-    background-color: rgb(225,78,84);
-  }
-
-  .gauge-cont {
-    display: inline-block;
-    position: relative;
-    width: 200px;
-    height: 100px;
-    margin-left: 30px;
-  }
-  .gauge-cont:first-child {
-    margin: 0;
-  }
-
-  .pointer {
-    display: block;
-    width: 6px;
-    height: 105px;
-    background-color: rgb(255,255,255);
-    border-radius: 4px 4px 0 0;
-    position: absolute;
-    z-index: 4;
-    bottom: 0px;
-    left: 97px;
-    -webkit-transform: rotate(-90deg);
-            transform: rotate(-90deg);
-    -webkit-transform-origin: center bottom;
-            transform-origin: center bottom;
-    -webkit-transition: -webkit-transform 800ms ease;
-    transition: -webkit-transform 800ms ease;
-    transition: transform 800ms ease;
-    transition: transform 800ms ease, -webkit-transform 800ms ease;
-  }
-
-  .pointer-knob {
-    width: 20px;
-    height: 20px;
-    background-color: rgb(255,255,255);
-    position: absolute;
-    left: 90px;
-    bottom: -10px;
-    z-index: 5;
-    border-radius: 20px;
-  }
+	
+	.wrapper {
+		position: relative;
+		margin: auto;
+		top: 16%;
+	}
+	
+	.meter {
+		width: 100%;
+		height: 100%;
+		transform: matrix(-1, 0, 0, 1, 0, 0) rotateX(180deg);
+	}
+	
+	.circle {
+		fill: none;
+	}
+	
+	.outline, #mask {
+		stroke: #F1F1F1;
+	}
 </style>
 
 <script>
   'use strict'
 
   export default {
-    data () {
-      return {
-        config: {},
-        value: 100
-      }
-    },
-
-    computed: {
-      pipSize: (config) => {
-        const range = config.max - config.min
-        return range / 100
-      },
-      degrees: (pipSize, value) => {
-        const percentage = pipSize * (value / 100)
-        return (180 / 100) * percentage
-      },
-      pointerDegrees: (degrees, value) => {
-        return degrees - 90
-      }
-    },
-
+		data () {
+			return {
+        config: {
+          maximum: 100
+        },
+        highest: 0,
+        value: 300,
+				radius: 100
+			}
+		},
+		
+		computed: {
+			dimension: radius => (radius * 2) + 100,
+			cf: radius => 2 * Math.PI * radius,
+			semi: cf => cf / 2,
+			current: (semi, config) => semi / config.maximum * config.value,
+			max: (semi, config) => semi / config.maximum * config.highest,
+			ends: semi => semi - 2,
+			maskStroke: radius => radius / 5 + 10,
+			rangeStroke: maskStroke => maskStroke - 5
+		},
+		
     methods: {
-      update ({ meta, data }) {
-        this.set(data)
+      update ({ data, meta, history }) {
+        const highest = Math.max(...history)
+        const { value } = data
+        this.set({ value, highest })
       }
     }
   }
