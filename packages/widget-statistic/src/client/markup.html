@@ -2,114 +2,171 @@
   <div class="value" ref:value>
     {{ value }}
   </div>
+  {{#if config.historyView === 'ticker'}}
+  <div class="ticker">
+    <span class="indicator {{ ticker.up ? 'up' : 'down' }}">
+      {{ ticker.difference }} ({{ ticker.percent }}%)
+    </span>
+  </div>
+  {{/if}}
   <div class="label">
     {{ config.description }}
   </div>
+  {{#if config.historyView === 'ticker'}}
   <div ref:chart class="chart"></div>
+  {{/if}}
 </div>
 
 <style>
-.vudash-statistic > .label, .vudash-statistic > .value {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-}
+  .vudash-statistic > .label,
+  .vudash-statistic > .value {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+  }
 
-.value {
-  width: 90%;
-}
+  .value {
+    width: 90%;
+  }
 
-.label {
-  position: absolute;
-  bottom: 30px;
-  font-size: 14px;
-}
+  .label {
+    position: absolute;
+    bottom: 30px;
+    font-size: 14px;
+  }
 
-.chart {
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  float: left;
-  z-index: -999;
-}
+  .chart {
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    float: left;
+    z-index: -999;
+  }
+
+  .ticker {
+    font-size: 1.6vw;
+  }
+
+  .indicator.up {
+    color: green;
+  }
+
+  .indicator.up::before {
+    content: '\25B2 '
+  }
+
+  .indicator.down {
+    color: red;
+  }
+
+  .indicator.down::before {
+    content: '\25BC '
+  }
 </style>
 
 <script>
-'use strict'
+  'use strict'
 
-import Chartist from 'chartist'
-import 'chartist/dist/chartist.css'
-import FitText from 'fit-text'
+  import Chartist from 'chartist'
+  import 'chartist/dist/chartist.css'
+  import FitText from 'fit-text'
 
-const options = {
-  axisX: {
-    showLabel: false,
-    showGrid: false
-  },
-  axisY: {
-    showLabel: false,
-    showGrid: false
-  },
-  showPoint: false,
-  showArea: true,
-  fullWidth: true,
-  width: '100%',
-  chartPadding: { 
-    left: -40,
-    right: 0,
-    bottom: -40
-  }
-}
-
-const colours = [
-  '#d70206',
-  '#f05b4f',
-  '#f4c63d',
-  '#d17905',
-  '#453d3f',
-  '#59922b',
-  '#0544d3',
-  '#6b0392',
-  '#f05b4f',
-  '#dda458',
-  '#eacf7d',
-  '#86797d',
-  '#b2c326',
-  '#6188e2',
-  '#a748ca'
-]
-
-export default {
-  data () {
-    return {
-      value: '-'
+  const options = {
+    axisX: {
+      showLabel: false,
+      showGrid: false
+    },
+    axisY: {
+      showLabel: false,
+      showGrid: false
+    },
+    showPoint: false,
+    showArea: true,
+    fullWidth: true,
+    width: '100%',
+    chartPadding: { 
+      left: -40,
+      right: 0,
+      bottom: -40
     }
-  },
+  }
 
-  oncreate () {
-    const config = this.get('config')
-    new FitText(this.refs.value, { fontRatio: config['font-ratio'] || 4 })
-    const colour = config.colour || colours[Math.floor(Math.random() * colours.length)]
-    this.set({ colour })
-  },
+  const colours = [
+    '#d70206',
+    '#f05b4f',
+    '#f4c63d',
+    '#d17905',
+    '#453d3f',
+    '#59922b',
+    '#0544d3',
+    '#6b0392',
+    '#f05b4f',
+    '#dda458',
+    '#eacf7d',
+    '#86797d',
+    '#b2c326',
+    '#6188e2',
+    '#a748ca'
+  ]
 
-  methods: {
-    update ({ data, meta, history }) {
-      const { value } = data
-      this.buildHistory(history)
-      const updates = { value }
-      this.set(updates)
+  export default {
+    data () {
+      return {
+        value: '-',
+        ticker: {
+          difference: 0,
+          percent: 0,
+          up: true
+        }
+      }
     },
 
-    buildHistory (history) {
-      if (history) {
+    oncreate () {
+      const config = this.get('config')
+      new FitText(this.refs.value, { fontRatio: config['font-ratio'] || 4 })
+      const colour = config.colour || colours[Math.floor(Math.random() * colours.length)]
+      this.set({ colour })
+    },
+
+    methods: {
+      update ({ data, meta, history }) {
+        const { value } = data
+        const config = this.get('config')
+
+        if (history) {
+          if (config.historyView === 'chart') {
+            this.buildChart(history)
+          } else {
+            this.buildTicker(history)
+          }
+        }
+        
+        const updates = { value }
+        this.set(updates)
+      },
+
+      buildTicker (history) {
+        try {
+          const latest = history.pop()
+          const previous = history.pop()
+          const current = Number.parseFloat(latest.data.value)
+          const former = Number.parseFloat(previous.data.value)
+          const difference = (Math.abs(current - former)).toFixed(2)
+          const percent = ((100 / current) * former).toFixed(2)
+          const up = current >= former
+          this.set({ ticker: { difference, percent, up } })
+        } catch (e) {
+          return
+        }
+      },
+
+      buildChart (history) {
         const series = history.reduce((curr, item) => {
           try {
             curr.push(Number.parseFloat(item.data.value))
+            return curr
           } catch (e) {
-            // do nothing
-          } finally {
             return curr
           }
         }, [])
@@ -117,28 +174,27 @@ export default {
         const chartData = { series: [series] }
         this.chart = this.chart || this.create(chartData)
         this.chart.update(chartData)
+      },
+
+      create (chartData) {
+        const chart = new Chartist.Line(this.refs.chart, chartData, options)
+        chart.on('created', () => {
+          const colour = this.get('colour')
+          const lineSelector = '.ct-series-a .ct-line'
+          const areaSelector = '.ct-series-a .ct-area'
+
+          const svg = this.refs.chart
+          const line = svg.querySelectorAll(lineSelector)[0]
+          const area = svg.querySelectorAll(areaSelector)[0]
+
+          line.style.stroke = colour
+          if (area) {
+            area.style.fill = colour
+            area.style.opacity = 0.5
+          }
+        })
+        return chart
       }
-    },
-
-    create (chartData) {
-      const chart = new Chartist.Line(this.refs.chart, chartData, options)
-      chart.on('created', () => {
-        const colour = this.get('colour')
-        const lineSelector = '.ct-series-a .ct-line'
-        const areaSelector = '.ct-series-a .ct-area'
-
-        const svg = this.refs.chart
-        const line = svg.querySelectorAll(lineSelector)[0]
-        const area = svg.querySelectorAll(areaSelector)[0]
-
-        line.style.stroke = colour
-        if (area) {
-          area.style.fill = colour
-          area.style.opacity = 0.5
-        }
-      })
-      return chart
     }
   }
-}
 </script>
