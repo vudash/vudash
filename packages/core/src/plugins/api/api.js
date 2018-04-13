@@ -2,6 +2,7 @@
 
 const Joi = require('joi')
 const viewCurrentHandlers = require('./handlers/view/current')
+const dashboardHandlers = require('./handlers/dashboards')
 
 const ApiPlugin = {
   register: function (server, options, next) {
@@ -17,6 +18,23 @@ const ApiPlugin = {
         }
       },
       handler: viewCurrentHandlers.put
+    })
+
+    server.route({
+      method: 'PUT',
+      path: '/api/v1/dashboards/{name}',
+      config: {
+        tags: ['api'],
+        validate: {
+          params: {
+            name: Joi.string().required().description('Dashboard id')
+          },
+          payload: {
+            descriptor: Joi.object().required().description('Dashboard descriptor')
+          }
+        }
+      },
+      handler: dashboardHandlers.put
     })
 
     next()
