@@ -1,7 +1,8 @@
 'use strict'
 
 const { expect } = require('code')
-const { register } = require('./widget')
+const { register, validation } = require('./widget')
+const Joi = require('joi')
 
 describe('widget', () => {
   it('Uses config', () => {
@@ -23,18 +24,12 @@ describe('widget', () => {
   })
 
   it('Will convert given value to string', () => {
-    const configuration = register({})
+    const configuration = register({ format: '%s' })
     const { value } = configuration.update(2)
     expect(value).to.equal('2')
   })
 
   context('Formatting', () => {
-    it('Will use default format value if none specified', () => {
-      const configuration = register({})
-      const output = configuration.update('things')
-      expect(output).to.equal({ value: 'things' })
-    })
-
     it('Will format according to format config', () => {
       const configuration = register({ format: '%d%%' })
       const output = configuration.update(34)
@@ -52,6 +47,13 @@ describe('widget', () => {
     it('No colour passed', () => {
       const { config } = register({})
       expect(config.colour).not.to.exist()
+    })
+  })
+
+  context('Configuration', () => {
+    it('default format is set', () => {
+      const { value } = Joi.validate({}, validation)
+      expect(value.format).to.equal('%s')
     })
   })
 })
