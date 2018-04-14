@@ -12,8 +12,8 @@
   <div class="label">
     {{ config.description }}
   </div>
-  {{#if config.historyView === 'ticker'}}
-  <div ref:chart class="chart"></div>
+  {{#if config.historyView === 'chart'}}
+    <div ref:chart class="chart"></div>
   {{/if}}
 </div>
 
@@ -23,6 +23,10 @@
     width: 100%;
     text-align: center;
     font-weight: bold;
+  }
+
+  .value, .label {
+    z-index: 1;
   }
 
   .value {
@@ -41,7 +45,7 @@
     width: 100%;
     position: absolute;
     float: left;
-    z-index: -999;
+    z-index: 0;
   }
 
   .ticker {
