@@ -25,15 +25,24 @@ describe('widget', () => {
 
   it('Will convert given value to string', () => {
     const configuration = register({ format: '%s' })
-    const { value } = configuration.update(2)
-    expect(value).to.equal('2')
+    const { displayValue } = configuration.update(2)
+    expect(displayValue).to.equal('2')
   })
 
   context('Formatting', () => {
-    it('Will format according to format config', () => {
+    let output
+
+    beforeEach(() => {
       const configuration = register({ format: '%d%%' })
-      const output = configuration.update(34)
-      expect(output).to.equal({ value: '34%' })
+      output = configuration.update(34)
+    })
+
+    it('Will format according to format config', () => {
+      expect(output.displayValue).to.equal('34%')
+    })
+
+    it('Will retain original value for history', () => {
+      expect(output.value).to.equal(34)
     })
   })
 

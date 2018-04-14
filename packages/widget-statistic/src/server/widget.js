@@ -17,7 +17,10 @@ class StatisticWidget {
   }
 
   update (value) {
-    return { value: format(this.config.format, value) }
+    return {
+      value,
+      displayValue: format(this.config.format, value)
+    }
   }
 }
 
