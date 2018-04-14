@@ -1,7 +1,22 @@
 body {
   font-family: 'Ubuntu', sans-serif;
   color: #fff;
-  background-color: #404040;
+  background-color: #191919;
+  text-align: center;
+}
+
+.logo {
+  width: 25vw;
+  margin: 5vh;
+}
+
+path {
+  fill: #fff;
+  stroke: transparent;
+}
+
+rect {
+  fill: tomato;
 }
 
 .sub-page {
@@ -9,15 +24,19 @@ body {
 }
 
 ul {
-  margin: 20px 0;
   list-style-type: none;
+  padding: 0;
 }
 
 ul > li {
   margin: 5px 0;
 }
 
-a {
+a, a:visited, a:active {
   color: #fff;
   text-decoration: none;
+}
+
+a:hover {
+  color: tomato;
 }
