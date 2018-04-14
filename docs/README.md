@@ -25,12 +25,13 @@ Visiting the root of the application will yield a list of all available dashboar
 
 # Screenshots
 
-![dashboard](https://cloud.githubusercontent.com/assets/218949/18632967/05d72ba6-7e72-11e6-964d-6de1f38135ac.png)
-![graph](https://cloud.githubusercontent.com/assets/218949/18608448/68c9bf90-7ce1-11e6-95a9-15c864722271.png)
+![dashboard](https://user-images.githubusercontent.com/218949/38768859-ca2a2ee4-3ff1-11e8-9d8c-3bf1138b563d.gif)
+![crypto](https://user-images.githubusercontent.com/218949/38768861-cf9f70b4-3ff1-11e8-91b5-ea8a27d06fb6.png)
 
 # Demo
 
 [Demo Dashboard](http://vudash.herokuapp.com/demo.dashboard)
+[Crypto Dashboard](http://vudash.herokuapp.com/crypto.dashboard)
 
 If, like me, you learn by example rather than reams of documentation, check out the [Demo Dashboard's Configuration](https://github.com/vudash/vudash-demo/blob/master/dashboards/demo.json) on github. You can then clarify any questions using the documentation below.
 
