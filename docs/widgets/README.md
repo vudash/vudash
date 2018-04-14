@@ -184,12 +184,20 @@ Simply include in your dashboard, and configure as required:
       "description": "Visitor Count", // Optional. Default "Statistics" Description shown below statistic,
       "format": "%s", // Optional. Default %s. Format the incoming data (using sprintf-js),
       "font-ratio": 4 // Optional. Default 4. Scaling ratio for main statistic (for longer text, increase this number),
-      "colour": "#86797d" // Optional. Defaults to a random colour from a pre-selected "pretty" list. Colour for line / fill-area of graph, if shown.
+      "colour": "#86797d", // Optional. Defaults to a random colour from a pre-selected "pretty" list. Colour for line / fill-area of graph, if shown.
+      "historyView": "chart" // Optional, defaults to "chart". How historical figures are represented. 
     }
   }
 ```
 
 Note that `datasource` tells the widget how to get data, and is using a datasource, which is documented in the [Datasources documentation](/#/datasources)
+
+#### History Views
+
+There are two ways to represent previous values that the widget has received:
+
+* `chart`: Displays a line-graph of the previous historical values which floats behind the widget's content.
+* `ticker`: Shows a stock-market type ticker, in either red or green depending on the direction the value is heading. Shows difference from previous value, and the same difference represented as a percentage.
 
 #### Graphs
 This widget will graph data which is passed in as an array.
