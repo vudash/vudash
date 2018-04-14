@@ -9,6 +9,7 @@
   "dependencies": {
     "chartist": "^0.11.0",
     "fit-text": "^2.0.0",
+    "joi": "^13.1.2",
     "sprintf-js": "^1.0.3"
   },
   "repository": {
