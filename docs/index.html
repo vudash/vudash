@@ -22,10 +22,23 @@
   <div id="app">
   </div>
 </body>
-<script 
-  src="//unpkg.com/docsify" 
-  data-coverpage
-  data-router 
-  data-repo="vudash/vudash">
-</script>
+<script>
+    window.$docsify = {
+      coverpage: true,
+      ga: 'UA-117504415-1',
+      name: 'vudash',
+      search: {
+        noData: {
+          '/': 'No results!'
+        },
+        paths: 'auto',
+        placeholder: {
+          '/': 'Search'
+        }
+      }
+    }
+  </script>
+<script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+<script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
+<script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
 </html>

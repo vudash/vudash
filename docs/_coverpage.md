@@ -1,5 +1,3 @@
-# Hello
-
 <svg class="logo" viewBox="0 0 176.08649 106.1699">
   <g transform="translate(-24.377661,-51.731245)">
     <g>
@@ -43,15 +41,15 @@
   </g>
 </svg>
 
-<script>
-  svg {
+<style>
+  .logo {
     width: 33vw;
   }
 
   path, rect {
     fill: #000;
   }
-</script>
+</style>
 
 - Uses websockets for realtime updates
 - Integrates with a huge number of services
