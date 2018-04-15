@@ -40,46 +40,46 @@ function register () {
     },
     require('./plugins/api')
   ])
-  .then(() => {
-    server.views({
-      engines: {
-        html: require('handlebars')
-      },
-      relativeTo: __dirname,
-      path: './views'
+    .then(() => {
+      server.views({
+        engines: {
+          html: require('handlebars')
+        },
+        relativeTo: __dirname,
+        path: './views'
+      })
+
+      console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
+      console.log(`Server ${chalk.green.bold('running')}`)
+      console.log(`Api key: ${chalk.magenta.bold(apiKey)}`)
+      console.log('Dashboards available:')
+      const dashboardDir = Path.join(process.cwd(), 'dashboards')
+      const boards = fs.readdirSync(dashboardDir)
+      for (let board of boards) {
+        const loaded = require(Path.join(dashboardDir, board))
+        const boardUrl = `${Path.basename(board, '.json')}.dashboard`
+        console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.settings.app.serverUrl}/${boardUrl}`))
+      }
+
+      return Promise.resolve(server)
     })
-
-    console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
-    console.log(`Server ${chalk.green.bold('running')}`)
-    console.log(`Api key: ${chalk.magenta.bold(apiKey)}`)
-    console.log('Dashboards available:')
-    const dashboardDir = Path.join(process.cwd(), 'dashboards')
-    const boards = fs.readdirSync(dashboardDir)
-    for (let board of boards) {
-      const loaded = require(Path.join(dashboardDir, board))
-      const boardUrl = `${Path.basename(board, '.json')}.dashboard`
-      console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.settings.app.serverUrl}/${boardUrl}`))
-    }
-
-    return Promise.resolve(server)
-  })
 }
 
 function start (server) {
   return server.start()
-  .then(() => {
-    if (process.env.BROWSER_SYNC) {
-      const bs = require('browser-sync').create()
+    .then(() => {
+      if (process.env.BROWSER_SYNC) {
+        const bs = require('browser-sync').create()
 
-      bs.init({
-        open: false,
-        proxy: server.info.uri,
-        files: ['src/public/**/*.{js,css}']
-      })
-    }
+        bs.init({
+          open: false,
+          proxy: server.info.uri,
+          files: ['src/public/**/*.{js,css}']
+        })
+      }
 
-    return Promise.resolve()
-  })
+      return Promise.resolve()
+    })
 }
 
 function cleanup (server) {

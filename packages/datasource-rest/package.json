@@ -5,7 +5,8 @@
   "main": "datasource.js",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
-    "link": "npm link"
+    "link": "npm link",
+    "lint": "../../node_modules/.bin/standard"
   },
   "author": "Antony Jones",
   "license": "MIT",
@@ -16,5 +17,16 @@
     "got": "^6.7.1",
     "hoek": "^4.1.0",
     "joi": "^10.6.0"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

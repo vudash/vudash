@@ -4,7 +4,8 @@
   "description": "Value datasource for Vudash dashboards",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
-    "link": "npm link"
+    "link": "npm link",
+    "lint": "../../node_modules/.bin/standard"
   },
   "main": "datasource.js",
   "repository": {
@@ -19,5 +20,16 @@
   "dependencies": {
     "bluebird": "^3.4.7",
     "joi": "^10.2.2"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

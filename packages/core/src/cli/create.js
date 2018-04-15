@@ -35,16 +35,16 @@ exports.run = function () {
     cwd,
     save: true
   })
-  .then(() => {
-    spinner.succeed('Installed dependencies.')
-    console.log(
-      green(
-        'Created sample dashboard. Run "vudash" or "npm start" to view'
+    .then(() => {
+      spinner.succeed('Installed dependencies.')
+      console.log(
+        green(
+          'Created sample dashboard. Run "vudash" or "npm start" to view'
+        )
       )
-    )
-  })
-  .catch(e => {
-    spinner.fail('Failed to install some dependencies.')
-    console.log(e)
-  })
+    })
+    .catch(e => {
+      spinner.fail('Failed to install some dependencies.')
+      console.log(e)
+    })
 }

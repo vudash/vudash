@@ -5,7 +5,8 @@
   "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
-    "link": "npm link"
+    "link": "npm link",
+    "lint": "../../node_modules/.bin/standard"
   },
   "repository": {
     "type": "git",
@@ -31,9 +32,18 @@
     "circleci": "^0.3.2",
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
-    "travis-ci": "^2.1.1"
-  },
-  "devDependencies": {
+    "travis-ci": "^2.1.1",
     "moment": "^2.22.0"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

@@ -5,21 +5,23 @@ matrix:
   fast_finish: true
 cache:
   directories:
+  - ~/.npm
   - node_modules
   - packages/**/node_modules
 env:
-  - TEST_DIR=vudash
-  - TEST_DIR=@vudash/datasource-rest
-  - TEST_DIR=@vudash/datasource-random
-  - TEST_DIR=@vudash/datasource-value
-  - TEST_DIR=@vudash/datasource-google-sheets
-  - TEST_DIR=vudash-widget-ci
-  - TEST_DIR=vudash-widget-gauge
-  - TEST_DIR=vudash-widget-progress
-  - TEST_DIR=vudash-widget-statistic
-  - TEST_DIR=vudash-widget-time
-  - TEST_DIR=vudash-widget-status
-  - TEST_DIR=@vudash/widget-chart
+  matrix:
+  - PACKAGE=vudash
+  - PACKAGE=@vudash/datasource-rest
+  - PACKAGE=@vudash/datasource-random
+  - PACKAGE=@vudash/datasource-value
+  - PACKAGE=@vudash/datasource-google-sheets
+  - PACKAGE=vudash-widget-ci
+  - PACKAGE=vudash-widget-gauge
+  - PACKAGE=vudash-widget-progress
+  - PACKAGE=vudash-widget-statistic
+  - PACKAGE=vudash-widget-time
+  - PACKAGE=vudash-widget-status
+  - PACKAGE=@vudash/widget-chart
 script:
-  - lerna bootstrap
+  - lerna run lint --scope $TEST_DIR
   - lerna run test --scope $TEST_DIR

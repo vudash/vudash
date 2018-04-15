@@ -9,7 +9,6 @@ describe('providers.github', () => {
   context('#configValidation', () => {
     it('Returns an empty block', () => {
       expect(Provider.configValidation).to.equal({})
-      
     })
   })
 
@@ -23,22 +22,21 @@ describe('providers.github', () => {
 
     afterEach(() => {
       nock.cleanAll()
-      
     })
 
     scenarios.forEach(({ status, health }) => {
       it(`Returns ${health} when status is ${status}`, () => {
         nock('https://status.github.com')
-        .get('/api/status.json')
-        .reply(200, { status })
+          .get('/api/status.json')
+          .reply(200, { status })
 
         const provider = new Provider()
         return provider.fetch()
-        .then((output) => {
-          expect(output.description).to.equal('Github')
-          expect(output.components[0].ligature).to.equal(health)
-          expect(output.components[0].name).to.equal('github')
-        })
+          .then((output) => {
+            expect(output.description).to.equal('Github')
+            expect(output.components[0].ligature).to.equal(health)
+            expect(output.components[0].name).to.equal('github')
+          })
       })
     })
   })

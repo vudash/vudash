@@ -4,7 +4,6 @@ const providers = require('../providers')
 const { validateConfig, validateProvider } = require('./validator')
 
 class StatusWidget {
-
   constructor (options, emitter) {
     this.emitter = emitter
 
@@ -22,11 +21,11 @@ class StatusWidget {
 
   run () {
     return this
-    .provider
-    .fetch()
-    .then(data => {
-      this.emitter.emit('update', data)
-    })
+      .provider
+      .fetch()
+      .then(data => {
+        this.emitter.emit('update', data)
+      })
   }
 
   destroy () {

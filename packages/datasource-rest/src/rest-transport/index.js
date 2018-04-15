@@ -23,7 +23,6 @@ const internals = {
 }
 
 class RestTransport {
-
   constructor (options) {
     this.config = options
   }
@@ -31,7 +30,7 @@ class RestTransport {
   fetch () {
     const options = internals.prepareRequest(this.config)
     return got[this.config.method](this.config.url, options)
-    .then(({ body }) => body)
+      .then(({ body }) => body)
   }
 }
 

@@ -5,7 +5,6 @@ const HealthStatus = require('../../health-status')
 const { reach } = require('hoek')
 
 class Github {
-
   static get configValidation () {
     return {}
   }
@@ -25,15 +24,15 @@ class Github {
     return got('https://status.github.com/api/status.json', {
       json: true
     })
-    .then((response) => {
-      const body = response.body
-      return {
-        components: [
-          { name: 'github', ligature: this.mapHealth(body) }
-        ],
-        description: 'Github'
-      }
-    })
+      .then((response) => {
+        const body = response.body
+        return {
+          components: [
+            { name: 'github', ligature: this.mapHealth(body) }
+          ],
+          description: 'Github'
+        }
+      })
   }
 }
 

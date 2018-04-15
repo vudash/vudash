@@ -18,8 +18,8 @@ describe('transports.rest', () => {
     nock.cleanAll()
   })
 
-  scenarios.forEach((scenario) => {
-    it(`#fetch() with ${scenario.method} ${scenario.host}`, () => {
+  scenarios.forEach(scenario => {
+    it(`#fetch() with ${scenario.method} ${scenario.host}`, async () => {
       const config = Object.assign({}, scenario)
       config.url = `${config.host}${config.path}`
       delete config.host
@@ -27,15 +27,12 @@ describe('transports.rest', () => {
       const transport = new RestTransport(config)
 
       nock(scenario.host)[scenario.method](scenario.path, scenario.body)
-      .query(scenario.query)
-      .reply(200, { a: 'b' })
+        .query(scenario.query)
+        .reply(200, { a: 'b' })
 
-      return transport
-        .fetch()
-        .then(body => {
-          expect(nock.isDone(), nock.pendingMocks()).to.equal(true)
-          expect(body.a).to.equal('b')
-        })
+      const body = await transport.fetch()
+      expect(nock.isDone(), nock.pendingMocks()).to.equal(true)
+      expect(body.a).to.equal('b')
     })
   })
 
@@ -45,21 +42,18 @@ describe('transports.rest', () => {
 
     beforeEach(() => {
       nock('http://example.com')
-      .get('/some/stuff')
-      .reply(200, body)
+        .get('/some/stuff')
+        .reply(200, body)
     })
 
     afterEach(() => {
       nock.cleanAll()
     })
 
-    it('returns full body', () => {
+    it('returns full body', async () => {
       const transport = new RestTransport(options)
-      return transport.fetch()
-      .then((value) => {
-        expect(value).to.equal(body)
-      })
+      const value = await transport.fetch()
+      expect(value).to.equal(body)
     })
   })
 })
-

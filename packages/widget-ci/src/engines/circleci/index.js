@@ -28,14 +28,14 @@ class CircleCIEngine {
       branch: this.branch,
       limit: 1
     })
-    .then((builds) => {
-      if (builds.length < 1) {
-        throw new Error('No builds found')
-      }
+      .then((builds) => {
+        if (builds.length < 1) {
+          throw new Error('No builds found')
+        }
 
-      const latestBuild = builds[0]
-      return this.mappings[latestBuild.status] || BuildStatus.unknown
-    })
+        const latestBuild = builds[0]
+        return this.mappings[latestBuild.status] || BuildStatus.unknown
+      })
   }
 }
 

@@ -7,9 +7,9 @@ exports.compile = function (source) {
   const { inputConfig, outputConfig } = build(source)
 
   return rollup
-  .rollup(inputConfig)
-  .then(bundle => {
-    const js = bundle.generate(outputConfig)
-    return js
-  })
+    .rollup(inputConfig)
+    .then(bundle => {
+      const js = bundle.generate(outputConfig)
+      return js
+    })
 }

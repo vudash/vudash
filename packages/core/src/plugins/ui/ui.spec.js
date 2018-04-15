@@ -19,9 +19,9 @@ describe('core/plugins/ui', function () {
 
   it('Loads dashboards into memory', () => {
     return app.inject({ url: `/${dashboard}.dashboard` })
-    .then(({ statusCode }) => {
-      expect(statusCode).to.equal(200)
-    })
+      .then(({ statusCode }) => {
+        expect(statusCode).to.equal(200)
+      })
   })
 
   it('Builds dashboard cache', () => {

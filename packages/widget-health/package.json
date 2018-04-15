@@ -3,7 +3,8 @@
   "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
-    "link": "npm link"
+    "link": "npm link",
+    "lint": "../../node_modules/.bin/standard"
   },
   "vudash": {
     "component": "./src/client/component.html"
@@ -22,5 +23,16 @@
   "version": "9.3.4",
   "dependencies": {
     "bluebird": "^3.4.7"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

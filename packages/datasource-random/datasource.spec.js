@@ -50,13 +50,11 @@ describe('plugin', () => {
     const options = ['chance.abcde']
     const transport = new RandomTransport({ method: 'n', options }, MT_SEED)
     expect(transport.fetch.bind(transport)).to.throw(Error, /is not a known chance method/)
-    
   })
 
   it('Allow shorthand chance method names', () => {
     const options = ['integer', 12, { min: 0, max: 1 }]
     const transport = new RandomTransport({ method: 'n', options }, MT_SEED)
     expect(transport.fetch.bind(transport)).not.to.throw()
-    
   })
 })

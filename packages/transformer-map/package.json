@@ -5,6 +5,9 @@
   "main": "transformer.js",
   "author": "Antony Jones",
   "license": "MIT",
+  "scripts": {
+    "lint": "../../node_modules/.bin/standard"
+  },
   "dependencies": {
     "reorient": "^2.1.0"
   },

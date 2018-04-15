@@ -66,8 +66,8 @@ describe('transform-loader', () => {
       expect(
         load('x', configuration)
       )
-      .to.be.an.array()
-      .and.to.have.length(0)
+        .to.be.an.array()
+        .and.to.have.length(0)
     })
   })
 

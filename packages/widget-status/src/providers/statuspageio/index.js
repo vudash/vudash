@@ -42,15 +42,15 @@ class StatuspageIo {
     return got(this.url, {
       json: true
     })
-    .then((response) => {
-      const body = response.body
-      const filteredComponents = body.components.reduce(this.filterComponentList.bind(this), [])
+      .then((response) => {
+        const body = response.body
+        const filteredComponents = body.components.reduce(this.filterComponentList.bind(this), [])
 
-      return {
-        description: reach(body, 'page.name'),
-        components: filteredComponents
-      }
-    })
+        return {
+          description: reach(body, 'page.name'),
+          components: filteredComponents
+        }
+      })
   }
 }
 

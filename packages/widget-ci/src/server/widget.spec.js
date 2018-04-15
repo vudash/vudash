@@ -95,9 +95,9 @@ describe('widget-ci/server', () => {
 
     it('Sound only plays on state change', () => {
       return instance.update()
-      .then(() => {
-        expect(emitStub.callCount).to.equal(1)
-      })
+        .then(() => {
+          expect(emitStub.callCount).to.equal(1)
+        })
     })
 
     const scenarios = [

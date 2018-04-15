@@ -7,7 +7,6 @@ const spreadsheetToJson = require('spreadsheet-to-json')
 const configValidator = require('../config-validator')
 
 class GoogleSheetsTransport {
-
   constructor (options) {
     this.config = options
     this.extract = Promise.promisify(spreadsheetToJson.extractSheets)

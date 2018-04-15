@@ -5,7 +5,8 @@
   "main": "datasource.js",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
-    "link": "npm link"
+    "link": "npm link",
+    "lint": "../../node_modules/.bin/standard"
   },
   "keywords": [
     "vudash",
@@ -28,5 +29,16 @@
     "bluebird": "^3.4.7",
     "chance": "^1.0.4",
     "joi": "^13.0.2"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "it",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

@@ -65,14 +65,14 @@ describe('providers.statuspageio', () => {
           accept: 'application/json'
         }
       })
-      .get('/')
-      .reply(200, statuspageJson)
+        .get('/')
+        .reply(200, statuspageJson)
 
       const provider = new Provider(config)
       return provider.fetch()
-      .then((output) => {
-        results = output
-      })
+        .then((output) => {
+          results = output
+        })
     })
 
     it('Has status page name', () => {

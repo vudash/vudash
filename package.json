@@ -3,7 +3,8 @@
     "lint": "lerna run lint",
     "start": "lerna run start --scope vudash",
     "heroku-postbuild": "./node_modules/.bin/lerna bootstrap",
-    "docs:preview": "docsify serve docs"
+    "docs:preview": "docsify serve docs",
+    "postinstall": "lerna bootstrap --hoist"
   },
   "devDependencies": {
     "chance": "^1.0.4",
@@ -18,7 +19,7 @@
     "nodemon": "^1.9.2",
     "sinon": "^1.17.4",
     "sinon-as-promised": "^4.0.2",
-    "standard": "^7.1.2"
+    "standard": "^11.0.1"
   },
   "engines": {
     "node": ">=9.x"

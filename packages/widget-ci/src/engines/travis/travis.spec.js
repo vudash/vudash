@@ -20,8 +20,8 @@ describe('engines.travis', () => {
     }
 
     return engine.fetchBuildStatus()
-    .then((result) => {
-      expect(result).to.equal(BuildStatus.passed)
-    })
+      .then((result) => {
+        expect(result).to.equal(BuildStatus.passed)
+      })
   })
 })

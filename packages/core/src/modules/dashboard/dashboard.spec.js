@@ -368,7 +368,7 @@ describe('dashboard', () => {
         expect(
           dashboardEmitter.emit.firstCall.args[1].history
         ).to.exist()
-        .and.to.equal([{ foo: 'bar' }])
+          .and.to.equal([{ foo: 'bar' }])
       })
 
       it('widget does not exist', () => {

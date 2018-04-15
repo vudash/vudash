@@ -50,13 +50,13 @@ describe('dashboard/parser', () => {
   it('replaces entire element', () => {
     const config = {
       some: {
-        value: { 
+        value: {
           $env: 'SOME_KEY',
           invalid: 'entry'
         }
       }
     }
-    
+
     expect(parse(config)).to.equal({
       some: {
         value: 'abcde'
@@ -70,7 +70,7 @@ describe('dashboard/parser', () => {
         value: { $env: 'NONEXISTENT_KEY' }
       }
     }
-    
+
     expect(() => {
       parse(config)
     }).to.throw(

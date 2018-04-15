@@ -27,16 +27,16 @@ class CiWidget {
 
   run () {
     return this.provider
-    .fetchBuildStatus()
-    .then((status) => {
-      const sound = Hoek.reach(this.config, `sounds.${status}`)
-      if (sound && this.previousState !== status) {
-        this.emitter.emit('plugin', 'audio:play', { data: sound })
-      }
+      .fetchBuildStatus()
+      .then((status) => {
+        const sound = Hoek.reach(this.config, `sounds.${status}`)
+        if (sound && this.previousState !== status) {
+          this.emitter.emit('plugin', 'audio:play', { data: sound })
+        }
 
-      this.previousState = status
-      this.emitter.emit('update', { status })
-    })
+        this.previousState = status
+        this.emitter.emit('update', { status })
+      })
   }
 
   destroy () {

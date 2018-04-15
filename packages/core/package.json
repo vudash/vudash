@@ -90,8 +90,5 @@
       "beforeEach",
       "afterEach"
     ]
-  },
-  "devDependencies": {
-    "moment": "^2.22.0"
   }
 }

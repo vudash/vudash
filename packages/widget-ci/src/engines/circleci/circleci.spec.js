@@ -31,9 +31,9 @@ describe('engines.circleci', () => {
       }])
 
       return engine.fetchBuildStatus()
-      .then((result) => {
-        status = result
-      })
+        .then((result) => {
+          status = result
+        })
     })
 
     after(() => {
@@ -42,22 +42,18 @@ describe('engines.circleci', () => {
 
     it('has correct repo', () => {
       expect(getBranchBuildsStub.firstCall.args[0].project).to.equal(options.repo)
-      
     })
 
     it('has correct user', () => {
       expect(getBranchBuildsStub.firstCall.args[0].username).to.equal(options.user)
-      
     })
 
     it('has correct branch', () => {
       expect(getBranchBuildsStub.firstCall.args[0].branch).to.equal(options.branch)
-      
     })
 
     it('fetches correct status', () => {
       expect(status).to.equal(BuildStatus.passed)
-      
     })
   })
 })
