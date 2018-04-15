@@ -1,6 +1,6 @@
 'use strict'
 
-const { WidgetRegistrationError } = require('../../../errors')
+const { WidgetRegistrationError } = require('../../errors')
 
 exports.locate = function (datasources, datasource) {
   const resolved = datasources[datasource]

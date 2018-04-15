@@ -4,7 +4,7 @@ const { reach } = require('hoek')
 const { join } = require('path')
 const resolver = require('../../resolver')
 const { upperCamel } = require('../../upper-camel')
-const { ConfigurationError } = require('../../../errors')
+const { ConfigurationError } = require('../../errors')
 const slash = require('slash')
 const findRoot = require('find-root')
 

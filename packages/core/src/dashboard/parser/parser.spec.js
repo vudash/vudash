@@ -2,7 +2,7 @@
 
 const { expect } = require('code')
 const { parse } = require('.')
-const { ConfigurationError } = require('../../../errors')
+const { ConfigurationError } = require('../../errors')
 
 describe('dashboard/parser', () => {
   beforeEach(() => {

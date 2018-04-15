@@ -1,6 +1,6 @@
 'use strict'
 
-const { upperCamel } = require('../modules/upper-camel')
+const { upperCamel } = require('../upper-camel')
 
 const requireDirectory = require('require-directory')
 const errors = requireDirectory(module, {

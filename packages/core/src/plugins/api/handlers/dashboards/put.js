@@ -1,6 +1,6 @@
 'use strict'
 
-const loader = require('../../../../modules/dashboard/loader')
+const loader = require('../../../../dashboard/loader')
 
 module.exports = function (request, reply) {
   const { dashboards } = request.server.plugins.ui

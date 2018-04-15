@@ -4,7 +4,7 @@ const { load } = require('.')
 const { expect } = require('code')
 const { stub } = require('sinon')
 const resolver = require('../resolver')
-const { ConfigurationError } = require('../../errors')
+const { ConfigurationError } = require('../errors')
 
 describe('transform-loader', () => {
   class SomeTransformer {}

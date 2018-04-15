@@ -1,6 +1,6 @@
 'use strict'
 
-const { WidgetRegistrationError } = require('../../../errors')
+const { WidgetRegistrationError } = require('../../errors')
 const locator = require('.')
 const { expect } = require('code')
 

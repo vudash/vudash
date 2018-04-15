@@ -13,11 +13,12 @@ describe('dashboard/schema', () => {
       expect(error.message).to.include('"layout" is required')
     })
 
-    const boards = fs.readdirSync(join(__dirname, '..', '..', '..', '..', 'dashboards'))
+    const dashboardsDir = join(__dirname, '..', '..', '..', 'dashboards')
+    const boards = fs.readdirSync(dashboardsDir)
 
-    boards.forEach((board) => {
+    boards.forEach(board => {
       it(`Parses valid schema ${board}`, () => {
-        const json = require(`../../../../dashboards/${board}`)
+        const json = require(join(dashboardsDir, board))
         const { error } = Joi.validate(json, schema)
         expect(error).not.to.exist()
       })

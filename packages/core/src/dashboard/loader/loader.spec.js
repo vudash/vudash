@@ -1,6 +1,6 @@
 'use strict'
 
-const { NotFoundError } = require('../../../errors')
+const { NotFoundError } = require('../../errors')
 const loader = require('.')
 const { expect } = require('code')
 

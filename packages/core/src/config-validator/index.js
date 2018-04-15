@@ -1,7 +1,7 @@
 'use strict'
 
 const Joi = require('joi')
-const { ConfigurationError } = require('../../errors')
+const { ConfigurationError } = require('../errors')
 
 exports.validate = function (name, rules = {}, json = {}, options = {}) {
   if (!rules || (typeof rules === 'object' && !Object.keys(rules).length)) {

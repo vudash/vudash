@@ -1,6 +1,6 @@
 'use strict'
 
-const dashboardLoader = require('../../../../modules/dashboard/loader')
+const dashboardLoader = require('../../../../dashboard/loader')
 const { NotFoundError } = require('../../../../errors')
 const Boom = require('boom')
 

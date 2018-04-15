@@ -1,6 +1,6 @@
 'use strict'
 
-const { NotFoundError } = require('../../../errors')
+const { NotFoundError } = require('../../errors')
 const Dashboard = require('..')
 const fs = require('fs')
 const { join } = require('path')

@@ -1,6 +1,6 @@
 'use strict'
 
-const { create } = require('modules/widget')
+const { create } = require('.')
 const { stub } = require('sinon')
 const loader = require('./loader')
 const { expect } = require('code')

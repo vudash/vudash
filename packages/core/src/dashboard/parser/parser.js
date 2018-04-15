@@ -1,6 +1,6 @@
 'use strict'
 
-const { ConfigurationError } = require('../../../errors')
+const { ConfigurationError } = require('../../errors')
 
 function get (directive) {
   if (process.env.hasOwnProperty(directive)) {

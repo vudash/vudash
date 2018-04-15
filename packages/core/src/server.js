@@ -9,7 +9,7 @@ const fs = require('fs')
 const Path = require('path')
 const chalk = require('chalk')
 const unhandled = require('unhandled-rejection')
-const id = require('./modules/id-gen')
+const id = require('./id-gen')
 
 const rejectionEmitter = unhandled({
   timeout: 5
