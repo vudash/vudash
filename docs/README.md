@@ -22,7 +22,7 @@ In so few lines:
 Install as a global module `npm install -g vudash` and use `vudash create` to create an example dashboard.
 Add new widgets under `/widgets` and add them to your dashboard under `/dashboards`.
 
-You can visit your created dashboard by visiting http://localhost:3000/`dashboard`.dashboard - where `dashboard` is the name of a JSON file within the `/dashboards` directory.
+You can visit your created dashboard by visiting http://localhost:3300/`dashboard`.dashboard - where `dashboard` is the name of a JSON file within the `/dashboards` directory.
 
 Visiting the root of the application will yield a list of all available dashboards, unless the environment variable `DEFAULT_DASHBOARD` is set, in which case that dashboard will be loaded instead. Other dashboards will still be available via the normal methods.
 
