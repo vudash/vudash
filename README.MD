@@ -4,6 +4,8 @@ An open-source, configurable, extensible dashboard for monitoring, marketing, an
 
 Note that this project is a lerna `monorepo`, individual packages in the vudash family are under `/packages`
 
+
+[![Join the chat at https://gitter.im/vudash/vudash-core](https://badges.gitter.im/vudash/vudash-core.svg)](https://gitter.im/vudash/vudash-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/vudash/vudash.svg?branch=master)](https://travis-ci.org/vudash/vudash) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/475d7d8cff824b11bee7680de7134d94)](https://www.codacy.com/app/ant/vudash?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vudash/vudash&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/8e7cf36d54ce0210c0ba/maintainability)](https://codeclimate.com/github/vudash/vudash/maintainability)
 [![CodeFactor](https://www.codefactor.io/repository/github/vudash/vudash/badge)](https://www.codefactor.io/repository/github/vudash/vudash)
