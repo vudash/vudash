@@ -9,7 +9,8 @@
     "lint": "../../node_modules/.bin/standard"
   },
   "dependencies": {
-    "jq-web": "0.2.0"
+    "execa": "^0.10.0",
+    "jq.node": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

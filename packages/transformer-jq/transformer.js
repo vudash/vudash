@@ -1,6 +1,7 @@
 'use strict'
 
-const jq = require('jq-web')
+const { sync } = require('execa')
+const { join } = require('path')
 
 class JqTransformer {
   constructor (transformation) {
@@ -8,7 +9,10 @@ class JqTransformer {
   }
 
   transform (data) {
-    return jq(data, this.transformation.value)
+    const jqn = join(__dirname, 'node_modules', '.bin', 'jqn')
+    const input = `'${JSON.stringify(data)}'`
+    const transformation = `"${this.transformation.value}"`
+    return sync('echo', [input, '|', jqn, transformation, '-j'])
   }
 }
 
