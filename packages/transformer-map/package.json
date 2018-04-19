@@ -1,6 +1,6 @@
 {
   "name": "@vudash/transformer-map",
-  "version": "9.3.3",
+  "version": "9.8.0",
   "description": "Vudash data transformer which maps from one structure to another",
   "main": "transformer.js",
   "author": "Antony Jones",

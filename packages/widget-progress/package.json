@@ -1,7 +1,7 @@
 {
   "name": "vudash-widget-progress",
   "main": "./src/server",
-  "version": "9.0.1",
+  "version": "9.8.0",
   "description": "Vudash Progress Widget",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",

@@ -1,6 +1,6 @@
 {
   "name": "@vudash/datasource-value",
-  "version": "9.3.3",
+  "version": "9.8.0",
   "description": "Value datasource for Vudash dashboards",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",

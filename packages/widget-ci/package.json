@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-ci",
-  "version": "9.4.0",
+  "version": "9.8.0",
   "description": "A CI Widget for Vudash",
   "main": "./src/server",
   "scripts": {
@@ -32,8 +32,8 @@
     "circleci": "^0.3.2",
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
-    "travis-ci": "^2.1.1",
-    "moment": "^2.22.0"
+    "moment": "^2.22.0",
+    "travis-ci": "^2.1.1"
   },
   "standard": {
     "globals": [
