@@ -20,6 +20,10 @@ const DashboardPlugin = {
           params: {
             board: Joi.string().required().description('Board name')
           }
+        },
+        cache: {
+          expiresIn: 15 * 60 * 1000,
+          privacy: 'private'
         }
       },
       handler: dashboardHandler
