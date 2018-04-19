@@ -200,6 +200,69 @@ When running the server, a number of environment variables are available:
 | API_KEY                   | api key used to access the vudash api                                  | (random)      |
 | SERVER_URL                | external server url (for when node can't resolve it by itself)         | (inferred)    |
 
+# Tips and tricks
+
+## Securing your dashboard with basic auth
+
+Want to protect your dashboard from the public eye? You can secure it with basic auth in a few steps:
+
+1. Install basic-auth and http-proxy modules:
+
+```javascript
+npm i -S basic-auth http-proxy
+```
+
+2. Change the start script in package.json
+
+```json
+{
+  "scripts": {
+    "start": "node ./proxy"
+  }
+}
+```
+
+3. Create a simple proxy server called `proxy.js` in your project's root directory
+
+```javascript
+'use strict'
+
+const http = require('http')
+const httpProxy = require('http-proxy')
+const auth = require('basic-auth')
+
+const proxy = httpProxy.createProxyServer()
+
+function verify (credentials) {
+  const user = process.env.BASIC_AUTH_NAME
+  const pass = process.env.BASIC_AUTH_PASS
+  return credentials && credentials.name === user && credentials.pass === pass
+}
+
+http.createServer((req, res) => {
+  const credentials = auth(req)
+ 
+  if (verify (credentials)) {
+    return proxy.web(req, res, {
+      target: 'http://localhost:3300'
+    })
+  }
+
+  res.statusCode = 401
+  res.setHeader('WWW-Authenticate', 'Basic realm="example"')
+  res.end('Access denied')
+}).listen(process.env.PORT)
+
+process.env.PORT = 3300
+require('vudash')
+```
+
+4. When you run the project, don't forget your credentials:
+
+```bash
+BASIC_AUTH_NAME=username BASIC_AUTH_PASS=password npm run start
+```
+
 # Troubleshooting
 
 * Q. The console shows that the websocket is failing to connect, and my widgets aren't updating.
