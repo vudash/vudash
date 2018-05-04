@@ -22,7 +22,7 @@ function loadFromCache (boards, request) {
   }, boards)
 }
 
-exports.handler = function (request, reply) {
+exports.handler = function (request, h) {
   const defaultDashboard = process.env.DEFAULT_DASHBOARD
   if (defaultDashboard) {
     return reply.redirect(`/${defaultDashboard}.dashboard`)
@@ -32,8 +32,8 @@ exports.handler = function (request, reply) {
     const boards = new Set()
     loadFromDisk(boards)
     loadFromCache(boards, request)
-    reply.view('listing', { boards: Array.from(boards) })
+    return h.view('listing', { boards: Array.from(boards) })
   } catch (e) {
-    return reply(internal(e))
+    return internal(e)
   }
 }

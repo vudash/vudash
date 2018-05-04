@@ -2,7 +2,7 @@
 
 const loader = require('../../../../dashboard/loader')
 
-module.exports = function (request, reply) {
+module.exports = function (request, h) {
   const { dashboards } = request.server.plugins.ui
   const { io } = request.server.plugins.socket
   const { name } = request.params
@@ -12,5 +12,5 @@ module.exports = function (request, reply) {
 
   loader.add(dashboards, name, io, descriptor)
 
-  reply().code(isUpdate ? 200 : 201)
+  return h.code(isUpdate ? 200 : 201)
 }

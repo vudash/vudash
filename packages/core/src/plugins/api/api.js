@@ -4,12 +4,15 @@ const Joi = require('joi')
 const viewCurrentHandlers = require('./handlers/view/current')
 const dashboardHandlers = require('./handlers/dashboards')
 
-const ApiPlugin = {
-  register: function (server, options, next) {
+module.exports = {
+  name: 'api',
+  version: '1.0.0',
+  dependencies: ['hapi-api-secret-key'],
+  register: async function (server, options) {
     server.route({
       method: 'PUT',
       path: '/api/v1/view/current',
-      config: {
+      options: {
         tags: ['api'],
         validate: {
           payload: {
@@ -23,7 +26,7 @@ const ApiPlugin = {
     server.route({
       method: 'PUT',
       path: '/api/v1/dashboards/{name}',
-      config: {
+      options: {
         tags: ['api'],
         validate: {
           params: {
@@ -36,15 +39,5 @@ const ApiPlugin = {
       },
       handler: dashboardHandlers.put
     })
-
-    next()
   }
 }
-
-ApiPlugin.register.attributes = {
-  name: 'api',
-  version: '1.0.0',
-  dependencies: ['hapi-api-secret-key']
-}
-
-module.exports = ApiPlugin

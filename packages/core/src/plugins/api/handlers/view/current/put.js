@@ -1,8 +1,8 @@
 'use strict'
 
-module.exports = function (request, reply) {
+module.exports = function (request, h) {
   const { io } = request.server.plugins.socket
   const { dashboard } = request.payload
   io.emit('view:current', { dashboard })
-  reply()
+  return h.code(200)
 }

@@ -4,8 +4,11 @@ const Joi = require('joi')
 const { handler: indexHandler } = require('./handlers/index')
 const { handler: dashboardHandler } = require('./handlers/dashboard')
 
-const DashboardPlugin = {
-  register: function (server, options, next) {
+module.exports = {
+  name: 'ui',
+  version: '1.0.0',
+  dependencies: ['socket'],
+  register: async function (server, options) {
     server.route({
       method: 'GET',
       path: '/',
@@ -15,7 +18,7 @@ const DashboardPlugin = {
     server.route({
       method: 'GET',
       path: '/{board}.dashboard',
-      config: {
+      options: {
         validate: {
           params: {
             board: Joi.string().required().description('Board name')
@@ -36,15 +39,5 @@ const DashboardPlugin = {
     })
 
     server.expose('dashboards', {})
-
-    next()
   }
 }
-
-DashboardPlugin.register.attributes = {
-  name: 'ui',
-  version: '1.0.0',
-  dependencies: ['socket']
-}
-
-module.exports = DashboardPlugin

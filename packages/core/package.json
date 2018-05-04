@@ -44,7 +44,7 @@
   "dependencies": {
     "app-module-path": "^2.2.0",
     "bluebird": "^3.5.0",
-    "boom": "^6.0.0",
+    "boom": "^7.2.0",
     "browser-sync": "^2.12.9",
     "buble": "^0.19.3",
     "catbox-memory": "^3.0.0",
@@ -53,10 +53,10 @@
     "find-root": "^1.1.0",
     "fs-extra": "^0.30.0",
     "handlebars": "^4.0.10",
-    "hapi": "^16.6.2",
+    "hapi": "^17.4.0",
     "hapi-api-secret-key": "^1.1.0",
     "hoek": "^4.1.1",
-    "inert": "^4.2.0",
+    "inert": "^5.1.0",
     "izitoast": "^1.2.0",
     "joi": "^10.5.2",
     "json-to-css": "^0.1.0",
@@ -75,10 +75,10 @@
     "rollup-plugin-uglify-es": "0.0.1",
     "rollup-plugin-virtual": "^1.0.1",
     "slash": "^1.0.0",
-    "socket.io": "^2.0.1",
+    "socket.io": "^2.1.0",
     "svelte": "^1.60.2",
     "unhandled-rejection": "^1.0.0",
-    "vision": "^4.1.1"
+    "vision": "^5.3.2"
   },
   "standard": {
     "globals": [

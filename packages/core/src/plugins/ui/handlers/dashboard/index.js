@@ -17,7 +17,7 @@ async function buildViewModel (dashboard, server) {
   }
 }
 
-exports.handler = async function (request, reply) {
+exports.handler = async function (request, h) {
   const { board } = request.params
   const { server } = request
   const { io } = server.plugins.socket
@@ -25,12 +25,12 @@ exports.handler = async function (request, reply) {
   try {
     const dashboard = dashboardLoader.find(dashboards, board, io)
     const model = await buildViewModel(dashboard, server)
-    return reply.view('dashboard', model)
+    return h.view('dashboard', model)
   } catch (e) {
     console.error(e)
     if (e instanceof NotFoundError) {
-      return reply.redirect('/')
+      return h.redirect('/')
     }
-    return reply(Boom.boomify(e, { statusCode: 400 }))
+    return Boom.boomify(e, { statusCode: 400 })
   }
 }

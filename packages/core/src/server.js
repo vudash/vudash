@@ -19,14 +19,18 @@ rejectionEmitter.on('unhandledRejection', (error, promise) => {
   console.error(error)
 })
 
-function register () {
-  const server = new Hapi.Server()
-  server.connection({ port: process.env.PORT || 3300 })
+async function register () {
+  const server = Hapi.server({
+    port: process.env.PORT || 3300
+  })
 
-  server.settings.app = { serverUrl: process.env.SERVER_URL || server.info.uri }
+  server.settings.app = {
+    serverUrl: process.env.SERVER_URL || server.info.uri
+  }
+
   const apiKey = process.env['API_KEY'] || id()
 
-  return server.register([
+  await server.register([
     require('vision'),
     require('inert'),
     require('./plugins/socket'),
@@ -40,46 +44,42 @@ function register () {
     },
     require('./plugins/api')
   ])
-    .then(() => {
-      server.views({
-        engines: {
-          html: require('handlebars')
-        },
-        relativeTo: __dirname,
-        path: './views'
-      })
 
-      console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
-      console.log(`Server ${chalk.green.bold('running')}`)
-      console.log(`Api key: ${chalk.magenta.bold(apiKey)}`)
-      console.log('Dashboards available:')
-      const dashboardDir = Path.join(process.cwd(), 'dashboards')
-      const boards = fs.readdirSync(dashboardDir)
-      for (let board of boards) {
-        const loaded = require(Path.join(dashboardDir, board))
-        const boardUrl = `${Path.basename(board, '.json')}.dashboard`
-        console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.settings.app.serverUrl}/${boardUrl}`))
-      }
+  server.views({
+    engines: {
+      html: require('handlebars')
+    },
+    relativeTo: __dirname,
+    path: './views'
+  })
 
-      return Promise.resolve(server)
-    })
+  console.log(`Loading dashboards from ${chalk.blue(process.cwd())}`)
+  console.log(`Server ${chalk.green.bold('running')}`)
+  console.log(`Api key: ${chalk.magenta.bold(apiKey)}`)
+  console.log('Dashboards available:')
+  const dashboardDir = Path.join(process.cwd(), 'dashboards')
+  const boards = fs.readdirSync(dashboardDir)
+  for (let board of boards) {
+    const loaded = require(Path.join(dashboardDir, board))
+    const boardUrl = `${Path.basename(board, '.json')}.dashboard`
+    console.log(chalk.blue.bold(loaded.name), 'at', chalk.cyan.underline(`${server.settings.app.serverUrl}/${boardUrl}`))
+  }
+
+  return server
 }
 
-function start (server) {
-  return server.start()
-    .then(() => {
-      if (process.env.BROWSER_SYNC) {
-        const bs = require('browser-sync').create()
+async function start (server) {
+  await server.start()
 
-        bs.init({
-          open: false,
-          proxy: server.info.uri,
-          files: ['src/public/**/*.{js,css}']
-        })
-      }
+  if (process.env.BROWSER_SYNC) {
+    const bs = require('browser-sync').create()
 
-      return Promise.resolve()
+    bs.init({
+      open: false,
+      proxy: server.info.uri,
+      files: ['src/public/**/*.{js,css}']
     })
+  }
 }
 
 function cleanup (server) {

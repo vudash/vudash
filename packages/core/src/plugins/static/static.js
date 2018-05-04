@@ -2,8 +2,10 @@
 
 const { join } = require('path')
 
-const AssetsPlugin = {
-  register: function (server, options, next) {
+module.exports = {
+  name: 'assets',
+  version: '1.0.0',
+  register: async function (server, options) {
     server.route({
       method: 'GET',
       path: '/assets/{param*}',
@@ -13,14 +15,5 @@ const AssetsPlugin = {
         }
       }
     })
-
-    next()
   }
 }
-
-AssetsPlugin.register.attributes = {
-  name: 'assets',
-  version: '1.0.0'
-}
-
-module.exports = AssetsPlugin

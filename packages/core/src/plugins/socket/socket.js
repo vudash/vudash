@@ -2,16 +2,10 @@
 
 const socketio = require('socket.io')
 
-const SocketPlugin = {
-  register: function (server, options, next) {
+module.exports = {
+  name: 'socket',
+  version: '1.0.0',
+  register: async function (server, options) {
     server.expose('io', socketio(server.listener))
-    next()
   }
 }
-
-SocketPlugin.register.attributes = {
-  name: 'socket',
-  version: '1.0.0'
-}
-
-module.exports = SocketPlugin

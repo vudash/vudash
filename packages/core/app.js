@@ -2,17 +2,15 @@
 
 const { register, start, stop } = require('./src/server')
 
-let server
+async function init () {
 
-register()
-  .then(registered => {
-    server = registered
-    start(server)
+  const server = await register()
+  await start(server)
+
+  process.on('SIGUSR2', async () => {
+    await stop(server)
+    process.exit()
   })
+}
 
-process.on('SIGUSR2', () => {
-  stop(server)
-    .then(() => {
-      process.exit()
-    })
-})
+init()
