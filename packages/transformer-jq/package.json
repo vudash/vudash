@@ -6,11 +6,12 @@
   "author": "Antony Jones",
   "license": "MIT",
   "scripts": {
-    "lint": "../../node_modules/.bin/standard"
+    "lint": "../../node_modules/.bin/standard",
+    "test": "../../node_modules/.bin/mocha ../../test/unit.lab.js"
   },
   "dependencies": {
-    "execa": "^0.10.0",
-    "jq.node": "^2.0.0"
+    "bluebird": "^3.5.1",
+    "jq.node": "^2.1.1"
   },
   "publishConfig": {
     "access": "public"

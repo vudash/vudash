@@ -5,13 +5,29 @@ const ora = require('ora')
 const Path = require('path')
 const fs = require('fs-extra')
 
-const { green } = require('chalk')
+const { green, yellow } = require('chalk')
+
+const dockerFileContents = ```
+FROM node:9-alpine
+
+COPY . /app
+
+WORKDIR /app
+RUN npm install
+
+EXPOSE 3300
+
+ENV SERVER_URL http://localhost:3300
+
+CMD npm start
+```
 
 exports.run = function () {
   const dashboard = require('../../dashboards/template.json')
   const cwd = process.cwd()
   const spinner = ora().start('Creating dashboard layout')
   const configFile = Path.join(cwd, 'dashboards', 'default.json')
+  const dockerFile = Path.join(cwd, 'Dockerfile')
   const packageJson = Path.join(cwd, 'package.json')
   const dashboardsDir = Path.join(cwd, 'dashboards')
 
@@ -25,6 +41,7 @@ exports.run = function () {
     }
   })
   fs.writeJsonSync(configFile, dashboard)
+  fs.outputFileSync(dockerFile, dockerFileContents)
   spinner.succeed('Created dashboard layout')
   spinner.start('Installing dependencies. This could take a minute or two...')
 
@@ -40,6 +57,11 @@ exports.run = function () {
       console.log(
         green(
           'Created sample dashboard. Run "vudash" or "npm start" to view'
+        )
+      )
+      console.log(
+        yellow(
+          'Dockerfile written. Use `docker build -t my-dashboard-name .` to build'
         )
       )
     })
