@@ -82,7 +82,7 @@ And if you actually want the contents of two? (As an object of course):
 
 ### JQ Transformer (@vudash/transformer-jq)
 
-The JQ transformer uses the module [jq-web](https://www.npmjs.org/package/jq-web), which is a native implementation of the JQ command line tool, to perform complex transformations on json data.
+The JQ transformer uses the module [jq.node](https://www.npmjs.com/package/jq.node), which is an 'improved, faster' version of jq specifically for node.
 
 Usage is a matter of compiling a selector to modify the data as you please
 
@@ -92,18 +92,26 @@ Supposing your data looks like this:
 {
   "a": {
     "big": {
-      "json": [
-        "full",
-        "of",
-        "important",
-        "things"
-      ]
+      "json": {
+        "jeff": {
+          "email": "jeff@example.net"
+        },
+        "joe": {
+          "phone": "+447721981546"
+        },
+        "emma": {
+          "email": "emma@example.com"
+        },
+        "grayson": {
+          "email": "wailo@example.net"
+        }
+      }
     } 
   }
 }
 ```
 
-You could use the following configuration to pass the string "empty of useless things" to the widget
+You could use the following configuration to group the above users by email domain.
 
 ```javascript
 {
@@ -115,12 +123,12 @@ You could use the following configuration to pass the string "empty of useless t
     {
       "transformer": "@vudash/transformer-jq",
       "options":  {
-        "value": ".a.big.json | [\"empty\", .[1], \"useless\", .[3]] | join(\" \")"
+        "value": "filter(has('email')) | groupBy(flow(get('email'), split('@'), get(1)))"
       }
     }
   ],
   "options": {
-    "description": "Value of three"
+    "description": "People grouped by email domain"
   },
   "widget": "vudash-widget-statistic"
 }
