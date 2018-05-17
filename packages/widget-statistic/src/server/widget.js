@@ -26,6 +26,8 @@ class StatisticWidget {
 
 exports.validation = Joi.object({
   format: Joi.string().optional().default('%s').description('Display format'),
+  colour: Joi.string().optional().default('%s').description('Colour'),
+  description: Joi.string().optional().description('Description'),
   'font-ratio': Joi.number().default(4).description('Font ratio for display value'),
   historyView: Joi.string().only('chart', 'ticker').default('chart').description('History display format')
 })
