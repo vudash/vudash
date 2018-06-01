@@ -7,8 +7,8 @@ const fs = require('fs-extra')
 
 const { green, yellow } = require('chalk')
 
-const dockerFileContents = ```
-FROM node:9-alpine
+const dockerFileContents = `
+FROM node:10-alpine
 
 COPY . /app
 
@@ -20,7 +20,7 @@ EXPOSE 3300
 ENV SERVER_URL http://localhost:3300
 
 CMD npm start
-```
+`
 
 exports.run = function () {
   const dashboard = require('../../dashboards/template.json')
