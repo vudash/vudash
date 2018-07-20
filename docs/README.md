@@ -312,4 +312,4 @@ lerna run test
  - Concept and foundation by Antony Jones / Desirable Objects Ltd
  - Contributions from github committers
  - Contains svg imagery from flaticons, by [Gregor Cresnar](http://www.flaticon.com/authors/gregor-cresnar), [Vectors Market](http://www.flaticon.com/authors/vectors-market)
- - Various fixes and improvements by [Alex Voight](https://github.com/alex-voigt)
+ - Various fixes and improvements by [Alex Voigt](https://github.com/alex-voigt)
