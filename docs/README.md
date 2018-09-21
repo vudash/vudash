@@ -33,8 +33,8 @@ Visiting the root of the application will yield a list of all available dashboar
 
 # Demo
 
-[Demo Dashboard](http://vudash.herokuapp.com/demo.dashboard)
-[Crypto Dashboard](http://vudash.herokuapp.com/crypto.dashboard)
+ - [Demo Dashboard](http://vudash.herokuapp.com/demo.dashboard)
+ - [Crypto Dashboard](http://vudash.herokuapp.com/crypto.dashboard)
 
 If, like me, you learn by example rather than reams of documentation, check out the [Demo Dashboard's Configuration](https://github.com/vudash/vudash-demo/blob/master/dashboards/demo.json) on github. You can then clarify any questions using the documentation below.
 
