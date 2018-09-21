@@ -50,7 +50,7 @@ class TimeWidget {
   }
 }
 
-exports.register function (options, emitter) {
+exports.register = function (options, emitter) {
   return new TimeWidget(options, emitter)
 }
 ```
