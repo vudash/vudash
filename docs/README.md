@@ -167,6 +167,9 @@ Widgets have some optional properties:
 | ------------- | ------------------------------------ | ------- |
 | background    | css for "background" style attribute | #ffffff |
 
+For a list of built in widgets, see [Widgets](widgets/).
+For developing widgets see [Developing Widgets](developers/?id=developing-widgets).
+
 # Datasources
 
 Unless a widget specifies its own data fetching method, data is fetched by a datasource.
@@ -188,6 +191,9 @@ Datasources are specified as a hash in the `dashboard.json` as follows:
 ```
 
 Each refresh, the datasource will fetch new data, and tell all widgets that listen to it about the new data.
+
+For a list of built in datasources, see [Datasources](datasources/).
+For developing datasources see [Developing Datasources](developers/?id=developing-datasources).
 
 # Configuration
 
