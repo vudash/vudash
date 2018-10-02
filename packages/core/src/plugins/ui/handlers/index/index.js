@@ -3,13 +3,17 @@
 const Path = require('path')
 const { readdirSync } = require('fs')
 const { internal } = require('boom')
+const { join } = require('path')
 
 function loadFromDisk (boards) {
   const path = Path.join(process.cwd(), 'dashboards')
   const files = readdirSync(path)
   return files.reduce((curr, d) => {
-    const name = d.replace('.json', '')
-    curr.add(name)
+    const descriptor = require(join(path, d))
+    curr.add({
+      name: descriptor.name,
+      path: '/' + d.replace('.json', '') + '.dashboard'
+    })
     return curr
   }, boards)
 }
