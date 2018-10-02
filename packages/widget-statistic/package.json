@@ -1,6 +1,6 @@
 {
   "name": "vudash-widget-statistic",
-  "version": "9.8.2",
+  "version": "9.9.0",
   "main": "./src/server",
   "scripts": {
     "test": "NODE_PATH=src:test ../../node_modules/.bin/mocha ../../test/unit.lab.js",
