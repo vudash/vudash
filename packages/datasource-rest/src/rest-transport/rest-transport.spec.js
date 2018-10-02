@@ -9,9 +9,9 @@ describe('transports.rest', () => {
   const scenarios = [
     { method: 'get', host, path: '/' },
     { method: 'post', host, path: '/some/path' },
-    { method: 'post', host, path: '/some/path', payload: {a: 'b', one: 2, true: false} },
+    { method: 'post', host, path: '/some/path', body: { a: 'b', one: 2, true: false } },
     { method: 'get', host, path: '/lala', query: { foot: 'bart' } },
-    { method: 'post', host, path: '/some/path', payload: {a: 'b', one: 2, true: false}, query: { foot: 'bath' } }
+    { method: 'post', host, path: '/some/path', body: { a: 'b', one: 2, true: false }, query: { foot: 'bath' } }
   ]
 
   afterEach(() => {

@@ -166,7 +166,7 @@ The default method is GET. Simply specify an URL.
 #### POSTing data
 
 Say you wanted to POST to the endpoint `/v1/api` at `https://example.org` on port 3333.
-Furthermore, you want to send JSON request data as specified in "payload" below.
+Furthermore, you want to send JSON request data as specified in "body" below.
 
 ```javascript
 {
@@ -174,7 +174,7 @@ Furthermore, you want to send JSON request data as specified in "payload" below.
   "options": {
     "method": "post",
     "url": "https://example.org:3333/v1/api",
-    "payload": {
+    "body": {
       "foo": "bar",
       "one": 2,
       "three": false
@@ -186,7 +186,7 @@ Furthermore, you want to send JSON request data as specified in "payload" below.
 #### Query Parameters
 
 Say you wanted to POST to the endpoint `/v1/api` at `https://example.org` on port 3333.
-Furthermore, you want to send JSON request data as specified in "payload" below.
+Furthermore, you want to send JSON request data as specified in "query" below.
 
 ```javascript
 {
