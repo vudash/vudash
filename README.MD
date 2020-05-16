@@ -10,8 +10,6 @@ Note that this project is a lerna `monorepo`, individual packages in the vudash 
 [![Maintainability](https://api.codeclimate.com/v1/badges/8e7cf36d54ce0210c0ba/maintainability)](https://codeclimate.com/github/vudash/vudash/maintainability)
 [![CodeFactor](https://www.codefactor.io/repository/github/vudash/vudash/badge)](https://www.codefactor.io/repository/github/vudash/vudash)
 
-[Full documentation](https://vudash.com) is available.
-
 See this project on NPM: [Vudash](https://npmjs.org/vudash)
 
 # Screenshots
